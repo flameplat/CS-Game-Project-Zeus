@@ -10,11 +10,11 @@ Dice-Realms/
 │   │   ├── java/
 │   │   │   └── game/
 │   │   │       ├── collectibles/
-│   │   │       │
+│   │   │       │   └──            
 │   │   │       ├── creatures/
-│   │   │       │
+│   │   │       │   └──
 │   │   │       ├── dice/
-│   │   │       │
+│   │   │       │   └──
 │   │   │       ├── engine/
 │   │   │       │   ├── GameController.java
 │   │   │       │
