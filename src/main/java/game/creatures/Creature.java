@@ -1,5 +1,4 @@
 package game.creatures;
 
-public interface Creature {
-    
+public abstract class Creature {
 }

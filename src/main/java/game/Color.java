@@ -1,5 +1,5 @@
-package game.dice;
+package game;
 
-public enum DiceColor {
+public enum Color {
     RED,GREEN,BLUE,MAGENTA,YELLOW,WHITE
 }

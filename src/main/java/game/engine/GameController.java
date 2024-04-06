@@ -87,7 +87,7 @@ public abstract class GameController {
     public abstract Player getPlayer();
 
     /**
-     * Gets the score sheet for the current active player.
+     * Gets the scoresheet for the current active player.
      * 
      * @return The {@code ScoreSheet} object for the current active player.
      */
@@ -104,7 +104,7 @@ public abstract class GameController {
     /**
      * Gets the current score of the game, including scores in each realm, number of
      * elemental crests, and the total score for the current active player.
-     * 
+     *
      * @return The current {@code GameScore} object.
      */
     public abstract GameScore getGameScore();
@@ -115,7 +115,6 @@ public abstract class GameController {
      * @return The {@code TimeWarp} object for the current active player.
      */
     public abstract TimeWarp getTimeWarpPowers();
-
     /**
      * Gets the number of ArcaneBoost powers the active player has and their status.
      * 
