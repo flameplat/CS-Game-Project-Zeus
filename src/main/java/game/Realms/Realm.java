@@ -3,8 +3,8 @@ package game.Realms;
 import game.Color;
 
 public abstract class Realm {
-    /*getName() method return the name of the realm as a String */
+    /* Method return the name of the realm as a String */
     public abstract String getName();
-/* Method to return the color of the realm*/
+    /* Method to return the color of the realm*/
     public abstract Color getColor();
 }
