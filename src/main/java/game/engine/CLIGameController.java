@@ -72,12 +72,12 @@ public class CLIGameController extends GameController{
     }
 
     @Override
-    public TimeWarp getTimeWarpPowers() {
+    public TimeWarp[] getTimeWarpPowers() {
         return null;
     }
 
     @Override
-    public ArcaneBoost getArcaneBoostPowers() {
+    public ArcaneBoost[] getArcaneBoostPowers() {
         return null;
     }
 
