@@ -1,4 +1,7 @@
 package game;
+/*To ensure that this class is well encapsulated we can
+    make getters and set the attributes to private
+ */
 
 public class Config {
     // -----------------------Game settings-----------------------//

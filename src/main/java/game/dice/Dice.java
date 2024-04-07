@@ -23,5 +23,9 @@ public class Dice {
     public Color getDiceColor() {
         return color;
     }
+    @Override
+    public String toString(){
+        return null;
+    }
 
 }

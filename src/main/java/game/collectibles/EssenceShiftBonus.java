@@ -16,4 +16,8 @@ public class EssenceShiftBonus extends Collectibles{
     public void setStatus(CollectiblesStatus status) {
         this.status=status;
     }
+    @Override
+    public boolean isBonus(){
+        return true;
+    }
 }

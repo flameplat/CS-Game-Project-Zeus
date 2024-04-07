@@ -12,11 +12,14 @@ public class RedRealm extends Realm {
     private Dragon[] dragons;
     private boolean[][] dragonsStatus;
     private Collectibles reward;
+    private int noElementalCrests;
     private Color realmColor;
+    private String name;
 
     // -----------------------Constructor-----------------------//
-    public RedRealm() {
+    public RedRealm(String name) {
         this.realmColor = Color.RED;
+        this.name=name;
         dragons = new Dragon[Config.MAX_NUM_DRAGONS];
         initDragons();
         dragonsStatus = new boolean[4][4];
@@ -47,7 +50,7 @@ public class RedRealm extends Realm {
     // get the name of the realm
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     // get the realm color
@@ -66,15 +69,30 @@ public class RedRealm extends Realm {
         return reward;
     }
 
-    // Update reward attribute if sequence appears
+    // Update reward attribute if sequence appears if no reward sets it to null
+    // if reward is elemental crest set reward to null and increment elemental crests number
     @Override
     public boolean checkReward() {
         return false;
     }
 
-    // attack
-    public boolean attack(Move g) {
+    // Gets from Move: Creature to attack, Hit Region
+    public boolean attack(Move move) {
         return false;
     }
+
+    @Override
+    public int getTotalScore() {
+        return totalRealmScore;
+    }
+    public int getNoElementalCrests(){
+        return noElementalCrests;
+    }
+
+    @Override
+    public String toString() {
+        return null;
+    }
+
 
 }

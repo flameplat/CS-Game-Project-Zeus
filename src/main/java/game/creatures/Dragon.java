@@ -42,4 +42,8 @@ public class Dragon extends Creature {
     public int getId() { // getter for the dragon number
         return id;
     }
+    @Override
+    public String toString(){
+        return null;
+    }
 }

@@ -2,6 +2,7 @@ package game.Realms;
 
 import game.Color;
 import game.collectibles.Collectibles;
+import game.engine.Move;
  // -----------------------Abstract methods-----------------------//
 public abstract class Realm {
     /* Method return the name of the realm as a String */
@@ -18,5 +19,9 @@ public abstract class Realm {
 
     /* Method to check whether there is a reward or not after attacking */
     public abstract boolean checkReward();
+    public abstract boolean attack(Move move);
+    public abstract int getTotalScore();
+    public abstract int getNoElementalCrests();
+    public abstract String toString();
 
 }

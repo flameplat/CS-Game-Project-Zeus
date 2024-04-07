@@ -37,5 +37,9 @@ public class Move {
     public HitRegionsOfDragons getHitRegion() {
         return hitRegion;
     }
+    @Override
+    public String toString(){
+        return null;
+    }
 
 }

@@ -14,7 +14,6 @@ public class CLIGameController extends GameController {
 
     @Override
     public boolean switchPlayer() {
-        RedRealm x=new RedRealm();
         return false;
     }
 

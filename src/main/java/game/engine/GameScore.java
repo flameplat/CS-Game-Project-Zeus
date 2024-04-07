@@ -6,57 +6,40 @@ import game.Realms.Realm;
 import java.util.LinkedList;
 
 public class GameScore {
+    //--------------------------Attributes--------------------------//
     // all of the scores for the Realms
-    private int noElementalCrests;
+    private int totalElementalCrests;
     private int totalScore;
-    private RealmxScore[] realmxScores;
+    private Realm[] realms;
 
-    /*
-     * Inner class to represent the scores for each realm.
-     */
-    public class RealmxScore {
-
-        private final Realm realm;
-        private int score;
-
-        private RealmxScore(Realm realm, int score) {
-            this.realm = realm;
-            this.score = score;
-        }
-
-    }
-
-    // -------------------end of the inner class---------------------//
-
-    // --------------Methods----------------//
+    //--------------------------Constructor--------------------------//
     public GameScore(Realm[] realms) {
-        for (int i = 0; i < realmxScores.length; i++) {
-            realmxScores[i] = new RealmxScore(realms[i], 0);
+        for (int i = 0; i < realms.length; i++) {
+            this.realms=realms;
         }
-        noElementalCrests = 0;
+        totalElementalCrests = 0;
         totalScore = 0;
     }
-
+    //--------------------------Methods--------------------------//
     private void updateTotalScore() {
-        for (int i = 0; i < realmxScores.length; i++) {
-            totalScore += realmxScores[i].score;
-        }
+
     }
 
-    public void updateGameScore(Realm realm, int score) {
-
-        // Update total score, no Elemental Crests and score for each realm
-        for (int i = 0; i < realmxScores.length; i++) {
-            if (realmxScores[i].realm == realm) {
-                realmxScores[i].score = score;
-                break;
-            }
+    public void updateGameStatus(){
+        //Reset attributes to recalculate them
+        totalScore=0;
+        totalElementalCrests=0;
+        for (int i = 0; i < realms.length; i++) {
+            totalScore += realms[i].getTotalScore();
+            totalElementalCrests+=realms[i].getNoElementalCrests();
         }
-        updateTotalScore();
-
     }
 
     public void displayGameScore() {
 
+    }
+    @Override
+    public String toString(){
+        return null;
     }
 }

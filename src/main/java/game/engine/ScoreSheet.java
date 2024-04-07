@@ -4,19 +4,23 @@ package game.engine;
 import game.Realms.Realm;
 
 public class ScoreSheet {
-    /* • Both players tally their scores based on the creatures subdued and Elemental Crests
-    collected in each realm.
-        • The wizard with the highest score is declared the Protector of Eldoria.
-     */
-    //Keep track of: dead creatures and alive creatures in each realm.
+    //We will create linked list of type realm/action and everytime we update the linked list
+    //--------------------------Attributes--------------------------//
     private Realm[] realms;
+    //--------------------------Constructor--------------------------//
     public ScoreSheet(Realm[] realmsReference){
         this.realms=realmsReference;
     }
+    //--------------------------Methods--------------------------//
     boolean updateScoresheet(){
         return false;
     }
     void displayScoreSheet(){
+
+    }
+    @Override
+    public String toString(){
+        return null;
     }
 
 }

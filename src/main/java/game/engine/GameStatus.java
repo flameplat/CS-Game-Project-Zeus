@@ -6,15 +6,16 @@ public class GameStatus {
      * current active player
      * return The current { GameStatus} object.
      */
+    //--------------------------Attributes--------------------------//
     private CurrentStatus gameStatus;
     private Player currentActivePlayer;
     private int round;
     private int turn;
-
+    //--------------------------Constructor--------------------------//
     public GameStatus() {
         //
     }
-
+    //--------------------------Methods--------------------------//
     public CurrentStatus getGameStatus() {
         return gameStatus;
     }

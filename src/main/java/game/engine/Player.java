@@ -12,6 +12,7 @@ import java.util.LinkedList;
 
 
 public class Player {
+    //----------------------Attributes--------------------------//
     private Realm[] realms;
     private ScoreSheet scoreSheet;
     private GameScore gameScore;
@@ -21,48 +22,60 @@ public class Player {
     private int arcaneBoostCount;
 
     private ArcaneBoost[] arcaneBoosts;
+    //----------------------Constructor--------------------------//
     public Player(String name){
-//        this.name=name;
-//        scoreSheet=new ScoreSheet(realms);
-//        timeWarps=new TimeWarp[Config.NUM_POWERS];
-//        arcaneBoosts=new ArcaneBoost[Config.NUM_POWERS];
-//        realms=new Realm[Config.NUM_REALMS];
-//        initializePowers();
+        this.name=name;
+        timeWarps=new TimeWarp[Config.NUM_POWERS];
+        arcaneBoosts=new ArcaneBoost[Config.NUM_POWERS];
+        realms=new Realm[Config.NUM_REALMS];
+        initializePowers();
+        initializeRealms();
+        scoreSheet=new ScoreSheet(realms);
+        gameScore=new GameScore(realms);
+    }
+
+    //----------------------Methods--------------------------//
+
+    /**
+     * Initialize all powers to DISABLED at the start of initialization of the player
+     */
+    private void initializePowers(){
+
+    }
+    /**
+     * Initialize all realms at the start of initialization of the player
+     */
+    private void initializeRealms(){
+
     }
     /**
      * Receives the power and set its status to ENABLED.
      * @return true if the power was successfully received, false otherwise
      */
     boolean receivePower(Collectibles power){
-//        boolean flag=false;
-//        //Assumption: The player won't be able receive powers more than POWER_NUMBER
-//        if(power instanceof ArcaneBoost){
-//            for(int i = 0; i< Config.NUM_POWERS; i++){
-//                if(arcaneBoosts[i].getStatus()== CollectiblesStatus.DISABLED){
-//                    arcaneBoosts[i].setStatus(CollectiblesStatus.ENABLED);
-//                    arcaneBoostCount++;
-//                    flag=true;
-//                    break;
-//                }
-//            }
-//        }
-//        if(power instanceof TimeWarp){
-//            for(int i = 0; i< Config.NUM_POWERS; i++){
-//                if(timeWarps[i].getStatus()== CollectiblesStatus.DISABLED){
-//                    timeWarps[i].setStatus(CollectiblesStatus.ENABLED);
-//                    timeWarpCount++;
-//                    flag=true;
-//                    break;
-//                }
-//            }
-//        }
-//        return flag;
-        return false;
-    }
-    /**
-     * Initialize all powers to DISABLED at the start of initialization of the player
-     */
-    private void initializePowers(){
+        boolean flag=false;
+        //Assumption: The player won't be able receive powers more than POWER_NUMBER
+        if(power instanceof ArcaneBoost){
+            for(int i = 0; i< Config.NUM_POWERS; i++){
+                if(arcaneBoosts[i].getStatus()== CollectiblesStatus.DISABLED){
+                    arcaneBoosts[i].setStatus(CollectiblesStatus.ENABLED);
+                    arcaneBoostCount++;
+                    flag=true;
+                    break;
+                }
+            }
+        }
+        if(power instanceof TimeWarp){
+            for(int i = 0; i< Config.NUM_POWERS; i++){
+                if(timeWarps[i].getStatus()== CollectiblesStatus.DISABLED){
+                    timeWarps[i].setStatus(CollectiblesStatus.ENABLED);
+                    timeWarpCount++;
+                    flag=true;
+                    break;
+                }
+            }
+        }
+        return flag;
 
     }
     ScoreSheet getScoreSheet(){
@@ -84,7 +97,7 @@ public class Player {
      * @return true if the power was successfully used, false otherwise
      */
     public boolean useTimeWarpPower(){
-        //Decrement number of available powers
+        //Decrement number of available TW powers
         return false;
     }
     /**
@@ -93,7 +106,7 @@ public class Player {
      * @return true if the power was successfully used, false otherwise
      */
     public boolean useArcaneBoostPower() {
-        //Decrement number of available powers
+        //Decrement number of available AB powers
         return false;
     }
     public String getName(){
@@ -105,8 +118,6 @@ public class Player {
     }
     //Returns total Arcane Boosts collected and unused
     public int getTotalArcaneBoostPowersCollected(){
-
-
         return arcaneBoostCount;
     }
 
@@ -121,6 +132,10 @@ public class Player {
     }
     public Realm[] getRealms(){
         return realms;
+    }
+    @Override
+    public String toString(){
+        return null;
     }
 
 

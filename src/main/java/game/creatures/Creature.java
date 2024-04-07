@@ -23,4 +23,6 @@ public abstract class Creature {
     public Collectibles getReward(int value) {
         return null;
     }
+    @Override
+    public abstract String toString();
 }

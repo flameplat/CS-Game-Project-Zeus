@@ -12,6 +12,7 @@ public class TimeWarp extends Collectibles {
 
     // -----------------------methods-----------------------//
     // Method to get current status of TW
+    @Override
     public CollectiblesStatus getStatus() {
         return status;
     }
@@ -21,8 +22,14 @@ public class TimeWarp extends Collectibles {
      * it becomes Enabled when the user is
      * rewarded with a power from a move or at the beginning of a round
      */
+    @Override
     public void setStatus(CollectiblesStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return null;
     }
 
 }
