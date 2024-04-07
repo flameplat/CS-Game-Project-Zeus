@@ -3,19 +3,24 @@ package game.creatures;
 import game.collectibles.Collectibles;
 
 public abstract class Creature {
-    //------------------Abstract Methods------------------//
-    public abstract boolean isAlive();
+    // ------------------Abstract Methods------------------//
+    public abstract boolean isAlive(); // check wheather the creature is dead or alive
 
-    public abstract int getScore();
+    public abstract int getScore(); // get score of creature
+    // ------------------Concrete Methods------------------//
+    // attack
 
-    //------------------Concrete Methods------------------//
-    public boolean attack(int value){
+    public boolean attack(int value) {
         return false;
     }
-    public boolean attack(int value,HitRegions region){
+
+    // attack for the dragon
+    public boolean attack(int value, HitRegionsOfDragons region) {
         return false;
     }
-    public Collectibles getReward(int value){
+
+    // get rewards after attcking
+    public Collectibles getReward(int value) {
         return null;
     }
 }

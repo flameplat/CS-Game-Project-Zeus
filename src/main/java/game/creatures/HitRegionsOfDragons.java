@@ -1,5 +1,5 @@
 package game.creatures;
 
-public enum HitRegions {
+public enum HitRegionsOfDragons {
     HEAD,WING,TAIL,HEART
 }

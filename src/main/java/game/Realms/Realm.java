@@ -2,15 +2,21 @@ package game.Realms;
 
 import game.Color;
 import game.collectibles.Collectibles;
-
+ // -----------------------Abstract methods-----------------------//
 public abstract class Realm {
     /* Method return the name of the realm as a String */
     public abstract String getName();
-    /* Method to return the color of the realm*/
-    public abstract Color getColor();
-    public abstract int getStatus();
-    public abstract Collectibles getReward();
-    public abstract boolean checkReward();
 
+    /* Method to return the color of the realm */
+    public abstract Color getColor();
+
+    /* Method to return the status of the realm */
+    public abstract int getStatus();
+
+    /* Method to return the rewards of the realm */
+    public abstract Collectibles getReward();
+
+    /* Method to check whether there is a reward or not after attacking */
+    public abstract boolean checkReward();
 
 }
