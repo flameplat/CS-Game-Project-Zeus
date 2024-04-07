@@ -2,6 +2,7 @@ package game.Realms;
 
 import game.Color;
 import game.collectibles.Collectibles;
+import game.creatures.Creature;
 import game.engine.Move;
  // -----------------------Abstract methods-----------------------//
 public abstract class Realm {
@@ -23,5 +24,6 @@ public abstract class Realm {
     public abstract int getTotalScore();
     public abstract int getNoElementalCrests();
     public abstract String toString();
+    public abstract Creature[] getAliveCreatures();
 
 }
