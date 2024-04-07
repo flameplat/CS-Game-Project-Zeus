@@ -11,6 +11,18 @@ public class Config {
     //-----------------------Power settings-----------------------//
     // Max number of powers a player can use in the game
     public static final int NUM_POWERS = 7;
+    //-----------------------Red Realm settings-----------------------//
+    public static final int MAX_NUM_DRAGONS = 4;
+    public static final int MAX_NUM_DRAGON_REGIONS = 4;
 
+
+
+    //-----------------------Green Realm settings-----------------------//
+
+    //-----------------------Blue Realm settings-----------------------//
+
+    //-----------------------Magenta Realm settings-----------------------//
+
+    //-----------------------Yellow Realm settings-----------------------//
 
 }

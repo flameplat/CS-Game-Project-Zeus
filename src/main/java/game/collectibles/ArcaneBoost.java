@@ -4,7 +4,7 @@ public class ArcaneBoost extends Collectibles{
     private CollectiblesStatus status;
     //Initialize the AB to DISABLED
     public ArcaneBoost(){
-        status=CollectiblesStatus.DISABLED;
+        this.status=CollectiblesStatus.DISABLED;
     }
     //Method to get current status of TW
     public CollectiblesStatus getStatus(){

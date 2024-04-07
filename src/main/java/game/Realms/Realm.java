@@ -7,4 +7,5 @@ public abstract class Realm {
     public abstract String getName();
     /* Method to return the color of the realm*/
     public abstract Color getColor();
+
 }

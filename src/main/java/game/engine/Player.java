@@ -6,15 +6,15 @@ import game.collectibles.Collectibles;
 import game.collectibles.CollectiblesStatus;
 import game.collectibles.TimeWarp;
 import game.Realms.Realm;
+import game.Color;
 
 import java.util.LinkedList;
 
 
 public class Player {
-
-
     private Realm[] realms;
     private ScoreSheet scoreSheet;
+    private GameScore gameScore;
     private TimeWarp[] timeWarps;
     private String name;
     private int timeWarpCount;
@@ -23,7 +23,7 @@ public class Player {
     private ArcaneBoost[] arcaneBoosts;
     public Player(String name){
 //        this.name=name;
-//        scoreSheet=new ScoreSheet();
+//        scoreSheet=new ScoreSheet(realms);
 //        timeWarps=new TimeWarp[Config.NUM_POWERS];
 //        arcaneBoosts=new ArcaneBoost[Config.NUM_POWERS];
 //        realms=new Realm[Config.NUM_REALMS];
@@ -115,6 +115,12 @@ public class Player {
     }
     public TimeWarp[] getTimeWarps(){
         return timeWarps;
+    }
+    public Realm getRealm(Color color){
+        return realms[color.ordinal()];
+    }
+    public Realm[] getRealms(){
+        return realms;
     }
 
 

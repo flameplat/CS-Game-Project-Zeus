@@ -5,16 +5,18 @@ import game.Color;
 import java.util.LinkedList;
 
 public class GameScore {
+    //Sum of score for every Realm
     private int noElementalCrests;
     private int totalScore;
-    private LinkedList<RealmScore> realmScores;
+    private RealmScore realmScore;
+
     /**
      * Inner class to represent the scores for each realm.
      */
     public static class RealmScore {
 
         private final Color realm;
-        private final int score;
+        private int score;
 
         public RealmScore(Color realm, int score) {
             this.realm = realm;
