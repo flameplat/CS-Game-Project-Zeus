@@ -4,6 +4,8 @@ import game.dice.*;
 import game.creatures.*;
 import game.collectibles.*;
 
+import java.util.LinkedList;
+
 /**
  * Abstract class representing the controller for the game.
  * This class defines the common blueprint for different controllers.
@@ -121,6 +123,7 @@ public abstract class GameController {
      * @return The {@code ArcaneBoost} object for the current active player.
      */
     public abstract ArcaneBoost getArcaneBoostPowers();
+
 
     /**
      * Selects a dice and adds it to the current turn of the active player, moves

@@ -7,6 +7,7 @@ import game.collectibles.CollectiblesStatus;
 import game.collectibles.TimeWarp;
 import game.Realms.Realm;
 
+import java.util.LinkedList;
 
 
 public class Player {
@@ -21,50 +22,48 @@ public class Player {
 
     private ArcaneBoost[] arcaneBoosts;
     public Player(String name){
-        this.name=name;
-        scoreSheet=new ScoreSheet();
-        timeWarps=new TimeWarp[Config.NUM_POWERS];
-        arcaneBoosts=new ArcaneBoost[Config.NUM_POWERS];
-        realms=new Realm[Config.NUM_REALMS];
-        initializePowers();
+//        this.name=name;
+//        scoreSheet=new ScoreSheet();
+//        timeWarps=new TimeWarp[Config.NUM_POWERS];
+//        arcaneBoosts=new ArcaneBoost[Config.NUM_POWERS];
+//        realms=new Realm[Config.NUM_REALMS];
+//        initializePowers();
     }
     /**
      * Receives the power and set its status to ENABLED.
      * @return true if the power was successfully received, false otherwise
      */
     boolean receivePower(Collectibles power){
-        boolean flag=false;
-        //Assumption: The player won't be able receive powers more than POWER_NUMBER
-        if(power instanceof ArcaneBoost){
-            for(int i = 0; i< Config.NUM_POWERS; i++){
-                if(arcaneBoosts[i].getStatus()== CollectiblesStatus.DISABLED){
-                    arcaneBoosts[i].setStatus(CollectiblesStatus.ENABLED);
-                    arcaneBoostCount++;
-                    flag=true;
-                    break;
-                }
-            }
-        }
-        if(power instanceof TimeWarp){
-            for(int i = 0; i< Config.NUM_POWERS; i++){
-                if(timeWarps[i].getStatus()== CollectiblesStatus.DISABLED){
-                    timeWarps[i].setStatus(CollectiblesStatus.ENABLED);
-                    timeWarpCount++;
-                    flag=true;
-                    break;
-                }
-            }
-        }
-        return flag;
+//        boolean flag=false;
+//        //Assumption: The player won't be able receive powers more than POWER_NUMBER
+//        if(power instanceof ArcaneBoost){
+//            for(int i = 0; i< Config.NUM_POWERS; i++){
+//                if(arcaneBoosts[i].getStatus()== CollectiblesStatus.DISABLED){
+//                    arcaneBoosts[i].setStatus(CollectiblesStatus.ENABLED);
+//                    arcaneBoostCount++;
+//                    flag=true;
+//                    break;
+//                }
+//            }
+//        }
+//        if(power instanceof TimeWarp){
+//            for(int i = 0; i< Config.NUM_POWERS; i++){
+//                if(timeWarps[i].getStatus()== CollectiblesStatus.DISABLED){
+//                    timeWarps[i].setStatus(CollectiblesStatus.ENABLED);
+//                    timeWarpCount++;
+//                    flag=true;
+//                    break;
+//                }
+//            }
+//        }
+//        return flag;
+        return false;
     }
     /**
      * Initialize all powers to DISABLED at the start of initialization of the player
      */
     private void initializePowers(){
-        for(int i = 0; i< Config.NUM_POWERS; i++){
-            timeWarps[i]=new TimeWarp();
-            arcaneBoosts[i]=new ArcaneBoost();
-        }
+
     }
     ScoreSheet getScoreSheet(){
         return scoreSheet;
@@ -85,7 +84,7 @@ public class Player {
      * @return true if the power was successfully used, false otherwise
      */
     public boolean useTimeWarpPower(){
-        timeWarpCount--;
+        //Decrement number of available powers
         return false;
     }
     /**
@@ -94,17 +93,28 @@ public class Player {
      * @return true if the power was successfully used, false otherwise
      */
     public boolean useArcaneBoostPower() {
-        arcaneBoostCount--;
+        //Decrement number of available powers
         return false;
     }
     public String getName(){
         return name;
     }
+    //Returns total Time Warps collected and unused
     public int getTotalTimeWarpPowersCollected(){
         return timeWarpCount;
     }
+    //Returns total Arcane Boosts collected and unused
     public int getTotalArcaneBoostPowersCollected(){
+
+
         return arcaneBoostCount;
+    }
+
+    public ArcaneBoost[] getArcaneBoosts(){
+        return arcaneBoosts;
+    }
+    public TimeWarp[] getTimeWarps(){
+        return timeWarps;
     }
 
 
