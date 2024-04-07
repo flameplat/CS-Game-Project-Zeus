@@ -1,5 +1,5 @@
 package game.collectibles;
 
-public class EssenceShiftBonus{
+public class EssenceShiftBonus extends Collectibles{
 
 }

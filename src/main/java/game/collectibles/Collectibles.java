@@ -1,5 +1,5 @@
 package game.collectibles;
 
-public interface Collectibles {
+public abstract class Collectibles {
 
 }
