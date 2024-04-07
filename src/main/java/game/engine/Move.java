@@ -1,24 +1,29 @@
 package game.engine;
+
 import game.Realms.Realm;
 import game.creatures.*;
 
-import javax.swing.plaf.synth.Region;
-
 public class Move {
+    // -----------------------Attributes-----------------------//
     private Realm realm;
     private Creature creature;
+    private HitRegionsOfDragons hitRegion;
 
-    private HitRegions hitRegion;
-    public Move(Realm realm,Creature creature){
-        this.realm=realm;
-        this.creature=creature;
-        hitRegion=null;
+    // -----------------------constructor-----------------------//
+    public Move(Realm realm, Creature creature) {
+        this.realm = realm;
+        this.creature = creature;
+        hitRegion = null;
 
     }
-    public Move(Realm realm,Creature creature,HitRegions hitRegion){
-        this(realm,creature);
-        this.hitRegion=hitRegion;
+
+    // constuctor for moves regarding the dragons
+    public Move(Realm realm, Creature creature, HitRegionsOfDragons hitRegion) {
+        this(realm, creature);
+        this.hitRegion = hitRegion;
     }
+
+    // -----------------------Methods-----------------------//
     public Realm getRealm() {
         return realm;
     }
@@ -26,7 +31,8 @@ public class Move {
     public Creature getCreature() {
         return creature;
     }
-    public HitRegions getHitRegion(){
+
+    public HitRegionsOfDragons getHitRegion() {
         return hitRegion;
     }
 

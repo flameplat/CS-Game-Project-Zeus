@@ -4,8 +4,7 @@ import game.dice.*;
 import game.creatures.*;
 import game.collectibles.*;
 
-
-public class CLIGameController extends GameController{
+public class CLIGameController extends GameController {
 
     @Override
     public void startGame() {
@@ -46,6 +45,7 @@ public class CLIGameController extends GameController{
     public Move[] getPossibleMoves(Dice dice) {
         return new Move[0];
     }
+
     @Override
     public GameBoard getGameBoard() {
         return null;
