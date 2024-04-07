@@ -21,8 +21,8 @@ public class GameScore {
             this.score = score;
         }
 
-        public int getRealm() {
-            return realmIndex;
+        public Color getRealm() {
+            return realm;
         }
 
         public int getScore() {
