@@ -4,8 +4,6 @@ import game.dice.*;
 import game.creatures.*;
 import game.collectibles.*;
 
-import java.util.LinkedList;
-
 /**
  * Abstract class representing the controller for the game.
  * This class defines the common blueprint for different controllers.
@@ -89,7 +87,7 @@ public abstract class GameController {
     public abstract Player getPlayer();
 
     /**
-     * Gets the scoresheet for the current active player.
+     * Gets the score sheet for the current active player.
      * 
      * @return The {@code ScoreSheet} object for the current active player.
      */
@@ -106,7 +104,7 @@ public abstract class GameController {
     /**
      * Gets the current score of the game, including scores in each realm, number of
      * elemental crests, and the total score for the current active player.
-     *
+     * 
      * @return The current {@code GameScore} object.
      */
     public abstract GameScore getGameScore();
@@ -117,7 +115,6 @@ public abstract class GameController {
      * @return An array of {@code TimeWarp} objects representing the TimeWarp powers
      *         of the active player.
      */
-
     public abstract TimeWarp[] getTimeWarpPowers();
 
     /**
@@ -127,7 +124,6 @@ public abstract class GameController {
      *         powers of the active player.
      */
     public abstract ArcaneBoost[] getArcaneBoostPowers();
-
 
     /**
      * Selects a dice and adds it to the current turn of the active player, moves
