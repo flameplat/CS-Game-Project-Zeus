@@ -15,7 +15,7 @@ public class ForgottenRealm {
     void removeDice(Dice dice){
 
     }
-    LinkedList<Dice> getForgottenDices(){
+    Dice[] getForgottenDices(){
         return null;
     }
 

@@ -4,19 +4,25 @@ import game.Config;
 import game.Realms.Realm;
 
 public class Dragon extends Creature{
-
+    //-----------------------Attributes-----------------------//
+    private static int id=0;
     private int[] health;//[HEAD,WING,TAIL,HEART]
     /*  Dragon1[HEAD,WING,TAIL,HEART]
         Dragon2[HEAD,WING,TAIL,HEART]
         Dragon3[HEAD,WING,TAIL,HEART]
         Dragon4[HEAD,WING,TAIL,HEART]
      */
-    public Dragon(int head,int wing,int tail,int heart){
+
+    private int score;
+    private boolean isAlive;
+    public Dragon(int[] hitValues,int score){
         health=new int[Config.MAX_NUM_DRAGON_REGIONS];
-        health[Regions.HEAD.ordinal()]=head;
-        health[Regions.WING.ordinal()]=wing;
-        health[Regions.TAIL.ordinal()]=tail;
-        health[Regions.HEART.ordinal()]=heart;
+        for(int i=0;i<health.length;i++){
+            health[i]=hitValues[i];
+        }
+        isAlive=true;
+        this.score=score;
+        id++;
     }
     @Override
     public boolean isAlive() {
@@ -24,16 +30,22 @@ public class Dragon extends Creature{
     }
 
     @Override
-    public boolean attack(int value) {
+    public boolean attack(int value,HitRegions region) {
         //Already creature to attack is chosen
-
-    }
-    public enum Regions{
-        HEAD,WING,TAIL,HEART
+        return false;
     }
 
+    @Override
+    public int getScore() {
+        return score;
+    }
 
-}
-public class Region extends Dragon{
 
+
+
+    public int getId(){
+        return id;
+    }
 }
+
+
