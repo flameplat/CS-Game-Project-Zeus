@@ -2,22 +2,22 @@ package game.engine;
 
 import game.dice.Dice;
 
-import java.util.LinkedList;
-
 public class ForgottenRealm {
 
-    public ForgottenRealm(){
+    public ForgottenRealm() {
 
     }
-    void addDice(Dice dice){
+
+    void addDice(Dice dice) {
 
     }
-    void removeDice(Dice dice){
+
+    void removeDice(Dice dice) {
 
     }
-    Dice[] getForgottenDices(){
+
+    Dice[] getForgottenDices() {
         return null;
     }
-
 
 }
