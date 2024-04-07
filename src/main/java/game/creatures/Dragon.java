@@ -8,12 +8,10 @@ public class Dragon extends Creature {
     private static int id = 0; // number of dragon
     private int[] health; // [HEAD,WING,TAIL,HEART]
     private int score; // score of the dragon
-    private boolean isAlive; // staus of the dragons if ther are alive or dead
+    private boolean isAlive; // status of the dragons if they are alive or dead
 
     // -----------------------Constructor-----------------------//
-    /*
-     * Dragon1(alive) [HEAD,WING,TAIL,HEART]
-     */
+
     public Dragon(int[] hitValues, int score) {
         health = new int[Config.MAX_NUM_DRAGON_REGIONS];
         for (int i = 0; i < health.length; i++) {

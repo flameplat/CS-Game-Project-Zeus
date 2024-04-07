@@ -2,6 +2,7 @@ package game.collectibles;
 
 public class ArcaneBoost extends Collectibles{
     private CollectiblesStatus status;
+
     //Initialize the AB to DISABLED
     public ArcaneBoost(){
         this.status=CollectiblesStatus.DISABLED;

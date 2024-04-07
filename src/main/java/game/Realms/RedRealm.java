@@ -76,4 +76,5 @@ public class RedRealm extends Realm {
     public boolean attack(Move g) {
         return false;
     }
+
 }

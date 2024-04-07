@@ -1,5 +1,6 @@
 package game.engine;
 
+import game.Realms.RedRealm;
 import game.dice.*;
 import game.creatures.*;
 import game.collectibles.*;
@@ -14,6 +15,7 @@ public class CLIGameController extends GameController{
 
     @Override
     public boolean switchPlayer() {
+        RedRealm x=new RedRealm();
         return false;
     }
 

@@ -1,5 +1,19 @@
 package game.collectibles;
 
-public class EssenceShiftBonus extends Collectibles{
+import game.Color;
 
+public class EssenceShiftBonus extends Collectibles{
+    private CollectiblesStatus status;
+    public EssenceShiftBonus(){
+        this.status=CollectiblesStatus.DISABLED;
+    }
+    @Override
+    public CollectiblesStatus getStatus() {
+        return status;
+    }
+
+    @Override
+    public void setStatus(CollectiblesStatus status) {
+        this.status=status;
+    }
 }
