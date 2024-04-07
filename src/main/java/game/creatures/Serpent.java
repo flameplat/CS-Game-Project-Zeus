@@ -1,3 +1,4 @@
+
 package game.creatures;
 
 public class Serpent extends Creature{
@@ -19,4 +20,5 @@ public class Serpent extends Creature{
     public String toString() {
         return null;
     }
+
 }
