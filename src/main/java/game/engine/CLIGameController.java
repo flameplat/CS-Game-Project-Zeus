@@ -4,17 +4,24 @@ import game.Realms.RedRealm;
 import game.dice.*;
 import game.creatures.*;
 import game.collectibles.*;
+import game.*;
 
 public class CLIGameController extends GameController {
-
+    // -----------------------Attributes-----------------------//
+    private GameBoard gameBoard;
+    private Player activePlayer;
+    // -----------------------Constructor-----------------------//
+    // -----------------------Methods-----------------------//
     @Override
     public void startGame() {
+    }
+    //Initialized Gameboard, Players (initializing players directly initialized realms and powers
+    private void initializeGame(){
 
     }
-
     @Override
     public boolean switchPlayer() {
-        return false;
+
     }
 
     @Override
