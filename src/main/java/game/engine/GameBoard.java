@@ -7,7 +7,7 @@ public class GameBoard {
     Player activePlayer;
 
     // -----------------------Constructor-----------------------//
-    //Initialized Players, Forgotten Realm, and set up the main board
+    //Initialized Players, Forgotten Realm, and set up the main board and contains the main game components
     public GameBoard(Player player1){
         //
     }

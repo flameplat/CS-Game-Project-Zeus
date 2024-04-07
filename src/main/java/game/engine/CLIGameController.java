@@ -21,7 +21,7 @@ public class CLIGameController extends GameController {
     }
     @Override
     public boolean switchPlayer() {
-
+        return false;
     }
 
     @Override
