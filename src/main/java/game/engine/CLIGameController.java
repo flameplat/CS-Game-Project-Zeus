@@ -7,6 +7,7 @@ import game.collectibles.*;
 
 public class CLIGameController extends GameController {
 
+
     @Override
     public void startGame() {
 
@@ -38,12 +39,17 @@ public class CLIGameController extends GameController {
     }
 
     @Override
-    public Move[] getAllPossibleMoves() {
+    public Move[] getAllPossibleMoves(Player player) {
         return new Move[0];
     }
 
     @Override
-    public Move[] getPossibleMoves(Dice dice) {
+    public Move[] getPossibleMovesForAvailableDice(Player player) {
+        return new Move[0];
+    }
+
+    @Override
+    public Move[] getPossibleMovesForADie(Player player, Dice dice) {
         return new Move[0];
     }
 
@@ -53,12 +59,17 @@ public class CLIGameController extends GameController {
     }
 
     @Override
-    public Player getPlayer() {
+    public Player getActivePlayer() {
         return null;
     }
 
     @Override
-    public ScoreSheet getScoreSheet() {
+    public Player getPassivePlayer() {
+        return null;
+    }
+
+    @Override
+    public ScoreSheet getScoreSheet(Player player) {
         return null;
     }
 
@@ -68,27 +79,27 @@ public class CLIGameController extends GameController {
     }
 
     @Override
-    public GameScore getGameScore() {
+    public GameScore getGameScore(Player player) {
         return null;
     }
 
     @Override
-    public TimeWarp[] getTimeWarpPowers() {
-        return null;
+    public TimeWarp[] getTimeWarpPowers(Player player) {
+        return new TimeWarp[0];
     }
 
     @Override
-    public ArcaneBoost[] getArcaneBoostPowers() {
-        return null;
+    public ArcaneBoost[] getArcaneBoostPowers(Player player) {
+        return new ArcaneBoost[0];
     }
 
     @Override
-    public boolean selectDice(Dice dice) {
+    public boolean selectDice(Dice dice, Player player) {
         return false;
     }
 
     @Override
-    public boolean makeMove(Dice dice, Creature creature) {
+    public boolean makeMove(Player player, Move move) {
         return false;
     }
 }
