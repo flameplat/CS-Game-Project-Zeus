@@ -3,43 +3,54 @@
 ## Folder Structure
 
 ```
-Dice-Realms/
-│
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── game/
-│   │   │       ├── collectibles/
-│   │   │       │   └──ArcaneBoost 
-│   │   │       │         
-│   │   │       ├── creatures/
-│   │   │       │   └──
-│   │   │       ├── dice/
-│   │   │       │   └──
-│   │   │       ├── engine/
-│   │   │       │   ├── GameController.java
-│   │   │       │
-│   │   │       ├── exceptions/
-│   │   │       │
-│   │   │       ├── gui/
-│   │   │       │
-│   │   │       └── Main.java
-│   │   │
-│   │   └── resources/
-│   │       ├── images/
-│   │       └── config/
-│   │
-│   └── test/
-│       └── java/
-│           └── game/
-│               ├── collectibles/
-│               ├── creatures/
-│               ├── dice/
-│               ├── engine/
-│               ├── exceptions/
-│               └── gui/
-│
-└── README.md
+dice-realms-game-zeus
+├── src
+│   └── main
+│       └── java
+│           └── game
+│               ├── Realms
+│               │   ├── BlueRealm.java
+│               │   ├── GreenRealm.java
+│               │   ├── MagentaRealm.java
+│               │   ├── Realm.java
+│               │   ├── RedRealm.java
+│               │   └── YellowRealm.java
+│               ├── collectibles
+│               │   ├── ArcaneBoost.java
+│               │   ├── Collectibles.java
+│               │   ├── CollectiblesStatus.java
+│               │   ├── ColorBonus.java
+│               │   ├── ElementalCrest.java
+│               │   ├── EssenceShiftBonus.java
+│               │   ├── TimeWarp.java
+│               │   └── dice-realms-game-zeus.code-workspace
+│               ├── creatures
+│               │   ├── Creature.java
+│               │   ├── Dragon.java
+│               │   ├── Guardians.java
+│               │   ├── HitRegionsOfDragons.java
+│               │   ├── Lion.java
+│               │   ├── Phoenix.java
+│               │   └── Serpent.java
+│               ├── dice
+│               │   └── Dice.java
+│               ├── engine
+│               │   ├── CLIGameController.java
+│               │   ├── CurrentStatus.java
+│               │   ├── ForgottenRealm.java
+│               │   ├── GameBoard.java
+│               │   ├── GameController.java
+│               │   ├── GameScore.java
+│               │   ├── GameStatus.java
+│               │   ├── Move.java
+│               │   ├── Player.java
+│               │   └── ScoreSheet.java
+│               ├── Color.java
+│               ├── Config.java
+│               └── Main.java
+├── ProjectSkeleton.md
+├── README.md
+└── pom.xml
 ```
 
 ## Packages
@@ -189,11 +200,6 @@ For each package, add the skeleton details for the class and duplicate as much a
       - `true` if the move is successfully completed,
       - `false` otherwise.
 
-### `Template` class
-
-- **Package**: `game.?`
-- **Type**: ? Class
-- **Description**: This class represents ?
 
 #### Methods:
 
@@ -203,3 +209,232 @@ For each package, add the skeleton details for the class and duplicate as much a
      - `?`: ?
    - **Return Type**: `?`
      - `?` ?
+
+### `ArcaneBoost` class
+
+- **Package**: `game.collectibles`
+- **Type**: SubClass
+- **Description**: This class represents the arcane boost.
+
+#### Methods:
+
+1. `CollectiblesStatus getStatus()`
+   - **Description**: it is a getter method for status attribute in the class.
+   - **Return Type**: `CollectiblesStatus`
+     - the current status of the collectible (disabled - enabled - used).
+
+2. `void setStatus(CollectiblesStatus status)`
+  - **Description**: it is a setter method for status attribute in the class.
+  - **Parameters**: `status`: the status needed to be changed into.
+
+3. `String toString()`
+  - **Description**: method that is used for printing a string of the properties of the collectible.
+  - **Return Type**: `String`
+    - return a string description of the collectible.
+
+
+
+
+### `Collectibles` class
+
+- **Package**: `game.collectibles`
+- **Type**: Abstract Class
+- **Description**: This class includes the abstract methods commonly used in all the subclasses.
+
+### `CollectiblesStatus` class
+
+- **Package**: `game.collectibles`
+- **Type**: Enum
+- **Description**: This class have options for the different statuses for the collectible.
+
+### `ColorBonus` class
+
+- **Package**: `game.collectibles`
+- **Type**: SubClass
+- **Description**: This class represents the color bonus.
+
+### `ElementalCrest` class
+
+- **Package**: `game.collectibles`
+- **Type**: SubClass
+- **Description**: This class represents the Elemental crest.
+
+### `TimeWarp` class
+
+- **Package**: `game.collectibles`
+- **Type**: SubClass
+- **Description**: This class represents the Time warp power.
+
+### `EssenceShiftBonus` class
+
+- **Package**: `game.collectibles`
+- **Type**: SubClass
+- **Description**: This class represents the Essence shift class.
+
+### `Creature` class
+
+- **Package**: `game.creatures`
+- **Type**: Abstract Class
+- **Description**: This class holds all abstract methods common in the creatures.
+
+### `Dragon` class
+
+- **Package**: `game.creatures`
+- **Type**: SubClass
+- **Description**: This class represents the Dragon creature.
+
+### `Gaurdians` class
+
+- **Package**: `game.creatures`
+- **Type**: SubClass
+- **Description**: This class represents the gaia guardians.
+
+### `Lion` class
+
+- **Package**: `game.creatures`
+- **Type**: SubClass
+- **Description**: This class represents the Lion.
+
+### `Phoenix` class
+
+- **Package**: `game.creatures`
+- **Type**: SubClass
+- **Description**: This class represents the Phoenix.
+
+### `HitRegionsOfDragons` class
+
+- **Package**: `game.creatures`
+- **Type**: enum
+- **Description**: This class represents the different hit regions of a dragon.
+
+### `Serpent` class
+
+- **Package**: `game.creatures`
+- **Type**: SubClass
+- **Description**: This class represents the Serpent.
+
+### `Dice` class
+
+- **Package**: `game.dice`
+- **Type**: Class
+- **Description**: This class creates and manipulates the dice object.
+
+### `CLIGameController` class
+
+- **Package**: `game.engine`
+- **Type**: SubClass
+- **Description**: This class represents the command line game controller and inherits most of its methods from the GameController abstract class.
+
+### `CurrentStatus` class
+
+- **Package**: `game.engine`
+- **Type**: enum
+- **Description**: This class represents
+the different options for the status of the game.
+
+### `ForgottenRealm` class
+
+- **Package**: `game.engine`
+- **Type**: Class
+- **Description**: This class initiallizes and controls the forgotten Realm.
+
+### `GameBoard` class
+
+- **Package**: `game.engine`
+- **Type**: Class
+- **Description**: This class represents
+the game board where all the realms appear and the dice playing area
+
+### `GameScore` class
+
+- **Package**: `game.engine`
+- **Type**: Class
+- **Description**: This class includes total score of the game including the realm scores
+
+### `GameStatus` class
+
+- **Package**: `game.engine`
+- **Type**: Class
+- **Description**: This class gets the current game status and checks if there is a change to be made and act accordingly.
+
+### `Move` class
+
+- **Package**: `game.engine`
+- **Type**: Class
+- **Description**: This class controls how a move is processed in the game.
+
+### `Player` class
+
+- **Package**: `game.engine`
+- **Type**: Class
+- **Description**: This class represents
+all the functions of the player and construct a player object.
+
+### `ScoreSheet` class
+
+- **Package**: `game.engine`
+- **Type**: Class
+- **Description**: This class manages the ScoreSheet.
+
+### `Realm` class
+
+- **Package**: `game.Realms`
+- **Type**: Abstract Class
+- **Description**: This class manages all the realms by including every common used in the main realms.
+
+### `GreenRealm` class
+
+- **Package**: `game.Realms`
+- **Type**: SubClass
+- **Description**: This class manages the green realm.
+
+### `BlueRealm` class
+
+- **Package**: `game.Realms`
+- **Type**:  SubClass
+- **Description**: This class manages the blue realm.
+
+### `RedRealm` class
+
+- **Package**: `game.Realms`
+- **Type**: SubClass
+- **Description**: This class manages the  realm
+.
+### `YellowRealm` class
+
+- **Package**: `game.Realms`
+- **Type**: SubClass
+- **Description**: This class manages the yellow realm.
+
+### `MagentaRealm` class
+
+- **Package**: `game.Realms`
+- **Type**: SubClass
+- **Description**: This class manages the Magenta Realm.
+
+### `Color` class
+
+- **Package**: `game`
+- **Type**: enum
+- **Description**: This class has all different realm colors.
+
+### `Config` class
+
+- **Package**: `game`
+- **Type**: class
+- **Description**: This class has all settings in the game like max number of rounds an all similar.
+
+### `Main` class
+
+- **Package**: `game`
+- **Type**: class
+- **Description**: This class has the function of starting the game.
+
+
+
+
+
+
+
+
+
