@@ -10,7 +10,8 @@ Dice-Realms/
 │   │   ├── java/
 │   │   │   └── game/
 │   │   │       ├── collectibles/
-│   │   │       │   └──            
+│   │   │       │   └──ArcaneBoost 
+│   │   │       │         
 │   │   │       ├── creatures/
 │   │   │       │   └──
 │   │   │       ├── dice/

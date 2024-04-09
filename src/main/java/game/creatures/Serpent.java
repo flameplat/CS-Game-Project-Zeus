@@ -20,5 +20,4 @@ public class Serpent extends Creature{
     public String toString() {
         return null;
     }
-
 }

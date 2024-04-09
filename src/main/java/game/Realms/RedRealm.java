@@ -28,7 +28,6 @@ public class RedRealm extends Realm {
     }
 
     // -----------------------Methods-----------------------//
-
     // Loop on all dragons on all regions update dead regions and alive regions
     public void updateDragonsStatus() {
 
