@@ -1,6 +1,9 @@
 package game.creatures;
 
 public class Guardians extends Creature{
+    public Guardians(int score){
+
+    }
     @Override
     public boolean attack(int value) {
         return false;
@@ -14,6 +17,7 @@ public class Guardians extends Creature{
     public int getScore() {
         return 0;
     }
+
 
     @Override
     public String toString() {

@@ -2,6 +2,7 @@ package game.creatures;
 
 import game.Config;
 import game.Realms.Realm;
+import game.collectibles.Collectibles;
 
 public class Dragon extends Creature {
     // -----------------------Attributes-----------------------//
@@ -33,6 +34,9 @@ public class Dragon extends Creature {
         // Already creature to attack is chosen
         return false;
     }
+
+
+
 
     @Override
     public int getScore() { // getter for score of the dragon

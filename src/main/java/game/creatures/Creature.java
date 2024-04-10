@@ -19,9 +19,4 @@ public abstract class Creature {
     public boolean attack(int value, HitRegionsOfDragons region) {
         return false;
     }
-
-    // get rewards after attacking
-    public Collectibles getReward(int value) {
-        return null;
-    }
 }

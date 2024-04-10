@@ -30,6 +30,4 @@ public class GameBoard {
     public void setPassivePlayer(Player player){
         this.passivePlayer=player;
     }
-
-
 }
