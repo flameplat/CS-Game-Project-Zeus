@@ -774,9 +774,9 @@ the game board where all the realms appear and the dice playing area
 
 ### `GameStatus` class
 
-- **Package**: `game.engine`
-- **Type**: Class
-- **Description**: This class gets the current game status and checks if there is a change to be made and act accordingly.
+**Package**: `game.engine`
+**Type**: Class
+**Description**: This class gets the current game status and checks if there is a change to be made and act accordingly.
 
 #### Methods:
 
