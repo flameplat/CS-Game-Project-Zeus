@@ -49,7 +49,7 @@ public class BlueRealm extends Realm{
     public int getNoElementalCrests() {
         return 0;
     }
-
+    
     @Override
     public String toString() {
         return null;
