@@ -201,15 +201,6 @@ For each package, add the skeleton details for the class and duplicate as much a
       - `false` otherwise.
 
 
-#### Methods:
-
-1. `void startGame()`
-   - **Description**: ?
-   - **Parameters**:
-     - `?`: ?
-   - **Return Type**: `?`
-     - `?` ?
-
 ### `ArcaneBoost` class
 
 - **Package**: `game.collectibles`
@@ -959,11 +950,59 @@ all the functions of the player and construct a player object.
     - **Description:** Returns a string representation of the object.
     - **Return Type:** String
 
-### `Realm` class
+#### Abstract Methods:
 
-- **Package**: `game.Realms`
-- **Type**: Abstract Class
-- **Description**: This class manages all the realms by including every common used in the main realms.
+1. `String getName()`
+   - **Description**: Method to return the name of the realm.
+   - **Return Type**: `String`
+     - the name of the realm.
+
+2. `Color getColor()`
+   - **Description**: Method to return the color of the realm.
+   - **Return Type**: `Color`
+     - the color of the realm.
+
+3. `int getStatus()`
+   - **Description**: Method to return the status of the realm.
+   - **Return Type**: `int`
+     - the status of the realm.
+
+4. `Collectibles getReward()`
+   - **Description**: Method to return the rewards of the realm.
+   - **Return Type**: `Collectibles`
+     - the rewards of the realm.
+
+5. `boolean checkReward()`
+   - **Description**: Method to check whether there is a reward or not after attacking.
+   - **Return Type**: `boolean`
+     - true if there is a reward, false otherwise.
+
+6. `boolean attack(Move move)`
+   - **Description**: Method to perform an attack using a move.
+   - **Parameters**: `move`: the move used for the attack.
+   - **Return Type**: `boolean`
+     - true if the attack was successful, false otherwise.
+
+7. `int getTotalScore()`
+   - **Description**: Method to return the total score of the realm.
+   - **Return Type**: `int`
+     - the total score of the realm.
+
+8. `int getNoElementalCrests()`
+   - **Description**: Method to return the number of elemental crests in the realm.
+   - **Return Type**: `int`
+     - the number of elemental crests in the realm.
+
+9. `String toString()`
+   - **Description**: Method to provide a string representation of the realm.
+   - **Return Type**: `String`
+     - a string description of the realm.
+
+10. `Creature[] getAliveCreatures()`
+    - **Description**: Method to retrieve an array of alive creatures in the realm.
+    - **Return Type**: `Creature[]`
+      - an array of alive creatures in the realm.
+
 
 #### Abstract Methods:
 
@@ -1324,6 +1363,10 @@ all the functions of the player and construct a player object.
       - an array of alive creatures in the realm.
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5d9f33cf012e84400c1e08b477001b224f6a5e69
 ### `Color` class
 
 - **Package**: `game`
