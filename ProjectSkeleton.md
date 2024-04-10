@@ -382,11 +382,118 @@ all the functions of the player and construct a player object.
 - **Type**: Abstract Class
 - **Description**: This class manages all the realms by including every common used in the main realms.
 
+#### Abstract Methods:
+
+1. `String getName()`
+   - **Description**: Method to return the name of the realm.
+   - **Return Type**: `String`
+     - the name of the realm.
+
+2. `Color getColor()`
+   - **Description**: Method to return the color of the realm.
+   - **Return Type**: `Color`
+     - the color of the realm.
+
+3. `int getStatus()`
+   - **Description**: Method to return the status of the realm.
+   - **Return Type**: `int`
+     - the status of the realm.
+
+4. `Collectibles getReward()`
+   - **Description**: Method to return the rewards of the realm.
+   - **Return Type**: `Collectibles`
+     - the rewards of the realm.
+
+5. `boolean checkReward()`
+   - **Description**: Method to check whether there is a reward or not after attacking.
+   - **Return Type**: `boolean`
+     - true if there is a reward, false otherwise.
+
+6. `boolean attack(Move move)`
+   - **Description**: Method to perform an attack using a move.
+   - **Parameters**: `move`: the move used for the attack.
+   - **Return Type**: `boolean`
+     - true if the attack was successful, false otherwise.
+
+7. `int getTotalScore()`
+   - **Description**: Method to return the total score of the realm.
+   - **Return Type**: `int`
+     - the total score of the realm.
+
+8. `int getNoElementalCrests()`
+   - **Description**: Method to return the number of elemental crests in the realm.
+   - **Return Type**: `int`
+     - the number of elemental crests in the realm.
+
+9. `String toString()`
+   - **Description**: Method to provide a string representation of the realm.
+   - **Return Type**: `String`
+     - a string description of the realm.
+
+10. `Creature[] getAliveCreatures()`
+    - **Description**: Method to retrieve an array of alive creatures in the realm.
+    - **Return Type**: `Creature[]`
+      - an array of alive creatures in the realm.
+
+
 ### `GreenRealm` class
 
 - **Package**: `game.Realms`
 - **Type**: SubClass
 - **Description**: This class manages the green realm.
+
+#### Methods:
+
+1. `String getName()`
+   - **Description**: Retrieves the name of the realm.
+   - **Return Type**: `String`
+     - the name of the realm.
+
+2. `Color getColor()`
+   - **Description**: Retrieves the color of the realm.
+   - **Return Type**: `Color`
+     - the color of the realm.
+
+3. `int getStatus()`
+   - **Description**: Retrieves the status of the realm.
+   - **Return Type**: `int`
+     - the status of the realm.
+
+4. `Collectibles getReward()`
+   - **Description**: Retrieves the reward of the realm.
+   - **Return Type**: `Collectibles`
+     - the reward of the realm.
+
+5. `boolean checkReward()`
+   - **Description**: Checks if the reward is available in the realm.
+   - **Return Type**: `boolean`
+     - true if the reward is available, false otherwise.
+
+6. `boolean attack(Move move)`
+   - **Description**: Performs an attack using a move.
+   - **Parameters**: `move`: the move used for the attack.
+   - **Return Type**: `boolean`
+     - true if the attack was successful, false otherwise.
+
+7. `int getTotalScore()`
+   - **Description**: Retrieves the total score of the realm.
+   - **Return Type**: `int`
+     - the total score of the realm.
+
+8. `int getNoElementalCrests()`
+   - **Description**: Retrieves the number of elemental crests in the realm.
+   - **Return Type**: `int`
+     - the number of elemental crests in the realm.
+
+9. `String toString()`
+   - **Description**: Method that is used for printing a string of the properties of the realm.
+   - **Return Type**: `String`
+     - a string description of the realm.
+
+10. `Creature[] getAliveCreatures()`
+    - **Description**: Retrieves an array of alive creatures in the realm.
+    - **Return Type**: `Creature[]`
+      - an array of alive creatures in the realm.
 
 ### `BlueRealm` class
 
@@ -394,11 +501,125 @@ all the functions of the player and construct a player object.
 - **Type**:  SubClass
 - **Description**: This class manages the blue realm.
 
+#### Methods:
+
+1. `String getName()`
+   - **Description**: Retrieves the name of the realm.
+   - **Return Type**: `String`
+     - the name of the realm.
+
+2. `Color getColor()`
+   - **Description**: Retrieves the color of the realm.
+   - **Return Type**: `Color`
+     - the color of the realm.
+
+3. `int getStatus()`
+   - **Description**: Retrieves the status of the realm.
+   - **Return Type**: `int`
+     - the status of the realm.
+
+4. `Collectibles getReward()`
+   - **Description**: Retrieves the reward of the realm.
+   - **Return Type**: `Collectibles`
+     - the reward of the realm.
+
+5. `boolean checkReward()`
+   - **Description**: Checks if the reward is available in the realm.
+   - **Return Type**: `boolean`
+     - true if the reward is available, false otherwise.
+
+6. `boolean attack(Move move)`
+   - **Description**: Performs an attack using a move.
+   - **Parameters**: `move`: the move used for the attack.
+   - **Return Type**: `boolean`
+     - true if the attack was successful, false otherwise.
+
+7. `int getTotalScore()`
+   - **Description**: Retrieves the total score of the realm.
+   - **Return Type**: `int`
+     - the total score of the realm.
+
+8. `int getNoElementalCrests()`
+   - **Description**: Retrieves the number of elemental crests in the realm.
+   - **Return Type**: `int`
+     - the number of elemental crests in the realm.
+
+9. `String toString()`
+   - **Description**: Method that is used for printing a string of the properties of the realm.
+   - **Return Type**: `String`
+     - a string description of the realm.
+
+
 ### `RedRealm` class
 
 - **Package**: `game.Realms`
 - **Type**: SubClass
 - **Description**: This class manages the  realm
+
+#### Methods:
+
+1. `void updateDragonsStatus()`
+   - **Description**: Updates the status of dragons.
+   
+2. `private void initDragons()`
+   - **Description**: Initializes dragons with specified attributes.
+   
+3. `int getScore(int dragonNumber)`
+   - **Description**: Retrieves the score of the specified dragon.
+   - **Parameters**: `dragonNumber`: the index of the dragon.
+   - **Return Type**: `int`
+     - the score of the dragon.
+   
+4. `String getName()`
+   - **Description**: Retrieves the name of the realm.
+   - **Return Type**: `String`
+     - the name of the realm.
+
+5. `Color getColor()`
+   - **Description**: Retrieves the color of the realm.
+   - **Return Type**: `Color`
+     - the color of the realm.
+
+6. `int getStatus()`
+   - **Description**: Retrieves the status of the realm.
+   - **Return Type**: `int`
+     - the status of the realm.
+
+7. `Collectibles getReward()`
+   - **Description**: Retrieves the reward of the realm.
+   - **Return Type**: `Collectibles`
+     - the reward of the realm.
+
+8. `boolean checkReward()`
+   - **Description**: Checks if there is a reward available in the realm.
+   - **Return Type**: `boolean`
+     - true if there is a reward available, false otherwise.
+
+9. `boolean attack(Move move)`
+   - **Description**: Performs an attack using a move.
+   - **Parameters**: `move`: the move used for the attack.
+   - **Return Type**: `boolean`
+     - true if the attack was successful, false otherwise.
+
+10. `int getTotalScore()`
+    - **Description**: Retrieves the total score of the realm.
+    - **Return Type**: `int`
+      - the total score of the realm.
+
+11. `int getNoElementalCrests()`
+    - **Description**: Retrieves the number of elemental crests in the realm.
+    - **Return Type**: `int`
+      - the number of elemental crests in the realm.
+
+12. `String toString()`
+    - **Description**: Retrieves a string representation of the realm.
+    - **Return Type**: `String`
+      - a string description of the realm.
+
+13. `Creature[] getAliveCreatures()`
+    - **Description**: Retrieves an array of alive creatures in the realm.
+    - **Return Type**: `Creature[]`
+      - an array of alive creatures in the realm.
 .
 ### `YellowRealm` class
 
@@ -406,11 +627,119 @@ all the functions of the player and construct a player object.
 - **Type**: SubClass
 - **Description**: This class manages the yellow realm.
 
+#### Methods:
+
+1. `String getName()`
+   - **Description**: Retrieves the name of the realm.
+   - **Return Type**: `String`
+     - the name of the realm.
+
+2. `Color getColor()`
+   - **Description**: Retrieves the color of the realm.
+   - **Return Type**: `Color`
+     - the color of the realm.
+
+3. `int getStatus()`
+   - **Description**: Retrieves the status of the realm.
+   - **Return Type**: `int`
+     - the status of the realm.
+
+4. `Collectibles getReward()`
+   - **Description**: Retrieves the reward of the realm.
+   - **Return Type**: `Collectibles`
+     - the reward of the realm.
+
+5. `boolean checkReward()`
+   - **Description**: Checks if there is a reward available in the realm.
+   - **Return Type**: `boolean`
+     - true if there is a reward available, false otherwise.
+
+6. `boolean attack(Move move)`
+   - **Description**: Performs an attack using a move.
+   - **Parameters**: `move`: the move used for the attack.
+   - **Return Type**: `boolean`
+     - true if the attack was successful, false otherwise.
+
+7. `int getTotalScore()`
+   - **Description**: Retrieves the total score of the realm.
+   - **Return Type**: `int`
+     - the total score of the realm.
+
+8. `int getNoElementalCrests()`
+   - **Description**: Retrieves the number of elemental crests in the realm.
+   - **Return Type**: `int`
+     - the number of elemental crests in the realm.
+
+9. `String toString()`
+   - **Description**: Retrieves a string representation of the realm.
+   - **Return Type**: `String`
+     - a string description of the realm.
+
+10. `Creature[] getAliveCreatures()`
+    - **Description**: Retrieves an array of alive creatures in the realm.
+    - **Return Type**: `Creature[]`
+      - an array of alive creatures in the realm.
+
+
 ### `MagentaRealm` class
 
 - **Package**: `game.Realms`
 - **Type**: SubClass
 - **Description**: This class manages the Magenta Realm.
+
+#### Methods:
+
+1. `String getName()`
+   - **Description**: Retrieves the name of the realm.
+   - **Return Type**: `String`
+     - the name of the realm.
+
+2. `Color getColor()`
+   - **Description**: Retrieves the color of the realm.
+   - **Return Type**: `Color`
+     - the color of the realm.
+
+3. `int getStatus()`
+   - **Description**: Retrieves the status of the realm.
+   - **Return Type**: `int`
+     - the status of the realm.
+
+4. `Collectibles getReward()`
+   - **Description**: Retrieves the reward of the realm.
+   - **Return Type**: `Collectibles`
+     - the reward of the realm.
+
+5. `boolean checkReward()`
+   - **Description**: Checks if the reward is available in the realm.
+   - **Return Type**: `boolean`
+     - true if the reward is available, false otherwise.
+
+6. `boolean attack(Move move)`
+   - **Description**: Performs an attack using a move.
+   - **Parameters**: `move`: the move used for the attack.
+   - **Return Type**: `boolean`
+     - true if the attack was successful, false otherwise.
+
+7. `int getTotalScore()`
+   - **Description**: Retrieves the total score of the realm.
+   - **Return Type**: `int`
+     - the total score of the realm.
+
+8. `int getNoElementalCrests()`
+   - **Description**: Retrieves the number of elemental crests in the realm.
+   - **Return Type**: `int`
+     - the number of elemental crests in the realm.
+
+9. `String toString()`
+   - **Description**: Method that is used for printing a string of the properties of the realm.
+   - **Return Type**: `String`
+     - a string description of the realm.
+
+10. `Creature[] getAliveCreatures()`
+    - **Description**: Retrieves an array of alive creatures in the realm.
+    - **Return Type**: `Creature[]`
+      - an array of alive creatures in the realm.
+
 
 ### `Color` class
 
