@@ -1,10 +1,6 @@
-
 package game.creatures;
 
-public class Serpent extends Creature{
-    public Serpent (int heads){
-        //constructor that creates a linked list of heads 
-    }
+public class Phoenix extends Creature{
     @Override
     public boolean attack(int value) {
         return false;

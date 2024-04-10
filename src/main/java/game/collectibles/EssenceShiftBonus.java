@@ -8,6 +8,10 @@ public class EssenceShiftBonus extends Collectibles{
         this.status=CollectiblesStatus.DISABLED;
     }
     @Override
+    public String toString() {
+        return null;
+    }
+    @Override
     public CollectiblesStatus getStatus() {
         return status;
     }
@@ -20,4 +24,6 @@ public class EssenceShiftBonus extends Collectibles{
     public boolean isBonus(){
         return true;
     }
+
+
 }

@@ -4,9 +4,13 @@ import game.Realms.RedRealm;
 import game.dice.*;
 import game.creatures.*;
 import game.collectibles.*;
+import game.*;
 
 public class CLIGameController extends GameController {
 
+    // -----------------------Attributes-----------------------//
+    private GameBoard gameBoard;
+    private Player activePlayer;
 
     @Override
     public void startGame() {
@@ -102,4 +106,8 @@ public class CLIGameController extends GameController {
     public boolean makeMove(Player player, Move move) {
         return false;
     }
+    // -----------------------Constructor-----------------------//
+    // -----------------------Methods-----------------------//
+
+
 }

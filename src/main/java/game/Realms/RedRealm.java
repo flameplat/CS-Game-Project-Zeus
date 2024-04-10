@@ -2,6 +2,7 @@ package game.Realms;
 
 import game.Config;
 import game.collectibles.Collectibles;
+import game.creatures.Creature;
 import game.creatures.Dragon;
 import game.Color;
 import game.engine.*;
@@ -27,7 +28,6 @@ public class RedRealm extends Realm {
     }
 
     // -----------------------Methods-----------------------//
-
     // Loop on all dragons on all regions update dead regions and alive regions
     public void updateDragonsStatus() {
 
@@ -91,6 +91,11 @@ public class RedRealm extends Realm {
 
     @Override
     public String toString() {
+        return null;
+    }
+
+    @Override
+    public Creature[] getAliveCreatures() {
         return null;
     }
 

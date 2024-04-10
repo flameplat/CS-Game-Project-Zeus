@@ -1,4 +1,3 @@
-
 package game.Realms;
 
 import game.Color;
@@ -6,10 +5,7 @@ import game.collectibles.Collectibles;
 import game.creatures.Creature;
 import game.engine.Move;
 
-public class BlueRealm extends Realm{
-    // -----------------------Attributes-----------------------//
-    // -----------------------Constructor-----------------------//
-    // -----------------------Methods-----------------------//
+public class MagentaRealm extends Realm{
     @Override
     public String getName() {
         return null;
@@ -49,7 +45,7 @@ public class BlueRealm extends Realm{
     public int getNoElementalCrests() {
         return 0;
     }
-    
+
     @Override
     public String toString() {
         return null;

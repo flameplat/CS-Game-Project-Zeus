@@ -1,0 +1,51 @@
+.
+├── src
+│   └── main
+│       └── java
+│           └── game
+│               ├── Realms
+│               │   ├── BlueRealm.java
+│               │   ├── GreenRealm.java
+│               │   ├── MagentaRealm.java
+│               │   ├── Realm.java
+│               │   ├── RedRealm.java
+│               │   └── YellowRealm.java
+│               ├── collectibles
+│               │   ├── ArcaneBoost.java
+│               │   ├── Collectibles.java
+│               │   ├── CollectiblesStatus.java
+│               │   ├── ColorBonus.java
+│               │   ├── ElementalCrest.java
+│               │   ├── EssenceShiftBonus.java
+│               │   ├── TimeWarp.java
+│               │   └── dice-realms-game-zeus.code-workspace
+│               ├── creatures
+│               │   ├── Creature.java
+│               │   ├── Dragon.java
+│               │   ├── Guardians.java
+│               │   ├── HitRegionsOfDragons.java
+│               │   ├── Lion.java
+│               │   ├── Phoenix.java
+│               │   └── Serpent.java
+│               ├── dice
+│               │   └── Dice.java
+│               ├── engine
+│               │   ├── CLIGameController.java
+│               │   ├── CurrentStatus.java
+│               │   ├── ForgottenRealm.java
+│               │   ├── GameBoard.java
+│               │   ├── GameController.java
+│               │   ├── GameScore.java
+│               │   ├── GameStatus.java
+│               │   ├── Move.java
+│               │   ├── Player.java
+│               │   └── ScoreSheet.java
+│               ├── Color.java
+│               ├── Config.java
+│               └── Main.java
+├── ProjectSkeleton.md
+├── README.md
+├── pom.xml
+└── treestr.txt
+
+10 directories, 39 files

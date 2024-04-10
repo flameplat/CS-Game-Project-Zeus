@@ -7,8 +7,9 @@ public abstract class Creature {
     public abstract boolean isAlive(); // check wheather the creature is dead or alive
 
     public abstract int getScore(); // get score of creature
+    @Override
+    public abstract String toString();
     // ------------------Concrete Methods------------------//
-    // attack
 
     public boolean attack(int value) {
         return false;
@@ -18,11 +19,4 @@ public abstract class Creature {
     public boolean attack(int value, HitRegionsOfDragons region) {
         return false;
     }
-
-    // get rewards after attcking
-    public Collectibles getReward(int value) {
-        return null;
-    }
-    @Override
-    public abstract String toString();
 }

@@ -11,7 +11,6 @@ public class ColorBonus extends Collectibles {
 
 
 
-
     // -----------------------constructor-----------------------//
     public ColorBonus(Color color){
             this.colorBonus=color;
