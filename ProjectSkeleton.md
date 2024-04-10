@@ -389,13 +389,8 @@ For each package, add the skeleton details for the class and duplicate as much a
     - `true` if an attack is possible.
     - `false` if not possible.
 
-4. `Collectibles getReward(int value)`
-  - **Description**: gets reward after attacking.
-  - **Parameters**: value of dice to attack.
-  - **Return Type**: `Collectibles`
-    - bonus or power depending on the attacked creature.
 
-5. `String toString()`
+4. `String toString()`
   - **Description**: method that is used for printing a string of the properties of the collectible.
   - **Return Type**: `String`
     - return a string description of the collectible.
@@ -426,18 +421,13 @@ For each package, add the skeleton details for the class and duplicate as much a
     - `true` if an attack is possible.
     - `false` if not possible.
 
-4. `Collectibles getReward(int value)`
-  - **Description**: gets reward after attacking.
-  - **Parameters**: value of dice to attack.
-  - **Return Type**: `Collectibles`
-    - bonus or power depending on the attacked creature.
 
-5. `String toString()`
+4. `String toString()`
   - **Description**: method that is used for printing a string of the properties of the collectible.
   - **Return Type**: `String`
     - return a string description of the collectible.
 
-6. `int getId()` 
+5. `int getId()` 
   - **Description**: method that is used as a getter for the id of the dragon.
   - **Return Type**: `int`
     - return an integer representing the dragon id.
