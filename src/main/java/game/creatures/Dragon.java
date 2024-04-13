@@ -1,8 +1,6 @@
 package game.creatures;
 
 import game.Config;
-import game.Realms.Realm;
-import game.collectibles.Collectibles;
 
 public class Dragon extends Creature {
     // -----------------------Attributes-----------------------//

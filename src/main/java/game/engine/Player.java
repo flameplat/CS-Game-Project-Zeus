@@ -5,10 +5,8 @@ import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
 import game.collectibles.CollectiblesStatus;
 import game.collectibles.TimeWarp;
-import game.Realms.Realm;
+import game.realms.Realm;
 import game.Color;
-
-import java.util.LinkedList;
 
 
 public class Player {

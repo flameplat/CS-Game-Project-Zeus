@@ -1,4 +1,4 @@
-package game.Realms;
+package game.realms;
 
 import game.Color;
 import game.collectibles.Collectibles;
