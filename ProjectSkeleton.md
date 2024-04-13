@@ -5,52 +5,63 @@
 ```
 dice-realms-game-zeus
 ├── src
-│   └── main
+│   ├── main
+│   │   └── java
+│   │       └── game
+│   │           ├── collectibles
+│   │           │   ├── ArcaneBoost.java
+│   │           │   ├── Collectibles.java
+│   │           │   ├── CollectiblesStatus.java
+│   │           │   ├── ColorBonus.java
+│   │           │   ├── ElementalCrest.java
+│   │           │   ├── EssenceShiftBonus.java
+│   │           │   └── TimeWarp.java
+│   │           ├── creatures
+│   │           │   ├── Creature.java
+│   │           │   ├── Dragon.java
+│   │           │   ├── Guardians.java
+│   │           │   ├── HitRegionsOfDragons.java
+│   │           │   ├── Lion.java
+│   │           │   ├── Phoenix.java
+│   │           │   └── Serpent.java
+│   │           ├── dice
+│   │           │   └── Dice.java
+│   │           ├── engine
+│   │           │   ├── CLIGameController.java
+│   │           │   ├── CurrentStatus.java
+│   │           │   ├── ForgottenRealm.java
+│   │           │   ├── GameBoard.java
+│   │           │   ├── GameController.java
+│   │           │   ├── GameScore.java
+│   │           │   ├── GameStatus.java
+│   │           │   ├── Move.java
+│   │           │   ├── Player.java
+│   │           │   └── ScoreSheet.java
+│   │           ├── exceptions
+│   │           ├── gui
+│   │           ├── realms
+│   │           │   ├── BlueRealm.java
+│   │           │   ├── GreenRealm.java
+│   │           │   ├── MagentaRealm.java
+│   │           │   ├── Realm.java
+│   │           │   ├── RedRealm.java
+│   │           │   └── YellowRealm.java
+│   │           ├── Color.java
+│   │           ├── Config.java
+│   │           └── Main.java
+│   └── test
 │       └── java
 │           └── game
-│               ├── Realms
-│               │   ├── BlueRealm.java
-│               │   ├── GreenRealm.java
-│               │   ├── MagentaRealm.java
-│               │   ├── Realm.java
-│               │   ├── RedRealm.java
-│               │   └── YellowRealm.java
 │               ├── collectibles
-│               │   ├── ArcaneBoost.java
-│               │   ├── Collectibles.java
-│               │   ├── CollectiblesStatus.java
-│               │   ├── ColorBonus.java
-│               │   ├── ElementalCrest.java
-│               │   ├── EssenceShiftBonus.java
-│               │   ├── TimeWarp.java
-│               │   └── dice-realms-game-zeus.code-workspace
 │               ├── creatures
-│               │   ├── Creature.java
-│               │   ├── Dragon.java
-│               │   ├── Guardians.java
-│               │   ├── HitRegionsOfDragons.java
-│               │   ├── Lion.java
-│               │   ├── Phoenix.java
-│               │   └── Serpent.java
 │               ├── dice
-│               │   └── Dice.java
 │               ├── engine
-│               │   ├── CLIGameController.java
-│               │   ├── CurrentStatus.java
-│               │   ├── ForgottenRealm.java
-│               │   ├── GameBoard.java
-│               │   ├── GameController.java
-│               │   ├── GameScore.java
-│               │   ├── GameStatus.java
-│               │   ├── Move.java
-│               │   ├── Player.java
-│               │   └── hScoreSheet.java
-│               ├── Color.java
-│               ├── Config.java
-│               └── Main.java
+│               ├── exceptions
+│               └── gui
+├── target
 ├── ProjectSkeleton.md
 ├── README.md
-└── pom.xml
+└──pom.xml
 ```
 
 ## Packages
@@ -1362,11 +1373,6 @@ all the functions of the player and construct a player object.
     - **Return Type**: `Creature[]`
       - an array of alive creatures in the realm.
 
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 5d9f33cf012e84400c1e08b477001b224f6a5e69
 ### `Color` class
 
 - **Package**: `game`
