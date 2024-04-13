@@ -1,7 +1,7 @@
 package game.engine;
 
 
-import game.Realms.Realm;
+import game.realms.Realm;
 
 public class ScoreSheet {
     //We will create linked list of type realm/action and everytime we will update the linked list

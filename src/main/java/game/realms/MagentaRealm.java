@@ -1,14 +1,11 @@
-package game.Realms;
+package game.realms;
 
 import game.Color;
 import game.collectibles.Collectibles;
 import game.creatures.Creature;
 import game.engine.Move;
 
-public class YellowRealm extends Realm{
-    // -----------------------Attributes-----------------------//
-    // -----------------------Constructor-----------------------//
-    // -----------------------Methods-----------------------//
+public class MagentaRealm extends Realm{
     @Override
     public String getName() {
         return null;

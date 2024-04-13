@@ -1,6 +1,6 @@
 package game.engine;
 
-import game.Realms.Realm;
+import game.realms.Realm;
 import game.creatures.*;
 
 

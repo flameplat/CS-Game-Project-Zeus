@@ -1060,7 +1060,7 @@ all the functions of the player and construct a player object.
 
 ### `GreenRealm` class
 
-- **Package**: `game.Realms`
+- **Package**: `game.realms`
 - **Type**: SubClass
 - **Description**: This class manages the green realm.
 
@@ -1119,7 +1119,7 @@ all the functions of the player and construct a player object.
 
 ### `BlueRealm` class
 
-- **Package**: `game.Realms`
+- **Package**: `game.realms`
 - **Type**:  SubClass
 - **Description**: This class manages the blue realm.
 
@@ -1174,7 +1174,7 @@ all the functions of the player and construct a player object.
 
 ### `RedRealm` class
 
-- **Package**: `game.Realms`
+- **Package**: `game.realms`
 - **Type**: SubClass
 - **Description**: This class manages the  realm
 
@@ -1245,7 +1245,7 @@ all the functions of the player and construct a player object.
 .
 ### `YellowRealm` class
 
-- **Package**: `game.Realms`
+- **Package**: `game.realms`
 - **Type**: SubClass
 - **Description**: This class manages the yellow realm.
 
@@ -1305,7 +1305,7 @@ all the functions of the player and construct a player object.
 
 ### `MagentaRealm` class
 
-- **Package**: `game.Realms`
+- **Package**: `game.realms`
 - **Type**: SubClass
 - **Description**: This class manages the Magenta Realm.
 

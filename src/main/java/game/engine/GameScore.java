@@ -1,9 +1,6 @@
 package game.engine;
 
-import game.Color;
-import game.Config;
-import game.Realms.Realm;
-import java.util.LinkedList;
+import game.realms.Realm;
 
 public class GameScore {
     //--------------------------Attributes--------------------------//
