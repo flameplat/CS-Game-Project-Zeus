@@ -15,6 +15,7 @@ public abstract class Realm {
 
     /* Method to return the status of the realm */
     public abstract int getStatus();
+    public abstract boolean isRealmAvailable();
 
     /* Method to return the rewards of the realm */
     public abstract Collectibles getReward();

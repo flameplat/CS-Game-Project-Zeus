@@ -26,6 +26,11 @@ public class BlueRealm extends Realm{
     }
 
     @Override
+    public boolean isRealmAvailable() {
+        return false;
+    }
+
+    @Override
     public Collectibles getReward() {
         return null;
     }

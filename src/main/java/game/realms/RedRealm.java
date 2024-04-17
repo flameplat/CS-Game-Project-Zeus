@@ -7,6 +7,8 @@ import game.creatures.Dragon;
 import game.Color;
 import game.engine.*;
 
+import java.util.Properties;
+
 public class RedRealm extends Realm {
     // -----------------------Attributes-----------------------//
     private int totalRealmScore;
@@ -16,15 +18,13 @@ public class RedRealm extends Realm {
     private int noElementalCrests;
     private Color realmColor;
     private String name;
+    private Properties rewardProperties;
+    private Properties realmProperties;
 
     // -----------------------Constructor-----------------------//
     public RedRealm(String name) {
-        this.realmColor = Color.RED;
-        this.name=name;
-        dragons = new Dragon[Config.MAX_NUM_DRAGONS];
-        initDragons();
-        dragonsStatus = new boolean[4][4];
-        totalRealmScore = 0;
+
+
     }
 
     // -----------------------Methods-----------------------//
@@ -64,6 +64,11 @@ public class RedRealm extends Realm {
         return 0;
     }
 
+    @Override
+    public boolean isRealmAvailable() {
+        return false;
+    }
+
     // get the rewards
     public Collectibles getReward() {
         return reward;
@@ -88,7 +93,18 @@ public class RedRealm extends Realm {
     public int getNoElementalCrests(){
         return noElementalCrests;
     }
-
+    /**
+     * +-----------------------------------+
+     * |  #  |D1   |D2   |D3   |D4   |R    |
+     * +-----------------------------------+
+     * |  F  |3    |6    |5    |X    |GB   |
+     * |  W  |2    |1    |X    |5    |YB   |
+     * |  T  |1    |X    |2    |4    |BB   |
+     * |  H  |X    |3    |4    |6    |EC   |
+     * +-----------------------------------+
+     * |  S  |10   |14   |16   |20   |AB   |
+     * +-----------------------------------+
+     */
     @Override
     public String toString() {
         return null;

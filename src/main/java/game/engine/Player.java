@@ -5,8 +5,13 @@ import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
 import game.collectibles.CollectiblesStatus;
 import game.collectibles.TimeWarp;
+import game.exceptions.InvalidPlayerNameException;
 import game.realms.Realm;
 import game.Color;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 
 public class Player {
@@ -18,10 +23,17 @@ public class Player {
     private String name;
     private int timeWarpCount;
     private int arcaneBoostCount;
+    private Properties properties;
 
     private ArcaneBoost[] arcaneBoosts;
     //----------------------Constructor--------------------------//
-    public Player(String name){
+    public Player(String name) throws InvalidPlayerNameException {
+        if(name.length()==0){
+            throw new InvalidPlayerNameException("Name cannot be empty");
+        }
+        if(checkSpecialCharacters(name)){
+            throw new InvalidPlayerNameException("Name cannot contain special characters");
+        }
         this.name=name;
         timeWarps=new TimeWarp[Config.NUM_POWERS];
         arcaneBoosts=new ArcaneBoost[Config.NUM_POWERS];
@@ -30,6 +42,23 @@ public class Player {
         initializeRealms();
         scoreSheet=new ScoreSheet(realms);
         gameScore=new GameScore(realms);
+    }
+    private void loadProperties(){
+        properties=new Properties();
+        try{
+            FileInputStream fileInputStream=new FileInputStream("src/main/resources" +
+                    "/config/GameProperties.properties");
+            properties.load(fileInputStream);
+
+        }
+        catch (IOException e){
+            throw IOException("File not")
+        }
+    }
+
+    private boolean checkSpecialCharacters(String name){
+        String regex = "^[a-zA-Z0-9]+$";
+        return !name.matches(regex);
     }
 
     //----------------------Methods--------------------------//

@@ -2,22 +2,56 @@ package game.engine;
 
 import game.dice.*;
 import game.collectibles.*;
+import game.exceptions.InvalidPlayerNameException;
+
+import java.util.Scanner;
 
 public class CLIGameController extends GameController {
 
     // -----------------------Attributes-----------------------//
     private GameBoard gameBoard;
     private Player activePlayer;
+    private Player player1;
+    private Player player2;
 
     @Override
     public void startGame() {
-
+        inputPlayerNames();
+    }
+    private void inputPlayerNames(){
+        Scanner sc = new Scanner(System.in);
+        while(true){
+            try{
+                System.out.println("Enter Player 1 name:");
+                String player1Name = sc.nextLine();
+                player1 = new Player(player1Name);
+                break;
+            }
+            catch (InvalidPlayerNameException e){
+                System.out.println(e.getMessage());
+                sc.nextLine();  // Clear the buffer
+            }
+        }
+        while(true){
+            try{
+                System.out.println("Enter Player 2 name:");
+                String player1Name = sc.nextLine();
+                player2 = new Player(player1Name);
+                break;
+            }
+            catch (InvalidPlayerNameException e){
+                System.out.println(e.getMessage());
+                sc.nextLine();  // Clear the buffer
+            }
+        }
+        sc.close();
     }
 
     @Override
     public boolean switchPlayer() {
         return false;
     }
+
 
     @Override
     public Dice[] rollDice() {
@@ -105,6 +139,8 @@ public class CLIGameController extends GameController {
     }
     // -----------------------Constructor-----------------------//
     // -----------------------Methods-----------------------//
-
+    public void endGame(){
+        //Compares GameScore of each player and declares winner
+    }
 
 }
