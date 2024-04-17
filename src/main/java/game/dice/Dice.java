@@ -6,11 +6,13 @@ public class Dice {
     // -----------------------Attributes-----------------------//
     private Color color; // [RED,GREEN,BLUE,MAGENTA,YELLOW,WHITE]
     private int value; // value of the dices
+    private boolean isUsed;
 
     // -----------------------constructor-----------------------//
     public Dice(Color color, int value) {
         this.color = color;
         this.value = value;
+        isUsed=false;
     }
 
     // -----------------------Methods-----------------------//
@@ -26,6 +28,15 @@ public class Dice {
     @Override
     public String toString(){
         return String.format("%s(%d)",color.toString(),value);
+    }
+    public boolean isUsed(){
+        return isUsed;
+    }
+    public void spell(){
+        isUsed=true;
+    }
+    public void setValue(int value){
+        this.value=value;
     }
 
 }

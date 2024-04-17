@@ -1,16 +1,19 @@
 package game;
 
+import game.collectibles.TimeWarp;
 import game.engine.*;
+import game.exceptions.InvalidPlayerNameException;
+import game.exceptions.MissingGameFilesException;
 
 import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Dice Realms: Quest for the Elemental Crests!");
+    public static void main(String[] args) throws MissingGameFilesException, InvalidPlayerNameException {
          CLIGameController cliGameController = new CLIGameController();
-         //cliGameController.startGame();
-        GameGuide g=new GameGuide();
-        System.out.println(g.getUserChoice(3,6));
+         cliGameController.startGame();
+
+
+
 
 
 

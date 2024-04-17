@@ -3,13 +3,16 @@ package game.engine;
 import game.Color;
 import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
+import game.collectibles.EssenceBonus;
 import game.collectibles.TimeWarp;
 import game.dice.Dice;
 import game.exceptions.InvalidPlayerNameException;
 import game.exceptions.MissingGameFilesException;
 import game.system.SystemManager;
+
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
@@ -18,6 +21,7 @@ public class CLIGameController extends GameController {
 
     // -----------------------Attributes-----------------------//
     private static final String GAME_PROPERTIES_PATH = "src/main/resources/config/Game.properties";
+    private static final String ROUNDS_REWARDS_PATH = "src/main/resources/config/RoundsRewards.properties";
     public static int MAX_NUMBER_OF_ROUNDS;
     private static int MAX_NUMBER_OF_ROLLS;
     public static int MAX_NUMBER_OF_TURNS;
@@ -25,12 +29,28 @@ public class CLIGameController extends GameController {
     private static Dice[] diceArray;
     static {
         Properties gameProperties = new Properties();
-        try (FileInputStream fileInputStream = new FileInputStream(GAME_PROPERTIES_PATH)) {
-            gameProperties.load(fileInputStream);
-            MAX_NUMBER_OF_ROUNDS = Integer.parseInt(gameProperties.getProperty("numberOfRounds"));
-            MAX_NUMBER_OF_TURNS = Integer.parseInt(gameProperties.getProperty("numberOfTurns"));
-            diceArray = new Dice[Integer.parseInt(gameProperties.getProperty("numberOfDice"))];
-            MAX_NUMBER_OF_ROLLS = Integer.parseInt(gameProperties.getProperty("numberOfDiceRolls"));
+        Properties roundRewardProperties=new Properties();
+        try (FileInputStream gameFileInputStream = new FileInputStream(GAME_PROPERTIES_PATH);
+             FileInputStream roundRewardFileInputStream = new FileInputStream(GAME_PROPERTIES_PATH)) {
+            gameProperties.load(gameFileInputStream);
+            roundRewardProperties.load(roundRewardFileInputStream);
+            MAX_NUMBER_OF_ROUNDS = Integer.parseInt(gameProperties.getProperty("numberOfRounds","6"));
+            MAX_NUMBER_OF_TURNS = Integer.parseInt(gameProperties.getProperty("numberOfTurns","3"));
+            diceArray = new Dice[Integer.parseInt(gameProperties.getProperty("numberOfDice","6"))];
+            roundRewards = new Collectibles[MAX_NUMBER_OF_ROUNDS];
+            for (int i = 0; i < MAX_NUMBER_OF_ROUNDS; i++) {
+                String reward = roundRewardProperties.getProperty("round"+(i+1)+"Reward");
+                if(reward!=null){
+                    switch (reward){
+                        case "TimeWarp":roundRewards[i]=new TimeWarp();break;
+                        case "ArcaneBoost":roundRewards[i]=new ArcaneBoost();break;
+                        case "EssenceBonus":roundRewards[i]=new EssenceBonus();break;
+                        default:roundRewards[i]=null;
+                    }
+                }
+
+            }
+            MAX_NUMBER_OF_ROLLS = Integer.parseInt(gameProperties.getProperty("numberOfDiceRolls","3"));
         } catch (IOException | NumberFormatException e) {
             // Handle the exception gracefully
             System.err.println("Error loading game properties: " + e.getMessage());
@@ -47,9 +67,11 @@ public class CLIGameController extends GameController {
     private Player player2;
     private Player passivePlayer;
 
+
     private ForgottenRealm forgottenRealm;
     private Dice selectedDice;
     private int roundsCount;
+    private GameGuide gameGuide;
     private int turnsCount;
     private SystemManager systemManager;
     private Scanner sc; //Will be closed at the end of the game
@@ -60,28 +82,90 @@ public class CLIGameController extends GameController {
     public void startGame() {
         systemManager = new SystemManager();
         systemManager.performSystemChecks();
+        gameGuide = new GameGuide();
+        mainMenu();
         sc = new Scanner(System.in);
         forgottenRealm = new ForgottenRealm();
         inputPlayerNames();
         activePlayer = player1;
         passivePlayer = player2;
-        for(int i=0;i<MAX_NUMBER_OF_ROUNDS;i++){
+        for (int i = 0; i < MAX_NUMBER_OF_ROUNDS; i++) {
             playRound();
+            playPassiveTurn();
+            checkArcaneBoost(activePlayer);
+            checkArcaneBoost(passivePlayer);
+            switchPlayer();
         }
         endGame();
-
-
     }
-    private void playRound(){
-        for(int i=0;i<MAX_NUMBER_OF_TURNS;i++){
-            rollDice();
+
+    public void mainMenu() {
+        gameGuide.displayMenu();
+        int choice = gameGuide.getUserChoice(1, 2);
+        if (choice == 2) {
+            gameGuide.closeScanner();
+            systemManager.exit();
         }
     }
-    private void playTurn(){
+    private void checkArcaneBoost(Player player){
+        while (player.isArcaneBoostAvailable()) {
+            gameGuide.displayInstructions(Instruction.AB_PROMPT);
+            boolean choice = gameGuide.getUserBooleanChoice();
+            if (choice) {
+                player.useArcaneBoostPower();
+                playTurn();
+            }
+            else{
+                break;
+            }
+        }
+    }
+    private void checkTimeWarp(){
+        while (activePlayer.isArcaneBoostAvailable()) {
+            gameGuide.displayInstructions(Instruction.TW_PROMPT);
+            boolean choice = gameGuide.getUserBooleanChoice();
+            if (choice) {
+                activePlayer.useArcaneBoostPower();
+                rollDice();
+            }
+            else{
+                break;
+            }
+        }
+    }
+
+    private void playRound() {
+        System.out.println(activePlayer.getName());
+        gameGuide.displayInstructions(Instruction.ROUND);
+        getAvailableDice();
+        for (int i = 0; (i < MAX_NUMBER_OF_TURNS)&(containsAvailableDie()); i++) {
+            playTurn();
+        }
+
+    }
+
+
+    private void playTurn() {
+        gameGuide.displayInstructions(Instruction.TURN);
+        System.out.println(Arrays.toString(rollDice()));
+        checkTimeWarp();
+        //Choosing a die, move (check if move is valid,if not choose another die)
+        //execute move
+        //All dice of value less than selected die's value goes to forgotten realm
 
     }
     private void playPassiveTurn(){
+        System.out.println(passivePlayer.getName());
+        gameGuide.displayInstructions(Instruction.PASSIVE_TURN);
 
+    }
+    private boolean containsAvailableDie(){
+        for(int i=0;i<diceArray.length;i++){
+            if(diceArray[i]!=null && !diceArray[i].isUsed()){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void inputPlayerNames() {
@@ -144,9 +228,10 @@ public class CLIGameController extends GameController {
         int diceMaxBound=6;
         int diceMinBound=1;
         for (int i = 0; i < diceArray.length; i++) {
-            Color color = Color.values()[i]; // Get color from enum
-            diceValue=random.nextInt(diceMaxBound-diceMinBound+1)+diceMinBound;
-            diceArray[i] = new Dice(Color.values()[i],diceValue);
+            if(diceArray[i]!=null && !diceArray[i].isUsed()){
+                diceValue=random.nextInt(diceMaxBound-diceMinBound+1)+diceMinBound;
+                diceArray[i].setValue(diceValue);
+            }
         }
         return diceArray;
     }
@@ -157,7 +242,17 @@ public class CLIGameController extends GameController {
      */
     @Override
     public Dice[] getAvailableDice() {
-        return new Dice[0];
+        Random random=new Random();
+        int diceValue;
+        //Dice values are from 1 to 6
+        int diceMaxBound=6;
+        int diceMinBound=1;
+        for (int i = 0; i < diceArray.length; i++) {
+            Color color = Color.values()[i]; // Get color from enum
+            diceValue=random.nextInt(diceMaxBound-diceMinBound+1)+diceMinBound;
+            diceArray[i] = new Dice(Color.values()[i],diceValue);
+        }
+        return diceArray;
     }
     /**
      * Gets all six dice, providing their current state and value within the

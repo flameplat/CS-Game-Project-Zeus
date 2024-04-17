@@ -20,13 +20,14 @@ public class Player {
     private Realm[] realms;
     private ScoreSheet scoreSheet;
     private GameScore gameScore;
-    private TimeWarp[] timeWarps;
+
     private String name;
     private int timeWarpCount;
     private int arcaneBoostCount;
     private Dice selectedDice;
 
     private ArcaneBoost[] arcaneBoosts;
+    private TimeWarp[] timeWarps;
 
     //----------------------Constructor--------------------------//
     public Player(String name) throws InvalidPlayerNameException, MissingGameFilesException {
@@ -85,12 +86,13 @@ public class Player {
      * Initialize all powers to DISABLED at the start of initialization of the player
      */
     private void initializePowers() {
+
         //Constructors initiallizes them automatically to disabled
-        for (TimeWarp i : timeWarps) {
-            i = new TimeWarp();
+        for (int i=0;i<timeWarps.length;i++) {
+            timeWarps[i]=new TimeWarp();
         }
-        for (ArcaneBoost i : arcaneBoosts) {
-            i = new ArcaneBoost();
+        for (int i=0;i<arcaneBoosts.length;i++) {
+            arcaneBoosts[i]=new ArcaneBoost();
         }
     }
     /**

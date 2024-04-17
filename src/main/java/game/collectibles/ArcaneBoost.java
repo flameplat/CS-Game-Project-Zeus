@@ -26,7 +26,7 @@ public class ArcaneBoost extends Collectibles {
     public void setStatus(CollectiblesStatus status) {
         this.status = status;
     }
-    public String getInstruction(){
+    public static String getInstruction(){
         return instruction;
     }
 

@@ -3,6 +3,7 @@ package game.collectibles;
 public class TimeWarp extends Collectibles {
     // -----------------------Attributes-----------------------//
     private CollectiblesStatus status;
+    private static final String instruction="TW-Instruction";
 
     // -----------------------constructor-----------------------//
     // Initialize the TW to DISABLED
@@ -29,7 +30,10 @@ public class TimeWarp extends Collectibles {
 
     @Override
     public String toString() {
-        return null;
+        return "Time Warp";
+    }
+    public static String getInstruction(){
+        return instruction;
     }
 
 }
