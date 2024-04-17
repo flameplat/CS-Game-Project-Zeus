@@ -2,13 +2,15 @@ package game.engine;
 
 public class GameBoard {
     // -----------------------Attributes-----------------------//
-    Player passivePlayer;
-    Player activePlayer;
+    private Player player1;
+    private Player player2;
+    private CurrentStatus currentStatus;
 
     // -----------------------Constructor-----------------------//
-    //Initialized Players, Forgotten Realm, and set up the main board and contains the main game components
-    public GameBoard(Player player1){
-        //
+    public GameBoard(Player player1,Player player2){
+        this.player1=player1;
+        this.player2=player2;
+        currentStatus=CurrentStatus.IN_PROGRESS;
     }
     // -----------------------Methods-----------------------//
     //Display realm for active player
@@ -23,10 +25,14 @@ public class GameBoard {
     }
     //Sets the active player
     public void setActivePlayer(Player player){
-        this.activePlayer=player;
+
     }
     //Sets the passive player
     public void setPassivePlayer(Player player){
-        this.passivePlayer=player;
+
+    }
+
+    public void display(){
+        //Display game board
     }
 }

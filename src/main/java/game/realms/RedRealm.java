@@ -1,6 +1,6 @@
 package game.realms;
 
-import game.Config;
+
 import game.collectibles.Collectibles;
 import game.creatures.Creature;
 import game.creatures.Dragon;

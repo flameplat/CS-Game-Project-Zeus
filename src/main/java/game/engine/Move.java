@@ -9,14 +9,14 @@ public class Move {
     private Realm realm;
     private Creature creature;
     private HitRegionsOfDragons hitRegion;
+    private int moveNumber;
 
 
-    // -----------------------constructor-----------------------//
+    // -----------------------Constructor-----------------------//
     public Move(Realm realm, Creature creature) {
         this.realm = realm;
         this.creature = creature;
         hitRegion = null;
-
     }
 
     // constuctor for moves regarding the dragons
@@ -29,6 +29,9 @@ public class Move {
     // -----------------------Methods-----------------------//
     public Realm getRealm() {
         return realm;
+    }
+    public int getMoveNumber(){
+        return moveNumber;
     }
     public Creature getCreature() {
         return creature;

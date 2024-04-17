@@ -1,68 +1,173 @@
 package game.engine;
 
-import game.dice.*;
-import game.collectibles.*;
+import game.Color;
+import game.collectibles.ArcaneBoost;
+import game.collectibles.Collectibles;
+import game.collectibles.TimeWarp;
+import game.dice.Dice;
 import game.exceptions.InvalidPlayerNameException;
-
+import game.exceptions.MissingGameFilesException;
+import game.system.SystemManager;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.Random;
 import java.util.Scanner;
 
 public class CLIGameController extends GameController {
 
     // -----------------------Attributes-----------------------//
+    private static final String GAME_PROPERTIES_PATH = "src/main/resources/config/Game.properties";
+    public static int MAX_NUMBER_OF_ROUNDS;
+    private static int MAX_NUMBER_OF_ROLLS;
+    public static int MAX_NUMBER_OF_TURNS;
+    public static Collectibles[] roundRewards;
+    private static Dice[] diceArray;
+    static {
+        Properties gameProperties = new Properties();
+        try (FileInputStream fileInputStream = new FileInputStream(GAME_PROPERTIES_PATH)) {
+            gameProperties.load(fileInputStream);
+            MAX_NUMBER_OF_ROUNDS = Integer.parseInt(gameProperties.getProperty("numberOfRounds"));
+            MAX_NUMBER_OF_TURNS = Integer.parseInt(gameProperties.getProperty("numberOfTurns"));
+            diceArray = new Dice[Integer.parseInt(gameProperties.getProperty("numberOfDice"))];
+            MAX_NUMBER_OF_ROLLS = Integer.parseInt(gameProperties.getProperty("numberOfDiceRolls"));
+        } catch (IOException | NumberFormatException e) {
+            // Handle the exception gracefully
+            System.err.println("Error loading game properties: " + e.getMessage());
+            // Default values
+            MAX_NUMBER_OF_ROUNDS = 6;
+            MAX_NUMBER_OF_TURNS = 3;
+            diceArray = new Dice[6];
+            MAX_NUMBER_OF_ROLLS = 3;
+        }
+    }
     private GameBoard gameBoard;
     private Player activePlayer;
     private Player player1;
     private Player player2;
+    private Player passivePlayer;
 
+    private ForgottenRealm forgottenRealm;
+    private Dice selectedDice;
+    private int roundsCount;
+    private int turnsCount;
+    private SystemManager systemManager;
+    private Scanner sc; //Will be closed at the end of the game
+
+    // -----------------------Constructor-----------------------//
+    // -----------------------Methods-----------------------//
     @Override
     public void startGame() {
+        systemManager = new SystemManager();
+        systemManager.performSystemChecks();
+        sc = new Scanner(System.in);
+        forgottenRealm = new ForgottenRealm();
         inputPlayerNames();
+        activePlayer = player1;
+        passivePlayer = player2;
+        for(int i=0;i<MAX_NUMBER_OF_ROUNDS;i++){
+            playRound();
+        }
+        endGame();
+
+
     }
-    private void inputPlayerNames(){
-        Scanner sc = new Scanner(System.in);
-        while(true){
-            try{
-                System.out.println("Enter Player 1 name:");
-                String player1Name = sc.nextLine();
-                player1 = new Player(player1Name);
-                break;
-            }
-            catch (InvalidPlayerNameException e){
+    private void playRound(){
+        for(int i=0;i<MAX_NUMBER_OF_TURNS;i++){
+            rollDice();
+        }
+    }
+    private void playTurn(){
+
+    }
+    private void playPassiveTurn(){
+
+    }
+
+    private void inputPlayerNames() {
+        player1 = getPlayerName("Enter player 1 name: ");
+        player2 = getPlayerName("Enter player 2 name: ");
+    }
+
+    private Player getPlayerName(String prompt) {
+        while (true) {
+            try {
+                System.out.println(prompt);
+                String playerName = sc.nextLine();
+                if (player1 != null && playerName.equals(player1.getName())) {
+                    throw new InvalidPlayerNameException("Name already in use!");
+                }
+                return new Player(playerName);
+            } catch (InvalidPlayerNameException e) {
                 System.out.println(e.getMessage());
                 sc.nextLine();  // Clear the buffer
+            } catch (MissingGameFilesException e) {
+                systemManager.exit(e.getMessage());
             }
         }
-        while(true){
-            try{
-                System.out.println("Enter Player 2 name:");
-                String player1Name = sc.nextLine();
-                player2 = new Player(player1Name);
-                break;
-            }
-            catch (InvalidPlayerNameException e){
-                System.out.println(e.getMessage());
-                sc.nextLine();  // Clear the buffer
-            }
-        }
-        sc.close();
     }
 
     @Override
     public boolean switchPlayer() {
+        if (player1 != null && player2 != null && player1 != player2) {
+            if (activePlayer != passivePlayer) {
+                Player temp = activePlayer;
+                activePlayer = passivePlayer;
+                passivePlayer = temp;
+                return true;
+            } else {
+                handleSwitchPlayerError("Active and passive are pointing to same player");
+            }
+        } else {
+            handleSwitchPlayerError("Invalid players to switch");
+        }
         return false;
     }
 
-
-    @Override
-    public Dice[] rollDice() {
-        return new Dice[0];
+    private void handleSwitchPlayerError(String message) {
+        System.out.println(message);
+        startGame();
     }
 
+
+    /**
+     * Rolls all available dice for the current turn, assigning each a random
+     * number from 1 to 6.
+     *
+     * @return An array of the currently rolled {@code Dice}.
+     */
+    @Override
+    public Dice[] rollDice() {
+        Random random=new Random();
+        int diceValue;
+        //Dice values are from 1 to 6
+        int diceMaxBound=6;
+        int diceMinBound=1;
+        for (int i = 0; i < diceArray.length; i++) {
+            Color color = Color.values()[i]; // Get color from enum
+            diceValue=random.nextInt(diceMaxBound-diceMinBound+1)+diceMinBound;
+            diceArray[i] = new Dice(Color.values()[i],diceValue);
+        }
+        return diceArray;
+    }
+    /**
+     * Gets the dice available for rolling or rerolling.
+     *
+     * @return An array of {@code Dice} available for the current turn.
+     */
     @Override
     public Dice[] getAvailableDice() {
         return new Dice[0];
     }
-
+    /**
+     * Gets all six dice, providing their current state and value within the
+     * game regardless of their location or status. The dice could be in various
+     * states, such as currently rolled and awaiting selection by the active player,
+     * in the Forgotten Realm awaiting selection by the passive player, or already
+     * assigned to a specific turn by the active player.
+     *
+     * @return An array of all six {@code Dice}, with each die's state and value.
+     */
     @Override
     public Dice[] getAllDice() {
         return new Dice[0];
@@ -105,7 +210,7 @@ public class CLIGameController extends GameController {
 
     @Override
     public ScoreSheet getScoreSheet(Player player) {
-        return null;
+        return player.getScoreSheet();
     }
 
     @Override
@@ -137,8 +242,7 @@ public class CLIGameController extends GameController {
     public boolean makeMove(Player player, Move move) {
         return false;
     }
-    // -----------------------Constructor-----------------------//
-    // -----------------------Methods-----------------------//
+
     public void endGame(){
         //Compares GameScore of each player and declares winner
     }

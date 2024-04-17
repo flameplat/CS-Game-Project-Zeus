@@ -1,6 +1,6 @@
 package game.creatures;
 
-import game.Config;
+
 
 public class Dragon extends Creature {
     // -----------------------Attributes-----------------------//
@@ -12,13 +12,13 @@ public class Dragon extends Creature {
     // -----------------------Constructor-----------------------//
 
     public Dragon(int[] hitValues, int score) {
-        health = new int[Config.MAX_NUM_DRAGON_REGIONS];
-        for (int i = 0; i < health.length; i++) {
-            health[i] = hitValues[i];
-        }
-        isAlive = true;
-        this.score = score;
-        id++;
+//        health = new int[Config.MAX_NUM_DRAGON_REGIONS];
+//        for (int i = 0; i < health.length; i++) {
+//            health[i] = hitValues[i];
+//        }
+//        isAlive = true;
+//        this.score = score;
+//        id++;
     }
 
     // -----------------------Methods-----------------------//

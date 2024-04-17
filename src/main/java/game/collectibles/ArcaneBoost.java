@@ -3,11 +3,10 @@ package game.collectibles;
 public class ArcaneBoost extends Collectibles {
     // -----------------------Attributes-----------------------//
     private CollectiblesStatus status;
-
+    private static final String instruction="AB-Instruction";
 
     // -----------------------constructor-----------------------//
     // Initialize the AB to DISABLED
-
     public ArcaneBoost() {
         this.status = CollectiblesStatus.DISABLED;
     }
@@ -26,6 +25,9 @@ public class ArcaneBoost extends Collectibles {
      */
     public void setStatus(CollectiblesStatus status) {
         this.status = status;
+    }
+    public String getInstruction(){
+        return instruction;
     }
 
     @Override

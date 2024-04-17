@@ -25,7 +25,7 @@ public class Dice {
     }
     @Override
     public String toString(){
-        return null;
+        return String.format("%s(%d)",color.toString(),value);
     }
 
 }

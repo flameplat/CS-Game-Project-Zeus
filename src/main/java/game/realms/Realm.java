@@ -28,4 +28,5 @@ public abstract class Realm {
     public abstract String toString();
     public abstract Creature[] getAliveCreatures();
 
+
 }
