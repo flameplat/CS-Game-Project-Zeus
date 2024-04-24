@@ -31,7 +31,7 @@ public class CLIGameController extends GameController {
         Properties gameProperties = new Properties();
         Properties roundRewardProperties=new Properties();
         try (FileInputStream gameFileInputStream = new FileInputStream(GAME_PROPERTIES_PATH);
-             FileInputStream roundRewardFileInputStream = new FileInputStream(GAME_PROPERTIES_PATH)) {
+             FileInputStream roundRewardFileInputStream = new FileInputStream(ROUNDS_REWARDS_PATH)) {
             gameProperties.load(gameFileInputStream);
             roundRewardProperties.load(roundRewardFileInputStream);
             MAX_NUMBER_OF_ROUNDS = Integer.parseInt(gameProperties.getProperty("numberOfRounds","6"));
