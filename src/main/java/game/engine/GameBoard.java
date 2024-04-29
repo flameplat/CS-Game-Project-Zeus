@@ -32,7 +32,16 @@ public class GameBoard {
 
     }
 
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
     public void display(){
         //Display game board
     }
+
 }

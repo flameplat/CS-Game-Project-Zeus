@@ -16,10 +16,6 @@ public class Dice {
     }
 
     // -----------------------Methods-----------------------//
-    // getter for the dice value
-    public int getDiceValue() {
-        return value;
-    }
 
     // getter for the dice color
     public Color getDiceColor() {
@@ -38,5 +34,8 @@ public class Dice {
     public void setValue(int value){
         this.value=value;
     }
-
+    // getter for the dice value
+    public int getValue() {
+        return value;
+    }
 }

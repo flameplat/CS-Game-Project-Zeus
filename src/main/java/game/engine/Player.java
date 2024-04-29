@@ -20,8 +20,12 @@ public class Player {
     private Realm[] realms;
     private ScoreSheet scoreSheet;
     private GameScore gameScore;
+    private PlayerStatus playerStatus;
 
     private String name;
+
+
+
     private int timeWarpCount;
     private int arcaneBoostCount;
     private Dice selectedDice;
@@ -210,7 +214,9 @@ public class Player {
     public void setSelectedDice(Dice dice){
         this.selectedDice=dice;
     }
-
+    public PlayerStatus getPlayerStatus() {
+        return playerStatus;
+    }
 
 
 
