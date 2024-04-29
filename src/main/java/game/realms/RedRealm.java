@@ -111,8 +111,8 @@ public class RedRealm extends Realm {
     }
 
     @Override
-    public Creature[] getAliveCreatures() {
-        return null;
+    public Move[] getRealmMoves() {
+        return new Move[0];
     }
 
 

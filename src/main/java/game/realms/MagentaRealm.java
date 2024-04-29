@@ -57,7 +57,8 @@ public class MagentaRealm extends Realm{
     }
 
     @Override
-    public Creature[] getAliveCreatures() {
-        return new Creature[0];
+    public Move[] getRealmMoves() {
+        return new Move[0];
     }
+
 }

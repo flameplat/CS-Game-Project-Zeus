@@ -26,7 +26,6 @@ public abstract class Realm {
     public abstract int getTotalScore();
     public abstract int getNoElementalCrests();
     public abstract String toString();
-    public abstract Creature[] getAliveCreatures();
-
+    public abstract Move[] getRealmMoves();
 
 }

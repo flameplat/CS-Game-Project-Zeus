@@ -31,6 +31,9 @@ public class GameScore {
             totalElementalCrests+=realms[i].getNoElementalCrests();
         }
     }
+    public int getYellowRealmScore(){
+
+    }
 
     public void displayGameScore() {
 

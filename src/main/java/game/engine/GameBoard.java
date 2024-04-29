@@ -1,16 +1,24 @@
 package game.engine;
 
+import game.dice.Dice;
+import game.realms.ForgottenRealm;
+
 public class GameBoard {
     // -----------------------Attributes-----------------------//
     private Player player1;
     private Player player2;
     private CurrentStatus currentStatus;
+    private ForgottenRealm forgottenRealm;
+    private Dice[] diceArray;
 
     // -----------------------Constructor-----------------------//
-    public GameBoard(Player player1,Player player2){
+    public GameBoard(){
+        currentStatus=CurrentStatus.IN_PROGRESS;
+        forgottenRealm=new ForgottenRealm();
+    }
+    public void setPlayers(Player player1,Player player2){
         this.player1=player1;
         this.player2=player2;
-        currentStatus=CurrentStatus.IN_PROGRESS;
     }
     // -----------------------Methods-----------------------//
     //Display realm for active player
@@ -20,15 +28,7 @@ public class GameBoard {
     public void displayAllPossibleMoves(Move[] moves){
 
     }
-    public void displayMainDiceDeck(){
-
-    }
-    //Sets the active player
-    public void setActivePlayer(Player player){
-
-    }
-    //Sets the passive player
-    public void setPassivePlayer(Player player){
+    public void displayMainDiceDeck() {
 
     }
 

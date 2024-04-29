@@ -2,6 +2,7 @@ package game.engine;
 
 import game.realms.Realm;
 import game.creatures.*;
+import game.dice.Dice;
 
 
 public class Move {
@@ -9,6 +10,7 @@ public class Move {
     private Realm realm;
     private Creature creature;
     private HitRegionsOfDragons hitRegion;
+    private Dice dice;
     private int moveNumber;
 
 

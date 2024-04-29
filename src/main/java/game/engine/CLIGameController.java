@@ -22,11 +22,11 @@ public class CLIGameController extends GameController {
     // -----------------------Attributes-----------------------//
     private static final String GAME_PROPERTIES_PATH = "src/main/resources/config/Game.properties";
     private static final String ROUNDS_REWARDS_PATH = "src/main/resources/config/RoundsRewards.properties";
-    public static int MAX_NUMBER_OF_ROUNDS;
+    private static int MAX_NUMBER_OF_ROUNDS;
     private static int MAX_NUMBER_OF_ROLLS;
     public static int MAX_NUMBER_OF_TURNS;
     public static Collectibles[] roundRewards;
-    private static Dice[] diceArray;
+
     static {
         Properties gameProperties = new Properties();
         Properties roundRewardProperties=new Properties();
@@ -63,14 +63,10 @@ public class CLIGameController extends GameController {
     }
     private GameBoard gameBoard;
     private Player activePlayer;
-    private Player player1;
-    private Player player2;
     private Player passivePlayer;
-
-
-    private ForgottenRealm forgottenRealm;
     private Dice selectedDice;
     private int roundsCount;
+    private Dice[] diceArray;
     private GameGuide gameGuide;
     private int turnsCount;
     private SystemManager systemManager;
@@ -83,10 +79,12 @@ public class CLIGameController extends GameController {
         systemManager = new SystemManager();
         systemManager.performSystemChecks();
         gameGuide = new GameGuide();
+        gameBoard=new GameBoard();
         mainMenu();
         sc = new Scanner(System.in);
-        forgottenRealm = new ForgottenRealm();
-        inputPlayerNames();
+        Player player1=getPlayerName("Enter Player 1 name: ");
+        Player player2=getPlayerName("Enter Player 1 name: ");
+        gameBoard.setPlayers(player1,player2);
         activePlayer = player1;
         passivePlayer = player2;
         for (int i = 0; i < MAX_NUMBER_OF_ROUNDS; i++) {
@@ -168,17 +166,14 @@ public class CLIGameController extends GameController {
         return false;
     }
 
-    private void inputPlayerNames() {
-        player1 = getPlayerName("Enter player 1 name: ");
-        player2 = getPlayerName("Enter player 2 name: ");
-    }
+
 
     private Player getPlayerName(String prompt) {
         while (true) {
             try {
                 System.out.println(prompt);
                 String playerName = sc.nextLine();
-                if (player1 != null && playerName.equals(player1.getName())) {
+                if (gameBoard.getPlayer1() != null && playerName.equals(gameBoard.getPlayer1().getName())) {
                     throw new InvalidPlayerNameException("Name already in use!");
                 }
                 return new Player(playerName);
@@ -193,25 +188,21 @@ public class CLIGameController extends GameController {
 
     @Override
     public boolean switchPlayer() {
-        if (player1 != null && player2 != null && player1 != player2) {
-            if (activePlayer != passivePlayer) {
-                Player temp = activePlayer;
-                activePlayer = passivePlayer;
-                passivePlayer = temp;
-                return true;
-            } else {
-                handleSwitchPlayerError("Active and passive are pointing to same player");
-            }
-        } else {
-            handleSwitchPlayerError("Invalid players to switch");
+        Player player1=gameBoard.getPlayer1();
+        Player player2=gameBoard.getPlayer2();
+        if (activePlayer!=passivePlayer && activePlayer.getPlayerStatus()==PlayerStatus.ACTIVE &&
+        passivePlayer.getPlayerStatus()==PlayerStatus.PASSIVE) {
+            activePlayer.setPlayerStatus(PlayerStatus.PASSIVE);
+            passivePlayer.setPlayerStatus(PlayerStatus.ACTIVE);
+            Player temp=activePlayer;
+            activePlayer=passivePlayer;
+            passivePlayer=temp;
+            return true;
         }
+        //System.err.println("Invalid Switch!");
         return false;
     }
 
-    private void handleSwitchPlayerError(String message) {
-        System.out.println(message);
-        startGame();
-    }
 
 
     /**

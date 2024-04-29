@@ -48,6 +48,7 @@ public class Player {
         scoreSheet = new ScoreSheet(realms);
         gameScore = new GameScore(realms);
     }
+    //----------------------Methods--------------------------//
 
     /**
      * Load player's attributes from resources
@@ -84,7 +85,8 @@ public class Player {
         return !name.matches(regex);
     }
 
-    //----------------------Methods--------------------------//
+
+
 
     /**
      * Initialize all powers to DISABLED at the start of initialization of the player
@@ -104,6 +106,9 @@ public class Player {
      */
     private void initializeRealms(){
 
+    }
+    public void setPlayerStatus(PlayerStatus status){
+        this.playerStatus=status;
     }
     /**
      * Receives the power and set its status to ENABLED.
