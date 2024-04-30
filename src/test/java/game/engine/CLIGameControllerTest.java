@@ -117,6 +117,7 @@ public class CLIGameControllerTest {
         Player player = controller.getActivePlayer();
 
         Dice[] dice = controller.getGameBoard().getDice();
+        //RED, GREEN, BLUE, MAGENTA, YELLOW, WHITE
         dice[0].setValue(2);
         dice[1].setValue(3);
         dice[2].setValue(4);
@@ -272,7 +273,7 @@ public class CLIGameControllerTest {
         int[] redDiceValues = { 3, 2, 3, 1, 3 };
         int[] dragonNumber = { 1, 1, 2, 1, 3 };
         int[] expectedScores = { 0, 0, 0, 10, 10 };
-        boolean[] expectedSuccess = { true, true, true, true, false };
+        boolean[] expectedSuccess = {true, true, true, true, false};
 
         for (int i = 0; i < redDiceValues.length; i++) {
             dice[0].setValue(redDiceValues[i]);
@@ -344,13 +345,11 @@ public class CLIGameControllerTest {
         int[] magentaDiceValues = { 6, 2, 2, 4 };
         int[] expectedScores = { 6, 8, 8, 12 };
         boolean[] expectedSuccess = { true, true, false, true };
-
         for (int i = 0; i < magentaDiceValues.length; i++) {
             dice[3].setValue(magentaDiceValues[i]);
             Move[] possibleMoves = controller.getPossibleMovesForADie(player, dice[3]);
             boolean hasMoves = possibleMoves.length > 0;
             boolean success = hasMoves && controller.makeMove(player, possibleMoves[0]);
-
             assertEquals("Expected success mismatch at move " + (i + 1), expectedSuccess[i], success);
             int actualScore = controller.getGameScore(player).getMagentaRealmScore();
             assertEquals("Expected score mismatch after move " + (i + 1), expectedScores[i], actualScore);

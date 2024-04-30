@@ -9,7 +9,6 @@ import game.dice.*;
 
 public class BlueRealm extends Realm{
     // -----------------------Attributes-----------------------//
-
     // -----------------------Constructor-----------------------//
     // -----------------------Methods-----------------------//
     @Override

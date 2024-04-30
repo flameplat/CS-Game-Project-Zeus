@@ -1,6 +1,7 @@
 package game.engine;
 
 import game.dice.*;
+import game.exceptions.MissingGameFilesException;
 import game.realms.ForgottenRealm;
 
 public class GameBoard {
@@ -11,9 +12,19 @@ public class GameBoard {
     private ForgottenRealm forgottenRealm;
     private Dice[] diceArray;
 
+    public CurrentStatus getCurrentStatus() {
+        return currentStatus;
+    }
+
+    public ForgottenRealm getForgottenRealm() {
+        return forgottenRealm;
+    }
+
     // -----------------------Constructor-----------------------//
     public GameBoard(){
         currentStatus=CurrentStatus.IN_PROGRESS;
+        player1=new Player();
+        player1=new Player();
         forgottenRealm=new ForgottenRealm();
         diceArray= new Dice[]{new RedDice(), new GreenDice(), new BlueDice(), new MagentaDice(), new YellowDice(), new WhiteDice()};
     }

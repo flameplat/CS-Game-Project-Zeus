@@ -30,8 +30,10 @@ public class ScoreSheet {
                 return i.getCreature(dice);
             }
         }
+        System.err.println("Creature not found");
         return null;
     }
+
 
 
 }

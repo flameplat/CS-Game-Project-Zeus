@@ -1,6 +1,5 @@
 package game.engine;
 
-import game.Color;
 import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
 import game.collectibles.EssenceBonus;
@@ -8,14 +7,12 @@ import game.collectibles.TimeWarp;
 import game.dice.*;
 import game.exceptions.InvalidPlayerNameException;
 import game.exceptions.MissingGameFilesException;
+import game.realms.ForgottenRealm;
 import game.system.SystemManager;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Properties;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class CLIGameController extends GameController {
 
@@ -23,7 +20,6 @@ public class CLIGameController extends GameController {
     private static final String GAME_PROPERTIES_PATH = "src/main/resources/config/Game.properties";
     private static final String ROUNDS_REWARDS_PATH = "src/main/resources/config/RoundsRewards.properties";
     private static int MAX_NUMBER_OF_ROUNDS;
-    private static int MAX_NUMBER_OF_ROLLS;
     public static int MAX_NUMBER_OF_TURNS;
     public static Collectibles[] roundRewards;
     private Dice[] diceArray;
@@ -50,19 +46,18 @@ public class CLIGameController extends GameController {
                 }
 
             }
-            MAX_NUMBER_OF_ROLLS = Integer.parseInt(gameProperties.getProperty("numberOfDiceRolls","3"));
         } catch (IOException | NumberFormatException e) {
             // Handle the exception gracefully
             System.err.println("Error loading game properties: " + e.getMessage());
             // Default values
             MAX_NUMBER_OF_ROUNDS = 6;
             MAX_NUMBER_OF_TURNS = 3;
-            MAX_NUMBER_OF_ROLLS = 3;
         }
     }
     private GameBoard gameBoard;
     private Player activePlayer;
     private Player passivePlayer;
+    private ForgottenRealm forgottenRealm;
     private Dice selectedDice;
     private int roundsCount;
 
@@ -72,22 +67,29 @@ public class CLIGameController extends GameController {
     private Scanner sc; //Will be closed at the end of the game
 
     // -----------------------Constructor-----------------------//
-    // -----------------------Methods-----------------------//
-    @Override
-    public void startGame() {
+    public CLIGameController(){
         systemManager = new SystemManager();
         systemManager.performSystemChecks();
         gameGuide = new GameGuide();
         gameBoard=new GameBoard();
         diceArray=gameBoard.getDice();
-        mainMenu();
         sc = new Scanner(System.in);
+        activePlayer = gameBoard.getPlayer1();
+        passivePlayer = gameBoard.getPlayer2();
+        forgottenRealm=gameBoard.getForgottenRealm();
+    }
+    // -----------------------Methods-----------------------//
+    @Override
+    public void startGame() {
+        mainMenu();
         Player player1=getPlayerName("Enter Player 1 name: ");
-        Player player2=getPlayerName("Enter Player 1 name: ");
+        Player player2=getPlayerName("Enter Player 2 name: ");
         gameBoard.setPlayers(player1,player2);
         activePlayer = player1;
         passivePlayer = player2;
         for (int i = 0; i < MAX_NUMBER_OF_ROUNDS; i++) {
+            //Active player receives round reward
+            activePlayer.receivePower(roundRewards[i]);
             playRound();
             playPassiveTurn();
             checkArcaneBoost(activePlayer);
@@ -214,10 +216,10 @@ public class CLIGameController extends GameController {
         //Dice values are from 1 to 6
         int diceMaxBound=6;
         int diceMinBound=1;
-        for (int i = 0; i < diceArray.length; i++) {
-            if(diceArray[i]!=null && diceArray[i].getDiceStatus()==DiceStatus.AVAILABLE){
-                diceValue=random.nextInt(diceMaxBound-diceMinBound+1)+diceMinBound;
-                diceArray[i].setValue(diceValue);
+        for (Dice dice : diceArray) {
+            if (dice != null && dice.getDiceStatus() == DiceStatus.AVAILABLE) {
+                diceValue = random.nextInt(diceMaxBound - diceMinBound + 1) + diceMinBound;
+                dice.setValue(diceValue);
             }
         }
         return diceArray;
@@ -230,15 +232,8 @@ public class CLIGameController extends GameController {
     @Override
     public Dice[] getAvailableDice() {
         Random random=new Random();
+        LinkedList<Dice> dice=new LinkedList<>();
         int diceValue;
-        //RED, GREEN, BLUE, MAGENTA, YELLOW, WHITE
-        //Dice values are from 1 to 6
-        int diceMaxBound=6;
-        int diceMinBound=1;
-        for (int i = 0; i < diceArray.length; i++) {
-            diceValue=random.nextInt(diceMaxBound-diceMinBound+1)+diceMinBound;
-            diceArray[i].setValue(diceValue);
-        }
         return diceArray;
     }
     /**

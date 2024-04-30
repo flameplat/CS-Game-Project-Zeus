@@ -18,12 +18,12 @@ public class RedRealm extends Realm {
     private Collectibles reward;
     private int noElementalCrests;
     private Color realmColor;
-    private String name;
+    private static final String name="Emberfall Dominion";
     private Properties rewardProperties;
     private Properties realmProperties;
 
     // -----------------------Constructor-----------------------//
-    public RedRealm(String name) {
+    public RedRealm() {
 
 
     }

@@ -8,7 +8,7 @@ import game.collectibles.TimeWarp;
 import game.dice.Dice;
 import game.exceptions.InvalidPlayerNameException;
 import game.exceptions.MissingGameFilesException;
-import game.realms.Realm;
+import game.realms.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class Player {
     private ScoreSheet scoreSheet;
     private GameScore gameScore;
     private PlayerStatus playerStatus;
-
+    private static int id=1;
     private String name;
 
 
@@ -31,6 +31,26 @@ public class Player {
     private Dice selectedDice;
 
     private ArcaneBoost[] arcaneBoosts;
+    private static int MAX_NUMBER_OF_REALMS;
+    private static int MAX_NUMBER_OF_TW;
+    private static int MAX_NUMBER_OF_AB;
+    static{
+        Properties playerProperties = new Properties();
+        Properties gameProperties = new Properties();
+        //Try with res will automatically close fileInputStream
+        try (FileInputStream fileInputStreamPlayer = new FileInputStream("src/main/resources/config/Player.properties")) {
+            playerProperties = new Properties();
+            playerProperties.load(fileInputStreamPlayer);
+            MAX_NUMBER_OF_TW = Integer.parseInt(playerProperties.getProperty("maxNumberOfTWPowers","7"));
+            MAX_NUMBER_OF_AB = Integer.parseInt(playerProperties.getProperty("maxNumberOfABPowers","7"));
+        } catch (IOException | NumberFormatException e) {
+            System.err.println("Error loading player properties");
+            //Load default values
+            MAX_NUMBER_OF_TW=7;
+            MAX_NUMBER_OF_AB=7;
+
+        }
+    }
     private TimeWarp[] timeWarps;
 
     //----------------------Constructor--------------------------//
@@ -48,31 +68,30 @@ public class Player {
         scoreSheet = new ScoreSheet(realms);
         gameScore = new GameScore(realms);
     }
+    public Player(){
+        this.name = String.format("Player %d",id);
+        loadProperties();
+        initializePowers();
+        initializeRealms();
+        scoreSheet = new ScoreSheet(realms);
+        gameScore = new GameScore(realms);
+        id++;
+    }
     //----------------------Methods--------------------------//
 
     /**
      * Load player's attributes from resources
      */
-    private void loadProperties() throws MissingGameFilesException {
-        Properties playerProperties = new Properties();
-        Properties gameProperties = new Properties();
-        //Try with res will automatically close fileInputStream
-        try (FileInputStream fileInputStreamPlayer = new FileInputStream("src/main/resources/config/Player.properties");
-             FileInputStream fileInputStreamGame = new FileInputStream("src/main/resources/config/Game.properties")) {
-
-            playerProperties = new Properties();
-            gameProperties = new Properties();
-
-            playerProperties.load(fileInputStreamPlayer);
-            gameProperties.load(fileInputStreamGame);
-
-            timeWarps = new TimeWarp[Integer.parseInt(playerProperties.getProperty("maxNumberOfTWPowers"))];
-            arcaneBoosts = new ArcaneBoost[Integer.parseInt(playerProperties.getProperty("maxNumberOfABPowers"))];
-            realms = new Realm[Integer.parseInt(gameProperties.getProperty("numberOfRealms"))];
-
-        } catch (IOException | NumberFormatException e) {
-            throw new MissingGameFilesException("Error loading properties: " + e.getMessage());
-        }
+    private void loadProperties() {
+        timeWarps=new TimeWarp[MAX_NUMBER_OF_TW];
+        arcaneBoosts=new ArcaneBoost[MAX_NUMBER_OF_AB];
+        //RED, GREEN, BLUE, MAGENTA, YELLOW
+        realms=new Realm[5];
+        realms[0]=new RedRealm();
+        realms[1]=new GreenRealm();
+        realms[2]=new BlueRealm();
+        realms[3]=new MagentaRealm();
+        realms[4]=new YellowRealm();
     }
 
     /**
@@ -212,6 +231,14 @@ public class Player {
     public Realm[] getRealms(){
         return realms;
     }
+    public Realm getRealm(Dice dice){
+        for(Realm i:realms){
+            if(dice.getRealm()==i.getColor()){
+                return i;
+            }
+        }
+        return null;
+    }
     @Override
     public String toString(){
         return null;
@@ -222,8 +249,4 @@ public class Player {
     public PlayerStatus getPlayerStatus() {
         return playerStatus;
     }
-
-
-
-
 }
