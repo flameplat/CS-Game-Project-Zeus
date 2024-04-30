@@ -15,15 +15,15 @@ public class Move {
 
 
     // -----------------------Constructor-----------------------//
-    public Move(Realm realm, Creature creature) {
-        this.realm = realm;
+    public Move(Dice dice, Creature creature) {
+        this.dice=dice;
         this.creature = creature;
         hitRegion = null;
     }
 
     // constuctor for moves regarding the dragons
-    public Move(Realm realm, Creature creature, HitRegionsOfDragons hitRegion) {
-        this(realm, creature);
+    public Move(Dice dice, Creature creature, HitRegionsOfDragons hitRegion) {
+        this(dice, creature);
         this.hitRegion = hitRegion;
 
     }
@@ -46,5 +46,7 @@ public class Move {
     public String toString(){
         return null;
     }
-
+    public Dice getDice(){
+        return dice;
+    }
 }

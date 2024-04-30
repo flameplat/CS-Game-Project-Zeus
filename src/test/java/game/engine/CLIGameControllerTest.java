@@ -305,7 +305,6 @@ public class CLIGameControllerTest {
             Move[] possibleMoves = controller.getPossibleMovesForADie(player, dice[1]);
             boolean hasMoves = possibleMoves.length > 0;
             boolean success = hasMoves && controller.makeMove(player, possibleMoves[0]);
-
             assertEquals("Expected success mismatch at move " + (i + 1), expectedSuccess[i], success);
             int actualScore = controller.getGameScore(player).getGreenRealmScore();
             assertEquals("Expected score mismatch after move " + (i + 1), expectedScores[i], actualScore);

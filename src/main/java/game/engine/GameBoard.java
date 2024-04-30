@@ -1,6 +1,6 @@
 package game.engine;
 
-import game.dice.Dice;
+import game.dice.*;
 import game.realms.ForgottenRealm;
 
 public class GameBoard {
@@ -15,6 +15,7 @@ public class GameBoard {
     public GameBoard(){
         currentStatus=CurrentStatus.IN_PROGRESS;
         forgottenRealm=new ForgottenRealm();
+        diceArray= new Dice[]{new RedDice(), new GreenDice(), new BlueDice(), new MagentaDice(), new YellowDice(), new WhiteDice()};
     }
     public void setPlayers(Player player1,Player player2){
         this.player1=player1;
@@ -43,5 +44,7 @@ public class GameBoard {
     public void display(){
         //Display game board
     }
-
+    public Dice[] getDice(){
+        return diceArray;
+    }
 }

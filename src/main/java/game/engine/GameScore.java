@@ -6,23 +6,24 @@ public class GameScore {
     //--------------------------Attributes--------------------------//
     // all of the scores for the Realms
     private int totalElementalCrests;
+    private int yellowRealmScore;
+    private int greenRealmScore;
+    private int redRealmScore;
+    private int magentaRealmScore;
+    private int blueRealmScore;
     private int totalScore;
     private Realm[] realms;
 
     //--------------------------Constructor--------------------------//
     public GameScore(Realm[] realms) {
-        for (int i = 0; i < realms.length; i++) {
-            this.realms=realms;
-        }
+        this.realms=realms;
         totalElementalCrests = 0;
         totalScore = 0;
     }
     //--------------------------Methods--------------------------//
-    private void updateTotalScore() {
 
-    }
 
-    public void updateGameStatus(){
+    public void updateGameScore(){
         //Reset attributes to recalculate them
         totalScore=0;
         totalElementalCrests=0;
@@ -31,13 +32,39 @@ public class GameScore {
             totalElementalCrests+=realms[i].getNoElementalCrests();
         }
     }
-    public int getYellowRealmScore(){
 
+    public int getYellowRealmScore() {
+        return yellowRealmScore;
+    }
+
+    public int getGreenRealmScore() {
+        return greenRealmScore;
+    }
+
+    public int getRedRealmScore() {
+        return redRealmScore;
+    }
+
+    public int getMagentaRealmScore() {
+        return magentaRealmScore;
+    }
+
+    public int getBlueRealmScore() {
+        return blueRealmScore;
     }
 
     public void displayGameScore() {
 
     }
+
+    public int getTotalElementalCrests() {
+        return totalElementalCrests;
+    }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
     @Override
     public String toString(){
         return null;

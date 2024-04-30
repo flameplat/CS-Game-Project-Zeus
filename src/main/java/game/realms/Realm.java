@@ -4,6 +4,7 @@ import game.Color;
 import game.collectibles.Collectibles;
 import game.creatures.Creature;
 import game.engine.Move;
+import game.dice.Dice;
 
 public abstract class Realm {
     // -----------------------Abstract methods-----------------------//
@@ -27,5 +28,6 @@ public abstract class Realm {
     public abstract int getNoElementalCrests();
     public abstract String toString();
     public abstract Move[] getRealmMoves();
+    public abstract Creature getCreature(Dice dice);
 
 }

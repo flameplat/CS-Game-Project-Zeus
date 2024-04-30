@@ -4,6 +4,7 @@ import game.Color;
 import game.collectibles.Collectibles;
 import game.creatures.Creature;
 import game.engine.Move;
+import game.dice.*;
 
 public class YellowRealm extends Realm{
     // -----------------------Attributes-----------------------//
@@ -62,6 +63,11 @@ public class YellowRealm extends Realm{
     @Override
     public Move[] getRealmMoves() {
         return new Move[0];
+    }
+
+    @Override
+    public Creature getCreature(Dice dice) {
+        return null;
     }
 
 

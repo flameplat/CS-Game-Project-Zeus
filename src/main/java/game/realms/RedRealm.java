@@ -6,6 +6,7 @@ import game.creatures.Creature;
 import game.creatures.Dragon;
 import game.Color;
 import game.engine.*;
+import game.dice.*;
 
 import java.util.Properties;
 
@@ -113,6 +114,11 @@ public class RedRealm extends Realm {
     @Override
     public Move[] getRealmMoves() {
         return new Move[0];
+    }
+
+    @Override
+    public Creature getCreature(Dice dice) {
+        return null;
     }
 
 
