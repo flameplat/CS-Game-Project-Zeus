@@ -21,6 +21,8 @@ public class GameBoard {
         currentStatus=CurrentStatus.IN_PROGRESS;
         player1=new Player();
         player2=new Player();
+        player1.setPlayerStatus(PlayerStatus.ACTIVE);
+        player2.setPlayerStatus(PlayerStatus.PASSIVE);
         diceArray= new Dice[]{new RedDice(), new GreenDice(), new BlueDice(), new MagentaDice(), new YellowDice(), new WhiteDice()};
     }
     public void setPlayer1(Player player1){

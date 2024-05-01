@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import game.dice.*;
-@Disabled("Disabled until game is run in the main method")
 public class CLIGameControllerTest {
 
     @Test

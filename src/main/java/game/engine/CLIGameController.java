@@ -395,17 +395,17 @@ public class CLIGameController extends GameController {
 
     @Override
     public GameBoard getGameBoard() {
-        return null;
+        return gameBoard;
     }
 
     @Override
     public Player getActivePlayer() {
-        return null;
+        return activePlayer;
     }
 
     @Override
     public Player getPassivePlayer() {
-        return null;
+        return passivePlayer;
     }
 
     @Override
@@ -437,7 +437,10 @@ public class CLIGameController extends GameController {
 
     @Override
     public ArcaneBoost[] getArcaneBoostPowers(Player player) {
-        return new ArcaneBoost[0];
+        if(player!=null){
+            return player.getArcaneBoosts();
+        }
+        return null;
     }
 
     @Override
