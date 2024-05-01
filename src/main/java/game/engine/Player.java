@@ -85,13 +85,7 @@ public class Player {
     private void loadProperties() {
         timeWarps=new TimeWarp[MAX_NUMBER_OF_TW];
         arcaneBoosts=new ArcaneBoost[MAX_NUMBER_OF_AB];
-        //RED, GREEN, BLUE, MAGENTA, YELLOW
-        realms=new Realm[5];
-        realms[0]=new RedRealm();
-        realms[1]=new GreenRealm();
-        realms[2]=new BlueRealm();
-        realms[3]=new MagentaRealm();
-        realms[4]=new YellowRealm();
+        initializeRealms();
     }
 
     /**
@@ -124,7 +118,13 @@ public class Player {
      * Initialize all realms at the start of initialization of the player
      */
     private void initializeRealms(){
-
+        //RED, GREEN, BLUE, MAGENTA, YELLOW
+        realms=new Realm[5];
+        realms[0]=new RedRealm();
+        realms[1]=new GreenRealm();
+        realms[2]=new BlueRealm();
+        realms[3]=new MagentaRealm();
+        realms[4]=new YellowRealm();
     }
     public void setPlayerStatus(PlayerStatus status){
         this.playerStatus=status;
@@ -133,7 +133,7 @@ public class Player {
      * Receives the power and set its status to ENABLED.
      * @return true if the power was successfully received, false otherwise
      */
-    boolean receivePower(Collectibles power){
+    void receivePower(Collectibles power){
         boolean flag=false;
         //Assumption: The player won't be able receive powers more than POWER_NUMBER
         if(power instanceof ArcaneBoost){
@@ -141,8 +141,8 @@ public class Player {
                 if (arcaneBoosts[i].getStatus() == CollectiblesStatus.DISABLED) {
                     arcaneBoosts[i].setStatus(CollectiblesStatus.ENABLED);
                     arcaneBoostCount++;
-                    flag = true;
-                    break;
+                    System.out.println("Arcane Boost Power Received!");
+                    return;
                 }
             }
         }
@@ -151,12 +151,12 @@ public class Player {
                 if (timeWarps[i].getStatus() == CollectiblesStatus.DISABLED) {
                     timeWarps[i].setStatus(CollectiblesStatus.ENABLED);
                     timeWarpCount++;
-                    flag = true;
-                    break;
+                    System.out.println("Time Warp Power Received!");
+                    return;
                 }
             }
         }
-        return flag;
+        System.out.printf("%s can't receive more than %d Arcane Boost power & %d Time Warp power%n",name,MAX_NUMBER_OF_AB,MAX_NUMBER_OF_TW);
     }
     ScoreSheet getScoreSheet(){
         return scoreSheet;

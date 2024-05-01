@@ -7,7 +7,7 @@ import game.collectibles.TimeWarp;
 import game.dice.*;
 import game.exceptions.InvalidPlayerNameException;
 import game.exceptions.MissingGameFilesException;
-import game.realms.ForgottenRealm;
+import game.realms.Realm;
 import game.system.SystemManager;
 
 import java.io.FileInputStream;
@@ -57,8 +57,7 @@ public class CLIGameController extends GameController {
     private GameBoard gameBoard;
     private Player activePlayer;
     private Player passivePlayer;
-    private ForgottenRealm forgottenRealm;
-    private Dice selectedDice;
+
     private int roundsCount;
 
     private GameGuide gameGuide;
@@ -76,21 +75,23 @@ public class CLIGameController extends GameController {
         sc = new Scanner(System.in);
         activePlayer = gameBoard.getPlayer1();
         passivePlayer = gameBoard.getPlayer2();
-        forgottenRealm=gameBoard.getForgottenRealm();
     }
     // -----------------------Methods-----------------------//
     @Override
     public void startGame() {
         mainMenu();
         Player player1=getPlayerName("Enter Player 1 name: ");
+        gameBoard.setPlayer1(player1);
         Player player2=getPlayerName("Enter Player 2 name: ");
-        gameBoard.setPlayers(player1,player2);
+        gameBoard.setPlayer2(player2);
         activePlayer = player1;
         passivePlayer = player2;
+        gameGuide.displayInstructions(Instruction.GAME);
         for (int i = 0; i < MAX_NUMBER_OF_ROUNDS; i++) {
             //Active player receives round reward
             activePlayer.receivePower(roundRewards[i]);
             playRound();
+
             playPassiveTurn();
             checkArcaneBoost(activePlayer);
             checkArcaneBoost(passivePlayer);
@@ -134,10 +135,11 @@ public class CLIGameController extends GameController {
         }
     }
 
+
     private void playRound() {
         System.out.println(activePlayer.getName());
         gameGuide.displayInstructions(Instruction.ROUND);
-        getAvailableDice();
+        resetDice();
         for (int i = 0; (i < MAX_NUMBER_OF_TURNS)&(containsAvailableDie()); i++) {
             playTurn();
         }
@@ -155,8 +157,20 @@ public class CLIGameController extends GameController {
 
     private void playTurn() {
         gameGuide.displayInstructions(Instruction.TURN);
-        System.out.println(Arrays.toString(rollDice()));
+        displayAvailableDice();
+        gameGuide.displayInstructions(Instruction.ROLL);
+        //Press enter to roll
+        System.out.println("Press Enter to roll");
+        sc.nextLine();
+        rollDice();
+        displayAvailableDice();
         checkTimeWarp();
+        Dice[] temp=getAvailableDice();
+        System.out.printf("Select a die from %d to %d%n",1,temp.length);
+        int choice=gameGuide.getUserChoice(1,temp.length);
+        Dice selectedDie=temp[choice-1];
+        System.out.println(selectedDie);
+        selectDice(selectedDie,activePlayer);
         //Choosing a die, move (check if move is valid,if not choose another die)
         //execute move
         //All dice of value less than selected die's value goes to forgotten realm
@@ -165,6 +179,20 @@ public class CLIGameController extends GameController {
     private void playPassiveTurn(){
         System.out.println(passivePlayer.getName());
         gameGuide.displayInstructions(Instruction.PASSIVE_TURN);
+    }
+    private void displayAvailableDice(){
+        StringBuilder result=new StringBuilder();
+        result.append("[");
+        Dice[] array=getAvailableDice();
+        for(int i=0;i<array.length;i++){
+            result.append(i+1).append("-");
+            result.append(array[i]);
+            if(i<array.length-1){
+                result.append(", ");
+            }
+        }
+        result.append("]");
+        System.out.println(result);
 
     }
 
@@ -191,17 +219,27 @@ public class CLIGameController extends GameController {
 
     @Override
     public boolean switchPlayer() {
-        if (activePlayer!=passivePlayer && activePlayer.getPlayerStatus()==PlayerStatus.ACTIVE &&
-        passivePlayer.getPlayerStatus()==PlayerStatus.PASSIVE) {
-            activePlayer.setPlayerStatus(PlayerStatus.PASSIVE);
-            passivePlayer.setPlayerStatus(PlayerStatus.ACTIVE);
-            Player temp=activePlayer;
-            activePlayer=passivePlayer;
-            passivePlayer=temp;
-            return true;
+        boolean flag;
+        try{
+            if (activePlayer!=passivePlayer && activePlayer.getPlayerStatus()==PlayerStatus.ACTIVE &&
+                    passivePlayer.getPlayerStatus()==PlayerStatus.PASSIVE) {
+                activePlayer.setPlayerStatus(PlayerStatus.PASSIVE);
+                passivePlayer.setPlayerStatus(PlayerStatus.ACTIVE);
+                Player temp=activePlayer;
+                activePlayer=passivePlayer;
+                passivePlayer=temp;
+                flag= true;
+            }
+            else{
+                flag= false;
+            }
+
         }
-        //System.err.println("Invalid Switch!");
-        return false;
+        catch (NullPointerException e){
+            System.err.println("Invalid Switch: "+e.getMessage());
+            flag=false;
+        }
+        return flag;
     }
     /**
      * Rolls all available dice for the current turn, assigning each a random
@@ -211,6 +249,7 @@ public class CLIGameController extends GameController {
      */
     @Override
     public Dice[] rollDice() {
+        //Rolling only rolls available dice
         Random random=new Random();
         int diceValue;
         //Dice values are from 1 to 6
@@ -224,6 +263,16 @@ public class CLIGameController extends GameController {
         }
         return diceArray;
     }
+
+    /**
+     * Resets dice status to be all available
+     * Used at the beginning of each round
+     */
+    private void resetDice(){
+        for(Dice i:diceArray){
+            i.setDiceStatus(DiceStatus.AVAILABLE);
+        }
+    }
     /**
      * Gets the dice available for rolling or rerolling.
      *
@@ -231,10 +280,17 @@ public class CLIGameController extends GameController {
      */
     @Override
     public Dice[] getAvailableDice() {
-        Random random=new Random();
-        LinkedList<Dice> dice=new LinkedList<>();
-        int diceValue;
-        return diceArray;
+        LinkedList<Dice> list=new LinkedList<>();
+        for(Dice i:diceArray){
+            if(i.getDiceStatus()==DiceStatus.AVAILABLE){
+                list.add(i);
+            }
+        }
+        Dice[] result=new Dice[list.size()];
+        for(int i=0;i<result.length;i++){
+            result[i]= list.get(i);
+        }
+        return result;
     }
     /**
      * Gets all six dice, providing their current state and value within the
@@ -247,17 +303,38 @@ public class CLIGameController extends GameController {
      */
     @Override
     public Dice[] getAllDice() {
-        return new Dice[0];
+        return diceArray;
     }
 
     @Override
     public Dice[] getForgottenRealmDice() {
-        return new Dice[0];
+        LinkedList<Dice> list=new LinkedList<>();
+        for(Dice i:diceArray){
+            if(i.getDiceStatus()==DiceStatus.FORGOTTEN_REALM){
+                list.add(i);
+            }
+        }
+        Dice[] result=new Dice[list.size()];
+        for(int i=0;i<result.length;i++){
+            result[i]= list.get(i);
+        }
+        return result;
     }
 
     @Override
     public Move[] getAllPossibleMoves(Player player) {
-        return new Move[0];
+        LinkedList<Move> list=new LinkedList<>();
+        for(Realm i:player.getRealms()){
+            Move[] moves=i.getRealmMoves();
+            for(Move m:moves){
+                list.addLast(m);
+            }
+        }
+        Move[] result= new Move[list.size()];
+        for(int i=0;i<result.length;i++){
+            result[i]=list.get(i);
+        }
+        return result;
     }
 
     @Override
@@ -292,7 +369,7 @@ public class CLIGameController extends GameController {
 
     @Override
     public GameStatus getGameStatus() {
-        return null;
+        return gameStatus;
     }
 
     @Override
@@ -312,7 +389,22 @@ public class CLIGameController extends GameController {
 
     @Override
     public boolean selectDice(Dice dice, Player player) {
-        return false;
+        boolean flag;
+        try{
+            player.setSelectedDice(dice);
+            dice.setDiceStatus(DiceStatus.TURN_SELECTED);
+            for(int i=0;i<diceArray.length;i++){
+                Dice diceFromArray=diceArray[i];
+                if(diceFromArray.getDiceStatus()==DiceStatus.AVAILABLE && diceFromArray.getValue()<dice.getValue()){
+                    diceFromArray.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
+                }
+            }
+            flag=true;
+        }
+        catch (NullPointerException e){
+            flag=false;
+        }
+        return flag;
     }
 
     @Override

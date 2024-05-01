@@ -3,5 +3,5 @@ package game.engine;
 public enum Instruction {
 
     GAME,ROUND,TURN,PASSIVE_TURN,TW_POWER,AB_POWER,COLOR_BONUS,FORGOTTEN_REALM,
-    AB_PROMPT, TW_PROMPT
+    AB_PROMPT, TW_PROMPT,ROLL
 }

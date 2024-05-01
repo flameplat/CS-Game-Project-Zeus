@@ -4,13 +4,18 @@ import game.Color;
 
 public class RedDice extends Dice{
     private static final Color color=Color.RED;
+    private static final String RESET = "\u001B[0m";
+    private static final String RED = "\u001B[31m";
+    private DiceStatus status;
     private int value; // value of the dices
     // -----------------------constructor-----------------------//
     public RedDice(int value) {
         this.value = value;
+        this.status=DiceStatus.AVAILABLE;
     }
     public RedDice(){
-        this.value=0;
+        this.value=1;
+        this.status=DiceStatus.AVAILABLE;
     }
 
     // -----------------------Methods-----------------------//
@@ -18,7 +23,7 @@ public class RedDice extends Dice{
     // getter for the dice color
     @Override
     public String toString() {
-        return String.format("%s(%d)", color, value);
+        return String.format(RED+"%s(%d)"+RESET, color, value);
     }
 
     public void setValue(int value){
@@ -34,11 +39,11 @@ public class RedDice extends Dice{
 
     @Override
     public DiceStatus getDiceStatus() {
-        return null;
+        return status;
     }
 
     @Override
     public void setDiceStatus(DiceStatus status) {
-
+        this.status=status;
     }
 }

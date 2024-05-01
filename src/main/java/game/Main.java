@@ -8,9 +8,13 @@ import game.exceptions.MissingGameFilesException;
 import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) throws MissingGameFilesException, InvalidPlayerNameException {
+
+    public static void main(String[] args) {
          CLIGameController cliGameController = new CLIGameController();
          cliGameController.startGame();
+
+
+
 
 
 
