@@ -9,20 +9,26 @@ public class ScoreSheet {
     //We will create linked list of type realm/action and everytime we will update the linked list
     //--------------------------Attributes--------------------------//
     private Realm[] realms;
+    private String string;
     //--------------------------Constructor--------------------------//
     public ScoreSheet(Realm[] realmsReference){
         this.realms=realmsReference;
     }
     //--------------------------Methods--------------------------//
-    boolean updateScoresheet(){
-        return false;
+    private void updateScoresheet(){
+        StringBuilder stringBuilder=new StringBuilder();
+        for(Realm realm:realms){
+            stringBuilder.append(realm.toString());
+            stringBuilder.append("\n");
+        }
+        string=stringBuilder.toString();
     }
-    void displayScoreSheet(){
-
+    public void displayScoreSheet(){
+        System.out.println(string);
     }
     @Override
     public String toString(){
-        return null;
+        return string;
     }
     public Creature getCreatureByRealm(Dice dice){
         for(Realm i:realms){

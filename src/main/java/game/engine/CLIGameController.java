@@ -1,9 +1,6 @@
 package game.engine;
 
-import game.collectibles.ArcaneBoost;
-import game.collectibles.Collectibles;
-import game.collectibles.EssenceBonus;
-import game.collectibles.TimeWarp;
+import game.collectibles.*;
 import game.dice.*;
 import game.exceptions.InvalidPlayerNameException;
 import game.exceptions.MissingGameFilesException;
@@ -58,6 +55,7 @@ public class CLIGameController extends GameController {
     private Player activePlayer;
     private Player passivePlayer;
 
+
     private int roundsCount;
 
     private GameGuide gameGuide;
@@ -84,17 +82,28 @@ public class CLIGameController extends GameController {
         gameBoard.setPlayer1(player1);
         Player player2=getPlayerName("Enter Player 2 name: ");
         gameBoard.setPlayer2(player2);
+        player1.setPlayerStatus(PlayerStatus.ACTIVE);
+        player2.setPlayerStatus(PlayerStatus.PASSIVE);
         activePlayer = player1;
         passivePlayer = player2;
-        gameGuide.displayInstructions(Instruction.GAME);
         for (int i = 0; i < MAX_NUMBER_OF_ROUNDS; i++) {
+            System.out.println("Round "+(i+1));
             //Active player receives round reward
-            activePlayer.receivePower(roundRewards[i]);
+            if(roundRewards[i]!=null){
+                if(roundRewards[i] instanceof EssenceBonus){
+                    //Play EssenceBonus
+                }
+                else{
+                    if(roundRewards[i] instanceof ColorBonus){
+                        //Play ColorBonus
+                    }
+                    else{
+                        activePlayer.receivePower(roundRewards[i]);
+                    }
+                }
+            }
             playRound();
 
-            playPassiveTurn();
-            checkArcaneBoost(activePlayer);
-            checkArcaneBoost(passivePlayer);
             switchPlayer();
         }
         endGame();
@@ -107,27 +116,52 @@ public class CLIGameController extends GameController {
             gameGuide.closeScanner();
             systemManager.exit();
         }
+        gameGuide.displayInstructions(Instruction.GAME);
+
     }
     private void checkArcaneBoost(Player player){
         while (player.isArcaneBoostAvailable()) {
+            System.out.println(player.getName());
             gameGuide.displayInstructions(Instruction.AB_PROMPT);
             boolean choice = gameGuide.getUserBooleanChoice();
             if (choice) {
                 player.useArcaneBoostPower();
-                playTurn();
+                playExtraTurn(player);
             }
             else{
                 break;
             }
         }
     }
+    private void playExtraTurn(Player player){
+        LinkedList<Dice> notSelectedByPlayer=new LinkedList<>();
+        DiceStatus filter=player.getPlayerStatus()==PlayerStatus.ACTIVE? DiceStatus.ACTIVE_PLAYER_SELECTED:DiceStatus.PASSIVE_PLAYER_SELECTED;
+        for(Dice i:diceArray){
+            if(i.getDiceStatus()!=filter){
+                notSelectedByPlayer.add(i);
+            }
+        }
+        Dice[] temp=new Dice[notSelectedByPlayer.size()];
+        for(int i=0;i<temp.length;i++){
+            temp[i]= notSelectedByPlayer.get(i);
+        }
+        displayDice(temp);
+        System.out.printf("Select a die from %d to %d%n",1,temp.length);
+        int choice=gameGuide.getUserChoice(1,temp.length);
+        Dice selectedDie=temp[choice-1];
+        System.out.println(selectedDie);
+        selectedDie.setDiceStatus(filter);
+        //Perform move
+
+    }
     private void checkTimeWarp(){
-        while (activePlayer.isArcaneBoostAvailable()) {
+        while (activePlayer.isTimeWarpAvailable()) {
             gameGuide.displayInstructions(Instruction.TW_PROMPT);
             boolean choice = gameGuide.getUserBooleanChoice();
             if (choice) {
-                activePlayer.useArcaneBoostPower();
+                activePlayer.useTimeWarpPower();
                 rollDice();
+                displayDice(getAvailableDice());
             }
             else{
                 break;
@@ -141,11 +175,16 @@ public class CLIGameController extends GameController {
         gameGuide.displayInstructions(Instruction.ROUND);
         resetDice();
         for (int i = 0; (i < MAX_NUMBER_OF_TURNS)&(containsAvailableDie()); i++) {
+            System.out.println("Turn "+(i+1));
             playTurn();
         }
+        moveDicetoForgottenRealm();
+        playPassiveTurn();
+        checkArcaneBoost(activePlayer);
+        checkArcaneBoost(passivePlayer);
 
     }
-    public boolean containsAvailableDie(){
+    private boolean containsAvailableDie(){
         for(Dice i:diceArray){
             if(i.getDiceStatus()==DiceStatus.AVAILABLE){
                 return true;
@@ -157,20 +196,24 @@ public class CLIGameController extends GameController {
 
     private void playTurn() {
         gameGuide.displayInstructions(Instruction.TURN);
-        displayAvailableDice();
+        System.out.println("Here is your score sheet");
+        activePlayer.getScoreSheet().displayScoreSheet();
+        Dice[] temp=getAvailableDice();
+        displayDice(temp);
         gameGuide.displayInstructions(Instruction.ROLL);
         //Press enter to roll
         System.out.println("Press Enter to roll");
         sc.nextLine();
         rollDice();
-        displayAvailableDice();
+        displayDice(temp);
         checkTimeWarp();
-        Dice[] temp=getAvailableDice();
         System.out.printf("Select a die from %d to %d%n",1,temp.length);
         int choice=gameGuide.getUserChoice(1,temp.length);
         Dice selectedDie=temp[choice-1];
         System.out.println(selectedDie);
         selectDice(selectedDie,activePlayer);
+        //Perform move based on selected Die
+
         //Choosing a die, move (check if move is valid,if not choose another die)
         //execute move
         //All dice of value less than selected die's value goes to forgotten realm
@@ -179,11 +222,17 @@ public class CLIGameController extends GameController {
     private void playPassiveTurn(){
         System.out.println(passivePlayer.getName());
         gameGuide.displayInstructions(Instruction.PASSIVE_TURN);
+        Dice[] temp=getForgottenRealmDice();
+        displayDice(temp);
+        System.out.printf("Select a die from %d to %d%n",1,temp.length);
+        int choice=gameGuide.getUserChoice(1,temp.length);
+        Dice selectedDie=temp[choice-1];
+        System.out.println(selectedDie);
+        //Perform move based on selected Die
     }
-    private void displayAvailableDice(){
+    private void displayDice(Dice[] array){
         StringBuilder result=new StringBuilder();
         result.append("[");
-        Dice[] array=getAvailableDice();
         for(int i=0;i<array.length;i++){
             result.append(i+1).append("-");
             result.append(array[i]);
@@ -195,9 +244,6 @@ public class CLIGameController extends GameController {
         System.out.println(result);
 
     }
-
-
-
 
     private Player getPlayerName(String prompt) {
         while (true) {
@@ -374,12 +420,19 @@ public class CLIGameController extends GameController {
 
     @Override
     public GameScore getGameScore(Player player) {
+        if(player!=null){
+            return player.getGameScore();
+        }
+        System.err.println("Cannot get player Game score since player is null");
         return null;
     }
 
     @Override
     public TimeWarp[] getTimeWarpPowers(Player player) {
-        return new TimeWarp[0];
+        if(player!=null){
+            return player.getTimeWarps();
+        }
+        return null;
     }
 
     @Override
@@ -405,6 +458,14 @@ public class CLIGameController extends GameController {
             flag=false;
         }
         return flag;
+    }
+    private void moveDicetoForgottenRealm(){
+        //Moves the rest of the dice unselected by active player to forgotten realm
+        for(Dice i:diceArray){
+            if(i.getDiceStatus()==DiceStatus.AVAILABLE){
+                i.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
+            }
+        }
     }
 
     @Override

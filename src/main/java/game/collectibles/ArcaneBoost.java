@@ -3,7 +3,8 @@ package game.collectibles;
 public class ArcaneBoost extends Collectibles {
     // -----------------------Attributes-----------------------//
     private CollectiblesStatus status;
-    private static final String instruction="The Time Warp power gives you the ability\nto roll the available dice again";
+    private static final String instruction="The Arcane Boost power gives you the ability\n" +
+            "to play an extra round using one of the unselected dice";
 
     // -----------------------constructor-----------------------//
     // Initialize the AB to DISABLED
@@ -32,7 +33,7 @@ public class ArcaneBoost extends Collectibles {
 
     @Override
     public String toString() {
-        return null;
+        return "Arcane Boost: "+status.toString();
     }
 
 }

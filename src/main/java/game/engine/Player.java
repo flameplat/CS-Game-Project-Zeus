@@ -133,8 +133,8 @@ public class Player {
      * Receives the power and set its status to ENABLED.
      * @return true if the power was successfully received, false otherwise
      */
-    void receivePower(Collectibles power){
-        boolean flag=false;
+    boolean receivePower(Collectibles power){
+
         //Assumption: The player won't be able receive powers more than POWER_NUMBER
         if(power instanceof ArcaneBoost){
             for (int i = 0; i < arcaneBoosts.length; i++) {
@@ -142,7 +142,7 @@ public class Player {
                     arcaneBoosts[i].setStatus(CollectiblesStatus.ENABLED);
                     arcaneBoostCount++;
                     System.out.println("Arcane Boost Power Received!");
-                    return;
+                    return true;
                 }
             }
         }
@@ -152,19 +152,25 @@ public class Player {
                     timeWarps[i].setStatus(CollectiblesStatus.ENABLED);
                     timeWarpCount++;
                     System.out.println("Time Warp Power Received!");
-                    return;
+                    return true;
                 }
             }
         }
         System.out.printf("%s can't receive more than %d Arcane Boost power & %d Time Warp power%n",name,MAX_NUMBER_OF_AB,MAX_NUMBER_OF_TW);
+        return false;
     }
     ScoreSheet getScoreSheet(){
         return scoreSheet;
     }
+
+    public GameScore getGameScore() {
+        return gameScore;
+    }
+
     // Check the player's Time Warp powers array
     // Return true if available, false otherwise
     public boolean isTimeWarpAvailable(){
-        return arcaneBoostCount!=0;
+        return timeWarpCount!=0;
     }
     // Check the player's Arcane Boost powers array
     // Return true if available, false otherwise

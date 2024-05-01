@@ -20,7 +20,7 @@ public class GameBoard {
     public GameBoard(){
         currentStatus=CurrentStatus.IN_PROGRESS;
         player1=new Player();
-        player1=new Player();
+        player2=new Player();
         diceArray= new Dice[]{new RedDice(), new GreenDice(), new BlueDice(), new MagentaDice(), new YellowDice(), new WhiteDice()};
     }
     public void setPlayer1(Player player1){

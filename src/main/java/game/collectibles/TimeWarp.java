@@ -30,7 +30,7 @@ public class TimeWarp extends Collectibles {
 
     @Override
     public String toString() {
-        return "Time Warp";
+        return "Time Warp: "+status.toString();
     }
     public static String getInstruction(){
         return instruction;
