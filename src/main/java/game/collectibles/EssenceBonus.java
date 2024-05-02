@@ -1,6 +1,7 @@
 package game.collectibles;
 
 public class EssenceBonus extends Collectibles{
+    private static final CollectiblesType type=CollectiblesType.ESSENCE_BONUS;
     private CollectiblesStatus status;
     public EssenceBonus(){
         this.status=CollectiblesStatus.DISABLED;
@@ -18,10 +19,7 @@ public class EssenceBonus extends Collectibles{
     public void setStatus(CollectiblesStatus status) {
         this.status=status;
     }
-    @Override
-    public boolean isBonus(){
-        return true;
-    }
+
 
 
 }

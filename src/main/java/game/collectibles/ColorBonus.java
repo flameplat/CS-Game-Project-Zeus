@@ -6,6 +6,7 @@ public class ColorBonus extends Collectibles {
     // -----------------------Attributes-----------------------//
     private Color colorBonus;
     private CollectiblesStatus status;
+    private static final CollectiblesType type=CollectiblesType.COLOR_BONUS;
 
 
 
