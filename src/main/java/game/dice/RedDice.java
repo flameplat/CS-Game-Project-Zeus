@@ -6,6 +6,7 @@ public class RedDice extends Dice{
     private static final Color color=Color.RED;
     private static final String RESET = "\u001B[0m";
     private static final String RED = "\u001B[31m";
+    private int dragonNumber;
     private DiceStatus status;
     private int value; // value of the dices
     // -----------------------constructor-----------------------//
@@ -45,5 +46,11 @@ public class RedDice extends Dice{
     @Override
     public void setDiceStatus(DiceStatus status) {
         this.status=status;
+    }
+    public void selectsDragon(int dragonNumber){
+        this.dragonNumber=dragonNumber;
+    }
+    public int getDragonNumber(){
+        return dragonNumber;
     }
 }

@@ -9,6 +9,7 @@ import game.exceptions.MissingGameFilesException;
 import game.exceptions.NoAvailableMovesException;
 import game.realms.GreenRealm;
 import game.realms.Realm;
+import game.realms.RedRealm;
 import game.system.SystemManager;
 
 import java.io.FileInputStream;
@@ -417,6 +418,7 @@ public class CLIGameController extends GameController {
                 for(Move i:moves){
                     if(((Dragon)i.getCreature()).getDragonNumber()==dragonNumber){
                         selectedMove=i;
+                        ((RedDice)selectedDie).selectsDragon(dragonNumber);
                         break;
                     }
                 }
@@ -424,6 +426,10 @@ public class CLIGameController extends GameController {
                     System.out.println("Can't attack Dragon " + dragonNumber);
                 }
             }
+            //Reset dragon number
+            //This will allow the possible moves for red dice to be based on dice value only regardless of creature
+            //and the test file will be able to select dragon number
+            ((RedDice)selectedDie).selectsDragon(0);
             return selectedMove;
         }
         else{
@@ -708,9 +714,29 @@ public class CLIGameController extends GameController {
                         possibleMoves.addLast(m);
                     }
                 }
-                if(m.getDice().getValue()==diceValue){
-                    possibleMoves.addLast(m);
+                else{
+                    if(realm instanceof RedRealm){
+                        if(m.getDice().getValue()==diceValue){
+                            int dragonNumber=((RedDice)dice).getDragonNumber();
+                            if(dragonNumber!=0 && ((Dragon)m.getCreature()).getDragonNumber()==dragonNumber){
+                                possibleMoves.addLast(m);
+                            }
+                            else{
+                                if(dragonNumber==0){
+                                    possibleMoves.addLast(m);
+                                }
+                            }
+
+                        }
+                    }
+                    else{
+                        if(m.getDice().getValue()==diceValue){
+                            possibleMoves.addLast(m);
+                        }
+                    }
+
                 }
+
             }
         }
         return possibleMoves.toArray(Move[]::new);
