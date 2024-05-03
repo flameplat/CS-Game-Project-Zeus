@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
          CLIGameController cliGameController = new CLIGameController();
 //        System.out.println(cliGameController.getGameScore(cliGameController.getActivePlayer()).toString());
-
+        int[] x={1,1,1,2,1,1,2,1,2,1,3};
 
     }
 
