@@ -8,43 +8,35 @@ public class GameStatus {
      */
     //--------------------------Attributes--------------------------//
     private CurrentStatus gameStatus;
-    private Player currentActivePlayer;
     private int round;
     private int turn;
     //--------------------------Constructor--------------------------//
     public GameStatus() {
-        //
+        round=1;
+        turn=1;
     }
     //--------------------------Methods--------------------------//
     public CurrentStatus getGameStatus() {
         return gameStatus;
+
     }
 
-    public int getRound() {
-        return round;
-    }
-
-    public int getTurn() {
-        return turn;
-    }
 
     public void incrementRound() {
         round++;
     }
 
     public void resetTurn() {
-        turn = 0;
+        turn = 1;
     }
 
     public void incrementTurn() {
         turn++;
     }
 
-    public Player getCurrentActivePlayer() {
-        return currentActivePlayer;
-    }
 
     public void setGameStatus(CurrentStatus status) {
         this.gameStatus = status;
     }
+
 }

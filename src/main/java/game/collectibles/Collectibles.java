@@ -7,9 +7,7 @@ public abstract class Collectibles {
     public void setStatus(CollectiblesStatus status){
 
     }
-    public boolean isBonus(){
-        return false;
-    }
+    public abstract CollectiblesType getType();
     @Override
     public abstract String toString();
 }

@@ -14,36 +14,54 @@ import game.engine.Move;
 import game.dice.*;
 
 public class BlueRealm extends Realm{
+    // -----------------------Attributes-----------------------//
     private int totalRealmScore;
+    private int attackNumber;
+    private int noElementalCrests;
     private Serpent[] serpent1;
     private Serpent[] serpent2;
+    private Move movement = ;
     private Collectibles reward;
-    private Collectibles[] rewardsarray;
-    private int noElementalCrests;
-    private Color realmColor;
     private static final String name="Tide Abyss";
     private Properties rewardProperties;
     private Properties realmProperties;
-    
+    private static final Color realmColor=Color.BLUE;
+
+    // -----------------------Constructor-----------------------//
     public BlueRealm() {
         serpent1 =new Serpent [5];
 
         for(int i=1; i<5;i++){
             serpent1[i] = new Serpent (i,true);
-        }
+            if(serpent1[i].getHeadNumber()==4) {
+                    serpent1[i].setReward("arcane boost");
+                    break;
+            }
 
         serpent2 =new Serpent [6];
 
-         for(int j=1; j<6;j++){
+        for(int j=1; j<6;j++){
             serpent2[j] = new Serpent (j,true);
-        }   
-
-    }
+            if(serpent2[j].getHeadNumber()==1) {
+                serpent2[j].setReward("green bonus");
+            }
+            if(serpent2[j].getHeadNumber()==2) {
+                serpent2[j].setReward("Elmental Crest");
+            }
+            if(serpent2[j].getHeadNumber()==4) {
+                serpent2[j].setReward("Magenta bonus"); 
+            }
+            if(serpent2[j].getHeadNumber()==5) {
+                serpent2[j].setReward("time Warp");
+            }   
+   
+        }
+    
     
     // -----------------------Methods-----------------------//
     @Override
     public String getName() {
-        return "Blue Realm";
+        return name;
     }
 
     @Override
@@ -68,30 +86,13 @@ public class BlueRealm extends Realm{
 
     @Override
     public Collectibles getReward() {
-        for(int i=1; i<5;i++){ 
-            switch (serpent1[i]) {
-                case 1:
-                case 2:
-                case 3:
-
-                case 4:
-                    System.out.println("Case 4: serpent1[i] is 4"); // This case will be executed
-                    break;
-                case 5:
-                    System.out.println("Case 5: serpent1[i] is 5");
-                    break;
-                default:
-                    System.out.println("Default case: unknown value");
-                    break;
-        }
-         for(int j=1; j<6;j++){
-            
-        }   
+       
         return null;
     }
 
     @Override
     public boolean checkReward() {
+
         
         return false;
     }
@@ -101,6 +102,7 @@ public class BlueRealm extends Realm{
         if (move.getMoveNumber()>=serpentstatus.getFirst()){
             
         }
+        movement=move;
         return ;
     }
 
@@ -145,10 +147,34 @@ public class BlueRealm extends Realm{
     }
 
     @Override
-    public Move[] getRealmMoves() {
-        return new Move[0];
+    public Move[] getRealmMoves() { 
+        return getNextPossibleDiceValue(movement);
     }
+    public Move[] getNextPossibleDiceValue(Move move){
+        LinkedList <Move> moves =new LinkedList<>();
+        /*Move move1= new Move (new BlueDice(1),new Serpent());
+        Move move2= new Move (new BlueDice(2),new Serpent());
+        Move move3= new Move (new BlueDice(3),new Serpent());
+        Move move4= new Move (new BlueDice(4),new Serpent());
+        Move move5= new Move (new BlueDice(5),new Serpent());
+        Move move6= new Move (new BlueDice(6),new Serpent());*/
+        if(serpent1[5].isAlive()==true){
 
+           for(int i=0;serpent1[i].getHeadNumber()<5;i++){
+                if (serpent1[i].isAlive())
+                int j=serpent1[i].getHeadNumber();
+                    while(j<=6){
+                        Move move =new Move((new BlueDice(j),new Serpent()));
+                        moves.addFirst(move);
+                        j++;
+                        
+                    }
+            }
+                
+                
+            }
+        }
+    };
     @Override
     public Creature getCreature(Dice dice) {
         return null;

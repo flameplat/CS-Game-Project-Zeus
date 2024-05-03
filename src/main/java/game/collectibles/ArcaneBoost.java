@@ -3,7 +3,9 @@ package game.collectibles;
 public class ArcaneBoost extends Collectibles {
     // -----------------------Attributes-----------------------//
     private CollectiblesStatus status;
-    private static final String instruction="AB-Instruction";
+    private static final CollectiblesType type=CollectiblesType.ARCANE_BOOST;
+    private static final String instruction="The Arcane Boost power gives you the ability\n" +
+            "to play an extra round using one of the unselected dice";
 
     // -----------------------constructor-----------------------//
     // Initialize the AB to DISABLED
@@ -17,7 +19,9 @@ public class ArcaneBoost extends Collectibles {
     public CollectiblesStatus getStatus() {
         return status;
     }
-
+    public CollectiblesType getType(){
+        return type;
+    }
     // Method to set current status of TW to ENABLED/USED
     /*
      * it becomes Enabled when the user is
@@ -32,7 +36,7 @@ public class ArcaneBoost extends Collectibles {
 
     @Override
     public String toString() {
-        return null;
+        return "Arcane Boost: "+status.toString();
     }
 
 }

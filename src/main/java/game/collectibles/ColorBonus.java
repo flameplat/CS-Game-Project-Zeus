@@ -6,7 +6,8 @@ public class ColorBonus extends Collectibles {
     // -----------------------Attributes-----------------------//
     private Color colorBonus;
     private CollectiblesStatus status;
-
+    private static final CollectiblesType type=CollectiblesType.COLOR_BONUS;
+    private static final String instruction="Color bonus makes you play a certain realm with any dice value you want";
 
 
 
@@ -17,6 +18,9 @@ public class ColorBonus extends Collectibles {
             this.status=CollectiblesStatus.DISABLED;
     }
     //-----------------------Methods-----------------------//
+    public CollectiblesType getType(){
+        return type;
+    }
     @Override
     public CollectiblesStatus getStatus() {
         return status;
@@ -25,14 +29,16 @@ public class ColorBonus extends Collectibles {
     public void setStatus(CollectiblesStatus status) {
         this.status = status;
     }
-    @Override
-    public boolean isBonus(){
-        return true;
-    }
 
     @Override
     public String toString() {
         return null;
     }
 
+    public Color getColor() {
+        return colorBonus;
+    }
+    public static String getInstruction(){
+        return instruction;
+    }
 }

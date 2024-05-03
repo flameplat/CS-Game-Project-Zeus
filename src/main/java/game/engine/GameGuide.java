@@ -1,6 +1,8 @@
 package game.engine;
 
 import game.collectibles.ArcaneBoost;
+import game.collectibles.ColorBonus;
+import game.collectibles.EssenceBonus;
 import game.collectibles.TimeWarp;
 
 import java.util.InputMismatchException;
@@ -8,6 +10,22 @@ import java.util.Scanner;
 
 public class GameGuide {
     private final Scanner sc;
+    private static final String GAME = String.format("Welcome to Dice Realms: Quest for the Elemental Crests!%n " +
+            "In this game, two players become wizards striving to conquer elemental realms %n" +
+            "and collect Elemental Crests. Players encounter creatures like Pyroclast Dragons, Gaia Guardians, %n" +
+            "Hydra Serpents, Majestic Phoenixes, and Solar Lions. To win, employ magic, strategy, and %n" +
+            "cunning to defeat creatures and claim crests. The goal: emerge as the most powerful mage in Eldoria.%n");
+    private static final String ROUND = "You have maximum 3 rolls for the given dice, choose wisely";
+    private static final String TURN = "Roll the available dice then choose one of them to spell";
+    private static final String FORGOTTEN_REALM = "Choose a dice from the forgotten realm";
+    private static final String PASSIVE_TURN="Now you have to play your passive turn";
+    private static final String COLOR_BONUS= ColorBonus.getInstruction();
+    private static final String AB_POWER = ArcaneBoost.getInstruction();
+    private static final String TW_POWER = TimeWarp.getInstruction();
+    private static final String ESSENCE_BONUS= EssenceBonus.getInstruction();
+    private static final String ROLL="Press R to roll the available dice";
+    private static final String SELECT_DICE="Enter the number corresponding to your choice:";
+
 
     public GameGuide() {
         this.sc = new Scanner(System.in);
@@ -17,20 +35,33 @@ public class GameGuide {
         System.out.println("Dice Realms: Quest for the Elemental Crests!");
         System.out.println("(1) Start Game\n(2) Exit Game");
     }
-
+    public void displayNumberedChoice(Object[] array){
+        StringBuilder result=new StringBuilder();
+        result.append("[");
+        for(int i=0;i<array.length;i++){
+            result.append(i+1).append("-");
+            result.append(array[i]);
+            if(i<array.length-1){
+                result.append(", ");
+            }
+        }
+        result.append("]");
+        System.out.println(result);
+    }
     public void displayInstructions(Instruction instruction) {
         String output;
         switch (instruction){
-            case GAME: output="GAME INSTRUCTIONS";break;
-            case ROUND:output="ROUND INSTRUCTIONS";break;
-            case TURN:output="TURN INSTRUCTIONS";break;
-            case FORGOTTEN_REALM:output="FORGOTTEN REALM INSTRUCTIONS";break;
+            case GAME: output=GAME;break;
+            case ROUND:output=ROUND;break;
+            case TURN:output=TURN;break;
+            case FORGOTTEN_REALM:output=FORGOTTEN_REALM;break;
             case AB_POWER:output= ArcaneBoost.getInstruction();break;
             case TW_POWER:output= TimeWarp.getInstruction();break;
-            case PASSIVE_TURN:output= "PASSIVE TURN INSTRUCTIONS";break;
-            case COLOR_BONUS:output= "COLOR BONUS INSTRUCTIONS";break;
-            case AB_PROMPT:output= "Do you want to use Arcane Boost?";break;
-            case TW_PROMPT:output= "Do you want to use Time Warp?";break;
+            case PASSIVE_TURN:output= PASSIVE_TURN ;break;
+            case COLOR_BONUS:output= COLOR_BONUS;break;
+            case AB_PROMPT:output= AB_POWER;break;
+            case TW_PROMPT:output= TW_POWER;break;
+            case ESSENCE_BONUS:output=ESSENCE_BONUS;break;
             default:output="";
         }
         System.out.println(output);
@@ -75,6 +106,7 @@ public class GameGuide {
         return validValue;
 
     }
+
     public void closeScanner(){
         sc.close();
     }

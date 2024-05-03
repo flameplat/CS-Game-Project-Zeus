@@ -7,6 +7,10 @@ import game.engine.Move;
 import game.dice.*;
 
 public class MagentaRealm extends Realm{
+    // -----------------------Attributes-----------------------//
+    private static final Color realmColor=Color.MAGENTA;
+    // -----------------------Constructor-----------------------//
+    // -----------------------Methods-----------------------//
     @Override
     public String getName() {
         return null;
@@ -14,7 +18,7 @@ public class MagentaRealm extends Realm{
 
     @Override
     public Color getColor() {
-        return null;
+        return realmColor;
     }
 
     @Override

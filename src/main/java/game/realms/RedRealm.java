@@ -17,7 +17,7 @@ public class RedRealm extends Realm {
     private boolean[][] dragonsStatus;
     private Collectibles reward;
     private int noElementalCrests;
-    private Color realmColor;
+    private static final Color realmColor=Color.RED;
     private static final String name="Emberfall Dominion";
     private Properties rewardProperties;
     private Properties realmProperties;
@@ -37,10 +37,10 @@ public class RedRealm extends Realm {
     // ENTER VALUES FOR:HEAD,WINGS,TAIL,HEART
     // NA->0
     private void initDragons() {
-        dragons[0] = new Dragon(new int[] { 3, 2, 1, 0 }, 10);
-        dragons[1] = new Dragon(new int[] { 6, 1, 0, 3 }, 14);
-        dragons[2] = new Dragon(new int[] { 5, 0, 2, 4 }, 16);
-        dragons[3] = new Dragon(new int[] { 0, 5, 4, 6 }, 20);
+        dragons[0] = new Dragon(new int[] { 3, 2, 1, 0 }, 10,1);
+        dragons[1] = new Dragon(new int[] { 6, 1, 0, 3 }, 14,2);
+        dragons[2] = new Dragon(new int[] { 5, 0, 2, 4 }, 16,3);
+        dragons[3] = new Dragon(new int[] { 0, 5, 4, 6 }, 20,4);
     }
 
     // get the score of the red realm
@@ -57,7 +57,7 @@ public class RedRealm extends Realm {
     // get the realm color
     @Override
     public Color getColor() {
-        return null;
+        return realmColor;
     }
 
     // get the realm status
@@ -108,7 +108,7 @@ public class RedRealm extends Realm {
      */
     @Override
     public String toString() {
-        return null;
+        return "Red Realm";
     }
 
     @Override

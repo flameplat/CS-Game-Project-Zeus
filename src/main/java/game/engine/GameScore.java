@@ -1,21 +1,19 @@
 package game.engine;
 
+import game.Color;
 import game.realms.Realm;
 
 public class GameScore {
     //--------------------------Attributes--------------------------//
     // all of the scores for the Realms
     private int totalElementalCrests;
-    private int yellowRealmScore;
-    private int greenRealmScore;
-    private int redRealmScore;
-    private int magentaRealmScore;
-    private int blueRealmScore;
     private int totalScore;
+    private String playerName;
     private Realm[] realms;
 
     //--------------------------Constructor--------------------------//
-    public GameScore(Realm[] realms) {
+    public GameScore(Realm[] realms,String playerName) {
+        this.playerName=playerName;
         this.realms=realms;
         totalElementalCrests = 0;
         totalScore = 0;
@@ -34,27 +32,34 @@ public class GameScore {
     }
 
     public int getYellowRealmScore() {
-        return yellowRealmScore;
+        return realms[Color.YELLOW.ordinal()].getTotalScore();
     }
 
     public int getGreenRealmScore() {
-        return greenRealmScore;
+        return realms[Color.GREEN.ordinal()].getTotalScore();
     }
 
     public int getRedRealmScore() {
-        return redRealmScore;
+        return realms[Color.RED.ordinal()].getTotalScore();
     }
 
     public int getMagentaRealmScore() {
-        return magentaRealmScore;
+        return realms[Color.MAGENTA.ordinal()].getTotalScore();
     }
 
     public int getBlueRealmScore() {
-        return blueRealmScore;
+        return realms[Color.BLUE.ordinal()].getTotalScore();
     }
 
-    public void displayGameScore() {
-
+    public int getFinalScore(){
+        int minScore=0;
+        for(int i=0;i<5;i++){
+            if(realms[i].getTotalScore()<minScore){
+                minScore=realms[i].getTotalScore();
+            }
+        }
+        totalScore+=totalElementalCrests*minScore;
+        return totalScore;
     }
 
     public int getTotalElementalCrests() {
@@ -64,9 +69,37 @@ public class GameScore {
     public int getTotalScore() {
         return totalScore;
     }
+    private int getTotalScoreForColor(Color color) {
+        return realms[color.ordinal()].getTotalScore();
+    }
 
     @Override
     public String toString(){
-        return null;
+        StringBuilder sb = new StringBuilder();
+
+        // Player Name row
+        sb.append(String.format("%-20s", "Player Name:")).append(playerName).append("\n");
+
+        // Realm headers row
+        sb.append(String.format("%-20s", "Realm"));
+        sb.append(String.format("%-20s", "Elemental Crests"));
+        sb.append(String.format("%-20s", "Total Score")).append("\n");
+
+        // Add rows for each realm
+        String[] colors = {"Yellow", "Green", "Red", "Magenta", "Blue"};
+        for (int i = 0; i < 5; i++) {
+            sb.append(String.format("%-20s", colors[i] + " Realm"));
+            sb.append(String.format("%-20d", realms[i].getNoElementalCrests()));
+            sb.append(String.format("%-20d", getTotalScoreForColor(Color.values()[i]))).append("\n");
+        }
+        sb.append("-".repeat(45)).append("\n");
+
+        // Total Elemental Crests row
+        sb.append(String.format("%-40s", "Total Elemental Crests")).append(totalElementalCrests).append("\n");
+
+        // Final Score row
+        sb.append(String.format("%-40s", "Final Score")).append(getFinalScore()).append("\n");
+
+        return sb.toString();
     }
 }

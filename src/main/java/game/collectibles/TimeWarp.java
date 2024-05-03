@@ -3,7 +3,8 @@ package game.collectibles;
 public class TimeWarp extends Collectibles {
     // -----------------------Attributes-----------------------//
     private CollectiblesStatus status;
-    private static final String instruction="TW-Instruction";
+    private static final CollectiblesType type=CollectiblesType.TIME_WARP;
+    private static final String instruction="The Time Warp power gives you the ability\nto roll the available dice again";
 
     // -----------------------constructor-----------------------//
     // Initialize the TW to DISABLED
@@ -30,10 +31,13 @@ public class TimeWarp extends Collectibles {
 
     @Override
     public String toString() {
-        return "Time Warp";
+        return "Time Warp: "+status.toString();
     }
     public static String getInstruction(){
         return instruction;
+    }
+    public CollectiblesType getType(){
+        return type;
     }
 
 }

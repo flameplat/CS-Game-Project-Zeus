@@ -3,14 +3,19 @@ package game.dice;
 import game.Color;
 
 public class MagentaDice extends Dice{
+    private DiceStatus status;
+    private static final String RESET = "\u001B[0m";
+    private static final String MAGENTA = "\u001B[35m";
     private static final Color color=Color.MAGENTA;
     private int value; // value of the dices
     // -----------------------constructor-----------------------//
     public MagentaDice(int value) {
         this.value = value;
+        this.status=DiceStatus.AVAILABLE;
     }
     public MagentaDice(){
         this.value=0;
+        this.status=DiceStatus.AVAILABLE;
     }
 
     // -----------------------Methods-----------------------//
@@ -18,7 +23,7 @@ public class MagentaDice extends Dice{
     // getter for the dice color
     @Override
     public String toString() {
-        return String.format("%s(%d)", color, value);
+        return String.format(MAGENTA+"%s(%d)"+RESET, color, value);
     }
 
     public void setValue(int value){
@@ -34,11 +39,11 @@ public class MagentaDice extends Dice{
 
     @Override
     public DiceStatus getDiceStatus() {
-        return null;
+        return status;
     }
 
     @Override
     public void setDiceStatus(DiceStatus status) {
-
+        this.status=status;
     }
 }

@@ -23,15 +23,16 @@ public class Player {
     private PlayerStatus playerStatus;
     private static int id=1;
     private String name;
+    private Dice selectedDie;
 
 
 
     private int timeWarpCount;
     private int arcaneBoostCount;
-    private Dice selectedDice;
+
 
     private ArcaneBoost[] arcaneBoosts;
-    private static int MAX_NUMBER_OF_REALMS;
+
     private static int MAX_NUMBER_OF_TW;
     private static int MAX_NUMBER_OF_AB;
     static{
@@ -66,7 +67,7 @@ public class Player {
         initializePowers();
         initializeRealms();
         scoreSheet = new ScoreSheet(realms);
-        gameScore = new GameScore(realms);
+        gameScore = new GameScore(realms,name);
     }
     public Player(){
         this.name = String.format("Player %d",id);
@@ -74,7 +75,7 @@ public class Player {
         initializePowers();
         initializeRealms();
         scoreSheet = new ScoreSheet(realms);
-        gameScore = new GameScore(realms);
+        gameScore = new GameScore(realms,name);
         id++;
     }
     //----------------------Methods--------------------------//
@@ -85,13 +86,6 @@ public class Player {
     private void loadProperties() {
         timeWarps=new TimeWarp[MAX_NUMBER_OF_TW];
         arcaneBoosts=new ArcaneBoost[MAX_NUMBER_OF_AB];
-        //RED, GREEN, BLUE, MAGENTA, YELLOW
-        realms=new Realm[5];
-        realms[0]=new RedRealm();
-        realms[1]=new GreenRealm();
-        realms[2]=new BlueRealm();
-        realms[3]=new MagentaRealm();
-        realms[4]=new YellowRealm();
     }
 
     /**
@@ -124,7 +118,13 @@ public class Player {
      * Initialize all realms at the start of initialization of the player
      */
     private void initializeRealms(){
-
+        //RED, GREEN, BLUE, MAGENTA, YELLOW
+        realms=new Realm[5];
+        realms[0]=new RedRealm();
+        realms[1]=new GreenRealm();
+        realms[2]=new BlueRealm();
+        realms[3]=new MagentaRealm();
+        realms[4]=new YellowRealm();
     }
     public void setPlayerStatus(PlayerStatus status){
         this.playerStatus=status;
@@ -134,15 +134,15 @@ public class Player {
      * @return true if the power was successfully received, false otherwise
      */
     boolean receivePower(Collectibles power){
-        boolean flag=false;
+
         //Assumption: The player won't be able receive powers more than POWER_NUMBER
         if(power instanceof ArcaneBoost){
             for (int i = 0; i < arcaneBoosts.length; i++) {
                 if (arcaneBoosts[i].getStatus() == CollectiblesStatus.DISABLED) {
                     arcaneBoosts[i].setStatus(CollectiblesStatus.ENABLED);
                     arcaneBoostCount++;
-                    flag = true;
-                    break;
+                    System.out.println("Arcane Boost Power Received!");
+                    return true;
                 }
             }
         }
@@ -151,20 +151,26 @@ public class Player {
                 if (timeWarps[i].getStatus() == CollectiblesStatus.DISABLED) {
                     timeWarps[i].setStatus(CollectiblesStatus.ENABLED);
                     timeWarpCount++;
-                    flag = true;
-                    break;
+                    System.out.println("Time Warp Power Received!");
+                    return true;
                 }
             }
         }
-        return flag;
+        System.out.printf("%s can't receive more than %d Arcane Boost power & %d Time Warp power%n",name,MAX_NUMBER_OF_AB,MAX_NUMBER_OF_TW);
+        return false;
     }
     ScoreSheet getScoreSheet(){
         return scoreSheet;
     }
+
+    public GameScore getGameScore() {
+        return gameScore;
+    }
+
     // Check the player's Time Warp powers array
     // Return true if available, false otherwise
     public boolean isTimeWarpAvailable(){
-        return arcaneBoostCount!=0;
+        return timeWarpCount!=0;
     }
     // Check the player's Arcane Boost powers array
     // Return true if available, false otherwise
@@ -232,6 +238,10 @@ public class Player {
         return realms;
     }
     public Realm getRealm(Dice dice){
+        if(dice.getRealm()==Color.WHITE){
+            System.err.println("There is no white realm");
+            return null;
+        }
         for(Realm i:realms){
             if(dice.getRealm()==i.getColor()){
                 return i;
@@ -241,12 +251,18 @@ public class Player {
     }
     @Override
     public String toString(){
-        return null;
+        return name;
     }
-    public void setSelectedDice(Dice dice){
-        this.selectedDice=dice;
-    }
+
     public PlayerStatus getPlayerStatus() {
         return playerStatus;
+    }
+
+    public Dice getSelectedDie() {
+        return selectedDie;
+    }
+
+    public void setSelectedDie(Dice selectedDie) {
+        this.selectedDie = selectedDie;
     }
 }

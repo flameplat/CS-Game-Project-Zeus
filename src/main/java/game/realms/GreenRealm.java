@@ -7,6 +7,8 @@ import game.engine.Move;
 import game.dice.*;
 public class GreenRealm extends Realm{
     // -----------------------Attributes-----------------------//
+    private static final Color realmColor=Color.GREEN;
+    private static WhiteDice whiteDice;
     // -----------------------Constructor-----------------------//
     // -----------------------Methods-----------------------//
     @Override
@@ -16,7 +18,7 @@ public class GreenRealm extends Realm{
 
     @Override
     public Color getColor() {
-        return null;
+        return realmColor;
     }
 
     @Override
@@ -69,5 +71,7 @@ public class GreenRealm extends Realm{
         return null;
     }
 
-
+    public static void setWhiteDice(WhiteDice whiteDice) {
+        GreenRealm.whiteDice = whiteDice;
+    }
 }
