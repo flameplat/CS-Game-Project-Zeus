@@ -23,15 +23,16 @@ public class Player {
     private PlayerStatus playerStatus;
     private static int id=1;
     private String name;
+    private Dice selectedDie;
 
 
 
     private int timeWarpCount;
     private int arcaneBoostCount;
-    private Dice selectedDice;
+
 
     private ArcaneBoost[] arcaneBoosts;
-    private static int MAX_NUMBER_OF_REALMS;
+
     private static int MAX_NUMBER_OF_TW;
     private static int MAX_NUMBER_OF_AB;
     static{
@@ -66,7 +67,7 @@ public class Player {
         initializePowers();
         initializeRealms();
         scoreSheet = new ScoreSheet(realms);
-        gameScore = new GameScore(realms);
+        gameScore = new GameScore(realms,name);
     }
     public Player(){
         this.name = String.format("Player %d",id);
@@ -74,7 +75,7 @@ public class Player {
         initializePowers();
         initializeRealms();
         scoreSheet = new ScoreSheet(realms);
-        gameScore = new GameScore(realms);
+        gameScore = new GameScore(realms,name);
         id++;
     }
     //----------------------Methods--------------------------//
@@ -85,7 +86,6 @@ public class Player {
     private void loadProperties() {
         timeWarps=new TimeWarp[MAX_NUMBER_OF_TW];
         arcaneBoosts=new ArcaneBoost[MAX_NUMBER_OF_AB];
-        initializeRealms();
     }
 
     /**
@@ -238,6 +238,10 @@ public class Player {
         return realms;
     }
     public Realm getRealm(Dice dice){
+        if(dice.getRealm()==Color.WHITE){
+            System.err.println("There is no white realm");
+            return null;
+        }
         for(Realm i:realms){
             if(dice.getRealm()==i.getColor()){
                 return i;
@@ -247,12 +251,18 @@ public class Player {
     }
     @Override
     public String toString(){
-        return null;
+        return name;
     }
-    public void setSelectedDice(Dice dice){
-        this.selectedDice=dice;
-    }
+
     public PlayerStatus getPlayerStatus() {
         return playerStatus;
+    }
+
+    public Dice getSelectedDie() {
+        return selectedDie;
+    }
+
+    public void setSelectedDie(Dice selectedDie) {
+        this.selectedDie = selectedDie;
     }
 }

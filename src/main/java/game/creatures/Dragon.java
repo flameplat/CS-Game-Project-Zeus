@@ -4,21 +4,22 @@ package game.creatures;
 
 public class Dragon extends Creature {
     // -----------------------Attributes-----------------------//
-    private static int id = 0; // number of dragon
+    private int dragonNumber; // number of dragon
     private int[] health; // [HEAD,WING,TAIL,HEART]
     private int score; // score of the dragon
     private boolean isAlive; // status of the dragons if they are alive or dead
 
     // -----------------------Constructor-----------------------//
 
-    public Dragon(int[] hitValues, int score) {
+    public Dragon(int[] hitValues, int score,int dragonNumber) {
 //        health = new int[Config.MAX_NUM_DRAGON_REGIONS];
 //        for (int i = 0; i < health.length; i++) {
 //            health[i] = hitValues[i];
 //        }
 //        isAlive = true;
 //        this.score = score;
-//        id++;
+//        this.dragonNumber=dragonNumber;
+
     }
 
     // -----------------------Methods-----------------------//
@@ -41,8 +42,8 @@ public class Dragon extends Creature {
         return score;
     }
 
-    public int getId() { // getter for the dragon number
-        return id;
+    public int getDragonNumber() { // getter for the dragon number
+        return dragonNumber;
     }
     @Override
     public String toString(){

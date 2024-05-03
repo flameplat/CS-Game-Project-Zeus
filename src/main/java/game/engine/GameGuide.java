@@ -1,6 +1,8 @@
 package game.engine;
 
 import game.collectibles.ArcaneBoost;
+import game.collectibles.ColorBonus;
+import game.collectibles.EssenceBonus;
 import game.collectibles.TimeWarp;
 
 import java.util.InputMismatchException;
@@ -17,9 +19,10 @@ public class GameGuide {
     private static final String TURN = "Roll the available dice then choose one of them to spell";
     private static final String FORGOTTEN_REALM = "Choose a dice from the forgotten realm";
     private static final String PASSIVE_TURN="Now you have to play your passive turn";
-    private static final String COLOR_BONUS=String.format("Congratulations you have received a color bonus,%nyou should now choose a realm to play by choosing a die you have not selected before%n");
+    private static final String COLOR_BONUS= ColorBonus.getInstruction();
     private static final String AB_POWER = ArcaneBoost.getInstruction();
     private static final String TW_POWER = TimeWarp.getInstruction();
+    private static final String ESSENCE_BONUS= EssenceBonus.getInstruction();
     private static final String ROLL="Press R to roll the available dice";
     private static final String SELECT_DICE="Enter the number corresponding to your choice:";
 
@@ -32,7 +35,19 @@ public class GameGuide {
         System.out.println("Dice Realms: Quest for the Elemental Crests!");
         System.out.println("(1) Start Game\n(2) Exit Game");
     }
-
+    public void displayNumberedChoice(Object[] array){
+        StringBuilder result=new StringBuilder();
+        result.append("[");
+        for(int i=0;i<array.length;i++){
+            result.append(i+1).append("-");
+            result.append(array[i]);
+            if(i<array.length-1){
+                result.append(", ");
+            }
+        }
+        result.append("]");
+        System.out.println(result);
+    }
     public void displayInstructions(Instruction instruction) {
         String output;
         switch (instruction){
@@ -46,6 +61,7 @@ public class GameGuide {
             case COLOR_BONUS:output= COLOR_BONUS;break;
             case AB_PROMPT:output= AB_POWER;break;
             case TW_PROMPT:output= TW_POWER;break;
+            case ESSENCE_BONUS:output=ESSENCE_BONUS;break;
             default:output="";
         }
         System.out.println(output);
@@ -90,16 +106,7 @@ public class GameGuide {
         return validValue;
 
     }
-    public void waitForKeyPress(char character){
-        while (true){
-            String validchar = sc.nextLine();
-            if(validchar.length()==1 && validchar.charAt(0)==character){
-                break;
-            }
 
-
-        }
-    }
     public void closeScanner(){
         sc.close();
     }

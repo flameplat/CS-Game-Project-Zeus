@@ -1,6 +1,7 @@
 package game.engine;
 
 
+import game.Color;
 import game.creatures.Creature;
 import game.realms.Realm;
 import game.dice.*;
@@ -10,10 +11,12 @@ public class ScoreSheet {
     //--------------------------Attributes--------------------------//
     private Realm[] realms;
     private String string;
+
     //--------------------------Constructor--------------------------//
     public ScoreSheet(Realm[] realmsReference){
         this.realms=realmsReference;
     }
+
     //--------------------------Methods--------------------------//
     private void updateScoresheet(){
         StringBuilder stringBuilder=new StringBuilder();
@@ -24,13 +27,21 @@ public class ScoreSheet {
         string=stringBuilder.toString();
     }
     public void displayScoreSheet(){
+        updateScoresheet();
         System.out.println(string);
+    }
+    public void displayRedRealm(){
+        System.out.println(realms[Color.RED.ordinal()]);
     }
     @Override
     public String toString(){
         return string;
     }
     public Creature getCreatureByRealm(Dice dice){
+        if(dice.getRealm()== Color.WHITE){
+            System.err.println("There is no white realm");
+            return null;
+        }
         for(Realm i:realms){
             if(dice.getRealm().equals(i.getColor())) {
                 return i.getCreature(dice);

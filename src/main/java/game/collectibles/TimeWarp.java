@@ -36,5 +36,8 @@ public class TimeWarp extends Collectibles {
     public static String getInstruction(){
         return instruction;
     }
+    public CollectiblesType getType(){
+        return type;
+    }
 
 }

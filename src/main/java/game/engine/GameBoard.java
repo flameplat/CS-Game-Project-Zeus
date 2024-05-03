@@ -1,29 +1,27 @@
 package game.engine;
 
+import game.Color;
 import game.dice.*;
 import game.exceptions.MissingGameFilesException;
+import game.realms.GreenRealm;
 
 public class GameBoard {
     // -----------------------Attributes-----------------------//
     private Player player1;
     private Player player2;
-    private CurrentStatus currentStatus;
     private Dice[] diceArray;
 
-    public CurrentStatus getCurrentStatus() {
-        return currentStatus;
-    }
 
 
 
     // -----------------------Constructor-----------------------//
     public GameBoard(){
-        currentStatus=CurrentStatus.IN_PROGRESS;
         player1=new Player();
         player2=new Player();
         player1.setPlayerStatus(PlayerStatus.ACTIVE);
         player2.setPlayerStatus(PlayerStatus.PASSIVE);
         diceArray= new Dice[]{new RedDice(), new GreenDice(), new BlueDice(), new MagentaDice(), new YellowDice(), new WhiteDice()};
+        GreenRealm.setWhiteDice((WhiteDice) diceArray[5]);
     }
     public void setPlayer1(Player player1){
         this.player1=player1;

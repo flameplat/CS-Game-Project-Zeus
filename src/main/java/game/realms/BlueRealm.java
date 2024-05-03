@@ -9,6 +9,7 @@ import game.dice.*;
 
 public class BlueRealm extends Realm{
     // -----------------------Attributes-----------------------//
+    private static final Color realmColor=Color.BLUE;
     // -----------------------Constructor-----------------------//
     // -----------------------Methods-----------------------//
     @Override
@@ -18,7 +19,7 @@ public class BlueRealm extends Realm{
 
     @Override
     public Color getColor() {
-        return null;
+        return realmColor;
     }
 
     @Override

@@ -14,7 +14,7 @@ public class MagentaDice extends Dice{
         this.status=DiceStatus.AVAILABLE;
     }
     public MagentaDice(){
-        this.value=1;
+        this.value=0;
         this.status=DiceStatus.AVAILABLE;
     }
 

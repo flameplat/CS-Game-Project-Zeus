@@ -16,7 +16,7 @@ public class BlueDice extends Dice{
 
     }
     public BlueDice(){
-        this.value=1;
+        this.value=0;
         this.status=DiceStatus.AVAILABLE;
     }
 

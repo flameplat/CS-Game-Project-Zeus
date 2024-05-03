@@ -14,7 +14,7 @@ public class YellowDice extends Dice{
         this.status=DiceStatus.AVAILABLE;
     }
     public YellowDice(){
-        this.value=1;
+        this.value=0;
         this.status=DiceStatus.AVAILABLE;
     }
 

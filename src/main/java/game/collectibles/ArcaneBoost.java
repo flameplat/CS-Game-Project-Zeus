@@ -19,7 +19,9 @@ public class ArcaneBoost extends Collectibles {
     public CollectiblesStatus getStatus() {
         return status;
     }
-
+    public CollectiblesType getType(){
+        return type;
+    }
     // Method to set current status of TW to ENABLED/USED
     /*
      * it becomes Enabled when the user is
