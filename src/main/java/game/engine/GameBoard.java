@@ -11,9 +11,6 @@ public class GameBoard {
     private Player player2;
     private Dice[] diceArray;
 
-
-
-
     // -----------------------Constructor-----------------------//
     public GameBoard(){
         player1=new Player();

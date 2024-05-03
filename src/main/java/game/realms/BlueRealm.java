@@ -4,13 +4,18 @@ package game.realms;
 import game.Color;
 import game.collectibles.Collectibles;
 import game.creatures.Creature;
+import game.creatures.Serpent;
 import game.engine.Move;
 import game.dice.*;
 
 public class BlueRealm extends Realm{
     // -----------------------Attributes-----------------------//
+    private Move[] realmMoves;
     private static final Color realmColor=Color.BLUE;
     // -----------------------Constructor-----------------------//
+    public BlueRealm(){
+        this.realmMoves=new Move[]{new Move(new BlueDice(),new Serpent(1))};
+    }
     // -----------------------Methods-----------------------//
     @Override
     public String getName() {
@@ -44,6 +49,7 @@ public class BlueRealm extends Realm{
 
     @Override
     public boolean attack(Move move) {
+
         return false;
     }
 

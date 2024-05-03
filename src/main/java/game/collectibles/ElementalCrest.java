@@ -9,6 +9,6 @@ public class ElementalCrest extends Collectibles{
 
     @Override
     public String toString() {
-        return null;
+        return "Elemental Crest";
     }
 }

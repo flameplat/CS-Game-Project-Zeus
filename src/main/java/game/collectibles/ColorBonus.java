@@ -32,7 +32,7 @@ public class ColorBonus extends Collectibles {
 
     @Override
     public String toString() {
-        return null;
+        return colorBonus+"_BONUS";
     }
 
     public Color getColor() {
