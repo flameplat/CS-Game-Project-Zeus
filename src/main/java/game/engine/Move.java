@@ -26,7 +26,7 @@ public class Move {
 
     @Override
     public String toString(){
-        return null;
+        return "["+dice.toString()+", "+creature.toString()+"]";
     }
     public Dice getDice(){
         return dice;

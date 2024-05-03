@@ -387,11 +387,12 @@ public class CLIGameController extends GameController {
     }
 
     private Move selectValidMove(Player player,Dice selectedDie){
+        //This method is called after selecting a valid die( a die with possible moves found with it)
         Move selectedMove=null;
         if(selectedDie instanceof WhiteDice) {
             System.out.println("Choose which realm to play with Arcane Prism");
             LinkedList<Dice> versatileDice=new LinkedList<>();
-            //RED, GREEN, BLUE, MAGENTA, YELLOW, WHITE
+            //RED, GREEN, BLUE, MAGENTA, YELLOW
             Dice[] possibleDice={
                     new RedDice(selectedDie.getValue()),
                     new GreenDice(selectedDie.getValue()),
@@ -418,7 +419,6 @@ public class CLIGameController extends GameController {
                 for(Move i:moves){
                     if(((Dragon)i.getCreature()).getDragonNumber()==dragonNumber){
                         selectedMove=i;
-                        ((RedDice)selectedDie).selectsDragon(dragonNumber);
                         break;
                     }
                 }
@@ -429,7 +429,6 @@ public class CLIGameController extends GameController {
             //Reset dragon number
             //This will allow the possible moves for red dice to be based on dice value only regardless of creature
             //and the test file will be able to select dragon number
-            ((RedDice)selectedDie).selectsDragon(0);
             return selectedMove;
         }
         else{
@@ -670,6 +669,7 @@ public class CLIGameController extends GameController {
                 Move[] moves=getPossibleMovesForADie(player,i);
                 for(Move m:moves){
                     //To not include duplicated moves if white die has same value of any other die in the given dice array
+                    //And to not duplicate moves for green realm
                     if(!availableMoves.contains(m)){
                         availableMoves.addLast(m);
                     }

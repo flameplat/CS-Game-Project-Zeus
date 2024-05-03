@@ -50,6 +50,7 @@ public class RedDice extends Dice{
     public void selectsDragon(int dragonNumber){
         this.dragonNumber=dragonNumber;
     }
+    //Should be used in the redRealm when getting creature by red die
     public int getDragonNumber(){
         return dragonNumber;
     }

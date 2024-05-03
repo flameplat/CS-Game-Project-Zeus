@@ -3,12 +3,14 @@ package game.realms;
 import game.Color;
 import game.collectibles.Collectibles;
 import game.creatures.Creature;
+import game.creatures.Lion;
 import game.engine.Move;
 import game.dice.*;
 
 public class YellowRealm extends Realm{
     // -----------------------Attributes-----------------------//
     private static final Color realmColor=Color.YELLOW;
+
     // -----------------------Constructor-----------------------//
     // -----------------------Methods-----------------------//
     @Override
@@ -63,7 +65,14 @@ public class YellowRealm extends Realm{
 
     @Override
     public Move[] getRealmMoves() {
-        return new Move[0];
+        return new Move[]{
+                new Move(new YellowDice(1),new Lion()),
+                new Move(new YellowDice(2),new Lion()),
+                new Move(new YellowDice(3),new Lion()),
+                new Move(new YellowDice(4),new Lion()),
+                new Move(new YellowDice(5),new Lion()),
+                new Move(new YellowDice(6),new Lion()),
+        };
     }
 
     @Override
