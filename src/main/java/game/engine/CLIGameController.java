@@ -24,7 +24,6 @@ public class CLIGameController extends GameController {
     private static int MAX_NUMBER_OF_ROUNDS;
     public static int MAX_NUMBER_OF_TURNS;
     public static Collectibles[] roundRewards;
-
     private Dice[] diceArray;
     private GameStatus gameStatus;
     static {
@@ -44,14 +43,10 @@ public class CLIGameController extends GameController {
                         case "TimeWarp":roundRewards[i]=new TimeWarp();break;
                         case "ArcaneBoost":roundRewards[i]=new ArcaneBoost();break;
                         case "EssenceBonus":roundRewards[i]=new EssenceBonus();break;
-                        case "RedBonus":roundRewards[i]=new ColorBonus(Color.RED);
-                        case "BlueBonus":roundRewards[i]=new ColorBonus(Color.BLUE);
-                        case "GreenBonus":roundRewards[i]=new ColorBonus(Color.GREEN);
-                        case "MagentaBonus":roundRewards[i]=new ColorBonus(Color.MAGENTA);
-                        case "YellowBonus":roundRewards[i]=new ColorBonus(Color.YELLOW);
                         default:roundRewards[i]=null;
                     }
                 }
+
             }
         } catch (IOException | NumberFormatException e) {
             // Handle the exception gracefully
@@ -452,7 +447,6 @@ public class CLIGameController extends GameController {
         System.out.println("Press Enter to roll");
         sc.nextLine();
         rollDice();
-        checkTimeWarp();
         Dice selectedDie=null;
         while (true){
             try {
@@ -849,6 +843,7 @@ public class CLIGameController extends GameController {
         }
         return false;
     }
+
     public void endGame(){
         gameGuide.closeScanner();
         sc.close();
