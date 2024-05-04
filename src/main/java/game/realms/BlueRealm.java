@@ -1,10 +1,13 @@
 
 package game.realms;
 
+<<<<<<< HEAD
 import java.util.Properties;
 
 import org.drools.core.util.LinkedList;
 
+=======
+>>>>>>> parent of b40a3b7 (Removed BlueRealm)
 import game.Color;
 import game.collectibles.Collectibles;
 import game.creatures.Creature;
@@ -14,6 +17,7 @@ import game.dice.*;
 
 public class BlueRealm extends Realm{
     // -----------------------Attributes-----------------------//
+<<<<<<< HEAD
 
     private Move[] realmMoves;
 
@@ -67,6 +71,18 @@ public class BlueRealm extends Realm{
     @Override
     public String getName() {
         return name;
+=======
+    private Move[] realmMoves;
+    private static final Color realmColor=Color.BLUE;
+    // -----------------------Constructor-----------------------//
+    public BlueRealm(){
+        this.realmMoves=new Move[]{new Move(new BlueDice(),new Serpent(1))};
+    }
+    // -----------------------Methods-----------------------//
+    @Override
+    public String getName() {
+        return null;
+>>>>>>> parent of b40a3b7 (Removed BlueRealm)
     }
 
     @Override
@@ -81,24 +97,34 @@ public class BlueRealm extends Realm{
 
     @Override
     public boolean isRealmAvailable() {
+<<<<<<< HEAD
         if (totalRealmScore==66/*cahnged from the properties */){
             return false;
         }else{
             return true;
         }
 
+=======
+        return false;
+>>>>>>> parent of b40a3b7 (Removed BlueRealm)
     }
 
     @Override
     public Collectibles getReward() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of b40a3b7 (Removed BlueRealm)
         return null;
     }
 
     @Override
     public boolean checkReward() {
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> parent of b40a3b7 (Removed BlueRealm)
         return false;
     }
 
@@ -106,6 +132,7 @@ public class BlueRealm extends Realm{
     public boolean attack(Move move) {
 
         return false;
+<<<<<<< HEAD
         if (move.getMoveNumber()>=serpentstatus.getFirst()){
 
         }
@@ -141,6 +168,13 @@ public class BlueRealm extends Realm{
         totalRealmScore=score1+score2;
         return totalRealmScore;
 
+=======
+    }
+
+    @Override
+    public int getTotalScore() {
+        return 0;
+>>>>>>> parent of b40a3b7 (Removed BlueRealm)
     }
 
     @Override
@@ -155,6 +189,7 @@ public class BlueRealm extends Realm{
 
     @Override
     public Move[] getRealmMoves() {
+<<<<<<< HEAD
         return getNextPossibleDiceValue(movement);
     }
     public Move[] getNextPossibleDiceValue(Move move){
@@ -182,6 +217,11 @@ public class BlueRealm extends Realm{
             }
         }
     };
+=======
+        return new Move[0];
+    }
+
+>>>>>>> parent of b40a3b7 (Removed BlueRealm)
     @Override
     public Creature getCreature(Dice dice) {
         return null;

@@ -74,8 +74,7 @@ public class YellowRealm extends Realm{
 
     @Override
     public Move[] getRealmMoves() {
-
-
+        return null;
     }
 
     @Override
