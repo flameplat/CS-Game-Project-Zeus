@@ -75,6 +75,7 @@ public class GameScore {
 
     @Override
     public String toString(){
+        updateGameScore();
         StringBuilder sb = new StringBuilder();
 
         // Player Name row
@@ -86,7 +87,8 @@ public class GameScore {
         sb.append(String.format("%-20s", "Total Score")).append("\n");
 
         // Add rows for each realm
-        String[] colors = {"Yellow", "Green", "Red", "Magenta", "Blue"};
+        //RED, GREEN, BLUE, MAGENTA, YELLOW, WHITE
+        String[] colors = {"Red", "Green", "Blue", "Magenta", "Yellow"};
         for (int i = 0; i < 5; i++) {
             sb.append(String.format("%-20s", colors[i] + " Realm"));
             sb.append(String.format("%-20d", realms[i].getNoElementalCrests()));

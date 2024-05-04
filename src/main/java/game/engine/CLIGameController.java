@@ -141,7 +141,7 @@ public class CLIGameController extends GameController {
         }
         Dice[] diceNotSelectedByPlayer=notSelectedByPlayer.toArray(Dice[]::new);
         try {
-            Dice selectedDie=selectValidDie(player,diceNotSelectedByPlayer);
+            Dice selectedDie=selectValidDie(player,diceNotSelectedByPlayer,false);
             selectedDie.setDiceStatus(filter);
             Move validMove=selectValidMove(player,selectedDie);
             makeMove(player,validMove);
@@ -200,7 +200,7 @@ public class CLIGameController extends GameController {
                         new RedDice(6)};
                 redDice=filterDiceWithPossibleMoves(player,redDice);
                 try{
-                    Dice selectedDie=selectValidDie(player,redDice);
+                    Dice selectedDie=selectValidDie(player,redDice,false);
                     Move selectedMove=selectValidMove(player,selectedDie);
                     makeMove(player,selectedMove);
                     if(player.getRealm(Color.RED).checkReward()){
@@ -228,7 +228,7 @@ public class CLIGameController extends GameController {
                 greenDice = filterDiceWithPossibleMoves(player, greenDice);
                 try {
                     // Select a valid die and move
-                    Dice selectedDie = selectValidDie(player, greenDice);
+                    Dice selectedDie = selectValidDie(player, greenDice,false);
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
                     if(player.getRealm(Color.GREEN).checkReward()){
@@ -254,7 +254,7 @@ public class CLIGameController extends GameController {
                 blueDice = filterDiceWithPossibleMoves(player, blueDice);
                 try {
                     // Select a valid die and move
-                    Dice selectedDie = selectValidDie(player, blueDice);
+                    Dice selectedDie = selectValidDie(player, blueDice,false);
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
                     if(player.getRealm(Color.BLUE).checkReward()){
@@ -280,7 +280,7 @@ public class CLIGameController extends GameController {
                 magentaDice = filterDiceWithPossibleMoves(player, magentaDice);
                 try {
                     // Select a valid die and move
-                    Dice selectedDie = selectValidDie(player, magentaDice);
+                    Dice selectedDie = selectValidDie(player, magentaDice,false);
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
                     if(player.getRealm(Color.MAGENTA).checkReward()){
@@ -306,7 +306,7 @@ public class CLIGameController extends GameController {
                 yellowDice = filterDiceWithPossibleMoves(player, yellowDice);
                 try {
                     // Select a valid die and move
-                    Dice selectedDie = selectValidDie(player, yellowDice);
+                    Dice selectedDie = selectValidDie(player, yellowDice,false);
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
                     if(player.getRealm(Color.YELLOW).checkReward()){
@@ -323,6 +323,7 @@ public class CLIGameController extends GameController {
 
     }
     public void performReward(Player player, Collectibles reward){
+        System.out.println(player.getName()+", you received "+reward.toString()+"!");
         if(reward instanceof EssenceBonus){
             playEssenceBonus(player);
         }
@@ -360,23 +361,32 @@ public class CLIGameController extends GameController {
     }
     //Selects a valid die (has an available move in player)
     //Prints given dice if no moves or prints filtered dice then the selected die
-    private Dice selectValidDie(Player player,Dice[] dice) throws NoAvailableMovesException {
+    private Dice selectValidDie(Player player,Dice[] dice,boolean checkTimeWarp) throws NoAvailableMovesException {
         Dice selectedDie;
+        Dice[] filteredDice;
         if(getPossibleMovesForDice(player,dice).length==0){
             gameGuide.displayNumberedChoice(dice);
             throw new NoAvailableMovesException();
         }
         else {
-            dice=filterDiceWithPossibleMoves(player,dice);
             gameGuide.displayNumberedChoice(dice);
-            System.out.printf("Select a die from %d to %d%n", 1, dice.length);
-            int choice = gameGuide.getUserChoice(1, dice.length);
-            selectedDie = dice[choice - 1];
+            filteredDice=filterDiceWithPossibleMoves(player,dice);
+            System.out.println("Possible Dice to choose from:");
+            gameGuide.displayNumberedChoice(filteredDice);
+            if(checkTimeWarp && checkTimeWarp()){
+                filteredDice=filterDiceWithPossibleMoves(player,dice);
+                gameGuide.displayNumberedChoice(dice);
+                System.out.println("Possible Dice to choose from:");
+                gameGuide.displayNumberedChoice(filteredDice);
+            }
+            System.out.printf("Select a die from %d to %d%n", 1, filteredDice.length);
+            int choice = gameGuide.getUserChoice(1, filteredDice.length);
+            selectedDie = filteredDice[choice - 1];
         }
         System.out.println(selectedDie);
         return selectedDie;
     }
-    private Dice[] filterDiceWithPossibleMoves(Player player,Dice[] dice){
+    public Dice[] filterDiceWithPossibleMoves(Player player,Dice[] dice){
         LinkedList<Dice> diceWithMoves=new LinkedList<>();
         for(Dice i:dice){
             if(getPossibleMovesForADie(player,i).length!=0){
@@ -386,7 +396,10 @@ public class CLIGameController extends GameController {
         return diceWithMoves.toArray(Dice[]::new);
     }
 
-    private Move selectValidMove(Player player,Dice selectedDie){
+    public GameGuide getGameGuide() {
+        return gameGuide;
+    }
+    private Move selectValidMove(Player player, Dice selectedDie){
         //This method is called after selecting a valid die( a die with possible moves found with it)
         Move selectedMove=null;
         if(selectedDie instanceof WhiteDice) {
@@ -409,39 +422,44 @@ public class CLIGameController extends GameController {
             int choice=gameGuide.getUserChoice(1,possibleDice.length);
             selectedDie=possibleDice[choice-1];
             System.out.println(selectedDie);
-        }
-        if(selectedDie instanceof RedDice){
-            player.getScoreSheet().displayRedRealm();
-            Move[] moves=getPossibleMovesForADie(player,selectedDie);
-            while(selectedMove==null){
-                System.out.println("Choose a Dragon to attack");
-                int dragonNumber=gameGuide.getUserChoice(1,4);
-                for(Move i:moves){
-                    if(((Dragon)i.getCreature()).getDragonNumber()==dragonNumber){
-                        selectedMove=i;
-                        break;
-                    }
-                }
-                if(selectedMove==null){
-                    System.out.println("Can't attack Dragon " + dragonNumber);
-                }
-            }
-            //Reset dragon number
-            //This will allow the possible moves for red dice to be based on dice value only regardless of creature
-            //and the test file will be able to select dragon number
-            return selectedMove;
+            selectedMove=getPossibleMovesForADie(player,selectedDie)[0];
         }
         else{
-            return getPossibleMovesForADie(player,selectedDie)[0];
+            if(selectedDie instanceof RedDice){
+                player.getScoreSheet().displayRedRealm();
+                Move[] moves=getPossibleMovesForADie(player,selectedDie);
+                while(selectedMove==null){
+                    System.out.println("Choose a Dragon to attack");
+                    int dragonNumber=gameGuide.getUserChoice(1,4);
+                    for(Move i:moves){
+                        if(((Dragon)i.getCreature()).getDragonNumber()==dragonNumber){
+                            selectedMove=i;
+                            break;
+                        }
+                    }
+                    if(selectedMove==null){
+                        System.out.println("Can't attack Dragon " + dragonNumber);
+                    }
+                }
+                //Reset dragon number
+                //This will allow the possible moves for red dice to be based on dice value only regardless of creature
+                //and the test file will be able to select dragon number
+                return selectedMove;
+            }
+            else{
+                return getPossibleMovesForADie(player,selectedDie)[0];
+            }
         }
+        return selectedMove;
+
     }
 
     private void playTurn() {
         gameGuide.displayInstructions(Instruction.TURN);
         System.out.println("Here is your score sheet");
         activePlayer.getScoreSheet().displayScoreSheet();
-        Dice[] temp=getAvailableDice();
-        gameGuide.displayNumberedChoice(temp);
+        Dice[] availableDice=getAvailableDice();
+        gameGuide.displayNumberedChoice(availableDice);
         gameGuide.displayInstructions(Instruction.ROLL);
         //Press enter to roll
         System.out.println("Press Enter to roll");
@@ -450,7 +468,7 @@ public class CLIGameController extends GameController {
         Dice selectedDie=null;
         while (true){
             try {
-                selectedDie=selectValidDie(activePlayer,temp);
+                selectedDie=selectValidDie(activePlayer,availableDice,true);
                 selectDice(selectedDie,activePlayer);
                 break;
             }
@@ -463,7 +481,9 @@ public class CLIGameController extends GameController {
             }
         }
 
+
         Move selectedMove=selectValidMove(activePlayer,selectedDie);
+        selectedDie=selectedMove.getDice();
         makeMove(activePlayer,selectedMove);
         if(selectedDie!=null && activePlayer.getRealm(selectedDie).checkReward()){
             Collectibles reward=activePlayer.getRealm(selectedDie).getReward();
@@ -480,7 +500,7 @@ public class CLIGameController extends GameController {
         Dice[] temp=getForgottenRealmDice();
         Dice selectedDie=null;
         try {
-            selectedDie=selectValidDie(passivePlayer,temp);
+            selectedDie=selectValidDie(passivePlayer,temp,false);
         }
         catch (NoAvailableMovesException e){
             System.out.println("Ohh bad luck...No possible moves!");
@@ -488,6 +508,7 @@ public class CLIGameController extends GameController {
             return;
         }
         Move selectedMove=selectValidMove(passivePlayer,selectedDie);
+        selectedDie=selectedMove.getDice();
         makeMove(passivePlayer,selectedMove);
         if(selectedDie!=null && passivePlayer.getRealm(selectedDie).checkReward()){
             Collectibles reward=passivePlayer.getRealm(selectedDie).getReward();
@@ -495,7 +516,7 @@ public class CLIGameController extends GameController {
         }
     }
 
-    private void displayAvailableRealms(Player player){
+    public void displayAvailableRealms(Player player){
         Realm[] realms=player.getRealms();
         StringBuilder result=new StringBuilder();
         result.append("[");

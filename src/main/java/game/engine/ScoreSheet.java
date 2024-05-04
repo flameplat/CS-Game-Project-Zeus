@@ -35,6 +35,7 @@ public class ScoreSheet {
     }
     @Override
     public String toString(){
+        updateScoresheet();
         return string;
     }
     public Creature getCreatureByRealm(Dice dice){

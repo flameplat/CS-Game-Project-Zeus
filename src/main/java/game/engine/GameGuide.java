@@ -104,7 +104,6 @@ public class GameGuide {
 
         }
         return validValue;
-
     }
 
     public void closeScanner(){

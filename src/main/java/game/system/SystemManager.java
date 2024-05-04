@@ -23,8 +23,8 @@ public class SystemManager {
                 "src/main/resources/config/RadiantSvannaRewards.properties",
                 "src/main/resources/config/RoundsRewards.properties",
                 "src/main/resources/config/TerrasHeartlandRewards.properties",
-                "src/main/resources/config/TideAbyssRewards.properties",
-                "src/main/resources/config/Player.properties"
+                "src/main/resources/config/TideAbyssRewards.properties"
+
 
         };
         for (String filePath : filePaths) {

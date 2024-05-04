@@ -3,17 +3,90 @@ package game.realms;
 import game.Color;
 import game.collectibles.Collectibles;
 import game.creatures.Creature;
+import game.creatures.Phoenix;
 import game.engine.Move;
 import game.dice.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
+import game.collectibles.*;
+
 
 public class MagentaRealm extends Realm{
     // -----------------------Attributes-----------------------//
     private static final Color realmColor=Color.MAGENTA;
+    private Collectibles[] collectibles;
+    private int totalRealmScore;
+    private int noElementalCrests;
+    private static final String name="";
+    private Move[]realmMoves;
+    private Phoenix phoenix;
+    private int counterHits;
+    private Move[]realmPossibleMoves;
+    private int[] score;
+
+
     // -----------------------Constructor-----------------------//
+    public MagentaRealm(){
+        this.collectibles = getRewardsProperties();
+        this.phoenix=new Phoenix();
+        totalRealmScore=0;
+        this.score=new int[11];
+        this.noElementalCrests=0;
+        this.realmMoves=new Move[]{new Move(new MagentaDice(1),phoenix),
+                new Move(new MagentaDice(2),phoenix),
+                new Move(new MagentaDice(3),phoenix),
+                new Move(new MagentaDice(4),phoenix),
+                new Move(new MagentaDice(5),phoenix),
+                new Move(new MagentaDice(6),phoenix) };
+        this.realmPossibleMoves=realmMoves;
+        this.counterHits=0;
+    }
     // -----------------------Methods-----------------------//
+    private void updatePossibleMoves(Move move){
+        LinkedList<Move> list=new LinkedList<>();
+        for(int i=0;i<realmMoves.length;i++){
+            if((move.getDice().getValue()%realmMoves.length)<realmMoves[i].getDice().getValue()){
+                list.addLast(realmMoves[i]);
+            }
+        }
+        this.realmPossibleMoves=list.toArray(Move[]::new);
+    }
+    private Collectibles[] getRewardsProperties() {
+        Properties properties = new Properties();
+        Collectibles []rewardProperties=new Collectibles[11] ;
+        try{
+            FileInputStream fileInputStream=new FileInputStream("src/main/resources/config/MysticalSkyRewards.properties");
+            properties.load(fileInputStream);
+            fileInputStream.close();
+        }
+        catch (IOException e){
+            System.out.println("File Not Found");
+        }
+        for (int i = 0; i < 11; i++) {
+
+            String reward = properties.getProperty("hit"+(i+1)+"Reward");
+            if(reward!=null){
+                switch (reward){
+                    case "TimeWarp":rewardProperties[i]=new TimeWarp();break;
+                    case "ArcaneBoost":rewardProperties[i]=new ArcaneBoost();break;
+                    case "EssenceBonus":rewardProperties[i]=new EssenceBonus();break;
+                    case "RedBonus":rewardProperties[i]=new ColorBonus(Color.RED);break;
+                    case "BlueBonus":rewardProperties[i]=new ColorBonus(Color.BLUE);break;
+                    case "GreenBonus":rewardProperties[i]=new ColorBonus(Color.GREEN);break;
+                    case "MagentaBonus":rewardProperties[i]=new ColorBonus(Color.MAGENTA);break;
+                    case "YellowBonus":rewardProperties[i]=new ColorBonus(Color.YELLOW);break;
+                    case "ElementalCrest":rewardProperties[i]=new ElementalCrest();break;
+                    default:rewardProperties[i]=null;
+                }
+            }
+
+        }
+        return rewardProperties;
+    }
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
@@ -28,47 +101,85 @@ public class MagentaRealm extends Realm{
 
     @Override
     public boolean isRealmAvailable() {
+        if(counterHits < 11){
+            return true;
+        }
         return false;
     }
 
     @Override
     public Collectibles getReward() {
-        return null;
+        return collectibles[counterHits-1];
     }
 
     @Override
     public boolean checkReward() {
+        if(collectibles[counterHits-1]!=null){
+            return true;
+        }
         return false;
+
     }
 
     @Override
     public boolean attack(Move move) {
-        return false;
+        if(isRealmAvailable()){
+            boolean flag=false;
+            for(Move i : realmPossibleMoves){
+                if(move !=null && i.getDice().getRealm()==move.getDice().getRealm() && i.getDice().getValue()==move.getDice().getValue()){
+                    flag = true;
+                    break;
+                }
+
+            }
+            if(flag == false){
+                return false;
+            }
+            updatePossibleMoves(move);
+            int attackScore=move.getDice().getValue();
+            score[counterHits]=attackScore;
+            totalRealmScore+=attackScore;
+            counterHits++;
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
     @Override
     public int getTotalScore() {
-        return 0;
+        return totalRealmScore;
     }
 
     @Override
     public int getNoElementalCrests() {
-        return 0;
+        return noElementalCrests;
     }
 
     @Override
     public String toString() {
-        return null;
+        String string=String.format("Mystical Sky: Majestic Phoenix (MAGENTA REALM):\n" +
+                "+-----------------------------------------------------------------------+\n" +
+                "|  #  |1    |2    |3    |4    |5    |6    |7    |8    |9    |10   |11   |\n" +
+                "+-----------------------------------------------------------------------+\n" +
+                "|  H  |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |\n" +
+                "|  C  |<    |<    |<    |<    |<    |<    |<    |<    |<    |<    |<    |\n" +
+                "|  R  |     |     |TW   |GB   |AB   |RB   |EC   |TW   |BB   |YB   |AB   |\n" +
+                "+-----------------------------------------------------------------------+\n\n",
+                score[0],score[1],score[2],score[3],score[4],score[5],score[6],score[7],score[8],score[9],score[10]);
+        return string;
     }
 
     @Override
     public Move[] getRealmMoves() {
-        return new Move[0];
+        return realmPossibleMoves;
     }
 
     @Override
     public Creature getCreature(Dice dice) {
-        return null;
+        return phoenix;
     }
 
 }

@@ -75,8 +75,6 @@ public class RedRealm extends Realm {
         return reward;
     }
 
-    // Update reward attribute if sequence appears if no reward sets it to null
-    // if reward is elemental crest set reward to null and increment elemental crests number
     @Override
     public boolean checkReward() {
         return false;

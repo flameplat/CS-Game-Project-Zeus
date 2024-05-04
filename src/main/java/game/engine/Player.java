@@ -3,7 +3,6 @@ package game.engine;
 import game.Color;
 import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
-import game.collectibles.CollectiblesStatus;
 import game.collectibles.TimeWarp;
 import game.dice.Dice;
 import game.exceptions.InvalidPlayerNameException;
@@ -12,6 +11,7 @@ import game.realms.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Properties;
 
 
@@ -24,35 +24,9 @@ public class Player {
     private static int id=1;
     private String name;
     private Dice selectedDie;
+    private LinkedList<ArcaneBoost> arcaneBoosts;
 
-
-
-    private int timeWarpCount;
-    private int arcaneBoostCount;
-
-
-    private ArcaneBoost[] arcaneBoosts;
-
-    private static int MAX_NUMBER_OF_TW;
-    private static int MAX_NUMBER_OF_AB;
-    static{
-        Properties playerProperties = new Properties();
-        Properties gameProperties = new Properties();
-        //Try with res will automatically close fileInputStream
-        try (FileInputStream fileInputStreamPlayer = new FileInputStream("src/main/resources/config/Player.properties")) {
-            playerProperties = new Properties();
-            playerProperties.load(fileInputStreamPlayer);
-            MAX_NUMBER_OF_TW = Integer.parseInt(playerProperties.getProperty("maxNumberOfTWPowers","7"));
-            MAX_NUMBER_OF_AB = Integer.parseInt(playerProperties.getProperty("maxNumberOfABPowers","7"));
-        } catch (IOException | NumberFormatException e) {
-            System.err.println("Error loading player properties");
-            //Load default values
-            MAX_NUMBER_OF_TW=7;
-            MAX_NUMBER_OF_AB=7;
-
-        }
-    }
-    private TimeWarp[] timeWarps;
+    private LinkedList<TimeWarp> timeWarps;
 
     //----------------------Constructor--------------------------//
     public Player(String name) throws InvalidPlayerNameException, MissingGameFilesException {
@@ -63,31 +37,22 @@ public class Player {
             throw new InvalidPlayerNameException("Name cannot contain special characters");
         }
         this.name = name;
-        loadProperties();
-        initializePowers();
         initializeRealms();
         scoreSheet = new ScoreSheet(realms);
         gameScore = new GameScore(realms,name);
+        timeWarps=new LinkedList<>();
+        arcaneBoosts=new LinkedList<>();
     }
     public Player(){
         this.name = String.format("Player %d",id);
-        loadProperties();
-        initializePowers();
         initializeRealms();
         scoreSheet = new ScoreSheet(realms);
         gameScore = new GameScore(realms,name);
         id++;
+        timeWarps=new LinkedList<>();
+        arcaneBoosts=new LinkedList<>();
     }
     //----------------------Methods--------------------------//
-
-    /**
-     * Load player's attributes from resources
-     */
-    private void loadProperties() {
-        timeWarps=new TimeWarp[MAX_NUMBER_OF_TW];
-        arcaneBoosts=new ArcaneBoost[MAX_NUMBER_OF_AB];
-    }
-
     /**
      * Check if player name contains special characters
      *
@@ -96,23 +61,6 @@ public class Player {
     private boolean checkSpecialCharacters(String name) {
         String regex = "^[a-zA-Z0-9]+$";
         return !name.matches(regex);
-    }
-
-
-
-
-    /**
-     * Initialize all powers to DISABLED at the start of initialization of the player
-     */
-    private void initializePowers() {
-
-        //Constructors initiallizes them automatically to disabled
-        for (int i=0;i<timeWarps.length;i++) {
-            timeWarps[i]=new TimeWarp();
-        }
-        for (int i=0;i<arcaneBoosts.length;i++) {
-            arcaneBoosts[i]=new ArcaneBoost();
-        }
     }
     /**
      * Initialize all realms at the start of initialization of the player
@@ -134,29 +82,15 @@ public class Player {
      * @return true if the power was successfully received, false otherwise
      */
     boolean receivePower(Collectibles power){
-
-        //Assumption: The player won't be able receive powers more than POWER_NUMBER
+        //The player only receives 2 powers AB and TW
         if(power instanceof ArcaneBoost){
-            for (int i = 0; i < arcaneBoosts.length; i++) {
-                if (arcaneBoosts[i].getStatus() == CollectiblesStatus.DISABLED) {
-                    arcaneBoosts[i].setStatus(CollectiblesStatus.ENABLED);
-                    arcaneBoostCount++;
-                    System.out.println("Arcane Boost Power Received!");
-                    return true;
-                }
-            }
+            arcaneBoosts.addLast((ArcaneBoost) power);
+            return true;
         }
         if(power instanceof TimeWarp){
-            for (int i = 0; i < timeWarps.length; i++) {
-                if (timeWarps[i].getStatus() == CollectiblesStatus.DISABLED) {
-                    timeWarps[i].setStatus(CollectiblesStatus.ENABLED);
-                    timeWarpCount++;
-                    System.out.println("Time Warp Power Received!");
-                    return true;
-                }
-            }
+            timeWarps.addLast((TimeWarp) power);
+            return true;
         }
-        System.out.printf("%s can't receive more than %d Arcane Boost power & %d Time Warp power%n",name,MAX_NUMBER_OF_AB,MAX_NUMBER_OF_TW);
         return false;
     }
     ScoreSheet getScoreSheet(){
@@ -170,12 +104,12 @@ public class Player {
     // Check the player's Time Warp powers array
     // Return true if available, false otherwise
     public boolean isTimeWarpAvailable(){
-        return timeWarpCount!=0;
+        return !timeWarps.isEmpty();
     }
     // Check the player's Arcane Boost powers array
     // Return true if available, false otherwise
     public boolean isArcaneBoostAvailable(){
-        return arcaneBoostCount!=0;
+        return !arcaneBoosts.isEmpty();
     }
 
     /**
@@ -183,53 +117,37 @@ public class Player {
      *
      * @return true if the power was successfully used, false otherwise
      */
-    public boolean useTimeWarpPower() {
-        //Decrement number of available TW powers
-        boolean flag = false;
-        for (int i = 0; i < timeWarps.length; i++) {
-            if (timeWarps[i].getStatus() == CollectiblesStatus.ENABLED) {
-                timeWarps[i].setStatus(CollectiblesStatus.USED);
-                timeWarpCount--;
-                flag = true;
-                break;
-            }
+    public void useTimeWarpPower() {
+        if(!timeWarps.isEmpty()) {
+            timeWarps.remove();
         }
-        return flag;
     }
     /**
      * Use the Arcane Boost power and set its status to USED.
      *
-     * @return true if the power was successfully used, false otherwise
      */
-    public boolean useArcaneBoostPower() {
-        boolean flag = false;
-        for (int i = 0; i < arcaneBoosts.length; i++) {
-            if (arcaneBoosts[i].getStatus() == CollectiblesStatus.ENABLED) {
-                arcaneBoosts[i].setStatus(CollectiblesStatus.USED);
-                arcaneBoostCount--;
-                flag = true;
-                break;
-            }
+    public void useArcaneBoostPower() {
+        if(!arcaneBoosts.isEmpty()){
+            arcaneBoosts.remove();
         }
-        return flag;
     }
     public String getName(){
         return name;
     }
     //Returns total Time Warps collected and unused
     public int getTotalTimeWarpPowersCollected(){
-        return timeWarpCount;
+        return timeWarps.size();
     }
     //Returns total Arcane Boosts collected and unused
     public int getTotalArcaneBoostPowersCollected(){
-        return arcaneBoostCount;
+        return timeWarps.size();
     }
 
     public ArcaneBoost[] getArcaneBoosts(){
-        return arcaneBoosts;
+        return arcaneBoosts.toArray(ArcaneBoost[]::new);
     }
     public TimeWarp[] getTimeWarps(){
-        return timeWarps;
+        return timeWarps.toArray(TimeWarp[]::new);
     }
     public Realm getRealm(Color color){
         return realms[color.ordinal()];
