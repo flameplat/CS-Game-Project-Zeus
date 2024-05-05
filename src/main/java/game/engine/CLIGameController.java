@@ -27,7 +27,7 @@ public class CLIGameController extends GameController {
     private static int MAX_NUMBER_OF_ROUNDS;
     public static int MAX_NUMBER_OF_TURNS;
     public static Collectibles[] roundRewards;
-    private Dice[] diceArray;
+    private final Dice[] diceArray;
     private GameStatus gameStatus;
     static {
         Properties gameProperties = new Properties();
@@ -59,7 +59,7 @@ public class CLIGameController extends GameController {
             MAX_NUMBER_OF_TURNS = 3;
         }
     }
-    private GameBoard gameBoard;
+    private final GameBoard gameBoard;
     private Player activePlayer;
     private Player passivePlayer;
 
@@ -68,7 +68,7 @@ public class CLIGameController extends GameController {
 
     private GameGuide gameGuide;
     private int turnsCount;
-    private SystemManager systemManager;
+    private final SystemManager systemManager;
     private Scanner sc; //Will be closed at the end of the game
 
     // -----------------------Constructor-----------------------//
@@ -164,8 +164,8 @@ public class CLIGameController extends GameController {
 
     }
     private boolean checkTimeWarp(){
-        boolean choice=false;
         if(activePlayer.isTimeWarpAvailable()) {
+            boolean choice=false;
             int count = activePlayer.getTotalTimeWarpPowersCollected();
             gameGuide.displayInstructions(Instruction.TW_PROMPT);
             System.out.printf("You have %d Time Warp%s%n",count,count>1?"s":"");
@@ -176,7 +176,7 @@ public class CLIGameController extends GameController {
                 return true;
             }
         }
-        return choice;
+        return false;
     }
     private void playEssenceBonus(Player player){
         gameGuide.displayInstructions(Instruction.ESSENCE_BONUS);
@@ -352,7 +352,7 @@ public class CLIGameController extends GameController {
             System.out.println("Turn "+(i+1));
             playTurn();
         }
-        moveDicetoForgottenRealm();
+        moveDiceToForgottenRealm();
         playPassiveTurn();
         checkArcaneBoost(activePlayer);
         checkArcaneBoost(passivePlayer);
@@ -472,7 +472,7 @@ public class CLIGameController extends GameController {
         System.out.println("Press Enter to roll");
         sc.nextLine();
         rollDice();
-        Dice selectedDie=null;
+        Dice selectedDie;
         while (true){
             try {
                 selectedDie=selectValidDie(activePlayer,availableDice,true);
@@ -810,7 +810,7 @@ public class CLIGameController extends GameController {
         return flag;
     }
 
-    private void moveDicetoForgottenRealm(){
+    private void moveDiceToForgottenRealm(){
         //Moves the rest of the dice unselected by active player to forgotten realm
         for(Dice i:diceArray){
             if(i.getDiceStatus()==DiceStatus.AVAILABLE){
