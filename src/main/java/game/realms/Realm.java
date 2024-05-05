@@ -1,6 +1,6 @@
 package game.realms;
 
-import game.Color;
+import game.utilities.Color;
 import game.collectibles.Collectibles;
 import game.creatures.Creature;
 import game.engine.Move;
@@ -19,7 +19,7 @@ public abstract class Realm {
     public abstract boolean isRealmAvailable();
 
     /* Method to return the rewards of the realm */
-    public abstract Collectibles getReward();
+    public abstract Collectibles[] getReward();
 
     /* Method to check whether there is a reward or not after attacking */
     public abstract boolean checkReward();

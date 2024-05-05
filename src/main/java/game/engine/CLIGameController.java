@@ -1,6 +1,7 @@
 package game.engine;
 
-import game.Color;
+import game.utilities.CollectiblesComparator;
+import game.utilities.Color;
 import game.collectibles.*;
 import game.creatures.Dragon;
 import game.dice.*;
@@ -14,10 +15,7 @@ import game.system.SystemManager;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Properties;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class CLIGameController extends GameController {
 
@@ -152,8 +150,8 @@ public class CLIGameController extends GameController {
             Move validMove=selectValidMove(player,selectedDie);
             makeMove(player,validMove);
             if(player.getRealm(validMove.getDice()).checkReward()){
-                Collectibles reward=player.getRealm(validMove.getDice()).getReward();
-                performReward(player,reward);
+                Collectibles[] rewards=player.getRealm(validMove.getDice()).getReward();
+                processRewardQueue(player,rewards);
             }
         }
         catch (NoAvailableMovesException e) {
@@ -211,8 +209,8 @@ public class CLIGameController extends GameController {
                     Move selectedMove=selectValidMove(player,selectedDie);
                     makeMove(player,selectedMove);
                     if(player.getRealm(Color.RED).checkReward()){
-                        Collectibles reward=player.getRealm(Color.RED).getReward();
-                        performReward(player,reward);
+                        Collectibles[] rewards=player.getRealm(Color.RED).getReward();
+                        processRewardQueue(player,rewards);
                     }
 
                 }
@@ -239,8 +237,8 @@ public class CLIGameController extends GameController {
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
                     if(player.getRealm(Color.GREEN).checkReward()){
-                        Collectibles reward=player.getRealm(Color.GREEN).getReward();
-                        performReward(player,reward);
+                        Collectibles[] rewards=player.getRealm(Color.GREEN).getReward();
+                        processRewardQueue(player,rewards);
                     }
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
@@ -265,8 +263,8 @@ public class CLIGameController extends GameController {
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
                     if(player.getRealm(Color.BLUE).checkReward()){
-                        Collectibles reward=player.getRealm(Color.BLUE).getReward();
-                        performReward(player,reward);
+                        Collectibles[] rewards=player.getRealm(Color.BLUE).getReward();
+                        processRewardQueue(player,rewards);
                     }
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
@@ -291,8 +289,8 @@ public class CLIGameController extends GameController {
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
                     if(player.getRealm(Color.MAGENTA).checkReward()){
-                        Collectibles reward=player.getRealm(Color.MAGENTA).getReward();
-                        performReward(player,reward);
+                        Collectibles[] rewards=player.getRealm(Color.MAGENTA).getReward();
+                        processRewardQueue(player,rewards);
                     }
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
@@ -317,8 +315,8 @@ public class CLIGameController extends GameController {
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
                     if(player.getRealm(Color.YELLOW).checkReward()){
-                        Collectibles reward=player.getRealm(Color.YELLOW).getReward();
-                        performReward(player,reward);
+                        Collectibles[] rewards=player.getRealm(Color.YELLOW).getReward();
+                        processRewardQueue(player,rewards);
                     }
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
@@ -328,6 +326,13 @@ public class CLIGameController extends GameController {
             }
         }
 
+    }
+    private void processRewardQueue(Player player,Collectibles[] rewards){
+        PriorityQueue<Collectibles> priorityQueue=new PriorityQueue<>(new CollectiblesComparator());
+        priorityQueue.addAll(Arrays.asList(rewards));
+        while (!priorityQueue.isEmpty()){
+            performReward(player,priorityQueue.remove());
+        }
     }
     private void performReward(Player player, Collectibles reward){
         System.out.println(player.getName()+", you received "+reward.toString()+"!");
@@ -493,8 +498,8 @@ public class CLIGameController extends GameController {
         selectedDie=selectedMove.getDice();
         makeMove(activePlayer,selectedMove);
         if(selectedDie!=null && activePlayer.getRealm(selectedDie).checkReward()){
-            Collectibles reward=activePlayer.getRealm(selectedDie).getReward();
-            performReward(activePlayer,reward);
+            Collectibles[] rewards=activePlayer.getRealm(selectedDie).getReward();
+            processRewardQueue(activePlayer,rewards);
         }
         //Choosing a die, move (check if move is valid,if not choose another die)
         //execute move
@@ -519,8 +524,8 @@ public class CLIGameController extends GameController {
         selectedDie=selectedMove.getDice();
         makeMove(passivePlayer,selectedMove);
         if(selectedDie!=null && passivePlayer.getRealm(selectedDie).checkReward()){
-            Collectibles reward=passivePlayer.getRealm(selectedDie).getReward();
-            performReward(passivePlayer,reward);
+            Collectibles[] rewards=passivePlayer.getRealm(selectedDie).getReward();
+            processRewardQueue(passivePlayer,rewards);
         }
     }
 

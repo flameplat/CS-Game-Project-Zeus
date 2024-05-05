@@ -1,6 +1,6 @@
 package game.realms;
 
-import game.Color;
+import game.utilities.Color;
 import game.collectibles.Collectibles;
 import game.creatures.Creature;
 import game.engine.Move;
@@ -32,7 +32,7 @@ public class GreenRealm extends Realm{
     }
 
     @Override
-    public Collectibles getReward() {
+    public Collectibles[] getReward() {
         return null;
     }
 

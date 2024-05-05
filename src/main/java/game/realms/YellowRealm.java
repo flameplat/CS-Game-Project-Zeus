@@ -1,6 +1,6 @@
 package game.realms;
 
-import game.Color;
+import game.utilities.Color;
 import game.collectibles.Collectibles;
 import game.creatures.Creature;
 import game.creatures.Lion;
@@ -129,8 +129,10 @@ public class YellowRealm extends Realm{
     }
 
     @Override
-    public Collectibles getReward() {
-        return collectibles[countHits-1];
+    public Collectibles[] getReward() {
+        Collectibles[] temp=new Collectibles[1];
+        temp[0]=collectibles[countHits-1];
+        return temp;
     }
 
     @Override

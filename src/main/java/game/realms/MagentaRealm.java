@@ -1,6 +1,6 @@
 package game.realms;
 
-import game.Color;
+import game.utilities.Color;
 import game.collectibles.Collectibles;
 import game.creatures.Creature;
 import game.creatures.Phoenix;
@@ -26,8 +26,6 @@ public class MagentaRealm extends Realm{
     private int[] score;
     private String[] attackValues;
     private String[] rewardValues;
-
-
     // -----------------------Constructor-----------------------//
     public MagentaRealm(){
         this.rewardValues=new String[11];
@@ -143,8 +141,10 @@ public class MagentaRealm extends Realm{
     }
 
     @Override
-    public Collectibles getReward() {
-        return collectibles[counterHits-1];
+    public Collectibles[] getReward() {
+        Collectibles[] temp=new Collectibles[1];
+        temp[0]=collectibles[counterHits-1];
+        return temp;
     }
 
     @Override

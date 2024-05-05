@@ -1,6 +1,6 @@
 package game.dice;
 
-import game.Color;
+import game.utilities.Color;
 
 public class YellowDice extends Dice{
     private DiceStatus status;

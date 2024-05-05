@@ -1,10 +1,12 @@
 package game.engine;
 
+import game.utilities.ColorComparator;
 import game.dice.Dice;
 import game.creatures.Creature;
 
 
-public class Move {
+
+public class Move implements Comparable<Move>{
     // -----------------------Attributes-----------------------//
     private Creature creature;
     private Dice dice;
@@ -30,4 +32,8 @@ public class Move {
     }
 
 
+    @Override
+    public int compareTo(Move o) {
+        return new ColorComparator().compare(dice.getRealm(), o.getDice().getRealm());
+    }
 }

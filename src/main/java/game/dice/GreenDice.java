@@ -1,6 +1,6 @@
 package game.dice;
 
-import game.Color;
+import game.utilities.Color;
 
 public class GreenDice extends Dice{
     private static final String RESET = "\u001B[0m";

@@ -1,6 +1,6 @@
 package game.engine;
 
-import game.Color;
+import game.utilities.Color;
 import game.realms.Realm;
 
 public class GameScore {

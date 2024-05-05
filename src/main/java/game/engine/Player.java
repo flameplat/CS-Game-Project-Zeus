@@ -1,6 +1,6 @@
 package game.engine;
 
-import game.Color;
+import game.utilities.Color;
 import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
 import game.collectibles.TimeWarp;
@@ -9,10 +9,7 @@ import game.exceptions.InvalidPlayerNameException;
 import game.exceptions.MissingGameFilesException;
 import game.realms.*;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Properties;
 
 
 public class Player {

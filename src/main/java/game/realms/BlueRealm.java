@@ -7,7 +7,7 @@ import java.util.Properties;
 
 
 
-import game.Color;
+import game.utilities.Color;
 import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
 import game.collectibles.ColorBonus;
@@ -168,8 +168,10 @@ public class BlueRealm extends Realm{
     }
 
     @Override
-    public Collectibles getReward() {
-        return rewardProperties[hitcount-1];
+    public Collectibles[] getReward() {
+        Collectibles[] temp=new Collectibles[1];
+        temp[0]=rewardProperties[hitcount-1];
+        return temp;
     }
 
     @Override

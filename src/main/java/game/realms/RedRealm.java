@@ -4,7 +4,7 @@ package game.realms;
 import game.collectibles.Collectibles;
 import game.creatures.Creature;
 import game.creatures.Dragon;
-import game.Color;
+import game.utilities.Color;
 import game.engine.*;
 import game.dice.*;
 
@@ -71,8 +71,8 @@ public class RedRealm extends Realm {
     }
 
     // get the rewards
-    public Collectibles getReward() {
-        return reward;
+    public Collectibles[] getReward() {
+        return null;
     }
 
     @Override

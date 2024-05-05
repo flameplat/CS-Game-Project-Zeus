@@ -1,8 +1,9 @@
 package game.collectibles;
 
-import game.Color;
+import game.utilities.Color;
+import game.utilities.ColorComparator;
 
-public class ColorBonus extends Collectibles {
+public class ColorBonus extends Collectibles implements Comparable<ColorBonus>{
     // -----------------------Attributes-----------------------//
     private Color colorBonus;
 
@@ -27,5 +28,9 @@ public class ColorBonus extends Collectibles {
     }
     public static String getInstruction(){
         return instruction;
+    }
+    @Override
+    public int compareTo(ColorBonus o) {
+        return new ColorComparator().compare(colorBonus, o.getColor());
     }
 }

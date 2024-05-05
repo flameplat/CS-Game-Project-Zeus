@@ -1,7 +1,7 @@
 package game.engine;
 
 
-import game.Color;
+import game.utilities.Color;
 import game.creatures.Creature;
 import game.realms.Realm;
 import game.dice.*;

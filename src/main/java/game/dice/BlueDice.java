@@ -1,6 +1,6 @@
 package game.dice;
 
-import game.Color;
+import game.utilities.Color;
 
 public class BlueDice extends Dice{
     private static final Color color=Color.BLUE;
