@@ -23,9 +23,11 @@ public class YellowRealm extends Realm{
     private Lion lion;
     private final int[] scoreMultiplier ={1,1,1,2,1,1,2,1,2,1,3};
     private int[] score;
+    private String[] rewardValues;
 
     // -----------------------Constructor-----------------------//
     public YellowRealm() {
+        this.rewardValues=new String[11];
         this.totalRealmScore=0;
         this.lion=new Lion();
         this.countHits=0;
@@ -60,16 +62,44 @@ public class YellowRealm extends Realm{
             String reward = properties.getProperty("hit"+(i+1)+"Reward");
             if(reward!=null){
                 switch (reward){
-                    case "TimeWarp":rewardProperties[i]=new TimeWarp();break;
-                    case "ArcaneBoost":rewardProperties[i]=new ArcaneBoost();break;
-                    case "EssenceBonus":rewardProperties[i]=new EssenceBonus();break;
-                    case "RedBonus":rewardProperties[i]=new ColorBonus(Color.RED);break;
-                    case "BlueBonus":rewardProperties[i]=new ColorBonus(Color.BLUE);break;
-                    case "GreenBonus":rewardProperties[i]=new ColorBonus(Color.GREEN);break;
-                    case "MagentaBonus":rewardProperties[i]=new ColorBonus(Color.MAGENTA);break;
-                    case "YellowBonus":rewardProperties[i]=new ColorBonus(Color.YELLOW);break;
-                    case "ElementalCrest":rewardProperties[i]=new ElementalCrest();break;
-                    default:rewardProperties[i]=null;
+                    case "TimeWarp":        {rewardProperties[i]=new TimeWarp();
+                        rewardValues[i]="TW";break;
+                    }
+                    case "ArcaneBoost":     {rewardProperties[i]=new ArcaneBoost();
+                        rewardValues[i]="AB";
+                        break;
+                    }
+                    case "EssenceBonus":    {rewardProperties[i]=new EssenceBonus();
+                        rewardValues[i]="EC";
+                        break;
+                    }
+                    case "RedBonus":        {rewardProperties[i]=new ColorBonus(Color.RED);
+                        rewardValues[i]="RB";
+                        break;
+                    }
+                    case "BlueBonus":       {rewardProperties[i]=new ColorBonus(Color.BLUE);
+                        rewardValues[i]="BB";
+                        break;
+                    }
+                    case "GreenBonus":      {rewardProperties[i]=new ColorBonus(Color.GREEN);
+                        rewardValues[i]="GB";
+                        break;
+                    }
+                    case "MagentaBonus":    {rewardProperties[i]=new ColorBonus(Color.MAGENTA);
+                        rewardValues[i]="MB";
+                        break;
+                    }
+                    case "YellowBonus":     {rewardProperties[i]=new ColorBonus(Color.YELLOW);
+                        rewardValues[i]="YB";
+                        break;
+                    }
+                    case "ElementalCrest":  {rewardProperties[i]=new ElementalCrest();
+                        rewardValues[i]="EC";
+                        break;
+                    }
+                    default:                {rewardProperties[i]=null;
+                        rewardValues[i]="  ";
+                    }
                 }
             }
 
@@ -109,6 +139,7 @@ public class YellowRealm extends Realm{
             if(collectibles[countHits-1] instanceof ElementalCrest){
                 noElementalCrests++;
             }
+            rewardValues[countHits-1]="X ";
             return true;
         }
         return false;
@@ -159,9 +190,10 @@ public class YellowRealm extends Realm{
                 "+-----------------------------------------------------------------------+\n" +
                 "|  H  |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |\n" +
                 "|  M  |     |     |     |x2   |     |     |x2   |     |x2   |     |x3   |\n" +
-                "|  R  |     |     |TW   |     |RB   |AB   |     |EC   |     |MB   |     |\n" +
+                "|  R  |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |\n" +
                 "+-----------------------------------------------------------------------+\n\n",
-                score[0],score[1],score[2],score[3],score[4],score[5],score[6],score[7],score[8],score[9],score[10]);
+                score[0],score[1],score[2],score[3],score[4],score[5],score[6],score[7],score[8],score[9],score[10],
+                rewardValues[0],rewardValues[1],rewardValues[2],rewardValues[3],rewardValues[4],rewardValues[5],rewardValues[6],rewardValues[7],rewardValues[8],rewardValues[9],rewardValues[10]);
         return string;
     }
 

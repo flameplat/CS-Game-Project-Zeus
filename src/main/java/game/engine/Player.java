@@ -140,7 +140,7 @@ public class Player {
     }
     //Returns total Arcane Boosts collected and unused
     public int getTotalArcaneBoostPowersCollected(){
-        return timeWarps.size();
+        return arcaneBoosts.size();
     }
 
     public ArcaneBoost[] getArcaneBoosts(){

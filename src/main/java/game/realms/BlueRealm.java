@@ -41,7 +41,7 @@ public class BlueRealm extends Realm{
     //-----------------------Constructor-----------------------//
     public BlueRealm() {
         attackValues=new String[11];
-        rewardValues=new String[]{"     ","     ","     ","AB   ","     ","GB   ","EC   ","     ","MB   ","TW   ","     "};
+        rewardValues=new String[11];
         for(int i=0;i<11;i++){
             attackValues[i]="---";
         }
@@ -54,7 +54,6 @@ public class BlueRealm extends Realm{
             possibleMoveS1.addLast(new Move(new BlueDice(i),serpent1));
             possibleMoveS2.addLast(new Move(new BlueDice(i),serpent2));
         }
-
         this.score=new int[11];
     }
     // -----------------------Methods-----------------------//
@@ -79,6 +78,7 @@ public class BlueRealm extends Realm{
                     if(possibleMove.getDice().getValue()==move.getDice().getValue()){
                         hitcount++;
                         score[hitcount-1]=calculateScore(hitcount);
+                        attackValues[hitcount-1]=move.getDice().getValue() +"  ";
                         possibleMoveS2.removeFirst();
                         serpent2.attack();
                         return true;
@@ -86,6 +86,7 @@ public class BlueRealm extends Realm{
                 }
 
             }
+
         }
         return false;
     }
@@ -149,7 +150,7 @@ public class BlueRealm extends Realm{
                 "+-----------------------------------------------------------------------+\n" +
                 "|  H  |%s  |%s  |%s  |%s  |%s  |%s  |%s  |%s  |%s  |%s  |%s  |\n" +
                 "|  C  |≥1   |≥2   |≥3   |≥4   |≥5   |≥1   |≥2   |≥3   |≥4   |≥5   |≥6   |\n" +
-                "|  R  |%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|\n" +
+                "|  R  |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |\n" +
                 "+-----------------------------------------------------------------------+\n" +
                 "|  S  |1    |3    |6    |10   |15   |21   |28   |36   |45   |55   |66   |\n" +
                 "+-----------------------------------------------------------------------+\n\n",
@@ -177,7 +178,7 @@ public class BlueRealm extends Realm{
             if(rewardProperties[hitcount-1] instanceof ElementalCrest){
                 noElementalCrests++;
             }
-            rewardValues[hitcount-1]="X";
+            rewardValues[hitcount-1]="X ";
             return true;
         }else{
             return false;
@@ -205,16 +206,44 @@ public class BlueRealm extends Realm{
             String reward = properties.getProperty("hit"+(i+1)+"Reward");
             if(reward!=null){
                 switch (reward){
-                    case "TimeWarp":rewardProperties[i]=new TimeWarp();break;
-                    case "ArcaneBoost":rewardProperties[i]=new ArcaneBoost();break;
-                    case "EssenceBonus":rewardProperties[i]=new EssenceBonus();break;
-                    case "RedBonus":rewardProperties[i]=new ColorBonus(Color.RED);break;
-                    case "BlueBonus":rewardProperties[i]=new ColorBonus(Color.BLUE);break;
-                    case "GreenBonus":rewardProperties[i]=new ColorBonus(Color.GREEN);break;
-                    case "MagentaBonus":rewardProperties[i]=new ColorBonus(Color.MAGENTA);break;
-                    case "YellowBonus":rewardProperties[i]=new ColorBonus(Color.YELLOW);break;
-                    case "ElementalCrest":rewardProperties[i]=new ElementalCrest();break;
-                    default:rewardProperties[i]=null;
+                    case "TimeWarp":        {rewardProperties[i]=new TimeWarp();
+                    rewardValues[i]="TW";break;
+                    }
+                    case "ArcaneBoost":     {rewardProperties[i]=new ArcaneBoost();
+                        rewardValues[i]="AB";
+                        break;
+                    }
+                    case "EssenceBonus":    {rewardProperties[i]=new EssenceBonus();
+                        rewardValues[i]="EC";
+                        break;
+                    }
+                    case "RedBonus":        {rewardProperties[i]=new ColorBonus(Color.RED);
+                        rewardValues[i]="RB";
+                        break;
+                    }
+                    case "BlueBonus":       {rewardProperties[i]=new ColorBonus(Color.BLUE);
+                        rewardValues[i]="BB";
+                        break;
+                    }
+                    case "GreenBonus":      {rewardProperties[i]=new ColorBonus(Color.GREEN);
+                        rewardValues[i]="GB";
+                        break;
+                    }
+                    case "MagentaBonus":    {rewardProperties[i]=new ColorBonus(Color.MAGENTA);
+                        rewardValues[i]="MB";
+                        break;
+                    }
+                    case "YellowBonus":     {rewardProperties[i]=new ColorBonus(Color.YELLOW);
+                        rewardValues[i]="YB";
+                        break;
+                    }
+                    case "ElementalCrest":  {rewardProperties[i]=new ElementalCrest();
+                        rewardValues[i]="EC";
+                        break;
+                    }
+                    default:                {rewardProperties[i]=null;
+                        rewardValues[i]="  ";
+                    }
                 }
             }
 
