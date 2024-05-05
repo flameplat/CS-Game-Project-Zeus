@@ -159,12 +159,17 @@ public class CLIGameController extends GameController {
     }
     private boolean checkTimeWarp(){
         boolean choice=false;
+        int count=0;
         while (activePlayer.isTimeWarpAvailable()) {
             gameGuide.displayInstructions(Instruction.TW_PROMPT);
             choice = gameGuide.getUserBooleanChoice();
             if (choice) {
                 activePlayer.useTimeWarpPower();
                 rollDice();
+                if(count>0) {
+                    gameGuide.displayNumberedChoice(getAvailableDice());
+                }
+                count++;
             }
             else{
                 break;
@@ -845,6 +850,7 @@ public class CLIGameController extends GameController {
     @Override
     public boolean makeMove(Player player, Move move) {
         try {
+            //Check on the move !!!!
             Realm[] realms=player.getRealms();
             Color color=move.getDice().getRealm();
             boolean flag=false;

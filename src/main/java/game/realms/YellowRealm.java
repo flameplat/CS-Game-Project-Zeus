@@ -129,6 +129,7 @@ public class YellowRealm extends Realm{
                 return false;
             }
             int attackScore=move.getDice().getValue()*scoreMultiplier[countHits];
+            lion.attack();
             score[countHits]=attackScore;
             totalRealmScore=totalRealmScore+attackScore;
             countHits++;
@@ -175,7 +176,11 @@ public class YellowRealm extends Realm{
 
     @Override
     public Creature getCreature(Dice dice) {
-        return lion;
+        if(dice.getRealm()==Color.YELLOW && (dice.getValue()<=6 &&dice.getValue()>=1)){
+            return lion;
+
+        }
+        return null;
     }
 
 

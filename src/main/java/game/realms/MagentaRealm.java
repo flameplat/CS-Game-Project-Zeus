@@ -136,6 +136,7 @@ public class MagentaRealm extends Realm{
                 return false;
             }
             updatePossibleMoves(move);
+            phoenix.attack();
             int attackScore=move.getDice().getValue();
             score[counterHits]=attackScore;
             totalRealmScore+=attackScore;
@@ -179,7 +180,10 @@ public class MagentaRealm extends Realm{
 
     @Override
     public Creature getCreature(Dice dice) {
-        return phoenix;
+        if(dice.getRealm()==Color.MAGENTA && (dice.getValue()<=6 &&dice.getValue()>=1)){
+            return phoenix;
+        }
+        return null;
     }
 
 }

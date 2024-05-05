@@ -2,16 +2,38 @@
 package game.creatures;
 
 public class Serpent extends Creature{
-    public Serpent (int heads){
-        //constructor that creates a linked list of heads 
+    private boolean status;
+    private int headNumber;
+    private int id;
+    private int totalHits;
+    public Serpent (int id,int headNumber){
+        this.status=true;
+        this.headNumber=headNumber;
+        this.totalHits=0;
+        this.id=id;
+    }
+    public Serpent(){
+        this.status=true;
     }
     @Override
-    public boolean attack(int value) {
+    public boolean attack() {
+        if(isAlive()){
+            totalHits++;
+            if(totalHits==headNumber){
+                status=false;
+            }
+            return true;
+        }
         return false;
     }
+
     @Override
     public boolean isAlive() {
-        return false;
+        return status;
+    }
+
+    public int getHeadNumber(){
+        return headNumber;
     }
 
     @Override
@@ -19,9 +41,11 @@ public class Serpent extends Creature{
         return 0;
     }
 
-
     @Override
     public String toString() {
-        return null;
+        return "Hydra Serpent "+id;
+    }
+    public int getSerpentNumber(){
+        return id;
     }
 }

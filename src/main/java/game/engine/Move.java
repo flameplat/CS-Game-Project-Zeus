@@ -1,10 +1,7 @@
 package game.engine;
 
-import game.Color;
-import game.dice.GreenDice;
-import game.realms.Realm;
-import game.creatures.*;
 import game.dice.Dice;
+import game.creatures.Creature;
 
 
 public class Move {

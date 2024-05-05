@@ -1,13 +1,28 @@
 package game.creatures;
 
 public class Phoenix extends Creature{
+    private boolean status;
+    private int totalHits;
+
+    public Phoenix() {
+        this.status=true;
+        int totalHits=0;
+    }
+
     @Override
-    public boolean attack(int value) {
+    public boolean attack() {
+        if(isAlive()){
+            totalHits++;
+            if(totalHits==11){
+                status=false;
+            }
+            return true;
+        }
         return false;
     }
     @Override
     public boolean isAlive() {
-        return false;
+        return status;
     }
 
     @Override
@@ -18,6 +33,6 @@ public class Phoenix extends Creature{
 
     @Override
     public String toString() {
-        return null;
+        return "Phoenix";
     }
 }

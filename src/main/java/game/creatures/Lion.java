@@ -1,14 +1,28 @@
 package game.creatures;
 
 public class Lion extends Creature{
+    private boolean status;
+    private int totalHits;
+
+    public Lion() {
+        this.status=true;
+        this.totalHits=0;
+    }
 
     @Override
-    public boolean attack(int value) {
+    public boolean attack() {
+        if(isAlive()){
+            totalHits++;
+            if(totalHits==11){
+                status=false;
+            }
+            return true;
+        }
         return false;
     }
     @Override
     public boolean isAlive() {
-        return false;
+        return status;
     }
 
     @Override
@@ -19,7 +33,7 @@ public class Lion extends Creature{
 
     @Override
     public String toString() {
-        return null;
+        return "Lion";
     }
 
 }
