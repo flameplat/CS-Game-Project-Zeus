@@ -49,4 +49,13 @@ public class Dragon extends Creature {
     public String toString(){
         return null;
     }
+    public boolean equals(Object o){
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        return dragonNumber==((Dragon)o).dragonNumber;
+    }
 }

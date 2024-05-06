@@ -15,8 +15,7 @@ public class RedDice extends Dice{
         this.status=DiceStatus.AVAILABLE;
     }
     public RedDice(){
-        this.value=0;
-        this.status=DiceStatus.AVAILABLE;
+        this(0);
     }
 
     // -----------------------Methods-----------------------//
@@ -53,5 +52,15 @@ public class RedDice extends Dice{
     //Should be used in the redRealm when getting creature by red die
     public int getDragonNumber(){
         return dragonNumber;
+    }
+    public boolean equals(Object o){
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        RedDice other = (RedDice) o;
+        return (color==other.getRealm())&&(value==other.getValue());
     }
 }

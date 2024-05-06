@@ -20,7 +20,7 @@ public class ColorBonus extends Collectibles implements Comparable<ColorBonus>{
 
     @Override
     public String toString() {
-        return colorBonus+"_BONUS";
+        return colorBonus.toString().charAt(0)+"B";
     }
 
     public Color getColor() {

@@ -14,8 +14,7 @@ public class MagentaDice extends Dice{
         this.status=DiceStatus.AVAILABLE;
     }
     public MagentaDice(){
-        this.value=0;
-        this.status=DiceStatus.AVAILABLE;
+        this(0);
     }
 
     // -----------------------Methods-----------------------//
@@ -45,5 +44,15 @@ public class MagentaDice extends Dice{
     @Override
     public void setDiceStatus(DiceStatus status) {
         this.status=status;
+    }
+    public boolean equals(Object o){
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        MagentaDice other = (MagentaDice) o;
+        return (color==other.getRealm())&&(value==other.getValue());
     }
 }

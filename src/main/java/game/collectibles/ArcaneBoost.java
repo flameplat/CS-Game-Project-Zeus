@@ -16,7 +16,7 @@ public class ArcaneBoost extends Collectibles {
 
     @Override
     public String toString() {
-        return "Arcane Boost";
+        return "AB";
     }
 
 }

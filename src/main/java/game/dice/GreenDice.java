@@ -14,8 +14,7 @@ public class GreenDice extends Dice{
         this.status=DiceStatus.AVAILABLE;
     }
     public GreenDice(){
-        this.value=0;
-        this.status=DiceStatus.AVAILABLE;
+        this(0);
     }
 
     // -----------------------Methods-----------------------//
@@ -45,6 +44,16 @@ public class GreenDice extends Dice{
     @Override
     public void setDiceStatus(DiceStatus status) {
         this.status=status;
+    }
+    public boolean equals(Object o){
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        GreenDice other = (GreenDice) o;
+        return (color==other.getRealm())&&(value==other.getValue());
     }
 
 }

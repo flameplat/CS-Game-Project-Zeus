@@ -3,6 +3,7 @@ package game.realms;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.PriorityQueue;
 import java.util.Properties;
 
 
@@ -29,8 +30,8 @@ public class BlueRealm extends Realm{
     private Serpent serpent1;
     private Serpent serpent2;
     private Move movement ;
-    private LinkedList<Move> possibleMoveS2;
-    private LinkedList<Move> possibleMoveS1;
+    private PriorityQueue<Move> possibleMoveS2;
+    private PriorityQueue<Move> possibleMoveS1;
     private Collectibles[] rewardProperties;
     private static final String name="Tide Abyss";
     private static final Color realmColor=Color.BLUE;
@@ -40,6 +41,7 @@ public class BlueRealm extends Realm{
 
     //-----------------------Constructor-----------------------//
     public BlueRealm() {
+
         attackValues=new String[11];
         rewardValues=new String[11];
         for(int i=0;i<11;i++){
@@ -48,54 +50,42 @@ public class BlueRealm extends Realm{
         serpent1 =new Serpent(1,5);
         serpent2=new Serpent(2,6);
         rewardProperties=getRewardsProperties("src/main/resources/config/TideAbyssRewards.properties");
-        possibleMoveS1=new LinkedList<>();
-        possibleMoveS2=new LinkedList<>();
+        possibleMoveS1=new PriorityQueue<>();
+        possibleMoveS2=new PriorityQueue<>();
         for(int i=1;i<7;i++){
-            possibleMoveS1.addLast(new Move(new BlueDice(i),serpent1));
-            possibleMoveS2.addLast(new Move(new BlueDice(i),serpent2));
+            possibleMoveS1.add(new Move(new BlueDice(i),serpent1));
+            possibleMoveS2.add(new Move(new BlueDice(i),serpent2));
         }
-        this.score=new int[11];
+        this.score=new int[]{1,3,6,10,15,21,28,36,45,55,66};
+        hitcount=0;
     }
     // -----------------------Methods-----------------------//
     @Override
     public boolean attack(Move move) {
         if(isRealmAvailable()){
             if(hitcount<5 && ((Serpent)move.getCreature()).getSerpentNumber()==serpent1.getSerpentNumber()){
-                for(Move possibleMove:possibleMoveS1){
-                    if(possibleMove.getDice().getValue()==move.getDice().getValue()){
-                        hitcount++;
-                        score[hitcount-1]=calculateScore(hitcount);
-                        attackValues[hitcount-1]=move.getDice().getValue() +"  ";
-                        possibleMoveS1.removeFirst();
-                        serpent1.attack();
-                        return true;
-                    }
+                if(possibleMoveS1.contains(move)){
+                    hitcount++;
+                    attackValues[hitcount-1]=move.getDice().getValue() +"  ";
+                    possibleMoveS1.remove();
+                    serpent1.attack();
+                    return true;
                 }
 
             }
             if(hitcount>=5 && ((Serpent)move.getCreature()).getSerpentNumber()==serpent2.getSerpentNumber()){
-                for(Move possibleMove:possibleMoveS2){
-                    if(possibleMove.getDice().getValue()==move.getDice().getValue()){
-                        hitcount++;
-                        score[hitcount-1]=calculateScore(hitcount);
-                        attackValues[hitcount-1]=move.getDice().getValue() +"  ";
-                        possibleMoveS2.removeFirst();
-                        serpent2.attack();
-                        return true;
-                    }
+                if(possibleMoveS2.contains(move)){
+                    hitcount++;
+                    attackValues[hitcount-1]=move.getDice().getValue() +"  ";
+                    possibleMoveS2.remove();
+                    serpent2.attack();
+                    return true;
                 }
 
             }
 
         }
         return false;
-    }
-    private int calculateScore(int hitCount){
-        int sum=0;
-        for(int i=1;i<=hitCount;i++){
-            sum+=i;
-        }
-        return sum;
     }
     @Override
     public String getName() {
@@ -119,6 +109,9 @@ public class BlueRealm extends Realm{
     }
     @Override
     public int getTotalScore(){
+        if(hitcount==0){
+            return 0;
+        }
         return score[hitcount-1];
     }
 
@@ -206,47 +199,12 @@ public class BlueRealm extends Realm{
         for (int i = 0; i < 11; i++) {
 
             String reward = properties.getProperty("hit"+(i+1)+"Reward");
-            if(reward!=null){
-                switch (reward){
-                    case "TimeWarp":        {rewardProperties[i]=new TimeWarp();
-                    rewardValues[i]="TW";break;
-                    }
-                    case "ArcaneBoost":     {rewardProperties[i]=new ArcaneBoost();
-                        rewardValues[i]="AB";
-                        break;
-                    }
-                    case "EssenceBonus":    {rewardProperties[i]=new EssenceBonus();
-                        rewardValues[i]="EC";
-                        break;
-                    }
-                    case "RedBonus":        {rewardProperties[i]=new ColorBonus(Color.RED);
-                        rewardValues[i]="RB";
-                        break;
-                    }
-                    case "BlueBonus":       {rewardProperties[i]=new ColorBonus(Color.BLUE);
-                        rewardValues[i]="BB";
-                        break;
-                    }
-                    case "GreenBonus":      {rewardProperties[i]=new ColorBonus(Color.GREEN);
-                        rewardValues[i]="GB";
-                        break;
-                    }
-                    case "MagentaBonus":    {rewardProperties[i]=new ColorBonus(Color.MAGENTA);
-                        rewardValues[i]="MB";
-                        break;
-                    }
-                    case "YellowBonus":     {rewardProperties[i]=new ColorBonus(Color.YELLOW);
-                        rewardValues[i]="YB";
-                        break;
-                    }
-                    case "ElementalCrest":  {rewardProperties[i]=new ElementalCrest();
-                        rewardValues[i]="EC";
-                        break;
-                    }
-                    default:                {rewardProperties[i]=null;
-                        rewardValues[i]="  ";
-                    }
-                }
+            rewardProperties[i]=getCollectibleFromString(reward);
+            if(rewardProperties[i]==null){
+                rewardValues[i]="  ";
+            }
+            else{
+                rewardValues[i]=rewardProperties[i].toString();
             }
 
         }

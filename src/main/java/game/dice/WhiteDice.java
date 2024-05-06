@@ -12,8 +12,7 @@ public class WhiteDice extends Dice{
         this.status=DiceStatus.AVAILABLE;
     }
     public WhiteDice(){
-        this.value=0;
-        this.status=DiceStatus.AVAILABLE;
+        this(0);
     }
 
     // -----------------------Methods-----------------------//
@@ -43,5 +42,15 @@ public class WhiteDice extends Dice{
     @Override
     public void setDiceStatus(DiceStatus status) {
         this.status=status;
+    }
+    public boolean equals(Object o){
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        WhiteDice other = (WhiteDice) o;
+        return (color==other.getRealm())&&(value==other.getValue());
     }
 }

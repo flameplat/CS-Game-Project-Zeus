@@ -16,8 +16,7 @@ public class BlueDice extends Dice{
 
     }
     public BlueDice(){
-        this.value=0;
-        this.status=DiceStatus.AVAILABLE;
+        this(0);
     }
 
     // -----------------------Methods-----------------------//
@@ -47,5 +46,16 @@ public class BlueDice extends Dice{
     @Override
     public void setDiceStatus(DiceStatus status) {
         this.status=status;
+    }
+    @Override
+    public boolean equals(Object o){
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BlueDice other = (BlueDice) o;
+        return (color==other.getRealm())&&(value==other.getValue());
     }
 }

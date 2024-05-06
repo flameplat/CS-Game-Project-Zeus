@@ -14,8 +14,7 @@ public class YellowDice extends Dice{
         this.status=DiceStatus.AVAILABLE;
     }
     public YellowDice(){
-        this.value=0;
-        this.status=DiceStatus.AVAILABLE;
+        this(0);
     }
 
     // -----------------------Methods-----------------------//
@@ -45,5 +44,15 @@ public class YellowDice extends Dice{
     @Override
     public void setDiceStatus(DiceStatus status) {
         this.status=status;
+    }
+    public boolean equals(Object o){
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        YellowDice other = (YellowDice) o;
+        return (color==other.getRealm())&&(value==other.getValue());
     }
 }

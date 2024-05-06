@@ -20,4 +20,5 @@ public abstract class Creature {
     public boolean attack(int value, HitRegionsOfDragons region) {
         return false;
     }
+
 }

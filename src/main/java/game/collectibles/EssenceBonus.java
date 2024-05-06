@@ -7,7 +7,7 @@ public class EssenceBonus extends Collectibles{
     }
     @Override
     public String toString() {
-        return "Essence Bonus";
+        return "EB";
     }
 
 

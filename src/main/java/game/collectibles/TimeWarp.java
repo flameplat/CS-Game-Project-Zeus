@@ -10,7 +10,7 @@ public class TimeWarp extends Collectibles {
     }
     @Override
     public String toString() {
-        return "Time Warp";
+        return "TW";
     }
 
 

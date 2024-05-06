@@ -17,7 +17,7 @@ public class YellowRealm extends Realm{
     public Collectibles[] collectibles;
     private int countHits;
     private int noElementalCrests;
-    private Move[]realmMoves;
+    private LinkedList<Move> realmMoves;
     private static final Color realmColor=Color.YELLOW;
     private static final String name="Radiant Svanna";
     private Lion lion;
@@ -27,19 +27,16 @@ public class YellowRealm extends Realm{
 
     // -----------------------Constructor-----------------------//
     public YellowRealm() {
+        this.realmMoves=new LinkedList<>();
         this.rewardValues=new String[11];
         this.totalRealmScore=0;
         this.lion=new Lion();
         this.countHits=0;
         this.noElementalCrests=0;
         this.collectibles= getRewardsProperties();
-        this.realmMoves=new Move[]{
-                new Move(new YellowDice(1),lion),
-                new Move(new YellowDice(2),lion),
-                new Move(new YellowDice(3),lion),
-                new Move(new YellowDice(4),lion),
-                new Move(new YellowDice(5),lion),
-                new Move(new YellowDice(6),lion)};
+        for(int i=0;i<7;i++){
+            this.realmMoves.addLast(new Move(new YellowDice(i),new Lion()));
+        }
         this.score=new int[11];
     }
 
@@ -58,49 +55,13 @@ public class YellowRealm extends Realm{
             System.exit(1);
         }
         for (int i = 0; i < 11; i++) {
-
             String reward = properties.getProperty("hit"+(i+1)+"Reward");
-            if(reward!=null){
-                switch (reward){
-                    case "TimeWarp":        {rewardProperties[i]=new TimeWarp();
-                        rewardValues[i]="TW";break;
-                    }
-                    case "ArcaneBoost":     {rewardProperties[i]=new ArcaneBoost();
-                        rewardValues[i]="AB";
-                        break;
-                    }
-                    case "EssenceBonus":    {rewardProperties[i]=new EssenceBonus();
-                        rewardValues[i]="EC";
-                        break;
-                    }
-                    case "RedBonus":        {rewardProperties[i]=new ColorBonus(Color.RED);
-                        rewardValues[i]="RB";
-                        break;
-                    }
-                    case "BlueBonus":       {rewardProperties[i]=new ColorBonus(Color.BLUE);
-                        rewardValues[i]="BB";
-                        break;
-                    }
-                    case "GreenBonus":      {rewardProperties[i]=new ColorBonus(Color.GREEN);
-                        rewardValues[i]="GB";
-                        break;
-                    }
-                    case "MagentaBonus":    {rewardProperties[i]=new ColorBonus(Color.MAGENTA);
-                        rewardValues[i]="MB";
-                        break;
-                    }
-                    case "YellowBonus":     {rewardProperties[i]=new ColorBonus(Color.YELLOW);
-                        rewardValues[i]="YB";
-                        break;
-                    }
-                    case "ElementalCrest":  {rewardProperties[i]=new ElementalCrest();
-                        rewardValues[i]="EC";
-                        break;
-                    }
-                    default:                {rewardProperties[i]=null;
-                        rewardValues[i]="  ";
-                    }
-                }
+            rewardProperties[i]=getCollectibleFromString(reward);
+            if(rewardProperties[i]==null){
+                rewardValues[i]="  ";
+            }
+            else{
+                rewardValues[i]=rewardProperties[i].toString();
             }
 
         }
@@ -202,7 +163,7 @@ public class YellowRealm extends Realm{
     @Override
     public Move[] getRealmMoves() {
         if(isRealmAvailable()){
-            return realmMoves;
+            return realmMoves.toArray(Move[]::new);
         }
         return new Move[0];
 

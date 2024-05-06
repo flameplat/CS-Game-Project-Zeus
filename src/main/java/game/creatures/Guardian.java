@@ -1,7 +1,7 @@
 package game.creatures;
 
-public class Guardians extends Creature{
-    public Guardians(int score){
+public class Guardian extends Creature{
+    public Guardian(int score){
 
     }
     @Override

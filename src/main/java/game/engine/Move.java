@@ -34,6 +34,21 @@ public class Move implements Comparable<Move>{
 
     @Override
     public int compareTo(Move o) {
-        return new ColorComparator().compare(dice.getRealm(), o.getDice().getRealm());
+        int color= (new ColorComparator().compare(dice.getRealm(), o.getDice().getRealm()));
+        if(color==0){
+            return Integer.compare(dice.getValue(), o.getDice().getValue());
+        }
+        return color;
+    }
+    @Override
+    public boolean equals(Object o){
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Move other = (Move) o;
+        return dice.equals(other.getDice()) && creature.equals(other.getCreature());
     }
 }
