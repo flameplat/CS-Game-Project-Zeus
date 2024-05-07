@@ -107,6 +107,15 @@ public class CLIGameController extends GameController {
         }
         endGame();
     }
+    private void delay(double s){
+        int ms= (int) (s*1000);
+        try{
+            Thread.sleep(ms);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+    }
 
     private void mainMenu() {
         gameGuide.displayMenu();
@@ -434,7 +443,7 @@ public class CLIGameController extends GameController {
             int choice=gameGuide.getUserChoice(1,possibleDice.length);
             selectedDie=possibleDice[choice-1];
             System.out.println(selectedDie);
-            selectedMove=getPossibleMovesForADie(player,selectedDie)[0];
+            selectedMove=selectValidMove(player,selectedDie);
         }
         else{
             if(selectedDie instanceof RedDice){
@@ -442,6 +451,14 @@ public class CLIGameController extends GameController {
                 Move[] moves=getPossibleMovesForADie(player,selectedDie);
                 while(selectedMove==null){
                     System.out.println("Choose a Dragon to attack");
+                    System.out.print("Possible dragons to attack: ");
+                    for(int i=0;i<moves.length;i++){
+                        System.out.print(((Dragon)moves[i].getCreature()).getDragonNumber());
+                        if(moves.length-i==2){
+                            System.out.print(", ");
+                        }
+                    }
+                    System.out.println();
                     int dragonNumber=gameGuide.getUserChoice(1,4);
                     for(Move i:moves){
                         if(((Dragon)i.getCreature()).getDragonNumber()==dragonNumber){
@@ -728,7 +745,8 @@ public class CLIGameController extends GameController {
                     }
                 }
             }
-        } else { // If the dice is not white, find moves in the respective realm
+        } else {
+            // If the dice is not white, find moves in the respective realm
             Realm realm = player.getRealm(dice);
             Move[] realmMoves = realm.getRealmMoves();
             for (Move move : realmMoves) {

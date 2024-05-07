@@ -34,7 +34,7 @@ public class YellowRealm extends Realm{
         this.countHits=0;
         this.noElementalCrests=0;
         this.collectibles= getRewardsProperties();
-        for(int i=0;i<7;i++){
+        for(int i=1;i<7;i++){
             this.realmMoves.addLast(new Move(new YellowDice(i),new Lion()));
         }
         this.score=new int[11];
@@ -173,7 +173,6 @@ public class YellowRealm extends Realm{
     public Creature getCreature(Dice dice) {
         if(dice.getRealm()==Color.YELLOW && (dice.getValue()<=6 &&dice.getValue()>=1)){
             return lion;
-
         }
         return null;
     }

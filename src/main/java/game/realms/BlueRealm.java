@@ -117,7 +117,7 @@ public class BlueRealm extends Realm{
 
     @Override
     public Creature getCreature(Dice dice) {
-        if(dice.getRealm()==Color.GREEN && (dice.getValue()<=6 &&dice.getValue()>=1)){
+        if(dice.getRealm()==Color.BLUE && (dice.getValue()<=6 &&dice.getValue()>=1)){
             if(hitcount<5){
                 return serpent1;
             }
@@ -146,7 +146,7 @@ public class BlueRealm extends Realm{
                 "|  R  |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |\n" +
                 "+-----------------------------------------------------------------------+\n" +
                 "|  S  |1    |3    |6    |10   |15   |21   |28   |36   |45   |55   |66   |\n" +
-                "+-----------------------------------------------------------------------+\n\n",
+                "+-----------------------------------------------------------------------+\n\n\n",
                 attackValues[0],attackValues[1],attackValues[2],attackValues[3],attackValues[4],attackValues[5],attackValues[6],attackValues[7],attackValues[8],attackValues[9],attackValues[10],
                 rewardValues[0],rewardValues[1],rewardValues[2],rewardValues[3],rewardValues[4],rewardValues[5],rewardValues[6],rewardValues[7],rewardValues[8],rewardValues[9],rewardValues[10]);
         return string;

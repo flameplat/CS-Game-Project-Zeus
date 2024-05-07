@@ -90,7 +90,7 @@ public class Player {
         }
         return false;
     }
-    ScoreSheet getScoreSheet(){
+    public ScoreSheet getScoreSheet(){
         return scoreSheet;
     }
 

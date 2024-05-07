@@ -1,26 +1,51 @@
 package game.creatures;
 
 public class Guardian extends Creature{
-    public Guardian(int score){
+    private int score;
+    private boolean status;
 
+    public Guardian(int score){
+        this.score=score;
+        this.status=true;
+    }
+    public Guardian(){
+        this(1);
     }
     @Override
-    public boolean attack(int value) {
+    public boolean attack() {
+        if(isAlive()){
+            status=false;
+            return true;
+        }
         return false;
     }
     @Override
     public boolean isAlive() {
-        return false;
+        return status;
     }
 
     @Override
     public int getScore() {
-        return 0;
+        return score;
     }
 
 
     @Override
     public String toString() {
-        return null;
+        String string;
+        if(isAlive()){
+            return String.valueOf(score);
+        }
+        return "X";
+
+    }
+    public boolean equals(Object o){
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        return true;
     }
 }

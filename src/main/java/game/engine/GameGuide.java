@@ -68,6 +68,11 @@ public class GameGuide {
     }
 
     public int getUserChoice(int minBound, int maxBound) {
+        if(minBound>maxBound){
+            int temp=minBound;
+            minBound=maxBound;
+            maxBound=temp;
+        }
         int validValue;
         while (true) {
             try {
