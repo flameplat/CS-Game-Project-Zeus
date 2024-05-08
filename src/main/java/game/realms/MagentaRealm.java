@@ -214,7 +214,7 @@ public class MagentaRealm extends Realm{
                 "|  H  |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |\n" +
                 "|  C  |<    |<%s   |<%s   |<%s   |<%s   |<%s   |<%s   |<%s   |<%s   |<%s   |<%s   |\n" +
                 "|  R  |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |\n" +
-                "+-----------------------------------------------------------------------+\n\n",
+                "+-----------------------------------------------------------------------+\n\n\n",
                 score[0],score[1],score[2],score[3],score[4],score[5],score[6],score[7],score[8],score[9],score[10],
                 attackValues[0],attackValues[1],attackValues[2],attackValues[3],attackValues[4],attackValues[5],attackValues[6],attackValues[7],attackValues[8],attackValues[9],
                 rewardValues[0],rewardValues[1],rewardValues[2],rewardValues[3],rewardValues[4],rewardValues[5],rewardValues[6],rewardValues[7],rewardValues[8],rewardValues[9],rewardValues[10]);

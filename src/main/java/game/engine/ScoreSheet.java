@@ -11,7 +11,6 @@ public class ScoreSheet {
     //--------------------------Attributes--------------------------//
     private Realm[] realms;
     private String string;
-
     //--------------------------Constructor--------------------------//
     public ScoreSheet(Realm[] realmsReference){
         this.realms=realmsReference;
@@ -20,9 +19,10 @@ public class ScoreSheet {
     //--------------------------Methods--------------------------//
     private void updateScoresheet(){
         StringBuilder stringBuilder=new StringBuilder();
+        stringBuilder.append("\n\nScoreSheet\n\n");
+        int c=0;
         for(Realm realm:realms){
             stringBuilder.append(realm.toString());
-            stringBuilder.append("\n");
         }
         string=stringBuilder.toString();
     }
