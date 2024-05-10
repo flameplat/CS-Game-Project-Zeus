@@ -214,9 +214,9 @@ public class GreenRealm extends Realm{
             }
 
             }
+            return false;
         }
-        return false;
-    }
+
     public void updateAvailableMoves(Move move){
         Move[] tmp = Move[availableRealmMoves.length()-1];
         for(i=0,k=0;i<availableRealmMoves.length();i++){
@@ -248,21 +248,21 @@ public class GreenRealm extends Realm{
     @Override
     public String toString() {
         return  String.format("Terras Heartland: (Green Realm):\n" +
-                "+-----------------------------------+\n"
-                "|  #  |1    |2    |3    |4    |R    |\n"
-                "+-----------------------------------+\n"   
-                "|  1  |%s    |%s   |%s   |%s   |%s   |\n" 
-                "|  2  |%s   |%s   |%s   |%s   |%s   |\n"
-                "|  3  |%s   |%s   |%s   |%s   |%s   |\n"
-                "+-----------------------------------+\n"
-                "|  R  |%s   |%s   |%s   |%s   |     |\n"
-                "+-----------------------------------------------------------------------------+\n"
-                "|  S  |0    |1    |2    |4    |7    |11   |16   |22   |29   |37   |46   |56   |\n"
+                "+-----------------------------------+\n"+
+                "|  #  |1    |2    |3    |4    |R    |\n"+
+                "+-----------------------------------+\n" +  
+                "|  1  |%s    |%s   |%s   |%s   |%s   |\n" +
+                "|  2  |%s   |%s   |%s   |%s   |%s   |\n"+
+                "|  3  |%s   |%s   |%s   |%s   |%s   |\n"+
+                "+-----------------------------------+\n"+
+                "|  R  |%s   |%s   |%s   |%s   |     |\n"+
+                "+-----------------------------------------------------------------------------+\n"+
+                "|  S  |0    |1    |2    |4    |7    |11   |16   |22   |29   |37   |46   |56   |\n"+
                 "+-----------------------------------------------------------------------------+\n\n",
                 attackValues[0],attackValues[1],attackValues[2],attackValues[3],rewardValues[0],
                 attackValues[4],attackValues[5],attackValues[6],attackValues[7],rewardValues[1],
                 attackValues[8],attackValues[9],attackValues[10],attackValues[11],rewardValues[2],
-                rewardValues[3],rewardValues[4],rewardValues[5],rewardValues[6];        
+                rewardValues[3],rewardValues[4],rewardValues[5],rewardValues[6]);        
     }
 
     @Override

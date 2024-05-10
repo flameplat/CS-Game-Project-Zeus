@@ -1,11 +1,11 @@
 package game.creatures;
 
 public class Guardian extends Creature{
-    private boolean status;
     private int score;
+    private boolean status;
     public Guardian(){
-        this.status=true;
-        this.score=0;
+        this.score = 0;
+        this.status = true;
     }
     @Override
     public boolean attack() {
@@ -29,6 +29,6 @@ public class Guardian extends Creature{
 
     @Override
     public String toString() {
-        return 'Gaia Guardian';
+        return "Gaia Guardian";
     }
 }
