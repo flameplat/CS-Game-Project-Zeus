@@ -71,48 +71,15 @@ public class MagentaRealm extends Realm{
         for (int i = 0; i < 11; i++) {
 
             String reward = properties.getProperty("hit"+(i+1)+"Reward");
-            if(reward!=null){
-                switch (reward){
-                    case "TimeWarp":        {rewardProperties[i]=new TimeWarp();
-                        rewardValues[i]="TW";break;
-                    }
-                    case "ArcaneBoost":     {rewardProperties[i]=new ArcaneBoost();
-                        rewardValues[i]="AB";
-                        break;
-                    }
-                    case "EssenceBonus":    {rewardProperties[i]=new EssenceBonus();
-                        rewardValues[i]="EC";
-                        break;
-                    }
-                    case "RedBonus":        {rewardProperties[i]=new ColorBonus(Color.RED);
-                        rewardValues[i]="RB";
-                        break;
-                    }
-                    case "BlueBonus":       {rewardProperties[i]=new ColorBonus(Color.BLUE);
-                        rewardValues[i]="BB";
-                        break;
-                    }
-                    case "GreenBonus":      {rewardProperties[i]=new ColorBonus(Color.GREEN);
-                        rewardValues[i]="GB";
-                        break;
-                    }
-                    case "MagentaBonus":    {rewardProperties[i]=new ColorBonus(Color.MAGENTA);
-                        rewardValues[i]="MB";
-                        break;
-                    }
-                    case "YellowBonus":     {rewardProperties[i]=new ColorBonus(Color.YELLOW);
-                        rewardValues[i]="YB";
-                        break;
-                    }
-                    case "ElementalCrest":  {rewardProperties[i]=new ElementalCrest();
-                        rewardValues[i]="EC";
-                        break;
-                    }
-                    default:                {rewardProperties[i]=null;
-                        rewardValues[i]="  ";
-                    }
-                }
+            rewardProperties[i]=getCollectibleFromString(reward);
+            if(rewardProperties[i]!=null){
+                rewardValues[i]=rewardProperties[i].toString();
             }
+            else{
+                rewardValues[i]="  ";
+            }
+
+
 
         }
         return rewardProperties;
@@ -172,7 +139,7 @@ public class MagentaRealm extends Realm{
                 }
 
             }
-            if(flag == false){
+            if(!flag){
                 return false;
             }
             updatePossibleMoves(move);

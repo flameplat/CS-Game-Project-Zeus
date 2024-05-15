@@ -62,12 +62,9 @@ public class CLIGameController extends GameController {
     private Player passivePlayer;
 
 
-    private int roundsCount;
-
     private GameGuide gameGuide;
-    private int turnsCount;
     private final SystemManager systemManager;
-    private Scanner sc; //Will be closed at the end of the game
+    private final Scanner sc; //Will be closed at the end of the game
 
     // -----------------------Constructor-----------------------//
     public CLIGameController(){
@@ -103,19 +100,18 @@ public class CLIGameController extends GameController {
             }
             playRound();
             switchPlayer();
+            System.out.println("Round "+(i+1));
+            //Active player receives round reward
+            if(roundRewards[i]!=null){
+                performReward(activePlayer,roundRewards[i]);
+            }
+            playRound();
+            switchPlayer();
             gameStatus.incrementRound();
         }
         endGame();
     }
-    private void delay(double s){
-        int ms= (int) (s*1000);
-        try{
-            Thread.sleep(ms);
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
-    }
+
 
     private void mainMenu() {
         gameGuide.displayMenu();
@@ -201,7 +197,7 @@ public class CLIGameController extends GameController {
         playColorBonus(player,colors[choice-1]);
 
     }
-    private void playColorBonus(Player player,Color color){
+    public void playColorBonus(Player player,Color color){
         gameGuide.displayInstructions(Instruction.COLOR_BONUS);
         switch (color){
             case RED: {
@@ -212,7 +208,6 @@ public class CLIGameController extends GameController {
                         new RedDice(4),
                         new RedDice(5),
                         new RedDice(6)};
-                redDice=filterDiceWithPossibleMoves(player,redDice);
                 try{
                     Dice selectedDie=selectValidDie(player,redDice,false);
                     Move selectedMove=selectValidMove(player,selectedDie);
@@ -238,8 +233,6 @@ public class CLIGameController extends GameController {
                         new GreenDice(4),
                         new GreenDice(5),
                         new GreenDice(6)};
-                // Filter green dice with possible moves
-                greenDice = filterDiceWithPossibleMoves(player, greenDice);
                 try {
                     // Select a valid die and move
                     Dice selectedDie = selectValidDie(player, greenDice,false);
@@ -264,8 +257,6 @@ public class CLIGameController extends GameController {
                         new BlueDice(4),
                         new BlueDice(5),
                         new BlueDice(6)};
-                // Filter blue dice with possible moves
-                blueDice = filterDiceWithPossibleMoves(player, blueDice);
                 try {
                     // Select a valid die and move
                     Dice selectedDie = selectValidDie(player, blueDice,false);
@@ -284,14 +275,7 @@ public class CLIGameController extends GameController {
             case MAGENTA: {
                 // Define magenta dice
                 Dice[] magentaDice = new Dice[]{
-                        new MagentaDice(1),
-                        new MagentaDice(2),
-                        new MagentaDice(3),
-                        new MagentaDice(4),
-                        new MagentaDice(5),
                         new MagentaDice(6)};
-                // Filter magenta dice with possible moves
-                magentaDice = filterDiceWithPossibleMoves(player, magentaDice);
                 try {
                     // Select a valid die and move
                     Dice selectedDie = selectValidDie(player, magentaDice,false);
@@ -310,14 +294,7 @@ public class CLIGameController extends GameController {
             case YELLOW: {
                 // Define yellow dice
                 Dice[] yellowDice = new Dice[]{
-                        new YellowDice(1),
-                        new YellowDice(2),
-                        new YellowDice(3),
-                        new YellowDice(4),
-                        new YellowDice(5),
                         new YellowDice(6)};
-                // Filter yellow dice with possible moves
-                yellowDice = filterDiceWithPossibleMoves(player, yellowDice);
                 try {
                     // Select a valid die and move
                     Dice selectedDie = selectValidDie(player, yellowDice,false);
@@ -528,7 +505,7 @@ public class CLIGameController extends GameController {
         gameGuide.displayInstructions(Instruction.PASSIVE_TURN);
         System.out.println(passivePlayer.getScoreSheet());
         Dice[] temp=getForgottenRealmDice();
-        Dice selectedDie=null;
+        Dice selectedDie;
         try {
             selectedDie=selectValidDie(passivePlayer,temp,false);
         }
@@ -819,9 +796,8 @@ public class CLIGameController extends GameController {
         try{
             dice.setDiceStatus(DiceStatus.TURN_SELECTED);
             player.setSelectedDie(dice);
-            for(int i=0;i<diceArray.length;i++){
-                Dice diceFromArray=diceArray[i];
-                if(diceFromArray.getDiceStatus()==DiceStatus.AVAILABLE && diceFromArray.getValue()<dice.getValue()){
+            for (Dice diceFromArray : diceArray) {
+                if (diceFromArray.getDiceStatus() == DiceStatus.AVAILABLE && diceFromArray.getValue() < dice.getValue()) {
                     diceFromArray.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
                 }
             }
@@ -862,6 +838,12 @@ public class CLIGameController extends GameController {
     private void endGame(){
         gameGuide.closeScanner();
         sc.close();
+        System.out.println(activePlayer.getName());
+        System.out.println(activePlayer.getScoreSheet());
+        System.out.println("*".repeat(100));
+        System.out.println(passivePlayer.getName());
+        System.out.println(passivePlayer.getScoreSheet());
+        System.out.println("*".repeat(100));
         System.out.println(activePlayer.getGameScore());
         System.out.println(passivePlayer.getGameScore());
 

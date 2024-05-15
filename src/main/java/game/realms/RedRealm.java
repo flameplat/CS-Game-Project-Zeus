@@ -1,16 +1,13 @@
 package game.realms;
 
-import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
-import game.collectibles.ColorBonus;
-import game.collectibles.ElementalCrest;
 import game.creatures.Creature;
 import game.creatures.Dragon;
-
 import game.creatures.HitRegionsOfDragons;
+import game.dice.Dice;
+import game.dice.RedDice;
+import game.engine.Move;
 import game.utilities.Color;
-import game.engine.*;
-import game.dice.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,17 +15,17 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 public class RedRealm extends Realm {
+    private static final Color realmColor = Color.RED;
+    private static final String name = "Emberfall Dominion";
     // -----------------------Attributes-----------------------//
     private int totalRealmScore;
     private Dragon[] dragons;
-    private Object[][] redrealm_scoresheet;
+    private final Object[][] redrealm_scoresheet;
     private Object[] collectibles;
     private int noElementalCrests;
-    private LinkedList<Move> redMoves;
-    private Collectibles[] realmRewards;
-    private static final Color realmColor = Color.RED;
-    private static final String name = "Emberfall Dominion";
-    private static final int rewardsNumber = 5;
+    private final LinkedList<Move> redMoves;
+    private LinkedList<Collectibles> realmRewards;
+
 
     // -----------------------Constructor-----------------------//
     public RedRealm() {
@@ -37,9 +34,8 @@ public class RedRealm extends Realm {
         this.collectibles = getRewardsProperties();
         this.dragons = initDragons();
         this.redrealm_scoresheet = initDragonscoresheet();
-        this.realmRewards = new Collectibles[rewardsNumber];
         this.redMoves = redMovespopulate();
-    };
+    }
 
     // -----------------------Methods-----------------------//
     private LinkedList<Move> redMovespopulate() {
@@ -83,24 +79,24 @@ public class RedRealm extends Realm {
     // NA->0
     private Dragon[] initDragons() {
         dragons = new Dragon[4];
-        dragons[0] = new Dragon(new Object[] { 3, 2, 1, "X" }, 10, 1);
-        dragons[1] = new Dragon(new Object[] { 6, 1, "X", 5}, 14, 2);
-        dragons[2] = new Dragon(new Object[] { 5, "X", 2, 4 }, 16, 3);
-        dragons[3] = new Dragon(new Object[] { "X", 5, 4, 6 }, 20, 4);
+        dragons[0] = new Dragon(new Object[]{3, 2, 1, "X"}, 10, 1);
+        dragons[1] = new Dragon(new Object[]{6, 1, "X", 3}, 14, 2);
+        dragons[2] = new Dragon(new Object[]{5, "X", 2, 4}, 16, 3);
+        dragons[3] = new Dragon(new Object[]{"X", 5, 4, 6}, 20, 4);
         return dragons;
     }
 
     private Object[][] initDragonscoresheet() {
         Object[][] scoresheet = {
-                { dragons[0].getHealth()[0], dragons[1].getHealth()[0], dragons[2].getHealth()[0],
-                        dragons[3].getHealth()[0], collectibles[0] },
-                { dragons[0].getHealth()[1], dragons[1].getHealth()[1], dragons[2].getHealth()[1],
-                        dragons[3].getHealth()[1], collectibles[1] },
-                { dragons[0].getHealth()[2], dragons[1].getHealth()[2], dragons[2].getHealth()[2],
-                        dragons[3].getHealth()[2], collectibles[2] },
-                { dragons[0].getHealth()[3], dragons[1].getHealth()[3], dragons[2].getHealth()[3],
-                        dragons[3].getHealth()[3], collectibles[3] },
-                { null, null, null, null, collectibles[4] } };
+                {dragons[0].getHealth()[0], dragons[1].getHealth()[0], dragons[2].getHealth()[0],
+                        dragons[3].getHealth()[0], collectibles[0]},
+                {dragons[0].getHealth()[1], dragons[1].getHealth()[1], dragons[2].getHealth()[1],
+                        dragons[3].getHealth()[1], collectibles[1]},
+                {dragons[0].getHealth()[2], dragons[1].getHealth()[2], dragons[2].getHealth()[2],
+                        dragons[3].getHealth()[2], collectibles[2]},
+                {dragons[0].getHealth()[3], dragons[1].getHealth()[3], dragons[2].getHealth()[3],
+                        dragons[3].getHealth()[3], collectibles[3]},
+                {null, null, null, null, collectibles[4]}};
         return scoresheet;
 
     }
@@ -120,27 +116,12 @@ public class RedRealm extends Realm {
         for (int i = 0; i < 5; i++) {
             String diagonal_reward = properties.getProperty("diagonalReward");
             if (diagonal_reward != null) {
-                rewardProperties[i] = new ArcaneBoost();
+                rewardProperties[i] = getCollectibleFromString(diagonal_reward);
             }
 
             String reward = properties.getProperty("row" + (i + 1) + "Reward");
             if (reward != null) {
-
-                switch (reward) {
-                    case "GreenBonus":
-                        rewardProperties[i] = new ColorBonus(Color.GREEN);
-                        break;
-                    case "YellowBonus":
-                        rewardProperties[i] = new ColorBonus(Color.YELLOW);
-                        break;
-                    case "BlueBonus":
-                        rewardProperties[i] = new ColorBonus(Color.BLUE);
-                        break;
-                    case "ElementalCrest":
-                        rewardProperties[i] = new ElementalCrest();
-                        break;
-                }
-
+                rewardProperties[i] = getCollectibleFromString(reward);
             }
 
         }
@@ -150,9 +131,15 @@ public class RedRealm extends Realm {
     // Gets from Move: Creature and dice
     public boolean attack(Move move) {
         if (isRealmAvailable()) {
+            Dragon dragon=new Dragon();
             if (redMoves.contains(move)) {
+                for(Move m:redMoves){
+                    if(m.equals(move)){
+                        dragon= (Dragon) m.getCreature();
+                    }
+                }
                 redMoves.remove(move);
-                Dragon dragon = (Dragon) move.getCreature();
+
                 for (int i = 0; i < dragon.getHealth().length; i++) {
                     if (!dragon.getHealth()[i].equals("X")
                             && (int) dragon.getHealth()[i] == move.getDice().getValue()) {
@@ -217,45 +204,44 @@ public class RedRealm extends Realm {
 
     @Override
     public boolean checkReward() {
-        int rewardsCounter = 0;
+        this.realmRewards = new LinkedList<Collectibles>();
         String getReward = "XXXX";
         boolean flage = false;
         String checkDiagonal = "";
-        for (int i = 0; i < redrealm_scoresheet.length; i++) {
+        for (int i = 0; i < dragons.length; i++) {
             String checkHorizontal = "";
-            for (int j = 0; j < collectibles.length; j++) {
+            for (int j = 0; j <= dragons[i].getHealth().length; j++) {
+                if (j == 4 && !checkHorizontal.equals(getReward))
+                    break;
                 if (j == 4 && checkHorizontal.equals(getReward)) {
                     if (i == 3 && collectibles[i] instanceof Collectibles) {
+                        System.out.println("You received Elemental Crest!");
                         noElementalCrests++;
                         collectibles = removeCollectible(i);
-                        flage=true;
+                        flage = true;
                         break;
                     }
                     if (collectibles[i] instanceof Collectibles) {
-                        realmRewards[rewardsCounter++] = (Collectibles) collectibles[i];
+                        realmRewards.add((Collectibles) collectibles[i]);
                         collectibles = removeCollectible(i);
                         flage = true;
                     }
-                }
-                if (j == 4 && !checkHorizontal.equals(getReward))
-                    break;
-                else
-                    checkHorizontal += redrealm_scoresheet[i][j];
+                } else
+                    checkHorizontal += dragons[j].getHealth()[i];
             }
 
         }
-        for (int i = 0; i < redrealm_scoresheet.length; i++) {
+        for (int i = 0; i <= dragons.length; i++) {
+            if (i == 4 && !checkDiagonal.equals(getReward))
+                break;
             if (i == 4 && checkDiagonal.equals(getReward)) {
                 if (collectibles[i] instanceof Collectibles) {
-                    realmRewards[rewardsCounter++] = (Collectibles) collectibles[i];
+                    realmRewards.add((Collectibles) collectibles[i]);
                     collectibles = removeCollectible(i);
                     flage = true;
                 }
-            }
-            if (i == 4 && !checkDiagonal.equals(getReward)) {
-                break;
             } else {
-                checkDiagonal += redrealm_scoresheet[i][i];
+                checkDiagonal += dragons[i].getHealth()[i];
             }
         }
         return flage;
@@ -263,24 +249,25 @@ public class RedRealm extends Realm {
 
     @Override
     public Collectibles[] getReward() {
-        
-            return realmRewards;
+
+        return realmRewards.toArray(Collectibles[]::new);
 
     }
 
     @Override
     public int getTotalScore() {
         String get_score = "XXXX";
-        int totalRealmScore=0;
+        int totalRealmScore1 = 0;
         for (int i = 0; i < dragons.length; i++) {
             String check_region = "";
             for (int j = 0; j < dragons[i].getHealth().length; j++) {
                 check_region = check_region + dragons[i].getHealth()[j];
             }
             if (check_region.equals(get_score)) {
-                totalRealmScore += dragons[i].getScore();
+                totalRealmScore1 += dragons[i].getScore();
             }
         }
+        totalRealmScore = totalRealmScore1;
         return totalRealmScore;
     }
 
@@ -290,17 +277,17 @@ public class RedRealm extends Realm {
 
     @Override
     public String toString() {
-        String red_String = String.format("Emberfall Dominion : Pyroclast Dragons (RED REALM):\n" +
-                "+-----------------------------------+\n" +
-                "|  #  |D1   |D2   |D3   |D4   |R    |\n" +
-                "+-----------------------------------+\n" +
-                "|  F  |%s    |%s    |%s    |X    |%s   |\n" +
-                "|  W  |%s    |%s    |X    |%s    |%s   |\n" +
-                "|  T  |%s    |X    |%s    |%s    |%s   |\n" +
-                "|  H  |X    |%s    |%s    |%s    |%s   |\n" +
-                "+-----------------------------------+\n" +
-                "|  S  |10   |14   |16   |20   |%s   |\n" +
-                "+-----------------------------------+", dragons[0].getHealth()[0], dragons[1].getHealth()[0],
+        String red_String = String.format("Emberfall Dominion: Pyroclast Dragon (RED REALM):\n" +
+                        "+-----------------------------------+\n" +
+                        "|  #  |D1   |D2   |D3   |D4   |R    |\n" +
+                        "+-----------------------------------+\n" +
+                        "|  F  |%s    |%s    |%s    |X    |%s   |\n" +
+                        "|  W  |%s    |%s    |X    |%s    |%s   |\n" +
+                        "|  T  |%s    |X    |%s    |%s    |%s   |\n" +
+                        "|  H  |X    |%s    |%s    |%s    |%s   |\n" +
+                        "+-----------------------------------+\n" +
+                        "|  S  |10   |14   |16   |20   |%s   |\n" +
+                        "+-----------------------------------+\n\n\n", dragons[0].getHealth()[0], dragons[1].getHealth()[0],
                 dragons[2].getHealth()[0], collectibles[0],
                 dragons[0].getHealth()[1], dragons[1].getHealth()[1], dragons[3].getHealth()[1], collectibles[1],
                 dragons[0].getHealth()[2], dragons[2].getHealth()[2], dragons[3].getHealth()[2], collectibles[2],
@@ -320,6 +307,9 @@ public class RedRealm extends Realm {
     @Override
     public Creature getCreature(Dice dice) {
         if (dice.getRealm() == Color.RED && dice instanceof RedDice && (dice.getValue() <= 6 && dice.getValue() >= 1)) {
+            if (((RedDice) dice).getDragonNumber() == 0) {
+                return dragons[0];
+            }
             return dragons[((RedDice) dice).getDragonNumber() - 1];
 
         }
@@ -330,6 +320,4 @@ public class RedRealm extends Realm {
     public int getStatus() {
         return 0;
     }
-
 }
-

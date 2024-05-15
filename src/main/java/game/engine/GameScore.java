@@ -52,7 +52,7 @@ public class GameScore {
     }
 
     public int getFinalScore(){
-        int minScore=0;
+        int minScore=realms[0].getTotalScore();
         for(int i=0;i<5;i++){
             if(realms[i].getTotalScore()<minScore){
                 minScore=realms[i].getTotalScore();

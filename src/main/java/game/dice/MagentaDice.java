@@ -1,7 +1,6 @@
 package game.dice;
 
 import game.utilities.Color;
-import org.testng.internal.EclipseInterface;
 
 public class MagentaDice extends Dice{
     private DiceStatus status;

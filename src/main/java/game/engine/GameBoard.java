@@ -19,6 +19,7 @@ public class GameBoard {
         player1.setPlayerStatus(PlayerStatus.ACTIVE);
         player2.setPlayerStatus(PlayerStatus.PASSIVE);
         diceArray= new Dice[]{new RedDice(), new GreenDice(), new BlueDice(), new MagentaDice(), new YellowDice(), new WhiteDice()};
+        GreenRealm.setWhiteDice((WhiteDice) diceArray[5]);
     }
     public void setPlayer1(Player player1){
         this.player1=player1;

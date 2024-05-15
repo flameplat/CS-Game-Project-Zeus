@@ -89,8 +89,10 @@ public class Dragon extends Creature {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
-        return true;
+        if(dragonNumber==((Dragon) o).dragonNumber){
+            return true;
+        }
+        return false;
 
     }
 
