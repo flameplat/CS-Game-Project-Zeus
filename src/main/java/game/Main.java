@@ -23,6 +23,7 @@ public class Main {
 
     public static void main(String[] args) {
         CLIGameController controller = new CLIGameController();
+        controller.startGame();
         GreenRealm x= (GreenRealm) controller.getActivePlayer().getRealm(Color.GREEN);
         Move[] moves=x.getRealmMoves();
         for(Move m:moves){
@@ -30,7 +31,7 @@ public class Main {
             x.attack(m);
             if(x.checkReward()){
                 System.out.println("Reward exists");
-                System.out.println(x.getReward()[0]);
+                System.out.println(Arrays.toString(x.getReward()));
             }
             else{
                 System.out.println("No reward");
@@ -38,6 +39,8 @@ public class Main {
             System.out.println(x);
         }
         System.out.println(x);
+        System.out.println(controller.getActivePlayer().getGameScore());
+
 
 
     }

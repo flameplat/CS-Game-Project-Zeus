@@ -29,32 +29,6 @@ public abstract class Realm {
     public abstract String toString();
     public abstract Move[] getRealmMoves();
     public abstract Creature getCreature(Dice dice);
-    public static Collectibles getCollectibleFromString(String reward) {
-        if(reward==null){
-            return null;
-        }
-        switch (reward) {
-            case "TimeWarp":
-                return new TimeWarp();
-            case "ArcaneBoost":
-                return new ArcaneBoost();
-            case "EssenceBonus":
-                return new EssenceBonus();
-            case "RedBonus":
-                return new ColorBonus(Color.RED);
-            case "BlueBonus":
-                return new ColorBonus(Color.BLUE);
-            case "GreenBonus":
-                return new ColorBonus(Color.GREEN);
-            case "MagentaBonus":
-                return new ColorBonus(Color.MAGENTA);
-            case "YellowBonus":
-                return new ColorBonus(Color.YELLOW);
-            case "ElementalCrest":
-                return new ElementalCrest();
-            default:
-                return null;
-        }
-    }
+
 
 }

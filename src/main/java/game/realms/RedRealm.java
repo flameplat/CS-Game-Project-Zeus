@@ -1,6 +1,7 @@
 package game.realms;
 
 import game.collectibles.Collectibles;
+import game.collectibles.ElementalCrest;
 import game.creatures.Creature;
 import game.creatures.Dragon;
 import game.creatures.HitRegionsOfDragons;
@@ -116,14 +117,13 @@ public class RedRealm extends Realm {
         for (int i = 0; i < 5; i++) {
             String diagonal_reward = properties.getProperty("diagonalReward");
             if (diagonal_reward != null) {
-                rewardProperties[i] = getCollectibleFromString(diagonal_reward);
+                rewardProperties[i] = Collectibles.getCollectibleFromString(diagonal_reward);
             }
 
             String reward = properties.getProperty("row" + (i + 1) + "Reward");
             if (reward != null) {
-                rewardProperties[i] = getCollectibleFromString(reward);
+                rewardProperties[i] = Collectibles.getCollectibleFromString(reward);
             }
-
         }
         return rewardProperties;
     }
@@ -213,15 +213,11 @@ public class RedRealm extends Realm {
             for (int j = 0; j <= dragons[i].getHealth().length; j++) {
                 if (j == 4 && !checkHorizontal.equals(getReward))
                     break;
-                if (j == 4 && checkHorizontal.equals(getReward)) {
-                    if (i == 3 && collectibles[i] instanceof Collectibles) {
-                        System.out.println("You received Elemental Crest!");
-                        noElementalCrests++;
-                        collectibles = removeCollectible(i);
-                        flage = true;
-                        break;
-                    }
+                if (j == 4) {
                     if (collectibles[i] instanceof Collectibles) {
+                        if(collectibles[i] instanceof ElementalCrest){
+                            noElementalCrests++;
+                        }
                         realmRewards.add((Collectibles) collectibles[i]);
                         collectibles = removeCollectible(i);
                         flage = true;

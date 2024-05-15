@@ -71,7 +71,7 @@ public class MagentaRealm extends Realm{
         for (int i = 0; i < 11; i++) {
 
             String reward = properties.getProperty("hit"+(i+1)+"Reward");
-            rewardProperties[i]=getCollectibleFromString(reward);
+            rewardProperties[i]=Collectibles.getCollectibleFromString(reward);
             if(rewardProperties[i]!=null){
                 rewardValues[i]=rewardProperties[i].toString();
             }

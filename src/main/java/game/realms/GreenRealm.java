@@ -63,7 +63,7 @@ public class GreenRealm extends Realm{
         }
         for (int i = 0; i <3; i++) {
             String rowReward = properties.getProperty("row"+(i+1)+"Reward");
-            rewardProperties[i]=getCollectibleFromString(rowReward);
+            rewardProperties[i]=Collectibles.getCollectibleFromString(rowReward);
             if(rewardProperties[i]==null){
                 System.out.println("Error in reading the file");
                 System.exit(1);
@@ -72,7 +72,7 @@ public class GreenRealm extends Realm{
         }
         for (int i=3;i<7;i++){
             String columnReward = properties.getProperty("column"+(i-2)+"Reward");
-            rewardProperties[i] = getCollectibleFromString(columnReward);
+            rewardProperties[i] = Collectibles.getCollectibleFromString(columnReward);
             if(rewardProperties[i]==null){
                 System.out.println("Error in reading the file");
                 System.exit(1);
@@ -181,6 +181,7 @@ public class GreenRealm extends Realm{
         }
         return false;
     }
+
     public boolean checkColumnReward(){
         //checks rewards in columns(r count position of row, l loop position of column)
         for(int r=0, l=0;l<4;r++){

@@ -9,17 +9,13 @@ import java.util.Properties;
 
 
 import game.utilities.Color;
-import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
-import game.collectibles.ColorBonus;
 import game.collectibles.ElementalCrest;
-import game.collectibles.EssenceBonus;
-import game.collectibles.TimeWarp;
+
 import game.creatures.Creature;
 import game.creatures.Serpent;
 import game.engine.Move;
 import game.dice.*;
-import java.util.LinkedList;
 
 public class BlueRealm extends Realm{
     // -----------------------Attributes-----------------------//
@@ -199,7 +195,7 @@ public class BlueRealm extends Realm{
         for (int i = 0; i < 11; i++) {
 
             String reward = properties.getProperty("hit"+(i+1)+"Reward");
-            rewardProperties[i]=getCollectibleFromString(reward);
+            rewardProperties[i]=Collectibles.getCollectibleFromString(reward);
             if(rewardProperties[i]==null){
                 rewardValues[i]="  ";
             }
