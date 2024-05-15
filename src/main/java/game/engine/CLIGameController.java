@@ -831,13 +831,9 @@ public class CLIGameController extends GameController {
         if(player==null || move==null || move.getDice().getRealm()==Color.WHITE){
             return false;
         }
-        if(getPossibleMovesForADie(player,move.getDice()).length==0){
-            return false;
-        }
-        Realm realm = player.getRealm(move.getDice().getRealm());
-        realm.attack(move);
-        return true;
 
+        Realm realm = player.getRealm(move.getDice().getRealm());
+        return realm.attack(move);
 
     }
 

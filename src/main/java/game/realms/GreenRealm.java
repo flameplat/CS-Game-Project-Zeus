@@ -33,6 +33,7 @@ public class GreenRealm extends Realm{
     // -----------------------Constructor-----------------------//
     public GreenRealm(){
         this.deadGuardians = 0;
+        this.guardian=new Guardian();
         this.realmScore = 0;
         this.noElementalCrests = 0;
         this.attackValues = new String[]{"X","2","3","4","5","6","7","8","9","10","11","12"};
