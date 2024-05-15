@@ -1,6 +1,7 @@
 package game.engine;
 
 import game.dice.Dice;
+import game.exceptions.CheatDetectedException;
 
 public class StandardAntiCheatService implements AntiCheatService{
     @Override
@@ -21,5 +22,11 @@ public class StandardAntiCheatService implements AntiCheatService{
     @Override
     public void checkDice(Dice[] dice) {
 
+    }
+
+    @Override
+    public void checkPlayerReward(Player player) throws CheatDetectedException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'checkPlayerReward'");
     }
 }
