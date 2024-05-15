@@ -35,7 +35,7 @@ public class YellowRealm extends Realm{
         this.noElementalCrests=0;
         this.collectibles= getRewardsProperties();
         for(int i=1;i<7;i++){
-            this.realmMoves.addLast(new Move(new YellowDice(i),new Lion()));
+            this.realmMoves.addLast(new Move(new YellowDice(i),lion));
         }
         this.score=new int[11];
     }
