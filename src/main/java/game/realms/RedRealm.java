@@ -21,12 +21,10 @@ public class RedRealm extends Realm {
     // -----------------------Attributes-----------------------//
     private int totalRealmScore;
     private Dragon[] dragons;
-    private final Object[][] redrealm_scoresheet;
     private Object[] collectibles;
     private int noElementalCrests;
     private final LinkedList<Move> redMoves;
     private LinkedList<Collectibles> realmRewards;
-
 
     // -----------------------Constructor-----------------------//
     public RedRealm() {
@@ -34,7 +32,6 @@ public class RedRealm extends Realm {
         this.noElementalCrests = 0;
         this.collectibles = getRewardsProperties();
         this.dragons = initDragons();
-        this.redrealm_scoresheet = initDragonscoresheet();
         this.redMoves = redMovespopulate();
     }
 
@@ -80,26 +77,11 @@ public class RedRealm extends Realm {
     // NA->0
     private Dragon[] initDragons() {
         dragons = new Dragon[4];
-        dragons[0] = new Dragon(new Object[]{3, 2, 1, "X"}, 10, 1);
-        dragons[1] = new Dragon(new Object[]{6, 1, "X", 3}, 14, 2);
-        dragons[2] = new Dragon(new Object[]{5, "X", 2, 4}, 16, 3);
-        dragons[3] = new Dragon(new Object[]{"X", 5, 4, 6}, 20, 4);
+        dragons[0] = new Dragon(new Object[] { 3, 2, 1, "X" }, 10, 1);
+        dragons[1] = new Dragon(new Object[] { 6, 1, "X", 3 }, 14, 2);
+        dragons[2] = new Dragon(new Object[] { 5, "X", 2, 4 }, 16, 3);
+        dragons[3] = new Dragon(new Object[] { "X", 5, 4, 6 }, 20, 4);
         return dragons;
-    }
-
-    private Object[][] initDragonscoresheet() {
-        Object[][] scoresheet = {
-                {dragons[0].getHealth()[0], dragons[1].getHealth()[0], dragons[2].getHealth()[0],
-                        dragons[3].getHealth()[0], collectibles[0]},
-                {dragons[0].getHealth()[1], dragons[1].getHealth()[1], dragons[2].getHealth()[1],
-                        dragons[3].getHealth()[1], collectibles[1]},
-                {dragons[0].getHealth()[2], dragons[1].getHealth()[2], dragons[2].getHealth()[2],
-                        dragons[3].getHealth()[2], collectibles[2]},
-                {dragons[0].getHealth()[3], dragons[1].getHealth()[3], dragons[2].getHealth()[3],
-                        dragons[3].getHealth()[3], collectibles[3]},
-                {null, null, null, null, collectibles[4]}};
-        return scoresheet;
-
     }
 
     private Object[] getRewardsProperties() {
@@ -131,11 +113,11 @@ public class RedRealm extends Realm {
     // Gets from Move: Creature and dice
     public boolean attack(Move move) {
         if (isRealmAvailable()) {
-            Dragon dragon=new Dragon();
+            Dragon dragon = new Dragon();
             if (redMoves.contains(move)) {
-                for(Move m:redMoves){
-                    if(m.equals(move)){
-                        dragon= (Dragon) m.getCreature();
+                for (Move m : redMoves) {
+                    if (m.equals(move)) {
+                        dragon = (Dragon) m.getCreature();
                     }
                 }
                 redMoves.remove(move);
@@ -215,7 +197,7 @@ public class RedRealm extends Realm {
                     break;
                 if (j == 4) {
                     if (collectibles[i] instanceof Collectibles) {
-                        if(collectibles[i] instanceof ElementalCrest){
+                        if (collectibles[i] instanceof ElementalCrest) {
                             noElementalCrests++;
                         }
                         realmRewards.add((Collectibles) collectibles[i]);
@@ -274,16 +256,16 @@ public class RedRealm extends Realm {
     @Override
     public String toString() {
         String red_String = String.format("Emberfall Dominion: Pyroclast Dragon (RED REALM):\n" +
-                        "+-----------------------------------+\n" +
-                        "|  #  |D1   |D2   |D3   |D4   |R    |\n" +
-                        "+-----------------------------------+\n" +
-                        "|  F  |%s    |%s    |%s    |X    |%s   |\n" +
-                        "|  W  |%s    |%s    |X    |%s    |%s   |\n" +
-                        "|  T  |%s    |X    |%s    |%s    |%s   |\n" +
-                        "|  H  |X    |%s    |%s    |%s    |%s   |\n" +
-                        "+-----------------------------------+\n" +
-                        "|  S  |10   |14   |16   |20   |%s   |\n" +
-                        "+-----------------------------------+\n\n\n", dragons[0].getHealth()[0], dragons[1].getHealth()[0],
+                "+-----------------------------------+\n" +
+                "|  #  |D1   |D2   |D3   |D4   |R    |\n" +
+                "+-----------------------------------+\n" +
+                "|  F  |%s    |%s    |%s    |X    |%s   |\n" +
+                "|  W  |%s    |%s    |X    |%s    |%s   |\n" +
+                "|  T  |%s    |X    |%s    |%s    |%s   |\n" +
+                "|  H  |X    |%s    |%s    |%s    |%s   |\n" +
+                "+-----------------------------------+\n" +
+                "|  S  |10   |14   |16   |20   |%s   |\n" +
+                "+-----------------------------------+\n\n\n", dragons[0].getHealth()[0], dragons[1].getHealth()[0],
                 dragons[2].getHealth()[0], collectibles[0],
                 dragons[0].getHealth()[1], dragons[1].getHealth()[1], dragons[3].getHealth()[1], collectibles[1],
                 dragons[0].getHealth()[2], dragons[2].getHealth()[2], dragons[3].getHealth()[2], collectibles[2],

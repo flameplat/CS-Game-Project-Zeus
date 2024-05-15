@@ -6,49 +6,77 @@
 dice-realms-game-zeus
 ├── src
 │   ├── main
-│   │   └── java
-│   │       └── game
-│   │           ├── collectibles
-│   │           │   ├── ArcaneBoost.java
-│   │           │   ├── Collectibles.java
-│   │           │   ├── CollectiblesStatus.java
-│   │           │   ├── ColorBonus.java
-│   │           │   ├── ElementalCrest.java
-│   │           │   ├── EssenceShiftBonus.java
-│   │           │   └── TimeWarp.java
-│   │           ├── creatures
-│   │           │   ├── Creature.java
-│   │           │   ├── Dragon.java
-│   │           │   ├── Guardians.java
-│   │           │   ├── HitRegionsOfDragons.java
-│   │           │   ├── Lion.java
-│   │           │   ├── Phoenix.java
-│   │           │   └── Serpent.java
-│   │           ├── dice
-│   │           │   └── Dice.java
-│   │           ├── engine
-│   │           │   ├── CLIGameController.java
-│   │           │   ├── CurrentStatus.java
-│   │           │   ├── ForgottenRealm.java
-│   │           │   ├── GameBoard.java
-│   │           │   ├── GameController.java
-│   │           │   ├── GameScore.java
-│   │           │   ├── GameStatus.java
-│   │           │   ├── Move.java
-│   │           │   ├── Player.java
-│   │           │   └── ScoreSheet.java
-│   │           ├── exceptions
-│   │           ├── gui
-│   │           ├── realms
-│   │           │   ├── BlueRealm.java
-│   │           │   ├── GreenRealm.java
-│   │           │   ├── MagentaRealm.java
-│   │           │   ├── Realm.java
-│   │           │   ├── RedRealm.java
-│   │           │   └── YellowRealm.java
-│   │           ├── Color.java
-│   │           ├── Config.java
-│   │           └── Main.java
+│   │   |── java
+│   │   |   ├── module-info.java
+│   │   |   └── game
+│   │   |        ├── collectibles
+│   │   |        │   ├── ArcaneBoost.java
+│   │   |        │   ├── Collectibles.java
+│   │   |        │   ├── CollectiblesStatus.java
+│   │   |        │   ├── ColorBonus.java
+│   │   |        │   ├── ElementalCrest.java
+│   │   |        │   ├── EssenceShiftBonus.java
+│   │   |        │   └── TimeWarp.java
+│   │   |        ├── creatures
+│   │   |        │   ├── Creature.java
+│   │   |        │   ├── Dragon.java
+│   │   |        │   ├── Guardians.java
+│   │   |        │   ├── HitRegionsOfDragons.java
+│   │   |        │   ├── Lion.java
+│   │   |        │   ├── Phoenix.java
+│   │   |        │   └── Serpent.java
+│   │   |        ├── dice
+│   │   |        │   └── BlueDice.java
+│   │   |        │   └── Dice.java
+│   │   |        │   └── DiceStatus.java
+│   │   |        │   └── GreenDice.java
+│   │   |        │   └── MagentaDice.java
+│   │   |        │   └── RedDice.java
+│   │   |        │   └── WhiteDice.java
+│   │   |        │   └── YellowDice.java
+│   │   |        ├── engine
+│   │   |        │   ├── CLIGameController.java
+│   │   |        │   ├── CurrentStatus.java
+│   │   |        │   ├── GameBoard.java
+│   │   |        │   ├── GameController.java
+│   │   |        │   ├── GameGuide.java
+│   │   |        │   ├── GameScore.java
+│   │   |        │   ├── GameStatus.java
+│   │   |        │   ├── Move.java
+│   │   |        │   ├── Player.java
+│   │   |        │   └── ScoreSheet.java
+│   │   |        ├── exceptions
+│   │   |        │   ├── InvalidPlayerNameException.java
+│   │   |        │   ├── MissingGameFilesException.java
+│   │   |        │   ├── NoAvailableMovesException.java
+│   │   |        ├── gui
+│   │   |        │   ├── DiceRealms.java
+│   │   |        ├── realms
+│   │   |        │   ├── BlueRealm.java
+│   │   |        │   ├── GreenRealm.java
+│   │   |        │   ├── MagentaRealm.java
+│   │   |        │   ├── Realm.java
+│   │   |        │   ├── RedRealm.java
+│   │   |        │   └── YellowRealm.java
+│   │   |        ├── system
+│   │   |        |    ├── SystemManager.java
+│   │   |        ├── utilities
+│   │   |        |    ├── Color.java
+│   │   |        |    ├── CollectiblesComparator.java
+│   │   |        |    └── ColorComparator.java
+│   │   |        ├── Main.java
+│   |   └── resources
+│   |            └── EmptyScoreSheet.txt
+│   |            └── images
+│   |            └── config
+│   |                 └── EmberfallDominionRewards.properties
+│   |                 └── Game.properties
+│   |                 └── MysticalSkyRewards.properties
+│   |                 └── RadiantSvannaRewards.properties
+│   |                 └── RoundsRewards.properties
+│   |                 └── TerrasHeartlandRewards.properties
+│   |                 └── TideAbyssRewards.properties
+│   |        
 │   └── test
 │       └── java
 │           └── game
@@ -59,6 +87,7 @@ dice-realms-game-zeus
 │               ├── exceptions
 │               └── gui
 ├── target
+├── Grades.md
 ├── ProjectSkeleton.md
 ├── README.md
 └──pom.xml
