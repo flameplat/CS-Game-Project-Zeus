@@ -1,0 +1,25 @@
+package game.engine;
+
+import game.dice.Dice;
+
+public class StandardAntiCheatService implements AntiCheatService{
+    @Override
+    public void checkPlayerScore(Player player) {
+
+    }
+
+    @Override
+    public void checkGameBoard(GameBoard gameBoard) {
+
+    }
+
+    @Override
+    public void checkGameStatus(GameStatus gameStatus) {
+
+    }
+
+    @Override
+    public void checkDice(Dice[] dice) {
+
+    }
+}

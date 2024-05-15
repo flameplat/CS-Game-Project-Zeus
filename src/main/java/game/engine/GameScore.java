@@ -1,7 +1,7 @@
 package game.engine;
 
+import game.realms.*;
 import game.utilities.Color;
-import game.realms.Realm;
 
 public class GameScore {
     //--------------------------Attributes--------------------------//
@@ -15,6 +15,12 @@ public class GameScore {
     public GameScore(Realm[] realms,String playerName) {
         this.playerName=playerName;
         this.realms=realms;
+        totalElementalCrests = 0;
+        totalScore = 0;
+    }
+    public GameScore(){
+        this.realms=new Realm[]{new RedRealm(),new GreenRealm(),new BlueRealm(),new MagentaRealm(),new YellowRealm()};
+        this.playerName="NULL";
         totalElementalCrests = 0;
         totalScore = 0;
     }

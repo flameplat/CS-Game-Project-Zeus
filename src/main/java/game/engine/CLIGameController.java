@@ -26,6 +26,7 @@ public class CLIGameController extends GameController {
     private static Collectibles[] roundRewards;
     private static int MAX_NUMBER_OF_ROUNDS;
 
+
     static {
         Properties gameProperties = new Properties();
         Properties roundRewardProperties = new Properties();
@@ -60,10 +61,12 @@ public class CLIGameController extends GameController {
     private Player activePlayer;
     private Player passivePlayer;
     private final GameGuide gameGuide;
+    private StandardAntiCheatService standardAntiCheatService;
 
     // -----------------------Constructor-----------------------//
     public CLIGameController() {
         systemManager = new SystemManager();
+        standardAntiCheatService=new StandardAntiCheatService();
         systemManager.performSystemChecks();
         gameGuide = new GameGuide();
         gameBoard = new GameBoard();
@@ -670,6 +673,10 @@ public class CLIGameController extends GameController {
 
     @Override
     public Move[] getAllPossibleMoves(Player player) {
+        if(player==null){
+            System.err.println("Player cannot be null.");
+            return new Move[0];
+        }
         LinkedList<Move> list = new LinkedList<>();
         for (Realm i : player.getRealms()) {
             Move[] moves = i.getRealmMoves();
@@ -717,36 +724,43 @@ public class CLIGameController extends GameController {
 
     @Override
     public Move[] getPossibleMovesForADie(Player player, Dice dice) {
-        LinkedList<Move> possibleMoves = new LinkedList<>();
-        int diceValue = dice.getValue();
+        try{
+            LinkedList<Move> possibleMoves = new LinkedList<>();
+            int diceValue = dice.getValue();
 
-        // If the dice is white, iterate over all realms
-        if (dice.getRealm() == Color.WHITE) {
-            for (Realm realm : player.getRealms()) {
+            // If the dice is white, iterate over all realms
+            if (dice.getRealm() == Color.WHITE) {
+                for (Realm realm : player.getRealms()) {
+                    Move[] realmMoves = realm.getRealmMoves();
+                    for (Move move : realmMoves) {
+                        int targetValue = (realm instanceof GreenRealm) ? diceValue + diceArray[1].getValue() : diceValue;
+                        if (move.getDice().getValue() == targetValue) {
+                            possibleMoves.add(move);
+                        }
+                    }
+                }
+            } else {
+                // If the dice is not white, find moves in the respective realm
+                Realm realm = player.getRealm(dice);
                 Move[] realmMoves = realm.getRealmMoves();
                 for (Move move : realmMoves) {
-                    int targetValue = (realm instanceof GreenRealm) ? diceValue + diceArray[1].getValue() : diceValue;
-                    if (move.getDice().getValue() == targetValue) {
+                    int targetValue = (realm instanceof GreenRealm) ? diceValue + diceArray[5].getValue() : diceValue;
+                    if ((realm instanceof RedRealm) && ((RedDice) dice).getDragonNumber() != 0) {
+                        if (move.getDice().getValue() == diceValue && ((Dragon) move.getCreature()).getDragonNumber() == ((RedDice) dice).getDragonNumber()) {
+                            possibleMoves.add(move);
+                        }
+                    } else if (move.getDice().getValue() == targetValue) {
                         possibleMoves.add(move);
                     }
                 }
             }
-        } else {
-            // If the dice is not white, find moves in the respective realm
-            Realm realm = player.getRealm(dice);
-            Move[] realmMoves = realm.getRealmMoves();
-            for (Move move : realmMoves) {
-                int targetValue = (realm instanceof GreenRealm) ? diceValue + diceArray[5].getValue() : diceValue;
-                if ((realm instanceof RedRealm) && ((RedDice) dice).getDragonNumber() != 0) {
-                    if (move.getDice().getValue() == diceValue && ((Dragon) move.getCreature()).getDragonNumber() == ((RedDice) dice).getDragonNumber()) {
-                        possibleMoves.add(move);
-                    }
-                } else if (move.getDice().getValue() == targetValue) {
-                    possibleMoves.add(move);
-                }
-            }
+            return possibleMoves.toArray(new Move[0]);
         }
-        return possibleMoves.toArray(new Move[0]);
+        catch (NullPointerException e){
+            System.err.println(e.getMessage());
+            return new Move[0];
+        }
+
     }
 
     @Override
@@ -780,7 +794,7 @@ public class CLIGameController extends GameController {
             return player.getGameScore();
         }
         System.err.println("Cannot get player Game score since player is null");
-        return null;
+        return new GameScore();
     }
 
     @Override
@@ -788,7 +802,7 @@ public class CLIGameController extends GameController {
         if (player != null) {
             return player.getTimeWarps();
         }
-        return null;
+        return new TimeWarp[0];
     }
 
     @Override
@@ -796,23 +810,30 @@ public class CLIGameController extends GameController {
         if (player != null) {
             return player.getArcaneBoosts();
         }
-        return null;
+        return new ArcaneBoost[0];
     }
 
     @Override
     public boolean selectDice(Dice dice, Player player) {
-        boolean flag;
+        boolean flag = false;
+
+        if (dice == null || player == null) {
+            System.err.println("Error: Dice or Player cannot be null.");
+            return false;
+        }
         try {
             dice.setDiceStatus(DiceStatus.TURN_SELECTED);
             player.setSelectedDie(dice);
+
             for (Dice diceFromArray : diceArray) {
                 if (diceFromArray.getDiceStatus() == DiceStatus.AVAILABLE && diceFromArray.getValue() < dice.getValue()) {
                     diceFromArray.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
                 }
             }
             flag = true;
-        } catch (NullPointerException e) {
-            flag = false;
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred: " + e.getMessage());
+            return false;
         }
         return flag;
     }
@@ -828,13 +849,17 @@ public class CLIGameController extends GameController {
 
     @Override
     public boolean makeMove(Player player, Move move) {
-        if(player==null || move==null || move.getDice().getRealm()==Color.WHITE){
+        try{
+            if(move.getDice().getRealm()==Color.WHITE){
+                return false;
+            }
+            Realm realm = player.getRealm(move.getDice().getRealm());
+            return realm.attack(move);
+        }
+        catch (NullPointerException e){
+            System.err.println(e.getMessage());
             return false;
         }
-
-        Realm realm = player.getRealm(move.getDice().getRealm());
-        return realm.attack(move);
-
     }
 
     private void endGame() {
