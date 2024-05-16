@@ -3,9 +3,7 @@ package game.engine;
 import game.collectibles.*;
 import game.creatures.Dragon;
 import game.dice.*;
-import game.exceptions.InvalidPlayerNameException;
-import game.exceptions.MissingGameFilesException;
-import game.exceptions.NoAvailableMovesException;
+import game.exceptions.*;
 import game.realms.GreenRealm;
 import game.realms.Realm;
 import game.realms.RedRealm;
@@ -106,6 +104,8 @@ public class CLIGameController extends GameController {
             }
             playRound();
             switchPlayer();
+            performAntiCheatServiceChecks(activePlayer);
+            performAntiCheatServiceChecks(passivePlayer);
             gameStatus.incrementRound();
         }
         endGame();
@@ -161,6 +161,7 @@ public class CLIGameController extends GameController {
         } catch (NoAvailableMovesException e) {
             System.out.println("Ohh bad luck...there are no possible moves, turn lost!");
         }
+        performAntiCheatServiceChecks(player);
 
 
     }
@@ -311,6 +312,7 @@ public class CLIGameController extends GameController {
                 break;
             }
         }
+        performAntiCheatServiceChecks(player);
 
     }
 
@@ -355,7 +357,6 @@ public class CLIGameController extends GameController {
         playPassiveTurn();
         checkArcaneBoost(activePlayer);
         checkArcaneBoost(passivePlayer);
-
     }
 
     private boolean containsAvailableDie() {
@@ -506,6 +507,7 @@ public class CLIGameController extends GameController {
         //Choosing a die, move (check if move is valid,if not choose another die)
         //execute move
         //All dice of value less than selected die's value goes to forgotten realm
+        performAntiCheatServiceChecks(activePlayer);
         gameStatus.incrementTurn();
     }
 
@@ -529,6 +531,7 @@ public class CLIGameController extends GameController {
             Collectibles[] rewards = passivePlayer.getRealm(selectedDie).getReward();
             processRewardQueue(passivePlayer, rewards);
         }
+        performAntiCheatServiceChecks(passivePlayer);
     }
 
     private void displayAvailableRealms(Player player) {
@@ -859,6 +862,39 @@ public class CLIGameController extends GameController {
         catch (NullPointerException e){
             System.err.println(e.getMessage());
             return false;
+        }
+    }
+    private void performAntiCheatServiceChecks(Player player){
+        try{
+            standardAntiCheatService.checkPlayerScore(player);
+            standardAntiCheatService.checkDice(diceArray);
+            standardAntiCheatService.checkPlayerFinalScore(player);
+            standardAntiCheatService.checkPlayerReward(player);
+            standardAntiCheatService.checkGameStatus(gameStatus);
+        }
+        catch (DiceCheatException e){
+            System.err.println(e.getMessage());
+            standardAntiCheatService.handleDiceCheat(diceArray);
+        } catch (InvalidFinalScoreCheat e) {
+            System.err.println("Cheat detected in final score of player: "+player.getName());
+            systemManager.exit("Cheat detected!");
+        }
+        catch (RewardCheatException e){
+            System.err.println("Cheat detected in rewards of player: "+player.getName());
+            standardAntiCheatService.handleRewardCheat(player);
+        }
+        catch (NegativeScoreException e){
+            System.err.println("Cheat detected in score of player: "+player.getName());
+            System.out.println("Score is below zero!");
+            standardAntiCheatService.handleRewardCheat(player);
+        }
+        catch (HighScoreException e){
+            System.err.println("Cheat detected in score of player: "+player.getName());
+            System.out.println("Score is invalid: "+player.getGameScore().getTotalScore());
+            standardAntiCheatService.handleRewardCheat(player);
+        }
+        catch (CheatDetectedException e){
+            systemManager.exit("Cheat detected!");
         }
     }
 

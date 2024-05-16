@@ -2,11 +2,19 @@ package game.collectibles;
 
 import game.utilities.Color;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class Collectibles {
+    private static final Map<String, Integer> collectibleCounters = new HashMap<>();
+
     public static Collectibles getCollectibleFromString(String reward) {
-        if(reward==null){
+        if (reward == null) {
             return null;
         }
+
+        collectibleCounters.put(reward, collectibleCounters.getOrDefault(reward, 0) + 1);
+
         switch (reward.toLowerCase()) {
             case "timewarp":
                 return new TimeWarp();
@@ -29,6 +37,10 @@ public abstract class Collectibles {
             default:
                 return null;
         }
+    }
+
+    public static int getCounter(String reward) {
+        return collectibleCounters.getOrDefault(reward, 0);
     }
 
     @Override

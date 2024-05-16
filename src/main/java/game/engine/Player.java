@@ -1,5 +1,6 @@
 package game.engine;
 
+import game.collectibles.ColorBonus;
 import game.utilities.Color;
 import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
@@ -9,7 +10,9 @@ import game.exceptions.InvalidPlayerNameException;
 import game.exceptions.MissingGameFilesException;
 import game.realms.*;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 
 public class Player {
@@ -22,7 +25,7 @@ public class Player {
     private String name;
     private Dice selectedDie;
     private LinkedList<ArcaneBoost> arcaneBoosts;
-
+    private static final Map<String, Integer> collectibleCounters = new HashMap<>();
     private LinkedList<TimeWarp> timeWarps;
 
     //----------------------Constructor--------------------------//
@@ -48,6 +51,9 @@ public class Player {
         id++;
         timeWarps=new LinkedList<>();
         arcaneBoosts=new LinkedList<>();
+    }
+    public int getCollectiblesCounters(String collecitible){
+        return collectibleCounters.get(collecitible);
     }
     //----------------------Methods--------------------------//
     /**
@@ -78,17 +84,23 @@ public class Player {
      * Receives the power and set its status to ENABLED.
      * @return true if the power was successfully received, false otherwise
      */
-    boolean receivePower(Collectibles power){
+    public boolean receivePower(Collectibles power){
         //The player only receives 2 powers AB and TW
         if(power instanceof ArcaneBoost){
             arcaneBoosts.addLast((ArcaneBoost) power);
+            collectibleCounters.put("ArcaneBoost",collectibleCounters.getOrDefault("ArcaneBoost", 0) + 1);
             return true;
         }
         if(power instanceof TimeWarp){
             timeWarps.addLast((TimeWarp) power);
+            collectibleCounters.put("TimeWarp",collectibleCounters.getOrDefault("TimeWarp", 0) + 1);
             return true;
         }
         return false;
+    }
+    public void resetRewards(){
+        this.arcaneBoosts=new LinkedList<>();
+        this.timeWarps=new LinkedList<>();
     }
     public ScoreSheet getScoreSheet(){
         return scoreSheet;

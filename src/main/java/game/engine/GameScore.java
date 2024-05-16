@@ -56,7 +56,9 @@ public class GameScore {
     public int getBlueRealmScore() {
         return realms[Color.BLUE.ordinal()].getTotalScore();
     }
-
+    public void setTotalScore(int score){
+        this.totalScore=score;
+    }
     public int getFinalScore(){
         int minScore=realms[0].getTotalScore();
         for(int i=0;i<5;i++){
