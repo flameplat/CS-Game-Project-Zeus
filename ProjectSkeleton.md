@@ -6,77 +6,81 @@
 dice-realms-game-zeus
 ├── src
 │   ├── main
-│   │   |── java
-│   │   |   ├── module-info.java
-│   │   |   └── game
-│   │   |        ├── collectibles
-│   │   |        │   ├── ArcaneBoost.java
-│   │   |        │   ├── Collectibles.java
-│   │   |        │   ├── CollectiblesStatus.java
-│   │   |        │   ├── ColorBonus.java
-│   │   |        │   ├── ElementalCrest.java
-│   │   |        │   ├── EssenceShiftBonus.java
-│   │   |        │   └── TimeWarp.java
-│   │   |        ├── creatures
-│   │   |        │   ├── Creature.java
-│   │   |        │   ├── Dragon.java
-│   │   |        │   ├── Guardians.java
-│   │   |        │   ├── HitRegionsOfDragons.java
-│   │   |        │   ├── Lion.java
-│   │   |        │   ├── Phoenix.java
-│   │   |        │   └── Serpent.java
-│   │   |        ├── dice
-│   │   |        │   └── BlueDice.java
-│   │   |        │   └── Dice.java
-│   │   |        │   └── DiceStatus.java
-│   │   |        │   └── GreenDice.java
-│   │   |        │   └── MagentaDice.java
-│   │   |        │   └── RedDice.java
-│   │   |        │   └── WhiteDice.java
-│   │   |        │   └── YellowDice.java
-│   │   |        ├── engine
-│   │   |        │   ├── CLIGameController.java
-│   │   |        │   ├── CurrentStatus.java
-│   │   |        │   ├── GameBoard.java
-│   │   |        │   ├── GameController.java
-│   │   |        │   ├── GameGuide.java
-│   │   |        │   ├── GameScore.java
-│   │   |        │   ├── GameStatus.java
-│   │   |        │   ├── Move.java
-│   │   |        │   ├── Player.java
-│   │   |        │   └── ScoreSheet.java
-│   │   |        ├── exceptions
-│   │   |        │   ├── InvalidPlayerNameException.java
-│   │   |        │   ├── MissingGameFilesException.java
-│   │   |        │   ├── NoAvailableMovesException.java
-│   │   |        ├── gui
-│   │   |        │   ├── DiceRealms.java
-│   │   |        ├── realms
-│   │   |        │   ├── BlueRealm.java
-│   │   |        │   ├── GreenRealm.java
-│   │   |        │   ├── MagentaRealm.java
-│   │   |        │   ├── Realm.java
-│   │   |        │   ├── RedRealm.java
-│   │   |        │   └── YellowRealm.java
-│   │   |        ├── system
-│   │   |        |    ├── SystemManager.java
-│   │   |        ├── utilities
-│   │   |        |    ├── Color.java
-│   │   |        |    ├── CollectiblesComparator.java
-│   │   |        |    └── ColorComparator.java
-│   │   |        ├── Main.java
-│   |   └── resources
-│   |            └── EmptyScoreSheet.txt
-│   |            └── images
-│   |            └── config
-│   |                 └── EmberfallDominionRewards.properties
-│   |                 └── Game.properties
-│   |                 └── MysticalSkyRewards.properties
-│   |                 └── RadiantSvannaRewards.properties
-│   |                 └── RoundsRewards.properties
-│   |                 └── TerrasHeartlandRewards.properties
-│   |                 └── TideAbyssRewards.properties
-│   |        
+│   │   ├── java
+│   │   │   ├── game
+│   │   │   │   ├── collectibles
+│   │   │   │   │   ├── ArcaneBoost.java
+│   │   │   │   │   ├── Collectibles.java
+│   │   │   │   │   ├── ColorBonus.java
+│   │   │   │   │   ├── ElementalCrest.java
+│   │   │   │   │   ├── EssenceBonus.java
+│   │   │   │   │   └── TimeWarp.java
+│   │   │   │   ├── creatures
+│   │   │   │   │   ├── Creature.java
+│   │   │   │   │   ├── Dragon.java
+│   │   │   │   │   ├── Guardian.java
+│   │   │   │   │   ├── HitRegionsOfDragons.java
+│   │   │   │   │   ├── Lion.java
+│   │   │   │   │   ├── Phoenix.java
+│   │   │   │   │   └── Serpent.java
+│   │   │   │   ├── dice
+│   │   │   │   │   ├── BlueDice.java
+│   │   │   │   │   ├── Dice.java
+│   │   │   │   │   ├── DiceStatus.java
+│   │   │   │   │   ├── GreenDice.java
+│   │   │   │   │   ├── MagentaDice.java
+│   │   │   │   │   ├── RedDice.java
+│   │   │   │   │   ├── WhiteDice.java
+│   │   │   │   │   └── YellowDice.java
+│   │   │   │   ├── engine
+│   │   │   │   │   ├── AntiCheatService.java
+│   │   │   │   │   ├── CLIGameController.java
+│   │   │   │   │   ├── CurrentStatus.java
+│   │   │   │   │   ├── GameBoard.java
+│   │   │   │   │   ├── GameController.java
+│   │   │   │   │   ├── GameGuide.java
+│   │   │   │   │   ├── GameScore.java
+│   │   │   │   │   ├── GameStatus.java
+│   │   │   │   │   ├── Instruction.java
+│   │   │   │   │   ├── Move.java
+│   │   │   │   │   ├── Player.java
+│   │   │   │   │   ├── PlayerStatus.java
+│   │   │   │   │   ├── ScoreSheet.java
+│   │   │   │   │   └── StandardAntiCheatService.java
+│   │   │   │   ├── exceptions
+│   │   │   │   │   ├── CheatDetectedException.java
+│   │   │   │   │   ├── InvalidPlayerNameException.java
+│   │   │   │   │   ├── MissingGameFilesException.java
+│   │   │   │   │   └── NoAvailableMovesException.java
+│   │   │   │   ├── gui
+│   │   │   │   │   └── DiceRealms.java
+│   │   │   │   ├── realms
+│   │   │   │   │   ├── BlueRealm.java
+│   │   │   │   │   ├── GreenRealm.java
+│   │   │   │   │   ├── MagentaRealm.java
+│   │   │   │   │   ├── Realm.java
+│   │   │   │   │   ├── RedRealm.java
+│   │   │   │   │   └── YellowRealm.java
+│   │   │   │   ├── system
+│   │   │   │   │   └── SystemManager.java
+│   │   │   │   ├── utilities
+│   │   │   │   │   ├── CollectiblesComparator.java
+│   │   │   │   │   ├── Color.java
+│   │   │   │   │   └── ColorComparator.java
+│   │   │   │   └── Main.java
+│   │   │   └── module-info.java
+│   │   └── resources
+│   │       ├── config
+│   │       │   ├── EmberfallDominionRewards.properties
+│   │       │   ├── Game.properties
+│   │       │   ├── MysticalSkyRewards.properties
+│   │       │   ├── RadiantSvannaRewards.properties
+│   │       │   ├── RoundsRewards.properties
+│   │       │   ├── TerrasHeartlandRewards.properties
+│   │       │   └── TideAbyssRewards.properties
+│   │       ├── images
+│   │       │   └── Project-UML-Diagram.png
+│   │       └── EmptyScoreSheet.txt
 │   └── test
 │       └── java
 │           └── game
@@ -84,13 +88,96 @@ dice-realms-game-zeus
 │               ├── creatures
 │               ├── dice
 │               ├── engine
+│               │   └── CLIGameControllerTest.java
 │               ├── exceptions
 │               └── gui
 ├── target
+│   ├── classes
+│   │   ├── config
+│   │   │   ├── EmberfallDominionRewards.properties
+│   │   │   ├── Game.properties
+│   │   │   ├── MysticalSkyRewards.properties
+│   │   │   ├── RadiantSvannaRewards.properties
+│   │   │   ├── RoundsRewards.properties
+│   │   │   ├── TerrasHeartlandRewards.properties
+│   │   │   └── TideAbyssRewards.properties
+│   │   ├── game
+│   │   │   ├── collectibles
+│   │   │   │   ├── ArcaneBoost.class
+│   │   │   │   ├── Collectibles.class
+│   │   │   │   ├── ColorBonus.class
+│   │   │   │   ├── ElementalCrest.class
+│   │   │   │   ├── EssenceBonus.class
+│   │   │   │   └── TimeWarp.class
+│   │   │   ├── creatures
+│   │   │   │   ├── Creature.class
+│   │   │   │   ├── Dragon$1.class
+│   │   │   │   ├── Dragon.class
+│   │   │   │   ├── Guardian.class
+│   │   │   │   ├── Guardians.class
+│   │   │   │   ├── HitRegionsOfDragons.class
+│   │   │   │   ├── Lion.class
+│   │   │   │   ├── Phoenix.class
+│   │   │   │   └── Serpent.class
+│   │   │   ├── dice
+│   │   │   │   ├── BlueDice.class
+│   │   │   │   ├── Dice.class
+│   │   │   │   ├── DiceStatus.class
+│   │   │   │   ├── GreenDice.class
+│   │   │   │   ├── MagentaDice.class
+│   │   │   │   ├── RedDice.class
+│   │   │   │   ├── WhiteDice.class
+│   │   │   │   └── YellowDice.class
+│   │   │   ├── engine
+│   │   │   │   ├── CLIGameController$1.class
+│   │   │   │   ├── CLIGameController.class
+│   │   │   │   ├── CurrentStatus.class
+│   │   │   │   ├── GameBoard.class
+│   │   │   │   ├── GameController.class
+│   │   │   │   ├── GameGuide$1.class
+│   │   │   │   ├── GameGuide.class
+│   │   │   │   ├── GameScore.class
+│   │   │   │   ├── GameStatus.class
+│   │   │   │   ├── Instruction.class
+│   │   │   │   ├── Move.class
+│   │   │   │   ├── Player.class
+│   │   │   │   ├── PlayerStatus.class
+│   │   │   │   └── ScoreSheet.class
+│   │   │   ├── exceptions
+│   │   │   │   ├── InvalidPlayerNameException.class
+│   │   │   │   ├── MissingGameFilesException.class
+│   │   │   │   └── NoAvailableMovesException.class
+│   │   │   ├── realms
+│   │   │   │   ├── BlueRealm.class
+│   │   │   │   ├── GreenRealm.class
+│   │   │   │   ├── MagentaRealm.class
+│   │   │   │   ├── Realm.class
+│   │   │   │   ├── RedRealm.class
+│   │   │   │   └── YellowRealm.class
+│   │   │   ├── system
+│   │   │   │   └── SystemManager.class
+│   │   │   ├── utilities
+│   │   │   │   ├── CollectiblesComparator.class
+│   │   │   │   ├── Color.class
+│   │   │   │   ├── ColorComparator$1.class
+│   │   │   │   └── ColorComparator.class
+│   │   │   └── Main.class
+│   │   ├── images
+│   │   │   └── Project-UML-Diagram.png
+│   │   └── EmptyScoreSheet.txt
+│   ├── generated-sources
+│   │   └── annotations
+│   ├── generated-test-sources
+│   │   └── test-annotations
+│   └── test-classes
+│       └── game
+│           └── engine
+│               └── CLIGameControllerTest.class
 ├── Grades.md
 ├── ProjectSkeleton.md
 ├── README.md
-└──pom.xml
+├── TemplateSkeleton.md
+└── pom.xml
 ```
 
 ## Packages
