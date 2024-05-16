@@ -52,8 +52,8 @@ public class Player {
         timeWarps=new LinkedList<>();
         arcaneBoosts=new LinkedList<>();
     }
-    public int getCollectiblesCounters(String collecitible){
-        return collectibleCounters.get(collecitible);
+    public int getCollectiblesCounters(String collectible){
+        return collectibleCounters.get(collectible);
     }
     //----------------------Methods--------------------------//
     /**

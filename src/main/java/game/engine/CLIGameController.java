@@ -886,7 +886,7 @@ public class CLIGameController extends GameController {
         catch (NegativeScoreException e){
             System.err.println("Cheat detected in score of player: "+player.getName());
             System.out.println("Score is below zero!");
-            standardAntiCheatService.handleRewardCheat(player);
+            standardAntiCheatService.handlePlayerScore(player);
         }
         catch (HighScoreException e){
             System.err.println("Cheat detected in score of player: "+player.getName());
