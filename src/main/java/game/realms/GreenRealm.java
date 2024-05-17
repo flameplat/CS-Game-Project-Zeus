@@ -1,98 +1,64 @@
 package game.realms;
 
-import game.utilities.Color;
 import game.collectibles.*;
-import game.creatures.Creature;
 import game.creatures.Guardian;
-import game.engine.*;
+import game.utilities.Color;
+import game.creatures.Creature;
+import game.engine.Move;
 import game.dice.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Properties;
 
-import static java.lang.Integer.parseInt;
-
 public class GreenRealm extends Realm{
+
     // -----------------------Attributes-----------------------//
+    private final Guardian[][] mainArray;
     private static final Color realmColor=Color.GREEN;
-    private static final String name="Terras Heartland";
-    private Move[] realmMoves;
-    private Move[] availableRealmMoves;
-    private Collectibles[] collectibles;
-    private String[] attackValues;
-    private String[] rewardValues;
-    private Guardian guardian;
-    private int realmScore;
-    private int deadGuardians;
+    private final Object[] rowRewards;
+    private final Guardian[] gardians;
+    private final int[] score;
+    private final Object[] colRewards;
+    private int count;
+    private final LinkedList<Move> possibleMoves;
+    Collectibles[] currentRewards;
     private int noElementalCrests;
-    
-
-
-
     // -----------------------Constructor-----------------------//
     public GreenRealm(){
-        this.deadGuardians = 0;
-        this.guardian=new Guardian();
-        this.realmScore = 0;
-        this.noElementalCrests = 0;
-        this.attackValues = new String[]{"X","2","3","4","5","6","7","8","9","10","11","12"};
-        this.rewardValues = new String[7];
-        this.realmMoves = new Move[11];
+
+        this.score= new int[]{1,2,4,7,11,16,22,29,37,46,56};
+        this.possibleMoves=new LinkedList<>();
+        this.rowRewards=new Object[3];
+        this.colRewards=new Object[4];
+        count=0;
+        gardians=new Guardian[11];
         for(int i=2;i<13;i++){
-            realmMoves[i-2] = new Move(new GreenDice(i),new Guardian());
+            gardians[i-2]=new Guardian(i);
         }
-        this.availableRealmMoves = realmMoves;
-        this.collectibles = getRewardsProperties();
-
-
+        Guardian deadGuardian=new Guardian();
+        deadGuardian.attack();
+        loadProperties();
+        this.mainArray=new Guardian[][]{
+                {deadGuardian,gardians[0],gardians[1],gardians[2]},
+                {gardians[3],gardians[4],gardians[5],gardians[6]},
+                {gardians[7],gardians[8],gardians[9],gardians[10]}
+        };
+        for (Guardian gardian : gardians) {
+            possibleMoves.add(new Move(new GreenDice(gardian.getScore()), gardian));
+        }
     }
     // -----------------------Methods-----------------------//
-    public Move[] getAvialableRealmMoves(){
-        return availableRealmMoves;
-    }
-    public Collectibles[] getRewardsProperties(){
-        Properties properties = new Properties();
-        Collectibles []rewardProperties=new Collectibles[7] ;
-        try{
-            FileInputStream fileInputStream=new FileInputStream("src/main/resources/config/TerrasHeartlandRewards.properties");
-            properties.load(fileInputStream);
-            fileInputStream.close();
-        }
-        catch (IOException e){
-            System.out.println("File Not Found");
-        }
-        for (int i = 0; i <3; i++) {
-            String rowReward = properties.getProperty("row"+(i+1)+"Reward");
-            rewardProperties[i]=Collectibles.getCollectibleFromString(rowReward);
-            if(rewardProperties[i]==null){
-                System.out.println("Error in reading the file");
-                System.exit(1);
-            }
-            rewardValues[i] = rewardProperties[i].toString();
-        }
-        for (int i=3;i<7;i++){
-            String columnReward = properties.getProperty("column"+(i-2)+"Reward");
-            rewardProperties[i] = Collectibles.getCollectibleFromString(columnReward);
-            if(rewardProperties[i]==null){
-                System.out.println("Error in reading the file");
-                System.exit(1);
-            }
-            rewardValues[i] = rewardProperties[i].toString();
-        } 
-        return rewardProperties;
-    }
-    
     @Override
     public String getName() {
-        return name;
+        return "Terra's Heartland";
     }
 
     @Override
     public Color getColor() {
         return realmColor;
     }
-
 
     @Override
     public int getStatus() {
@@ -101,155 +67,88 @@ public class GreenRealm extends Realm{
 
     @Override
     public boolean isRealmAvailable() {
-        return deadGuardians < 11;
+        return count<12;
     }
 
     @Override
     public Collectibles[] getReward() {
-        Collectibles[] earnedRewards = new Collectibles[2];
-        if(checkRowReward()){
-            earnedRewards[0] = getRowReward();
-        }
-        if(checkColumnReward()){
-            earnedRewards[1] = getColumnReward();
-        }
-        return earnedRewards;
-        
+        return currentRewards;
     }
-    public Collectibles getRowReward(){
-        Collectibles[] tmp = new Collectibles[1];
-        //checks rewards in rows(c count position of column, l loop position of row)
-        for(int c=0,l=0;l<3;c++){
-            if(!attackValues[c + l * 4].equals("X")){
-                l++;c=0;
-            }
-            if(c == 3){
-                if(!rewardValues[l].equals("X")){
-                    tmp[0] = collectibles[l];
-                    rewardValues[l] = "X";
-                    return tmp[0];
-                }
-                else{
-                    c=0;l++;
-                }
 
-            }
-        }
-        return null;
-    }
-    public Collectibles getColumnReward(){
-        Collectibles[] tmp = new Collectibles[1];
-        //checks rewards in columns(r count position of row, l loop position of column)
-        for(int r=0, l=0;l<4;r++){
-            if(!attackValues[r * 4 + l].equals("X")){
-                l++;r=0;
-            }
-            if(r == 2){
-                if(!rewardValues[l + 3].equals("X")){
-                    tmp[0] = collectibles[l+3];
-                    rewardValues[l+3] = "X";
-                    return tmp[0];
-                }
-                else{
-                    r=0;l++;
-                }
-            }
-        }
-        return null;
-    }
     @Override
     public boolean checkReward() {
-        return checkRowReward() || checkColumnReward();
-    }
-    public boolean checkRowReward(){
-        //checks rewards in rows(c count position of column, l loop position of row)
-        for(int c=0,l=0;l<3;c++){
-            if(!attackValues[c + l * 4].equals("X")){
-                l++;c=0;
+        LinkedList<Collectibles> rewards=new LinkedList<>();
+        for (int i = 0; i < mainArray.length; i++) {
+            int rowSum = 0;
+            int j;
+            for (j = 0; j < mainArray[i].length; j++) {
+                if (!mainArray[i][j].isAlive()) {
+                    rowSum += 1;
+                }
             }
-            if(c == 3){
-                if(!rewardValues[l].equals("X")){
-                    if(collectibles[l]  instanceof ElementalCrest){
+            if (rowSum == 4) {
+                Object rowReward=rowRewards[i];
+                if(rowReward!="X "){
+                    if(rowReward instanceof ElementalCrest){
                         noElementalCrests++;
                     }
-                    return true;
-                }
-                else{
-                    c=0;l++;
+                    rewards.add((Collectibles) rowReward);
+                    rowRewards[i]="X ";
                 }
 
             }
         }
-        return false;
-    }
 
-    public boolean checkColumnReward(){
-        //checks rewards in columns(r count position of row, l loop position of column)
-        for(int r=0, l=0;l<4;r++){
-            if(!attackValues[r * 4 + l].equals("X")){
-                l++;r=0;
+        // Check columns
+        for (int j = 0; j < mainArray[0].length; j++) {
+            int columnSum = 0;
+            int i;
+            for (i = 0; i < mainArray.length; i++) {
+                if (!mainArray[i][j].isAlive()) {
+                    columnSum +=1;
+                }
             }
-            if(r == 2){
-                if(!rewardValues[l + 3].equals("X")){
-                    if(collectibles[l+3]  instanceof ElementalCrest){
+            if (columnSum == 3) {
+                Object colReward=colRewards[j];
+                if(colReward!="X "){
+                    if(colReward instanceof ElementalCrest){
                         noElementalCrests++;
                     }
-                    return true;
+                    rewards.add((Collectibles) colReward);
+                    colRewards[j]="X ";
                 }
-                else{
-                    r=0;l++;
-                }
+
             }
         }
-        return false;
+        this.currentRewards= rewards.toArray(Collectibles[]::new);
+        return currentRewards.length!=0;
     }
 
     @Override
     public boolean attack(Move move) {
         if(isRealmAvailable()){
-            if(move.getDice().getRealm()== Color.GREEN || move.getDice().getRealm()== Color.WHITE){
-                int sumOfValues = move.getDice().getValue();
-                for(Move availableRealmMove : availableRealmMoves){
-                    if(sumOfValues == availableRealmMove.getDice().getValue()){
-                       availableRealmMove.getCreature().attack();
-                       deadGuardians++;
-                       if(deadGuardians>= 2)
-                           realmScore += deadGuardians - 1;
-
-                       else{
-                            realmScore = 1;}
-                       updateAvailableMoves(move);
-                       return true;
-                    }
-                }
-                return false;
-            }
-
-            }
-            return false;
-        }
-
-    public void updateAvailableMoves(Move move){
-        Move[] tmp = new Move[availableRealmMoves.length-1];
-        for(int i=0,k=0;i<availableRealmMoves.length;i++){
-            if(availableRealmMoves[i] != move){
-                tmp[k] = availableRealmMoves[i];
-                k++;
-            }
-            if(availableRealmMoves[i] == move){
-                for(int j=0;j<attackValues.length;j++){
-                    if(!attackValues[j].equals("X") && parseInt(attackValues[j]) == availableRealmMoves[i].getDice().getValue()){
-                        attackValues[j] = "X";
+            if(possibleMoves.contains(move)){
+                possibleMoves.remove(move);
+                for(Guardian[] guardians:mainArray){
+                    for(Guardian guardian:guardians){
+                        if(guardian.getScore()==move.getDice().getValue()){
+                            guardian.attack();
+                            count++;
+                            return true;
+                        }
                     }
                 }
             }
         }
-        availableRealmMoves = tmp;
+        return false;
     }
 
     @Override
     public int getTotalScore() {
-        return realmScore;
+        if(count==0){
+            return 0;
+        }
+        return score[count-1];
     }
 
     @Override
@@ -259,8 +158,7 @@ public class GreenRealm extends Realm{
 
     @Override
     public String toString() {
-        String string = String.format(
-                "Terra's Heartland: Gaia Guardians (GREEN REALM):\n" +
+        return String.format("Terra's Heartland: Gaia Guardians (GREEN REALM):\n" +
                         "+-----------------------------------+\n" +
                         "|  #  |1    |2    |3    |4    |R    |\n" +
                         "+-----------------------------------+\n" +
@@ -271,28 +169,50 @@ public class GreenRealm extends Realm{
                         "|  R  |%s   |%s   |%s   |%s   |     |\n" +
                         "+-----------------------------------------------------------------------+\n" +
                         "|  S  |1    |2    |4    |7    |11   |16   |22   |29   |37   |46   |56   |\n" +
-                        "+-----------------------------------------------------------------------+\n\n" +
-                        "\n"
-                ,attackValues[0],attackValues[1],attackValues[2],attackValues[3],rewardValues[0],
-                attackValues[4],attackValues[5],attackValues[6],attackValues[7],rewardValues[1],
-                attackValues[8],attackValues[9],attackValues[10],attackValues[11],rewardValues[2],
-                rewardValues[3],rewardValues[4],rewardValues[5],rewardValues[6]);
-        return string;
+                        "+-----------------------------------------------------------------------+\n\n\n",
+                mainArray[0][0], mainArray[0][1], mainArray[0][2], mainArray[0][3], rowRewards[0],
+                mainArray[1][0], mainArray[1][1], mainArray[1][2], mainArray[1][3], rowRewards[1],
+                mainArray[2][0], (mainArray[2][1].toString().length() == 1) ? mainArray[2][1] + " " : mainArray[2][1], (mainArray[2][2].toString().length() == 1) ? mainArray[2][2] + " " : mainArray[2][2], (mainArray[2][3].toString().length() == 1) ? mainArray[2][3] + " " : mainArray[2][3], rowRewards[2],
+                colRewards[0], colRewards[1], colRewards[2], colRewards[3]);
     }
+
 
     @Override
     public Move[] getRealmMoves() {
-        return realmMoves;
+        return possibleMoves.toArray(Move[]::new);
     }
 
     @Override
     public Creature getCreature(Dice dice) {
-        if(dice.getRealm()==Color.GREEN){
-            return guardian;
+        for(Guardian[] guardians:mainArray){
+            for(Guardian guardian:guardians){
+                if(guardian.getScore()==dice.getValue()){
+                    return guardian;
+                }
+            }
         }
-        else
-            return null;
-
+        return null;
+    }
+    private void loadProperties() {
+        Properties properties = new Properties();
+        try{
+            FileInputStream fileInputStream=new FileInputStream("src/main/resources/config/TerrasHeartlandRewards.properties");
+            properties.load(fileInputStream);
+            fileInputStream.close();
+        }
+        catch (IOException e){
+            System.out.println("File Not Found");
+        }
+        //Row rewards
+        for (int i = 0; i < 3; i++) {
+            String reward = properties.getProperty("row"+(i+1)+"Reward");
+            Collectibles collectible=Collectibles.getCollectibleFromString(reward);
+            rowRewards[i]=(collectible==null)?"X ":collectible;
+        }
+        for (int i = 0; i < 4; i++) {
+            String reward = properties.getProperty("column"+(i+1)+"Reward");
+            Collectibles collectible=Collectibles.getCollectibleFromString(reward);
+            colRewards[i]=(collectible==null)?"X ":collectible;
+        }
     }
 }
-
