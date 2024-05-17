@@ -8,8 +8,8 @@ import game.creatures.Creature;
 
 public class Move implements Comparable<Move>{
     // -----------------------Attributes-----------------------//
-    private Creature creature;
-    private Dice dice;
+    private final Creature creature;
+    private final Dice dice;
 
 
     // -----------------------Constructor-----------------------//

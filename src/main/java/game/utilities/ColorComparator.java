@@ -1,7 +1,5 @@
 package game.utilities;
 
-import game.utilities.Color;
-
 import java.util.Comparator;
 
 public class ColorComparator implements Comparator<Color> {

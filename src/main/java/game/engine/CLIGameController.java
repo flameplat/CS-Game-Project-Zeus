@@ -59,7 +59,7 @@ public class CLIGameController extends GameController {
     private Player activePlayer;
     private Player passivePlayer;
     private final GameGuide gameGuide;
-    private StandardAntiCheatService standardAntiCheatService;
+    private final StandardAntiCheatService standardAntiCheatService;
 
     // -----------------------Constructor-----------------------//
     public CLIGameController() {
@@ -317,8 +317,14 @@ public class CLIGameController extends GameController {
     }
 
     private void processRewardQueue(Player player, Collectibles[] rewards) {
+        LinkedList<Collectibles> list=new LinkedList<>();
+        for(Collectibles r:rewards){
+            if(r!=null){
+                list.add(r);
+            }
+        }
         PriorityQueue<Collectibles> priorityQueue = new PriorityQueue<>(new CollectiblesComparator());
-        priorityQueue.addAll(Arrays.asList(rewards));
+        priorityQueue.addAll(list);
         while (!priorityQueue.isEmpty()) {
             performReward(player, priorityQueue.remove());
         }
@@ -335,9 +341,7 @@ public class CLIGameController extends GameController {
             if (reward instanceof ColorBonus) {
                 playColorBonus(player, ((ColorBonus) reward).getColor());
             } else {
-                if (reward instanceof ElementalCrest) {
-                    System.out.println("You received Elemental Crest");
-                } else {
+                if (!(reward instanceof ElementalCrest)) {
                     player.receivePower(reward);
                 }
 
@@ -818,8 +822,6 @@ public class CLIGameController extends GameController {
 
     @Override
     public boolean selectDice(Dice dice, Player player) {
-        boolean flag = false;
-
         if (dice == null || player == null) {
             System.err.println("Error: Dice or Player cannot be null.");
             return false;
@@ -833,12 +835,11 @@ public class CLIGameController extends GameController {
                     diceFromArray.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
                 }
             }
-            flag = true;
+            return true;
         } catch (Exception e) {
             System.err.println("An unexpected error occurred: " + e.getMessage());
             return false;
         }
-        return flag;
     }
 
     private void moveDiceToForgottenRealm() {

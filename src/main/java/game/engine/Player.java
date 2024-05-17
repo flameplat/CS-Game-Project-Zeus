@@ -1,6 +1,5 @@
 package game.engine;
 
-import game.collectibles.ColorBonus;
 import game.utilities.Color;
 import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
@@ -18,11 +17,11 @@ import java.util.Map;
 public class Player {
     //----------------------Attributes--------------------------//
     private Realm[] realms;
-    private ScoreSheet scoreSheet;
-    private GameScore gameScore;
+    private final ScoreSheet scoreSheet;
+    private final GameScore gameScore;
     private PlayerStatus playerStatus;
     private static int id=1;
-    private String name;
+    private final String name;
     private Dice selectedDie;
     private LinkedList<ArcaneBoost> arcaneBoosts;
     private static final Map<String, Integer> collectibleCounters = new HashMap<>();
@@ -30,7 +29,7 @@ public class Player {
 
     //----------------------Constructor--------------------------//
     public Player(String name) throws InvalidPlayerNameException, MissingGameFilesException {
-        if (name.length() == 0) {
+        if (name.isEmpty()) {
             throw new InvalidPlayerNameException("Name cannot be empty");
         }
         if (checkSpecialCharacters(name)) {
@@ -81,7 +80,7 @@ public class Player {
         this.playerStatus=status;
     }
     /**
-     * Receives the power and set its status to ENABLED.
+     * Receives the power and set its status to ENABLE.
      * @return true if the power was successfully received, false otherwise
      */
     public boolean receivePower(Collectibles power){
@@ -123,8 +122,6 @@ public class Player {
 
     /**
      * Use the Time Warp power and set its status to USED.
-     *
-     * @return true if the power was successfully used, false otherwise
      */
     public void useTimeWarpPower() {
         if(!timeWarps.isEmpty()) {
@@ -133,7 +130,6 @@ public class Player {
     }
     /**
      * Use the Arcane Boost power and set its status to USED.
-     *
      */
     public void useArcaneBoostPower() {
         if(!arcaneBoosts.isEmpty()){

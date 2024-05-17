@@ -5,7 +5,7 @@ import game.utilities.ColorComparator;
 
 public class ColorBonus extends Collectibles implements Comparable<ColorBonus>{
     // -----------------------Attributes-----------------------//
-    private Color colorBonus;
+    private final Color colorBonus;
 
     private static final String instruction="Color bonus makes you play a certain realm with any dice value you want";
 

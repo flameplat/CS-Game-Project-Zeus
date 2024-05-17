@@ -9,7 +9,7 @@ import game.dice.*;
 public class ScoreSheet {
     //We will create linked list of type realm/action and everytime we will update the linked list
     //--------------------------Attributes--------------------------//
-    private Realm[] realms;
+    private final Realm[] realms;
     private String string;
     //--------------------------Constructor--------------------------//
     public ScoreSheet(Realm[] realmsReference){
@@ -17,17 +17,16 @@ public class ScoreSheet {
     }
 
     //--------------------------Methods--------------------------//
-    private void updateScoresheet(){
+    private void updateScoreSheet(){
         StringBuilder stringBuilder=new StringBuilder();
         stringBuilder.append("\n\nScoreSheet\n\n");
-        int c=0;
         for(Realm realm:realms){
             stringBuilder.append(realm.toString());
         }
         string=stringBuilder.toString();
     }
     public void displayScoreSheet(){
-        updateScoresheet();
+        updateScoreSheet();
         System.out.println(string);
     }
     public void displayRedRealm(){
@@ -35,7 +34,7 @@ public class ScoreSheet {
     }
     @Override
     public String toString(){
-        updateScoresheet();
+        updateScoreSheet();
         return string;
     }
     public Creature getCreatureByRealm(Dice dice){
