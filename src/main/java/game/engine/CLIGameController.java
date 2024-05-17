@@ -74,6 +74,8 @@ public class CLIGameController extends GameController {
         sc = new Scanner(System.in);
         activePlayer = gameBoard.getPlayer1();
         passivePlayer = gameBoard.getPlayer2();
+        performAntiCheatServiceChecks(activePlayer);
+        performAntiCheatServiceChecks(passivePlayer);
     }
 
     // -----------------------Methods-----------------------//
@@ -88,6 +90,8 @@ public class CLIGameController extends GameController {
         player2.setPlayerStatus(PlayerStatus.PASSIVE);
         activePlayer = player1;
         passivePlayer = player2;
+        performAntiCheatServiceChecks(activePlayer);
+        performAntiCheatServiceChecks(passivePlayer);
         for (int i = 0; i < MAX_NUMBER_OF_ROUNDS; i++) {
             gameStatus.resetTurn();
             System.out.println("Round " + (i + 1));
@@ -869,16 +873,12 @@ public class CLIGameController extends GameController {
         try{
             standardAntiCheatService.checkPlayerScore(player);
             standardAntiCheatService.checkDice(diceArray);
-            standardAntiCheatService.checkPlayerFinalScore(player);
             standardAntiCheatService.checkPlayerReward(player);
             standardAntiCheatService.checkGameStatus(gameStatus);
         }
         catch (DiceCheatException e){
             System.err.println(e.getMessage());
             standardAntiCheatService.handleDiceCheat(diceArray);
-        } catch (InvalidFinalScoreCheat e) {
-            System.err.println("Cheat detected in final score of player: "+player.getName());
-            systemManager.exit("Cheat detected!");
         }
         catch (RewardCheatException e){
             System.err.println("Cheat detected in rewards of player: "+player.getName());
@@ -886,13 +886,13 @@ public class CLIGameController extends GameController {
         }
         catch (NegativeScoreException e){
             System.err.println("Cheat detected in score of player: "+player.getName());
-            System.out.println("Score is below zero!");
+            System.err.println("Score is below zero!");
             standardAntiCheatService.handlePlayerScore(player);
         }
         catch (HighScoreException e){
             System.err.println("Cheat detected in score of player: "+player.getName());
-            System.out.println("Score is invalid: "+player.getGameScore().getTotalScore());
-            standardAntiCheatService.handleRewardCheat(player);
+            System.err.println("Score is invalid: "+player.getGameScore().getTotalScore());
+            standardAntiCheatService.handlePlayerScore(player);
         }
         catch (CheatDetectedException e){
             systemManager.exit("Cheat detected!");
@@ -900,6 +900,21 @@ public class CLIGameController extends GameController {
     }
 
     private void endGame() {
+        try{
+            standardAntiCheatService.checkPlayerFinalScore(activePlayer);
+        }
+        catch (InvalidFinalScoreCheat e) {
+            System.err.println("Cheat detected in final score of player: "+activePlayer.getName());
+            systemManager.exit("Cheat detected!");
+        }
+        try{
+            standardAntiCheatService.checkPlayerFinalScore(passivePlayer);
+        }
+        catch (InvalidFinalScoreCheat e) {
+            System.err.println("Cheat detected in final score of player: "+passivePlayer.getName());
+            systemManager.exit("Cheat detected!");
+        }
+
         gameGuide.closeScanner();
         sc.close();
         System.out.println(activePlayer.getName());

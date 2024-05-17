@@ -46,7 +46,7 @@ public class StandardAntiCheatService implements AntiCheatService{
     public void checkDice(Dice[] dice) throws DiceCheatException {
         int c=0;
         for(Dice die:dice){
-            if((die.getRealm()!= Color.values()[c++]) || !(die.getValue()>0 && die.getValue()<7)){
+            if((die.getRealm()!= Color.values()[c++]) || !(die.getValue()>-1 && die.getValue()<7)){
                 throw new DiceCheatException();
             }
         }
