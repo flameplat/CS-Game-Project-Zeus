@@ -21,6 +21,7 @@ public class Player {
     private final GameScore gameScore;
     private PlayerStatus playerStatus;
     private static int id=1;
+    private int playerNumber;
     private final String name;
     private Dice selectedDie;
     private LinkedList<ArcaneBoost> arcaneBoosts;
@@ -28,13 +29,14 @@ public class Player {
     private LinkedList<TimeWarp> timeWarps;
 
     //----------------------Constructor--------------------------//
-    public Player(String name) throws InvalidPlayerNameException, MissingGameFilesException {
+    public Player(String name,int playerNumber) throws InvalidPlayerNameException, MissingGameFilesException {
         if (name.isEmpty()) {
             throw new InvalidPlayerNameException("Name cannot be empty");
         }
         if (checkSpecialCharacters(name)) {
             throw new InvalidPlayerNameException("Name cannot contain special characters");
         }
+        this.playerNumber=playerNumber;
         this.name = name;
         initializeRealms();
         scoreSheet = new ScoreSheet(realms);
@@ -42,6 +44,15 @@ public class Player {
         timeWarps=new LinkedList<>();
         arcaneBoosts=new LinkedList<>();
     }
+
+    public int getPlayerNumber() {
+        return playerNumber;
+    }
+
+    public void setPlayerNumber(int playerNumber) {
+        this.playerNumber = playerNumber;
+    }
+
     public Player(){
         this.name = String.format("Player %d",id);
         initializeRealms();
@@ -64,6 +75,11 @@ public class Player {
         String regex = "^[a-zA-Z0-9]+$";
         return !name.matches(regex);
     }
+
+    public static int getId() {
+        return id;
+    }
+
     /**
      * Initialize all realms at the start of initialization of the player
      */

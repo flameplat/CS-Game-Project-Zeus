@@ -22,7 +22,7 @@ public class YellowRealm extends Realm{
     private static final String name="\u001B[33m"+"Yellow Realm"+"\u001B[0m";
     private Lion lion;
     private final int[] scoreMultiplier ={1,1,1,2,1,1,2,1,2,1,3};
-    private int[] score;
+    private Object[] score;
     private String[] rewardValues;
 
     // -----------------------Constructor-----------------------//
@@ -37,7 +37,10 @@ public class YellowRealm extends Realm{
         for(int i=1;i<7;i++){
             this.realmMoves.addLast(new Move(new YellowDice(i),lion));
         }
-        this.score=new int[11];
+        this.score=new Object[11];
+        for(int i=0;i<11;i++){
+            score[i]=0+" ";
+        }
     }
 
 
@@ -124,7 +127,7 @@ public class YellowRealm extends Realm{
             }
             int attackScore=move.getDice().getValue()*scoreMultiplier[countHits];
             lion.attack();
-            score[countHits]=attackScore;
+            score[countHits]=(attackScore<9)?attackScore+" ":attackScore;
             totalRealmScore=totalRealmScore+attackScore;
             countHits++;
             return true;
@@ -151,7 +154,7 @@ public class YellowRealm extends Realm{
                 "+-----------------------------------------------------------------------+\n" +
                 "|  #  |1    |2    |3    |4    |5    |6    |7    |8    |9    |10   |11   |\n" +
                 "+-----------------------------------------------------------------------+\n" +
-                "|  H  |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |%d    |\n" +
+                "|  H  |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |\n" +
                 "|  M  |     |     |     |x2   |     |     |x2   |     |x2   |     |x3   |\n" +
                 "|  R  |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |\n" +
                 "+-----------------------------------------------------------------------+\n\n",

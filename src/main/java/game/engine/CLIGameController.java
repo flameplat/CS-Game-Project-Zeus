@@ -25,6 +25,7 @@ public class CLIGameController extends GameController {
     private static int MAX_NUMBER_OF_TURNS;
     private static Collectibles[] roundRewards;
     private static int MAX_NUMBER_OF_ROUNDS;
+    private static int playerNumber=1;
 
 
     static {
@@ -45,7 +46,6 @@ public class CLIGameController extends GameController {
 
             }
         } catch (IOException | NumberFormatException e) {
-            // Handle the exception gracefully
             System.err.println("Error loading game properties: " + e.getMessage());
             // Default values
             MAX_NUMBER_OF_ROUNDS = 6;
@@ -233,6 +233,7 @@ public class CLIGameController extends GameController {
                 }
             }
         } else {
+            displayRealms(player);
             playColorBonus(player, realms[gameGuide.getUserChoice(1, realms.length) - 1].getColor());
         }
 
@@ -494,7 +495,7 @@ public class CLIGameController extends GameController {
         }
         while (true) {
             System.out.print("Possible dragons to attack: ");
-            moveDragonMap.forEach((dragonNumber, move) -> System.out.print(dragonNumber + " "));
+            moveDragonMap.forEach((dragonNumber, move) -> System.out.print(dragonNumber + "  "));
             System.out.println();
             int dragonNumber = gameGuide.getUserChoice(1, 4);
             try {
@@ -597,7 +598,7 @@ public class CLIGameController extends GameController {
                 if (gameBoard.getPlayer1() != null && playerName.equals(gameBoard.getPlayer1().getName())) {
                     throw new InvalidPlayerNameException("Name already in use!");
                 }
-                return new Player(playerName);
+                return new Player(playerName,playerNumber++);
             } catch (InvalidPlayerNameException e) {
                 System.out.println(e.getMessage());
                 sc.nextLine();  // Clear the buffer
@@ -947,8 +948,21 @@ public class CLIGameController extends GameController {
             if (diff > 0) {
                 //Active player is the winner
                 System.out.println(activePlayer + " is the winner!");
+                if(activePlayer.getPlayerNumber()==1){
+                    gameStatus.setGameStatus(CurrentStatus.PLAYER_1_WINS);
+                }
+                else{
+                    gameStatus.setGameStatus(CurrentStatus.PLAYER_2_WINS);
+                }
+
             } else {
                 System.out.println(passivePlayer + " is the winner!");
+                if(passivePlayer.getPlayerNumber()==1){
+                    gameStatus.setGameStatus(CurrentStatus.PLAYER_1_WINS);
+                }
+                else{
+                    gameStatus.setGameStatus(CurrentStatus.PLAYER_2_WINS);
+                }
             }
         }
 
