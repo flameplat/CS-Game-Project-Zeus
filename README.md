@@ -7,35 +7,35 @@ This repository contains the code for a Dice Realms: Quest for the Elemental Cre
 1. **Clone the Repository**: Clone this repository to your local machine.
 2. **Import into IDE**: Import the project into your preferred Java IDE (e.g., VS Code).
 3. **Install Dependencies**: Maven will automatically download the required dependencies. Otherwise, you can manually import them.
-   - **Java Version**: The project is configured to be compatible with at least Java 8 (1.8).
-   - **Maven**: This project uses Maven (v.3.8.0) for dependency management and build automation.
-   - **Encoding**: Ensure your IDE and build tools are configured to use UTF-8 encoding to avoid issues with character representation.
-   - **Testing**: Tests are run using JUnit 4.13.2 as specified in the Maven dependencies.
+    - **Java Version**: The project is configured to be compatible with at least Java 8 (1.8).
+    - **Maven**: This project uses Maven (v.3.8.0) for dependency management and build automation.
+    - **Encoding**: Ensure your IDE and build tools are configured to use UTF-8 encoding to avoid issues with character representation.
+    - **Testing**: Tests are run using JUnit 4.13.2 as specified in the Maven dependencies.
 4. **Familiarize yourself with the provided files**:
 
 ### **DO NOT** alter all core provided files as per the below list. Any modifications to these files will be reverted, which might disrupt your game’s functionality
 
 - root folder (`/`)
-  - [`Grades.md`](/Grades.md)
-  - [`README.md`](/README.md)
-  - [`TemplateSkeleton.md`](/TemplateSkeleton.md)
+    - [`Grades.md`](/Grades.md)
+    - [`README.md`](/README.md)
+    - [`TemplateSkeleton.md`](/TemplateSkeleton.md)
 - resources folder (`/src/main/resources/`)
-  - [`EmptyScoreSheet.txt`](/src/main/resources/EmptyScoreSheet.txt)
-  - config folder (`/src/main/resources/config/`)
-    - [`RoundsRewards.properties`](/src/main/resources/config/RoundsRewards.properties)
-    - [`EmberfallDominionRewards.properties`](/src/main/resources/config/EmberfallDominionRewards.properties)
-    - [`TerrasHeartlandRewards.properties`](/src/main/resources/config/TerrasHeartlandRewards.properties)
-    - [`TideAbyssRewards.properties`](/src/main/resources/config/TideAbyssRewards.properties)
-    - [`MysticalSkyRewards.properties`](/src/main/resources/config/MysticalSkyRewards.properties)
-    - [`RadiantSvannaRewards.properties`](/src/main/resources/config/RadiantSvannaRewards.properties)
-  - images folder (`/src/main/resources/images/`)
-    - [`Project-UML-Diagram.png`](/src/main/resources/images/Project-UML-Diagram.png)
+    - [`EmptyScoreSheet.txt`](/src/main/resources/EmptyScoreSheet.txt)
+    - config folder (`/src/main/resources/config/`)
+        - [`RoundsRewards.properties`](/src/main/resources/config/RoundsRewards.properties)
+        - [`EmberfallDominionRewards.properties`](/src/main/resources/config/EmberfallDominionRewards.properties)
+        - [`TerrasHeartlandRewards.properties`](/src/main/resources/config/TerrasHeartlandRewards.properties)
+        - [`TideAbyssRewards.properties`](/src/main/resources/config/TideAbyssRewards.properties)
+        - [`MysticalSkyRewards.properties`](/src/main/resources/config/MysticalSkyRewards.properties)
+        - [`RadiantSvannaRewards.properties`](/src/main/resources/config/RadiantSvannaRewards.properties)
+    - images folder (`/src/main/resources/images/`)
+        - [`Project-UML-Diagram.png`](/src/main/resources/images/Project-UML-Diagram.png)
 - game folder (`/src/main/java/game/`)
-  - [`Main.java`](/src/main/java/game/Main.java)
-  - engine folder (`/src/main/java/game/engine/`)
-    - [`GameController.java`](/src/main/java/game/engine/GameController.java)
+    - [`Main.java`](/src/main/java/game/Main.java)
+    - engine folder (`/src/main/java/game/engine/`)
+        - [`GameController.java`](/src/main/java/game/engine/GameController.java)
 - [test folder](`/src/test/`) (`/src/test/`)
-  - All files created under the test folder, however, you are free and highly recommended to add more custom test cases files to ensure proper unit testing of your code.
+    - All files created under the test folder, however, you are free and highly recommended to add more custom test cases files to ensure proper unit testing of your code.
 
 ## Grading
 
@@ -57,28 +57,28 @@ The [Grades.md](/Grades.md) file in your repository will be updated with milesto
 
 1. **Update the Project Structure**:
 
-   - Review the project structure to understand where to place your implementation files and test files and make modifications where necessary.
+    - Review the project structure to understand where to place your implementation files and test files and make modifications where necessary.
 
 2. **Identify Classes to Implement**:
 
-   - Review the provided GameController and identify the classes, interfaces, and enums you need to implement.
+    - Review the provided GameController and identify the classes, interfaces, and enums you need to implement.
 
 3. **Create Project Skeleton**:
 
-   - Update the `ProjectSkeleton.md` file with the following details for each class you plan to implement:
-     - **Class Name**
-       - **Package**
-       - **Type** (Class, Abstract Class, Interface, or Enum)
-       - **Description**
-       - **Methods** (List of methods with descriptions, parameters, and return types)
+    - Update the `ProjectSkeleton.md` file with the following details for each class you plan to implement:
+        - **Class Name**
+            - **Package**
+            - **Type** (Class, Abstract Class, Interface, or Enum)
+            - **Description**
+            - **Methods** (List of methods with descriptions, parameters, and return types)
 
 4. **Submission**:
 
-   - Before the deadline, push your updated `ProjectSkeleton.md` file to the repository root folder to indicate your submission and make a Pull Request titled `Milestone-1-Submission`
-   - Since many of you have been working on the main branch directly, which is not recommended. Therefore, you can use the Git-Tag instead of the pull request by tagging your submission commit on the `main` branch with tag `Milestone-1`. Use Git-Tag to tag the commit that is ready for evaluation. If you are unfamiliar with how to use Git-Tag, you can refer to the instructions at the end of this README.
+    - Before the deadline, push your updated `ProjectSkeleton.md` file to the repository root folder to indicate your submission and make a Pull Request titled `Milestone-1-Submission`
+    - Since many of you have been working on the main branch directly, which is not recommended. Therefore, you can use the Git-Tag instead of the pull request by tagging your submission commit on the `main` branch with tag `Milestone-1`. Use Git-Tag to tag the commit that is ready for evaluation. If you are unfamiliar with how to use Git-Tag, you can refer to the instructions at the end of this README.
 
 5. **Review and Feedback**:
-   - Once the deadline passes, review any feedback provided by the instructor and prepare for the next milestone accordingly.
+    - Once the deadline passes, review any feedback provided by the instructor and prepare for the next milestone accordingly.
 
 ---
 
@@ -108,27 +108,27 @@ _**Note:** The provided template skeleton is intended as a guideline to shape yo
 
 1. **Implement Defined Classes**:
 
-   - Begin implementing the defined classes within their respective packages based on the chosen project skeleton. If you are collaborating as a team on a single machine, make sure to utilize Git's commit system as much as possible to clearly document each team member's contributions to their specific classes.
+    - Begin implementing the defined classes within their respective packages based on the chosen project skeleton. If you are collaborating as a team on a single machine, make sure to utilize Git's commit system as much as possible to clearly document each team member's contributions to their specific classes.
 
 2. **Define Custom Exceptions**:
 
-   - Design and develop custom exceptions to enhance the robustness of error handling within your game. By implementing these exceptions, you can ensure that unexpected user inputs or other error conditions are managed gracefully, preventing the game from terminating unexpectedly.
+    - Design and develop custom exceptions to enhance the robustness of error handling within your game. By implementing these exceptions, you can ensure that unexpected user inputs or other error conditions are managed gracefully, preventing the game from terminating unexpectedly.
 
 3. **Realms Reward System**:
 
-   - The rewards for each realm are specified in individual files located in the [config folder](/src/main/resources/config/). It is the responsibility of those managing each realm to ensure that the game engine reads these files correctly to distribute rewards accurately. Similarly, the assignment of initial rewards for the rounds is the responsibility of the team coordinator. This setup ensures that rewards are systematically and fairly allocated throughout the game, contributing to a balanced and engaging gameplay experience.
+    - The rewards for each realm are specified in individual files located in the [config folder](/src/main/resources/config/). It is the responsibility of those managing each realm to ensure that the game engine reads these files correctly to distribute rewards accurately. Similarly, the assignment of initial rewards for the rounds is the responsibility of the team coordinator. This setup ensures that rewards are systematically and fairly allocated throughout the game, contributing to a balanced and engaging gameplay experience.
 
 4. **Score Management**:
 
-   - Take a look at the [EmptyScoreSheet.txt](/src/main/resources/EmptyScoreSheet.txt) file located in the resource folder to understand the format for displaying the Score Sheet to players. This should be achieved by utilizing the `toString()` method of the `ScoreSheet` object. Individuals responsible for each realm are tasked with implementing the `toString()` method for their specific creature or realm. The `ScoreSheet` object then combines all these individual representations into a cohesive whole.
-   - Additionally, to maintain consistency and ease of management similar to the rewards system, it is recommended to create a configuration file for the scoring system of each realm. This approach ensures that the scoring criteria are clear, structured, and easily adjustable, enhancing the game's transparency and adaptability.
+    - Take a look at the [EmptyScoreSheet.txt](/src/main/resources/EmptyScoreSheet.txt) file located in the resource folder to understand the format for displaying the Score Sheet to players. This should be achieved by utilizing the `toString()` method of the `ScoreSheet` object. Individuals responsible for each realm are tasked with implementing the `toString()` method for their specific creature or realm. The `ScoreSheet` object then combines all these individual representations into a cohesive whole.
+    - Additionally, to maintain consistency and ease of management similar to the rewards system, it is recommended to create a configuration file for the scoring system of each realm. This approach ensures that the scoring criteria are clear, structured, and easily adjustable, enhancing the game's transparency and adaptability.
 
 5. **Update the Project Structure & Skeleton**:
 
-   - Prior to submission, ensure that your [ProjectSkeleton.md](/ProjectSkeleton.md) accurately reflects the latest state of your project. This document should provide a comprehensive overview of the current folder and file structure, as well as the organization of packages, classes, and their respective methods. Keeping this document updated is crucial for maintaining a clear and precise record of the project’s development progress.
+    - Prior to submission, ensure that your [ProjectSkeleton.md](/ProjectSkeleton.md) accurately reflects the latest state of your project. This document should provide a comprehensive overview of the current folder and file structure, as well as the organization of packages, classes, and their respective methods. Keeping this document updated is crucial for maintaining a clear and precise record of the project’s development progress.
 
 6. **Review and Feedback**:
-   - Once the deadline passes, review any feedback provided by the instructor and prepare for the next milestone accordingly.
+    - Once the deadline passes, review any feedback provided by the instructor and prepare for the next milestone accordingly.
 
 ## Submission Guidelines
 
@@ -151,7 +151,7 @@ Develop a fully functional game that can be played through a Graphical User Inte
 ## **Submission Deadlines**
 
 - **Final Deadline**: 02.06.2024
-  - Deliver a fully functional GUI-based game that will be graded on unit tests, functionality, code quality, and adherence to the project requirements.
+    - Deliver a fully functional GUI-based game that will be graded on unit tests, functionality, code quality, and adherence to the project requirements.
 
 ## **General Requirements**
 
@@ -165,29 +165,29 @@ Develop a fully functional game that can be played through a Graphical User Inte
 ## **Game Requirements**
 
 - **Menu Scene**:
-  - Options for starting a new game for 2 players or 1 player vs. AI (note if AI is not implemented, notify player that it as WIP).
-  - Settings for configuration parameters and an exit button.
+    - Options for starting a new game for 2 players or 1 player vs. AI (note if AI is not implemented, notify player that it as WIP).
+    - Settings for configuration parameters and an exit button.
 - **Game Play Scene**:
-  - Display essential player information: Name and Status (active/passive)
-  - Display round numbers and their rewards
-  - Display designated area for turns and dice selection
-  - Display a dynamic tracknig of collected Elemental Crests
-  - Display a dynamic tracknig of Arcane Boost powers and their status (active / used)
-  - Display a dynamic tracknig of Time Warp powers and their status (active / used)
-  - Include a dynamic graphical representation of each player's ScoreSheet in their realm color, detailing hits, rewards, and scoring.
-  - Provide a designated area for dice rolling and Forgotten Realm.
+    - Display essential player information: Name and Status (active/passive)
+    - Display round numbers and their rewards
+    - Display designated area for turns and dice selection
+    - Display a dynamic tracknig of collected Elemental Crests
+    - Display a dynamic tracknig of Arcane Boost powers and their status (active / used)
+    - Display a dynamic tracknig of Time Warp powers and their status (active / used)
+    - Include a dynamic graphical representation of each player's ScoreSheet in their realm color, detailing hits, rewards, and scoring.
+    - Provide a designated area for dice rolling and Forgotten Realm.
 - **Game Over Scene**:
-  - Show scores per realm, total crests collected, and the total score declaring the winner and protector of Eldoria.
+    - Show scores per realm, total crests collected, and the total score declaring the winner and protector of Eldoria.
 
 ## **GUI Requirements**
 
 - If the design is not immediately intuitive, include a help section or navigation menu for game instructions.
 - **Interaction**:
-  - Players should be able to select dice, attack regions, and see possible moves highlighted.
-  - Include visual or audio cues for each action to guide the player through the game flow.
-  - Utilize pop-ups for additional information without affecting the game continuation.
+    - Players should be able to select dice, attack regions, and see possible moves highlighted.
+    - Include visual or audio cues for each action to guide the player through the game flow.
+    - Utilize pop-ups for additional information without affecting the game continuation.
 - **Aesthetic Enhancements**:
-  - The use of images, animations, and background music is optional but recommended to enhance gameplay experience.
+    - The use of images, animations, and background music is optional but recommended to enhance gameplay experience.
 
 ## **AI Requirement**
 
