@@ -33,4 +33,7 @@ public class ColorBonus extends Collectibles implements Comparable<ColorBonus>{
     public int compareTo(ColorBonus o) {
         return new ColorComparator().compare(colorBonus, o.getColor());
     }
+    public String getName(){
+        return colorBonus+" BONUS";
+    }
 }

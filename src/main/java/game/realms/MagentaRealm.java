@@ -18,7 +18,7 @@ public class MagentaRealm extends Realm{
     private Collectibles[] collectibles;
     private int totalRealmScore;
     private int noElementalCrests;
-    private static final String name="";
+    private static final String name="\u001B[35m"+"Magenta Realm"+"\u001B[0m";
     private Move[]realmMoves;
     private Phoenix phoenix;
     private int counterHits;

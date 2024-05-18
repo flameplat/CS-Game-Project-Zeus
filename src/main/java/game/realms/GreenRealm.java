@@ -52,7 +52,7 @@ public class GreenRealm extends Realm{
     // -----------------------Methods-----------------------//
     @Override
     public String getName() {
-        return "Terra's Heartland";
+        return "\u001B[32m"+ "Green Realm"+"\u001B[0m";
     }
 
     @Override

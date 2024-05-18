@@ -1,5 +1,6 @@
 package game;
 import game.engine.CLIGameController;
+import game.utilities.Color;
 
 
 public class Main {

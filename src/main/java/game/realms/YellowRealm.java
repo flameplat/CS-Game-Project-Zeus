@@ -19,7 +19,7 @@ public class YellowRealm extends Realm{
     private int noElementalCrests;
     private LinkedList<Move> realmMoves;
     private static final Color realmColor=Color.YELLOW;
-    private static final String name="Radiant Svanna";
+    private static final String name="\u001B[33m"+"Yellow Realm"+"\u001B[0m";
     private Lion lion;
     private final int[] scoreMultiplier ={1,1,1,2,1,1,2,1,2,1,3};
     private int[] score;

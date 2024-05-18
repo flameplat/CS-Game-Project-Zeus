@@ -9,6 +9,9 @@ public class EssenceBonus extends Collectibles{
     public String toString() {
         return "EB";
     }
+    public String getName(){
+        return "Essence Bonus";
+    }
 
 
 

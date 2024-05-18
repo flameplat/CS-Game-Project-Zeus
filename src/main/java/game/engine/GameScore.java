@@ -60,6 +60,7 @@ public class GameScore {
         this.totalScore=score;
     }
     public int getFinalScore(){
+        updateGameScore();
         int minScore=realms[0].getTotalScore();
         for(int i=0;i<5;i++){
             if(realms[i].getTotalScore()<minScore){
