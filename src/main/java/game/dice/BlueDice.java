@@ -16,7 +16,7 @@ public class BlueDice extends Dice{
 
     }
     public BlueDice(){
-        this(0);
+        this(1);
     }
 
     // -----------------------Methods-----------------------//

@@ -8,6 +8,7 @@ import game.realms.Realm;
 import game.realms.RedRealm;
 import game.utilities.Color;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -47,6 +48,7 @@ public class StandardAntiCheatService implements AntiCheatService{
         int c=0;
         for(Dice die:dice){
             if((die.getRealm()!= Color.values()[c++]) || !(die.getValue()>0 && die.getValue()<7)){
+                System.out.println(Arrays.toString(dice));
                 throw new DiceCheatException();
             }
         }

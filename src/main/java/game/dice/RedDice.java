@@ -15,7 +15,7 @@ public class RedDice extends Dice{
         this.status=DiceStatus.AVAILABLE;
     }
     public RedDice(){
-        this(0);
+        this(1);
     }
 
     // -----------------------Methods-----------------------//

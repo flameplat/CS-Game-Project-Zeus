@@ -10,7 +10,6 @@ import game.realms.RedRealm;
 import game.system.SystemManager;
 import game.utilities.CollectiblesComparator;
 import game.utilities.Color;
-import game.utilities.ColorComparator;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -77,6 +76,7 @@ public class CLIGameController extends GameController {
         sc = new Scanner(System.in);
         activePlayer = gameBoard.getPlayer1();
         passivePlayer = gameBoard.getPlayer2();
+
     }
 
     // -----------------------Methods-----------------------//
@@ -126,19 +126,18 @@ public class CLIGameController extends GameController {
 
     }
 
-    private void checkArcaneBoost(Player player){
+    private void checkArcaneBoost(Player player) {
         while (player.isArcaneBoostAvailable()) {
             displayArcaneBoostStatus(player);
             boolean choice = gameGuide.getUserBooleanChoice();
             if (choice) {
-                try{
-                    if(getPossibleMovesForDice(player,diceArray).length==0){
+                try {
+                    if (getPossibleMovesForDice(player, diceArray).length == 0) {
                         throw new NoAvailableMovesException();
                     }
                     player.useArcaneBoostPower();
                     playExtraTurn(player);
-                }
-                catch (NoAvailableMovesException e){
+                } catch (NoAvailableMovesException e) {
                     System.out.println("No available moves for current dice");
                     System.out.println("You can't use Arcane Boost");
                     break;
@@ -148,7 +147,8 @@ public class CLIGameController extends GameController {
             }
         }
     }
-    private void displayArcaneBoostStatus(Player player){
+
+    private void displayArcaneBoostStatus(Player player) {
         System.out.println(player.getName());
         gameGuide.displayInstructions(Instruction.AB_PROMPT);
         int count = player.getTotalArcaneBoostPowersCollected();
@@ -194,7 +194,8 @@ public class CLIGameController extends GameController {
         }
         return false;
     }
-    private void displayTimeWarpStatus(Player player){
+
+    private void displayTimeWarpStatus(Player player) {
         int count = player.getTotalTimeWarpPowersCollected();
         gameGuide.displayInstructions(Instruction.TW_PROMPT);
         System.out.printf("You have %d Time Warp%s%n", count, count > 1 ? "s" : "");
@@ -207,27 +208,32 @@ public class CLIGameController extends GameController {
         LinkedList<Realm> availableRealms = Stream.of(realms)
                 .filter(Realm::isRealmAvailable)
                 .collect(Collectors.toCollection(LinkedList::new));
-        displayRealms(player);
-        if(availableRealms.size()!=realms.length){
-            while(true){
+
+        if (availableRealms.size() != realms.length) {
+            while (true) {
+                displayRealms(player);
                 System.out.println("Possible realms to choose from:");
-                System.out.println(availableRealms);
+                for(int i=0;i<availableRealms.size();i++){
+                    System.out.print(availableRealms.get(i).getName());
+                    if(i!=availableRealms.size()-1){
+                        System.out.print(", ");
+                    }
+                }
+                System.out.println();
                 int choice = gameGuide.getUserChoice(1, realms.length);
-                try{
-                    if(!availableRealms.contains(realms[choice-1])){
+                try {
+                    if (!availableRealms.contains(realms[choice - 1])) {
                         throw new InvalidMoveException();
                     }
-                    playColorBonus(player,realms[choice-1].getColor());
+                    playColorBonus(player, realms[choice - 1].getColor());
                     break;
-                }
-                catch (InvalidMoveException e){
-                    System.out.printf("%s is not available%n",realms[choice-1].getName());
+                } catch (InvalidMoveException e) {
+                    System.out.printf("%s is not available%n", realms[choice - 1].getName());
                     System.out.println("Choose another realm");
                 }
             }
-        }
-        else{
-            playColorBonus(player,realms[gameGuide.getUserChoice(1,realms.length)-1].getColor());
+        } else {
+            playColorBonus(player, realms[gameGuide.getUserChoice(1, realms.length) - 1].getColor());
         }
 
 
@@ -475,19 +481,20 @@ public class CLIGameController extends GameController {
         if (selectedDie instanceof RedDice) {
             return selectMoveForRedDice(player, (RedDice) selectedDie);
         }
-            return getPossibleMovesForADie(player, selectedDie)[0];
+        return getPossibleMovesForADie(player, selectedDie)[0];
     }
-    private Move selectMoveForRedDice(Player player,RedDice redDice){
+
+    private Move selectMoveForRedDice(Player player, RedDice redDice) {
         player.getScoreSheet().displayRedRealm();
         Move[] moves = getPossibleMovesForADie(player, redDice);
         System.out.println("Choose a Dragon to attack");
         Map<Integer, Move> moveDragonMap = new HashMap<>();
         for (Move move : moves) {
-            moveDragonMap.put(((Dragon)move.getCreature()).getDragonNumber(),move);
+            moveDragonMap.put(((Dragon) move.getCreature()).getDragonNumber(), move);
         }
         while (true) {
             System.out.print("Possible dragons to attack: ");
-            moveDragonMap.forEach((dragonNumber,move)-> System.out.print(dragonNumber+" "));
+            moveDragonMap.forEach((dragonNumber, move) -> System.out.print(dragonNumber + " "));
             System.out.println();
             int dragonNumber = gameGuide.getUserChoice(1, 4);
             try {

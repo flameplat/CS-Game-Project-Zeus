@@ -16,7 +16,7 @@ public class MagentaDice extends Dice{
     }
 
     public MagentaDice(){
-        this(0);
+        this(1);
     }
 
     // -----------------------Methods-----------------------//

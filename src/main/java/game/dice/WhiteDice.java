@@ -12,7 +12,7 @@ public class WhiteDice extends Dice{
         this.status=DiceStatus.AVAILABLE;
     }
     public WhiteDice(){
-        this(0);
+        this(1);
     }
 
     // -----------------------Methods-----------------------//
