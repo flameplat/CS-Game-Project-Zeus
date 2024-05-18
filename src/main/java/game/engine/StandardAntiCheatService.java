@@ -13,9 +13,9 @@ import java.util.Map;
 import java.util.Random;
 
 public class StandardAntiCheatService implements AntiCheatService{
-    private Map<Player,Map<String,Integer>> previousCollectibles;
+    private final Map<Player,Map<String,Integer>> previousCollectibles;
     private final Map<Player, Integer> previousScores;
-    private Dice[] previousDice;
+    private final Dice[] previousDice;
     public StandardAntiCheatService(){
         this.previousScores=new HashMap<>();
         this.previousCollectibles=new HashMap<>();
@@ -117,9 +117,7 @@ public class StandardAntiCheatService implements AntiCheatService{
 
     @Override
     public void handleDiceCheat(Dice[] dice) {
-        for(int i=0;i<dice.length;i++){
-            dice[i]=previousDice[i];
-        }
+        System.arraycopy(previousDice, 0, dice, 0, dice.length);
     }
     @Override
     public void handleRewardCheat(Player player){

@@ -8,8 +8,8 @@ public class GameScore {
     // all of the scores for the Realms
     private int totalElementalCrests;
     private int totalScore;
-    private String playerName;
-    private Realm[] realms;
+    private final String playerName;
+    private final Realm[] realms;
 
     //--------------------------Constructor--------------------------//
     public GameScore(Realm[] realms,String playerName) {
@@ -31,9 +31,9 @@ public class GameScore {
         //Reset attributes to recalculate them
         totalScore=0;
         totalElementalCrests=0;
-        for (int i = 0; i < realms.length; i++) {
-            totalScore += realms[i].getTotalScore();
-            totalElementalCrests+=realms[i].getNoElementalCrests();
+        for (Realm realm : realms) {
+            totalScore += realm.getTotalScore();
+            totalElementalCrests += realm.getNoElementalCrests();
         }
     }
 
@@ -60,6 +60,7 @@ public class GameScore {
         this.totalScore=score;
     }
     public int getFinalScore(){
+        updateGameScore();
         int minScore=realms[0].getTotalScore();
         for(int i=0;i<5;i++){
             if(realms[i].getTotalScore()<minScore){

@@ -5,4 +5,7 @@ public class ElementalCrest extends Collectibles{
     public String toString() {
         return "EC";
     }
+    public String getName(){
+        return "Elemental Crest";
+    }
 }

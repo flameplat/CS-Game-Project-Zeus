@@ -1,13 +1,12 @@
 package game.engine;
 
 import game.dice.*;
-import game.realms.GreenRealm;
 
 public class GameBoard {
     // -----------------------Attributes-----------------------//
     private Player player1;
     private Player player2;
-    private Dice[] diceArray;
+    private final Dice[] diceArray;
 
 
 
@@ -27,16 +26,6 @@ public class GameBoard {
         this.player2=player2;
     }
     // -----------------------Methods-----------------------//
-    //Display realm for active player
-    public void displayAllRealms(){
-
-    }
-    public void displayAllPossibleMoves(Move[] moves){
-
-    }
-    public void displayMainDiceDeck() {
-
-    }
 
     public Player getPlayer1() {
         return player1;
@@ -46,9 +35,6 @@ public class GameBoard {
         return player2;
     }
 
-    public void display(){
-        //Display game board
-    }
     public Dice[] getDice(){
         return diceArray;
     }

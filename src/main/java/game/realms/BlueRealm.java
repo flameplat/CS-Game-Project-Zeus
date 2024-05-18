@@ -21,19 +21,16 @@ public class BlueRealm extends Realm{
     // -----------------------Attributes-----------------------//
     private int hitcount;
     private int noElementalCrests;
-    private final int S1HeadNumber=5;
-    private final int S2HeadNumber=6;
-    private Serpent serpent1;
-    private Serpent serpent2;
-    private Move movement ;
-    private PriorityQueue<Move> possibleMoveS2;
-    private PriorityQueue<Move> possibleMoveS1;
-    private Collectibles[] rewardProperties;
-    private static final String name="Tide Abyss";
+    private final Serpent serpent1;
+    private final Serpent serpent2;
+    private final PriorityQueue<Move> possibleMoveS2;
+    private final PriorityQueue<Move> possibleMoveS1;
+    private final Collectibles[] rewardProperties;
+    private static final String name="\u001B[34m"+"Blue Realm"+"\u001B[0m";
     private static final Color realmColor=Color.BLUE;
-    private int[] score;
-    private String[] attackValues;
-    private String[] rewardValues;
+    private final int[] score;
+    private final String[] attackValues;
+    private final String[] rewardValues;
 
     //-----------------------Constructor-----------------------//
     public BlueRealm() {

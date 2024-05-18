@@ -17,7 +17,7 @@ import java.util.Properties;
 
 public class RedRealm extends Realm {
     private static final Color realmColor = Color.RED;
-    private static final String name = "Emberfall Dominion";
+    private static final String name = "\u001B[31m"+"Red Realm"+"\u001B[0m";
     // -----------------------Attributes-----------------------//
     private int totalRealmScore;
     private Dragon[] dragons;

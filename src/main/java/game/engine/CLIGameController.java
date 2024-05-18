@@ -10,10 +10,13 @@ import game.realms.RedRealm;
 import game.system.SystemManager;
 import game.utilities.CollectiblesComparator;
 import game.utilities.Color;
+import game.utilities.ColorComparator;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CLIGameController extends GameController {
 
@@ -56,15 +59,15 @@ public class CLIGameController extends GameController {
     private final SystemManager systemManager;
     private final Scanner sc; //Will be closed at the end of the game
     private final GameStatus gameStatus;
+    private final GameGuide gameGuide;
+    private final StandardAntiCheatService standardAntiCheatService;
     private Player activePlayer;
     private Player passivePlayer;
-    private final GameGuide gameGuide;
-    private StandardAntiCheatService standardAntiCheatService;
 
     // -----------------------Constructor-----------------------//
     public CLIGameController() {
         systemManager = new SystemManager();
-        standardAntiCheatService=new StandardAntiCheatService();
+        standardAntiCheatService = new StandardAntiCheatService();
         systemManager.performSystemChecks();
         gameGuide = new GameGuide();
         gameBoard = new GameBoard();
@@ -123,20 +126,33 @@ public class CLIGameController extends GameController {
 
     }
 
-    private void checkArcaneBoost(Player player) {
+    private void checkArcaneBoost(Player player){
         while (player.isArcaneBoostAvailable()) {
-            System.out.println(player.getName());
-            gameGuide.displayInstructions(Instruction.AB_PROMPT);
-            int count = player.getTotalArcaneBoostPowersCollected();
-            System.out.printf("You have %d Arcane Boost%s%n", count, count > 1 ? "s" : "");
+            displayArcaneBoostStatus(player);
             boolean choice = gameGuide.getUserBooleanChoice();
             if (choice) {
-                player.useArcaneBoostPower();
-                playExtraTurn(player);
+                try{
+                    if(getPossibleMovesForDice(player,diceArray).length==0){
+                        throw new NoAvailableMovesException();
+                    }
+                    player.useArcaneBoostPower();
+                    playExtraTurn(player);
+                }
+                catch (NoAvailableMovesException e){
+                    System.out.println("No available moves for current dice");
+                    System.out.println("You can't use Arcane Boost");
+                    break;
+                }
             } else {
                 break;
             }
         }
+    }
+    private void displayArcaneBoostStatus(Player player){
+        System.out.println(player.getName());
+        gameGuide.displayInstructions(Instruction.AB_PROMPT);
+        int count = player.getTotalArcaneBoostPowersCollected();
+        System.out.printf("You have %d Arcane Boost%s%n", count, count > 1 ? "s" : "");
     }
 
     private void playExtraTurn(Player player) {
@@ -166,36 +182,54 @@ public class CLIGameController extends GameController {
 
     }
 
-    private boolean checkTimeWarp() {
-        if (activePlayer.isTimeWarpAvailable()) {
-            boolean choice;
-            int count = activePlayer.getTotalTimeWarpPowersCollected();
-            gameGuide.displayInstructions(Instruction.TW_PROMPT);
-            System.out.printf("You have %d Time Warp%s%n", count, count > 1 ? "s" : "");
-            choice = gameGuide.getUserBooleanChoice();
+    private boolean checkTimeWarp(Player player) {
+        if (player.isTimeWarpAvailable()) {
+            displayTimeWarpStatus(player);
+            boolean choice = gameGuide.getUserBooleanChoice();
             if (choice) {
-                activePlayer.useTimeWarpPower();
+                player.useTimeWarpPower();
                 rollDice();
                 return true;
             }
         }
         return false;
     }
+    private void displayTimeWarpStatus(Player player){
+        int count = player.getTotalTimeWarpPowersCollected();
+        gameGuide.displayInstructions(Instruction.TW_PROMPT);
+        System.out.printf("You have %d Time Warp%s%n", count, count > 1 ? "s" : "");
+    }
 
     private void playEssenceBonus(Player player) {
         gameGuide.displayInstructions(Instruction.ESSENCE_BONUS);
         System.out.println(player.getScoreSheet());
         Realm[] realms = player.getRealms();
-        LinkedList<Color> availableRealms = new LinkedList<>();
-        for (Realm r : realms) {
-            if (r.isRealmAvailable()) {
-                availableRealms.addLast(r.getColor());
+        LinkedList<Realm> availableRealms = Stream.of(realms)
+                .filter(Realm::isRealmAvailable)
+                .collect(Collectors.toCollection(LinkedList::new));
+        displayRealms(player);
+        if(availableRealms.size()!=realms.length){
+            while(true){
+                System.out.println("Possible realms to choose from:");
+                System.out.println(availableRealms);
+                int choice = gameGuide.getUserChoice(1, realms.length);
+                try{
+                    if(!availableRealms.contains(realms[choice-1])){
+                        throw new InvalidMoveException();
+                    }
+                    playColorBonus(player,realms[choice-1].getColor());
+                    break;
+                }
+                catch (InvalidMoveException e){
+                    System.out.printf("%s is not available%n",realms[choice-1].getName());
+                    System.out.println("Choose another realm");
+                }
             }
         }
-        Color[] colors = availableRealms.toArray(Color[]::new);
-        gameGuide.displayNumberedChoice(colors);
-        int choice = gameGuide.getUserChoice(1, colors.length);
-        playColorBonus(player, colors[choice - 1]);
+        else{
+            playColorBonus(player,realms[gameGuide.getUserChoice(1,realms.length)-1].getColor());
+        }
+
 
     }
 
@@ -223,7 +257,6 @@ public class CLIGameController extends GameController {
                     System.out.println("Ohh bad luck...no possible moves, bonus lost!");
                 }
                 break;
-
             }
             case GREEN: {
                 // Define green dice
@@ -252,11 +285,6 @@ public class CLIGameController extends GameController {
             case BLUE: {
                 // Define blue dice
                 Dice[] blueDice = new Dice[]{
-                        new BlueDice(1),
-                        new BlueDice(2),
-                        new BlueDice(3),
-                        new BlueDice(4),
-                        new BlueDice(5),
                         new BlueDice(6)};
                 try {
                     // Select a valid die and move
@@ -317,27 +345,31 @@ public class CLIGameController extends GameController {
     }
 
     private void processRewardQueue(Player player, Collectibles[] rewards) {
+        LinkedList<Collectibles> list = new LinkedList<>();
+        for (Collectibles r : rewards) {
+            if (r != null) {
+                list.add(r);
+            }
+        }
         PriorityQueue<Collectibles> priorityQueue = new PriorityQueue<>(new CollectiblesComparator());
-        priorityQueue.addAll(Arrays.asList(rewards));
+        priorityQueue.addAll(list);
         while (!priorityQueue.isEmpty()) {
             performReward(player, priorityQueue.remove());
         }
     }
 
     private void performReward(Player player, Collectibles reward) {
-        if(reward==null){
+        if (reward == null) {
             return;
         }
-        System.out.println(player.getName() + ", you received " + reward + "!");
+        System.out.println(player.getName() + ", you received " + reward.getName() + "!");
         if (reward instanceof EssenceBonus) {
             playEssenceBonus(player);
         } else {
             if (reward instanceof ColorBonus) {
                 playColorBonus(player, ((ColorBonus) reward).getColor());
             } else {
-                if (reward instanceof ElementalCrest) {
-                    System.out.println("You received Elemental Crest");
-                } else {
+                if (!(reward instanceof ElementalCrest)) {
                     player.receivePower(reward);
                 }
 
@@ -357,6 +389,8 @@ public class CLIGameController extends GameController {
         playPassiveTurn();
         checkArcaneBoost(activePlayer);
         checkArcaneBoost(passivePlayer);
+
+
     }
 
     private boolean containsAvailableDie() {
@@ -372,49 +406,44 @@ public class CLIGameController extends GameController {
     //Prints given dice if no moves or prints filtered dice then the selected die
     private Dice selectValidDie(Player player, Dice[] dice, boolean checkTimeWarp) throws NoAvailableMovesException {
         Dice selectedDie;
-        Dice[] filteredDice;
+        LinkedList<Dice> filteredDice;
         if (getPossibleMovesForDice(player, dice).length == 0) {
             gameGuide.displayNumberedChoice(dice);
             throw new NoAvailableMovesException();
         } else {
             gameGuide.displayNumberedChoice(dice);
             filteredDice = filterDiceWithPossibleMoves(player, dice);
-            System.out.printf("Possible Dice to choose from:%100s%n", player.getName());
-            gameGuide.displayNumberedChoice(filteredDice);
-            while (checkTimeWarp && checkTimeWarp()) {
+            if (filteredDice.size() != dice.length) {
+                System.out.println("Possible Dice to choose from:");
+                System.out.println(filteredDice);
+            }
+            while (checkTimeWarp && checkTimeWarp(player)) {
                 filteredDice = filterDiceWithPossibleMoves(player, dice);
                 gameGuide.displayNumberedChoice(dice);
-                System.out.printf("Possible Dice to choose from:%100s%n", player.getName());
-                gameGuide.displayNumberedChoice(filteredDice);
+                if (filteredDice.size() != dice.length) {
+                    System.out.println("Possible Dice to choose from:");
+                    System.out.println(filteredDice);
+                }
             }
-            System.out.printf("Select a die from %d to %d%n", 1, filteredDice.length);
-            int choice = gameGuide.getUserChoice(1, filteredDice.length);
-            selectedDie = filteredDice[choice - 1];
+            while (true) {
+                int choice = gameGuide.getUserChoice(1, dice.length);
+                selectedDie = dice[choice - 1];
+                try {
+                    if (!filteredDice.contains(dice[choice - 1])) {
+                        throw new InvalidMoveException();
+                    }
+                    break;
+                } catch (InvalidMoveException e) {
+                    System.out.println("There are no possible moves for " + selectedDie);
+                    System.out.println("Choose another die");
+                }
+            }
+
         }
         System.out.println(selectedDie);
-        return selectedDie;
-    }
-
-    private Dice[] filterDiceWithPossibleMoves(Player player, Dice[] dice) {
-        LinkedList<Dice> diceWithMoves = new LinkedList<>();
-        for (Dice i : dice) {
-            if (getPossibleMovesForADie(player, i).length != 0) {
-                diceWithMoves.add(i);
-            }
-        }
-        return diceWithMoves.toArray(Dice[]::new);
-    }
-
-    public GameGuide getGameGuide() {
-        return gameGuide;
-    }
-
-    private Move selectValidMove(Player player, Dice selectedDie) {
-        //This method is called after selecting a valid die( a die with possible moves found with it)
-        Move selectedMove = null;
         if (selectedDie instanceof WhiteDice) {
             System.out.println("Choose which realm to play with Arcane Prism");
-            LinkedList<Dice> versatileDice = new LinkedList<>();
+            selectedDie.setDiceStatus(DiceStatus.TURN_SELECTED);
             //RED, GREEN, BLUE, MAGENTA, YELLOW
             Dice[] possibleDice = {
                     new RedDice(selectedDie.getValue()),
@@ -422,52 +451,55 @@ public class CLIGameController extends GameController {
                     new BlueDice(selectedDie.getValue()),
                     new MagentaDice(selectedDie.getValue()),
                     new YellowDice(selectedDie.getValue())};
-            for (Dice i : possibleDice) {
-                if (getPossibleMovesForADie(player, i).length != 0) {
-                    versatileDice.addLast(i);
-                }
-            }
-            possibleDice = versatileDice.toArray(Dice[]::new);
-            gameGuide.displayNumberedChoice(possibleDice);
-            int choice = gameGuide.getUserChoice(1, possibleDice.length);
-            selectedDie = possibleDice[choice - 1];
-            System.out.println(selectedDie);
-            selectedMove = selectValidMove(player, selectedDie);
-        } else {
-            if (selectedDie instanceof RedDice) {
-                player.getScoreSheet().displayRedRealm();
-                Move[] moves = getPossibleMovesForADie(player, selectedDie);
-                while (selectedMove == null) {
-                    System.out.println("Choose a Dragon to attack");
-                    System.out.print("Possible dragons to attack: ");
-                    for (int i = 0; i < moves.length; i++) {
-                        System.out.print(((Dragon) moves[i].getCreature()).getDragonNumber());
-                        if (moves.length - i == 2) {
-                            System.out.print(", ");
-                        }
-                    }
-                    System.out.println();
-                    int dragonNumber = gameGuide.getUserChoice(1, 4);
-                    for (Move i : moves) {
-                        if (((Dragon) i.getCreature()).getDragonNumber() == dragonNumber) {
-                            selectedMove = i;
-                            break;
-                        }
-                    }
-                    if (selectedMove == null) {
-                        System.out.println("Can't attack Dragon " + dragonNumber);
-                    }
-                }
-                //Reset dragon number
-                //This will allow the possible moves for red dice to be based on dice value only regardless of creature
-                //and the test file will be able to select dragon number
-                return selectedMove;
-            } else {
-                return getPossibleMovesForADie(player, selectedDie)[0];
+            return selectValidDie(player, possibleDice, false);
+        }
+        return selectedDie;
+    }
+
+    private LinkedList<Dice> filterDiceWithPossibleMoves(Player player, Dice[] dice) {
+        LinkedList<Dice> diceWithMoves = new LinkedList<>();
+        for (Dice i : dice) {
+            if (getPossibleMovesForADie(player, i).length != 0) {
+                diceWithMoves.add(i);
             }
         }
-        return selectedMove;
+        return diceWithMoves;
+    }
 
+    public GameGuide getGameGuide() {
+        return gameGuide;
+    }
+
+    private Move selectValidMove(Player player, Dice selectedDie) {
+
+        if (selectedDie instanceof RedDice) {
+            return selectMoveForRedDice(player, (RedDice) selectedDie);
+        }
+            return getPossibleMovesForADie(player, selectedDie)[0];
+    }
+    private Move selectMoveForRedDice(Player player,RedDice redDice){
+        player.getScoreSheet().displayRedRealm();
+        Move[] moves = getPossibleMovesForADie(player, redDice);
+        System.out.println("Choose a Dragon to attack");
+        Map<Integer, Move> moveDragonMap = new HashMap<>();
+        for (Move move : moves) {
+            moveDragonMap.put(((Dragon)move.getCreature()).getDragonNumber(),move);
+        }
+        while (true) {
+            System.out.print("Possible dragons to attack: ");
+            moveDragonMap.forEach((dragonNumber,move)-> System.out.print(dragonNumber+" "));
+            System.out.println();
+            int dragonNumber = gameGuide.getUserChoice(1, 4);
+            try {
+                if (!moveDragonMap.containsKey(dragonNumber)) {
+                    throw new InvalidMoveException();
+                }
+                return moveDragonMap.get(dragonNumber);
+            } catch (InvalidMoveException e) {
+                System.out.println("Can't attack Dragon " + dragonNumber);
+                System.out.println("Choose another dragon");
+            }
+        }
     }
 
     private void playTurn() {
@@ -489,7 +521,7 @@ public class CLIGameController extends GameController {
                 break;
             } catch (NoAvailableMovesException e) {
                 System.out.println("Ohh bad luck...No possible moves!");
-                if (!checkTimeWarp()) {
+                if (!checkTimeWarp(activePlayer)) {
                     System.out.println("Turn lost!");
                     return;
                 }
@@ -534,14 +566,14 @@ public class CLIGameController extends GameController {
         performAntiCheatServiceChecks(passivePlayer);
     }
 
-    private void displayAvailableRealms(Player player) {
+    private void displayRealms(Player player) {
         Realm[] realms = player.getRealms();
         StringBuilder result = new StringBuilder();
         result.append("[");
         for (int i = 0; i < realms.length; i++) {
 
             result.append(i + 1).append("-");
-            result.append(realms[i].getColor().toString());
+            result.append(realms[i].getName());
             if (i < realms.length - 1) {
                 result.append(", ");
             }
@@ -676,7 +708,7 @@ public class CLIGameController extends GameController {
 
     @Override
     public Move[] getAllPossibleMoves(Player player) {
-        if(player==null){
+        if (player == null) {
             System.err.println("Player cannot be null.");
             return new Move[0];
         }
@@ -727,7 +759,7 @@ public class CLIGameController extends GameController {
 
     @Override
     public Move[] getPossibleMovesForADie(Player player, Dice dice) {
-        try{
+        try {
             LinkedList<Move> possibleMoves = new LinkedList<>();
             int diceValue = dice.getValue();
 
@@ -758,8 +790,7 @@ public class CLIGameController extends GameController {
                 }
             }
             return possibleMoves.toArray(new Move[0]);
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.err.println(e.getMessage());
             return new Move[0];
         }
@@ -818,8 +849,6 @@ public class CLIGameController extends GameController {
 
     @Override
     public boolean selectDice(Dice dice, Player player) {
-        boolean flag = false;
-
         if (dice == null || player == null) {
             System.err.println("Error: Dice or Player cannot be null.");
             return false;
@@ -833,12 +862,11 @@ public class CLIGameController extends GameController {
                     diceFromArray.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
                 }
             }
-            flag = true;
+            return true;
         } catch (Exception e) {
             System.err.println("An unexpected error occurred: " + e.getMessage());
             return false;
         }
-        return flag;
     }
 
     private void moveDiceToForgottenRealm() {
@@ -852,48 +880,43 @@ public class CLIGameController extends GameController {
 
     @Override
     public boolean makeMove(Player player, Move move) {
-        try{
-            if(move.getDice().getRealm()==Color.WHITE){
+        try {
+            if (move.getDice().getRealm() == Color.WHITE) {
                 return false;
             }
-            Realm realm = player.getRealm(move.getDice().getRealm());
+            Realm realm = player.getRealm(move.getDice());
             return realm.attack(move);
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.err.println(e.getMessage());
             return false;
         }
     }
-    private void performAntiCheatServiceChecks(Player player){
-        try{
+
+    private void performAntiCheatServiceChecks(Player player) {
+        try {
             standardAntiCheatService.checkPlayerScore(player);
             standardAntiCheatService.checkDice(diceArray);
             standardAntiCheatService.checkPlayerFinalScore(player);
             standardAntiCheatService.checkPlayerReward(player);
             standardAntiCheatService.checkGameStatus(gameStatus);
-        }
-        catch (DiceCheatException e){
+        } catch (DiceCheatException e) {
             System.err.println(e.getMessage());
             standardAntiCheatService.handleDiceCheat(diceArray);
         } catch (InvalidFinalScoreCheat e) {
-            System.err.println("Cheat detected in final score of player: "+player.getName());
+            System.err.println("Cheat detected in final score of player: " + player.getName());
             systemManager.exit("Cheat detected!");
-        }
-        catch (RewardCheatException e){
-            System.err.println("Cheat detected in rewards of player: "+player.getName());
+        } catch (RewardCheatException e) {
+            System.err.println("Cheat detected in rewards of player: " + player.getName());
             standardAntiCheatService.handleRewardCheat(player);
-        }
-        catch (NegativeScoreException e){
-            System.err.println("Cheat detected in score of player: "+player.getName());
+        } catch (NegativeScoreException e) {
+            System.err.println("Cheat detected in score of player: " + player.getName());
             System.out.println("Score is below zero!");
             standardAntiCheatService.handlePlayerScore(player);
-        }
-        catch (HighScoreException e){
-            System.err.println("Cheat detected in score of player: "+player.getName());
-            System.out.println("Score is invalid: "+player.getGameScore().getTotalScore());
+        } catch (HighScoreException e) {
+            System.err.println("Cheat detected in score of player: " + player.getName());
+            System.out.println("Score is invalid: " + player.getGameScore().getTotalScore());
             standardAntiCheatService.handleRewardCheat(player);
-        }
-        catch (CheatDetectedException e){
+        } catch (CheatDetectedException e) {
             systemManager.exit("Cheat detected!");
         }
     }
@@ -922,7 +945,6 @@ public class CLIGameController extends GameController {
             }
         }
 
-        System.out.println("Difference in score: " + Math.abs(diff));
         //Compares GameScore of each player and declares winner
         System.out.println("Game developed by Team: ");
         System.out.println("  ZZZZ  EEEEE  U   U  SSSS");

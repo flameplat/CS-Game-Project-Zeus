@@ -12,6 +12,9 @@ public class TimeWarp extends Collectibles {
     public String toString() {
         return "TW";
     }
+    public String getName(){
+        return "Time Warp";
+    }
 
 
 }

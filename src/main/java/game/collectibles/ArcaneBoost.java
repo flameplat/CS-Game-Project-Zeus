@@ -18,5 +18,8 @@ public class ArcaneBoost extends Collectibles {
     public String toString() {
         return "AB";
     }
+    public String getName(){
+        return "Arcane Boost";
+    }
 
 }
