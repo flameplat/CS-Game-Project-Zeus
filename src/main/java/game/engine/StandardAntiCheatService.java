@@ -79,7 +79,7 @@ public class StandardAntiCheatService implements AntiCheatService{
                 }
             }
         }
-        previousCollectibles.put(player,previousCollectibles.getOrDefault(player,new HashMap<>()));
+        previousCollectibles.put(player,player.getCollectiblesCounters());
     }
     @Override
     public void checkPlayerFinalScore(Player player) throws InvalidFinalScoreCheat {

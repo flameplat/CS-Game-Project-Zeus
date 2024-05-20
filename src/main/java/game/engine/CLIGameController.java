@@ -328,6 +328,8 @@ public class CLIGameController extends GameController {
                 }
                 break;
             }
+            default:
+                System.err.println("Invalid color bonus: "+color);
         }
         performAntiCheatServiceChecks(player);
 

@@ -9,9 +9,6 @@ public abstract class Creature {
     public abstract String toString();
     // ------------------Concrete Methods------------------//
 
-    public boolean attack(int value) {
-        return false;
-    }
     public boolean attack(){
         return false;
     }

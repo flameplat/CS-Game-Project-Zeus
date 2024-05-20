@@ -17,13 +17,13 @@ public class YellowRealm extends Realm{
     public Collectibles[] collectibles;
     private int countHits;
     private int noElementalCrests;
-    private LinkedList<Move> realmMoves;
+    private final LinkedList<Move> realmMoves;
     private static final Color realmColor=Color.YELLOW;
     private static final String name="\u001B[33m"+"Yellow Realm"+"\u001B[0m";
-    private Lion lion;
+    private final Lion lion;
     private final int[] scoreMultiplier ={1,1,1,2,1,1,2,1,2,1,3};
-    private Object[] score;
-    private String[] rewardValues;
+    private final Object[] score;
+    private final String[] rewardValues;
 
     // -----------------------Constructor-----------------------//
     public YellowRealm() {
@@ -87,9 +87,7 @@ public class YellowRealm extends Realm{
 
     @Override
     public boolean isRealmAvailable() {
-        if(countHits<11)
-            return true;
-        return false;
+        return countHits < 11;
     }
 
     @Override
@@ -150,7 +148,7 @@ public class YellowRealm extends Realm{
 
     @Override
     public String toString() {
-        String string=String.format("Radiant Savanna: Solar Lion (YELLOW REALM):\n" +
+        return String.format("Radiant Savanna: Solar Lion (YELLOW REALM):\n" +
                 "+-----------------------------------------------------------------------+\n" +
                 "|  #  |1    |2    |3    |4    |5    |6    |7    |8    |9    |10   |11   |\n" +
                 "+-----------------------------------------------------------------------+\n" +
@@ -160,7 +158,6 @@ public class YellowRealm extends Realm{
                 "+-----------------------------------------------------------------------+\n\n",
                 score[0],score[1],score[2],score[3],score[4],score[5],score[6],score[7],score[8],score[9],score[10],
                 rewardValues[0],rewardValues[1],rewardValues[2],rewardValues[3],rewardValues[4],rewardValues[5],rewardValues[6],rewardValues[7],rewardValues[8],rewardValues[9],rewardValues[10]);
-        return string;
     }
 
     @Override

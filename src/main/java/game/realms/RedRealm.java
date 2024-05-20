@@ -37,12 +37,13 @@ public class RedRealm extends Realm {
 
     // -----------------------Methods-----------------------//
     private LinkedList<Move> redMovespopulate() {
-        LinkedList<Move> temp = new LinkedList<Move>();
+        LinkedList<Move> temp = new LinkedList<>();
         for (int i = 1; i < 7; i++) {
             int dragonhit = 0;
             int dragonhit_1 = 0;
             switch (i) {
                 case 1:
+                case 3:
                     dragonhit = 1;
                     dragonhit_1 = 2;
                     break;
@@ -50,14 +51,7 @@ public class RedRealm extends Realm {
                     dragonhit = 1;
                     dragonhit_1 = 3;
                     break;
-                case 3:
-                    dragonhit = 1;
-                    dragonhit_1 = 2;
-                    break;
                 case 4:
-                    dragonhit = 3;
-                    dragonhit_1 = 4;
-                    break;
                 case 5:
                     dragonhit = 3;
                     dragonhit_1 = 4;
@@ -186,14 +180,14 @@ public class RedRealm extends Realm {
 
     @Override
     public boolean checkReward() {
-        this.realmRewards = new LinkedList<Collectibles>();
+        this.realmRewards = new LinkedList<>();
         String getReward = "XXXX";
         boolean flage = false;
-        String checkDiagonal = "";
+        StringBuilder checkDiagonal = new StringBuilder();
         for (int i = 0; i < dragons.length; i++) {
-            String checkHorizontal = "";
+            StringBuilder checkHorizontal = new StringBuilder();
             for (int j = 0; j <= dragons[i].getHealth().length; j++) {
-                if (j == 4 && !checkHorizontal.equals(getReward))
+                if (j == 4 && !checkHorizontal.toString().equals(getReward))
                     break;
                 if (j == 4) {
                     if (collectibles[i] instanceof Collectibles) {
@@ -205,21 +199,21 @@ public class RedRealm extends Realm {
                         flage = true;
                     }
                 } else
-                    checkHorizontal += dragons[j].getHealth()[i];
+                    checkHorizontal.append(dragons[j].getHealth()[i]);
             }
 
         }
         for (int i = 0; i <= dragons.length; i++) {
-            if (i == 4 && !checkDiagonal.equals(getReward))
+            if (i == 4 && !checkDiagonal.toString().equals(getReward))
                 break;
-            if (i == 4 && checkDiagonal.equals(getReward)) {
+            if (i == 4) {
                 if (collectibles[i] instanceof Collectibles) {
                     realmRewards.add((Collectibles) collectibles[i]);
                     collectibles = removeCollectible(i);
                     flage = true;
                 }
             } else {
-                checkDiagonal += dragons[i].getHealth()[i];
+                checkDiagonal.append(dragons[i].getHealth()[i]);
             }
         }
         return flage;
@@ -236,13 +230,13 @@ public class RedRealm extends Realm {
     public int getTotalScore() {
         String get_score = "XXXX";
         int totalRealmScore1 = 0;
-        for (int i = 0; i < dragons.length; i++) {
-            String check_region = "";
-            for (int j = 0; j < dragons[i].getHealth().length; j++) {
-                check_region = check_region + dragons[i].getHealth()[j];
+        for (Dragon dragon : dragons) {
+            StringBuilder check_region = new StringBuilder();
+            for (int j = 0; j < dragon.getHealth().length; j++) {
+                check_region.append(dragon.getHealth()[j]);
             }
-            if (check_region.equals(get_score)) {
-                totalRealmScore1 += dragons[i].getScore();
+            if (check_region.toString().equals(get_score)) {
+                totalRealmScore1 += dragon.getScore();
             }
         }
         totalRealmScore = totalRealmScore1;
@@ -255,7 +249,8 @@ public class RedRealm extends Realm {
 
     @Override
     public String toString() {
-        String red_String = String.format("Emberfall Dominion: Pyroclast Dragon (RED REALM):\n" +
+
+        return String.format("Emberfall Dominion: Pyroclast Dragon (RED REALM):\n" +
                 "+-----------------------------------+\n" +
                 "|  #  |D1   |D2   |D3   |D4   |R    |\n" +
                 "+-----------------------------------+\n" +
@@ -271,8 +266,6 @@ public class RedRealm extends Realm {
                 dragons[0].getHealth()[2], dragons[2].getHealth()[2], dragons[3].getHealth()[2], collectibles[2],
                 dragons[1].getHealth()[3], dragons[2].getHealth()[3], dragons[3].getHealth()[3], collectibles[3],
                 collectibles[4]);
-
-        return red_String;
     }
 
     @Override

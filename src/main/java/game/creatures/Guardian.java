@@ -1,7 +1,7 @@
 package game.creatures;
 
 public class Guardian extends Creature{
-    private int score;
+    private final int score;
     private boolean status;
 
     public Guardian(int score){
@@ -32,7 +32,6 @@ public class Guardian extends Creature{
 
     @Override
     public String toString() {
-        String string;
         if(isAlive()){
             return String.valueOf(score);
         }

@@ -32,10 +32,6 @@ public class Serpent extends Creature{
         return status;
     }
 
-    public int getHeadNumber(){
-        return headNumber;
-    }
-
     @Override
     public int getScore() {
         return 0;
@@ -52,9 +48,6 @@ public class Serpent extends Creature{
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        return true;
+        return o != null && getClass() == o.getClass();
     }
 }

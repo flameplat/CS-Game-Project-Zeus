@@ -2,7 +2,7 @@ package game.creatures;
 
 public class Dragon extends Creature {
     // -----------------------Attributes-----------------------//
-    private int dragonNumber; // number of dragon
+    private final int dragonNumber; // number of dragon
     private Object[] health; // [FACE,WING,TAIL,HEART]
     private int score; // score of the dragon
     private boolean isAlive; // status of the dragons if they are alive or dead
@@ -26,10 +26,10 @@ public class Dragon extends Creature {
     public boolean isAlive() {
         // check wheather a certain dragon is alive or not\
         int is_Alive = 0;
-        for (int i = 0; i < health.length; i++) {
-            if (!health[i].equals("X"))
+        for (Object o : health) {
+            if (!o.equals("X"))
 
-                is_Alive += (int) health[i];
+                is_Alive += (int) o;
         }
         if (is_Alive == 0) {
             isAlive = false;
@@ -89,10 +89,7 @@ public class Dragon extends Creature {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if(dragonNumber==((Dragon) o).dragonNumber){
-            return true;
-        }
-        return false;
+        return dragonNumber == ((Dragon) o).dragonNumber;
 
     }
 

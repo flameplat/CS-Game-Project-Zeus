@@ -53,8 +53,8 @@ public class Player {
         timeWarps=new LinkedList<>();
         arcaneBoosts=new LinkedList<>();
     }
-    public int getCollectiblesCounters(String collectible){
-        return collectibleCounters.get(collectible);
+    public Map<String, Integer> getCollectiblesCounters(){
+        return collectibleCounters;
     }
     //----------------------Methods--------------------------//
     /**
@@ -85,9 +85,8 @@ public class Player {
     }
     /**
      * Receives the power and set its status to ENABLE.
-     * @return true if the power was successfully received, false otherwise
      */
-    public boolean receiveCollectible(Collectibles collectible){
+    public void receiveCollectible(Collectibles collectible){
         if(collectible instanceof ElementalCrest){
             this.gameScore.receiveElementalCrest();
         }
@@ -95,14 +94,12 @@ public class Player {
         if(collectible instanceof ArcaneBoost){
             arcaneBoosts.addLast((ArcaneBoost) collectible);
             collectibleCounters.put("ArcaneBoost",collectibleCounters.getOrDefault("ArcaneBoost", 0) + 1);
-            return true;
+            return;
         }
         if(collectible instanceof TimeWarp){
             timeWarps.addLast((TimeWarp) collectible);
             collectibleCounters.put("TimeWarp",collectibleCounters.getOrDefault("TimeWarp", 0) + 1);
-            return true;
         }
-        return false;
     }
     public void resetRewards(){
         this.arcaneBoosts=new LinkedList<>();
