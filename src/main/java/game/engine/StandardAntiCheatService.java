@@ -19,13 +19,13 @@ public class StandardAntiCheatService implements AntiCheatService{
     private final Player master;
     private int scoreLimit;
     public StandardAntiCheatService(){
-        //MASTER PLAYER plays the game with max attacks
         master=new Player();
         this.previousScores=new HashMap<>();
         this.previousCollectibles=new HashMap<>();
         this.previousDice=new Dice[6];
     }
     public void initMasterPlayer(){
+        //MASTER PLAYER plays the game with max attacks
         CLIGameController controller=new CLIGameController();
         Collectibles[] roundRewards=controller.getRoundRewards();
         for(Collectibles r:roundRewards){
@@ -93,6 +93,9 @@ public class StandardAntiCheatService implements AntiCheatService{
     }
     @Override
     public void checkPlayerScore(Player player) throws CheatDetectedException {
+        if(scoreLimit==0){
+            initMasterPlayer();
+        }
         int currentScore=player.getGameScore().getCurrentScore();
         if(previousScores.containsKey(player)){
             if((currentScore-previousScores.get(player))<0){
@@ -155,6 +158,9 @@ public class StandardAntiCheatService implements AntiCheatService{
     }
     @Override
     public void checkPlayerFinalScore(Player player) throws InvalidFinalScoreCheat {
+        if(scoreLimit==0){
+            initMasterPlayer();
+        }
         Realm[] playerRealms=player.getRealms();
 
         for(int i=0;i<playerRealms.length;i++){
