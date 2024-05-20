@@ -230,7 +230,7 @@ public class CLIGameController extends GameController {
 
     }
 
-    public void playColorBonus(Player player, Color color) {
+    private void playColorBonus(Player player, Color color) {
         gameGuide.displayInstructions(Instruction.COLOR_BONUS);
         switch (color) {
             case RED: {
@@ -261,6 +261,7 @@ public class CLIGameController extends GameController {
                         throw new NoAvailableMovesException();
                     }
                     gameGuide.displayCreatures(allCreatures);
+                    System.out.println("Choose a Gaia to attack:");
                     while(true){
                         int choice=gameGuide.getUserChoice(2,12);
                         try{
