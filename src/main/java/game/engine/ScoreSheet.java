@@ -32,6 +32,9 @@ public class ScoreSheet {
     public void displayRedRealm(){
         System.out.println(realms[Color.RED.ordinal()]);
     }
+    public void displayGreenRealm(){
+        System.out.println(realms[Color.GREEN.ordinal()]);
+    }
     @Override
     public String toString(){
         updateScoreSheet();

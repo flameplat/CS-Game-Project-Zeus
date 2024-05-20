@@ -39,6 +39,16 @@ public class Guardian extends Creature{
         return "X";
 
     }
+    public String getName(){
+        String color;
+        if(status){
+            color="\u001B[32m";
+        }
+        else{
+            color="\u001B[37m";
+        }
+        return color+"Gaia "+score+"\u001B[0m";
+    }
     public boolean equals(Object o){
         if (this == o) {
             return true;
@@ -46,6 +56,6 @@ public class Guardian extends Creature{
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        return true;
+        return score==((Guardian) o).score;
     }
 }

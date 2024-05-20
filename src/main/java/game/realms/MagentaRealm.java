@@ -15,17 +15,17 @@ import game.collectibles.*;
 public class MagentaRealm extends Realm{
     // -----------------------Attributes-----------------------//
     private static final Color realmColor=Color.MAGENTA;
-    private Collectibles[] collectibles;
+    private final Collectibles[] collectibles;
     private int totalRealmScore;
     private int noElementalCrests;
     private static final String name="\u001B[35m"+"Magenta Realm"+"\u001B[0m";
-    private Move[]realmMoves;
-    private Phoenix phoenix;
+    private final Move[]realmMoves;
+    private final Phoenix phoenix;
     private int counterHits;
     private Move[]realmPossibleMoves;
-    private int[] score;
-    private String[] attackValues;
-    private String[] rewardValues;
+    private final int[] score;
+    private final String[] attackValues;
+    private final String[] rewardValues;
     // -----------------------Constructor-----------------------//
     public MagentaRealm(){
         this.rewardValues=new String[11];
@@ -50,9 +50,9 @@ public class MagentaRealm extends Realm{
     // -----------------------Methods-----------------------//
     private void updatePossibleMoves(Move move){
         LinkedList<Move> list=new LinkedList<>();
-        for(int i=0;i<realmMoves.length;i++){
-            if((move.getDice().getValue()%realmMoves.length)<realmMoves[i].getDice().getValue()){
-                list.addLast(realmMoves[i]);
+        for (Move realmMove : realmMoves) {
+            if ((move.getDice().getValue() % realmMoves.length) < realmMove.getDice().getValue()) {
+                list.addLast(realmMove);
             }
         }
         this.realmPossibleMoves=list.toArray(Move[]::new);
@@ -101,10 +101,7 @@ public class MagentaRealm extends Realm{
 
     @Override
     public boolean isRealmAvailable() {
-        if(counterHits < 11){
-            return true;
-        }
-        return false;
+        return counterHits < 11;
     }
 
     @Override
@@ -174,7 +171,7 @@ public class MagentaRealm extends Realm{
 
     @Override
     public String toString() {
-        String string=String.format("Mystical Sky: Majestic Phoenix (MAGENTA REALM):\n" +
+        return String.format("Mystical Sky: Majestic Phoenix (MAGENTA REALM):\n" +
                 "+-----------------------------------------------------------------------+\n" +
                 "|  #  |1    |2    |3    |4    |5    |6    |7    |8    |9    |10   |11   |\n" +
                 "+-----------------------------------------------------------------------+\n" +
@@ -185,7 +182,6 @@ public class MagentaRealm extends Realm{
                 score[0],score[1],score[2],score[3],score[4],score[5],score[6],score[7],score[8],score[9],score[10],
                 attackValues[0],attackValues[1],attackValues[2],attackValues[3],attackValues[4],attackValues[5],attackValues[6],attackValues[7],attackValues[8],attackValues[9],
                 rewardValues[0],rewardValues[1],rewardValues[2],rewardValues[3],rewardValues[4],rewardValues[5],rewardValues[6],rewardValues[7],rewardValues[8],rewardValues[9],rewardValues[10]);
-        return string;
     }
 
     @Override

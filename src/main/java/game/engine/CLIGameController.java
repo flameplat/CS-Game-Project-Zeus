@@ -1,7 +1,9 @@
 package game.engine;
 
 import game.collectibles.*;
+import game.creatures.Creature;
 import game.creatures.Dragon;
+import game.creatures.Guardian;
 import game.dice.*;
 import game.exceptions.*;
 import game.realms.GreenRealm;
@@ -240,7 +242,7 @@ public class CLIGameController extends GameController {
 
     }
 
-    private void playColorBonus(Player player, Color color) {
+    public void playColorBonus(Player player, Color color) {
         gameGuide.displayInstructions(Instruction.COLOR_BONUS);
         switch (color) {
             case RED: {
@@ -267,18 +269,29 @@ public class CLIGameController extends GameController {
             }
             case GREEN: {
                 // Define green dice
-                Dice[] greenDice = new Dice[]{
-                        new GreenDice(1),
-                        new GreenDice(2),
-                        new GreenDice(3),
-                        new GreenDice(4),
-                        new GreenDice(5),
-                        new GreenDice(6)};
+                GreenRealm greenRealm=(GreenRealm)player.getRealm(Color.GREEN);
+                LinkedList<Guardian> aliveCreatures = greenRealm.getAliveCreatures();
+                Creature[] allCreatures=((GreenRealm)player.getRealm(Color.GREEN)).getAllCreatures();
                 try {
-                    // Select a valid die and move
-                    Dice selectedDie = selectValidDie(player, greenDice, false);
-                    Move selectedMove = selectValidMove(player, selectedDie);
-                    makeMove(player, selectedMove);
+                    if(aliveCreatures.isEmpty() || !greenRealm.isRealmAvailable()){
+                        throw new NoAvailableMovesException();
+                    }
+                    gameGuide.displayCreatures(allCreatures);
+                    while(true){
+                        int choice=gameGuide.getUserChoice(2,12);
+                        try{
+                            if(!aliveCreatures.contains(allCreatures[choice-2])){
+                                throw new InvalidMoveException();
+                            }
+                            System.out.println(allCreatures[choice-2].getName());
+                            greenRealm.attack(new Move(new GreenDice(allCreatures[choice-2].getScore()),allCreatures[choice-2]));
+                            break;
+                        }
+                        catch (InvalidMoveException e){
+                            System.out.println(allCreatures[choice-2].getName()+" is dead, choose another Gaia");
+                        }
+                    }
+
                     if (player.getRealm(Color.GREEN).checkReward()) {
                         Collectibles[] rewards = player.getRealm(Color.GREEN).getReward();
                         processRewardQueue(player, rewards);

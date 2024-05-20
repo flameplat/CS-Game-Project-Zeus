@@ -4,6 +4,7 @@ import game.collectibles.ArcaneBoost;
 import game.collectibles.ColorBonus;
 import game.collectibles.EssenceBonus;
 import game.collectibles.TimeWarp;
+import game.creatures.Creature;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -89,6 +90,26 @@ public class GameGuide {
         }
         return validValue;
 
+    }
+    public void displayCreatures(Creature[] creatures){
+        System.out.print("[");
+        for(int i=0;i<creatures.length;i++){
+            System.out.print(creatures[i].getName());
+            if(i<creatures.length-1){
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+    }
+    public void displayNumberedCreatures(Creature[] creatures){
+        System.out.print("[");
+        for(int i=0;i<creatures.length;i++){
+            System.out.print((i+1)+"-"+creatures[i].getName());
+            if(i<creatures.length-1){
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
     }
     public boolean getUserBooleanChoice(){
         System.out.printf("(1) Yes%n(2) No%n");

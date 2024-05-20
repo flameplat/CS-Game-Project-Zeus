@@ -15,6 +15,9 @@ public abstract class Creature {
     public boolean attack(){
         return false;
     }
+    public String getName(){
+        return null;
+    }
 
     // attack for the dragon
     public boolean attack(int value, HitRegionsOfDragons region) {

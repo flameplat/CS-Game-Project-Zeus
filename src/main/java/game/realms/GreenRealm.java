@@ -193,6 +193,18 @@ public class GreenRealm extends Realm{
         }
         return null;
     }
+    public LinkedList<Guardian> getAliveCreatures(){
+        LinkedList<Guardian> aliveGardians=new LinkedList<>();
+        for(Guardian g:gardians){
+            if(g.isAlive()){
+                aliveGardians.add(g);
+            }
+        }
+        return aliveGardians;
+    }
+    public Creature[] getAllCreatures(){
+        return gardians;
+    }
     private void loadProperties() {
         Properties properties = new Properties();
         try{
