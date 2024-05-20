@@ -202,7 +202,7 @@ public class GreenRealm extends Realm{
         }
         return aliveGardians;
     }
-    public Creature[] getAllCreatures(){
+    public Guardian[] getAllCreatures(){
         return gardians;
     }
     private void loadProperties() {

@@ -7,10 +7,11 @@ public class ColorBonus extends Collectibles implements Comparable<ColorBonus>{
     // -----------------------Attributes-----------------------//
     private final Color colorBonus;
 
-    private static final String instruction="Color bonus makes you play a certain realm with any dice value you want";
-
-
-
+    private static final String instruction=
+                    "Color Bonus Unlocked: " +
+                    "Your feat grants an immediate bonus " +
+                    "attack in other realms, enabling precise " +
+                    "strikes against specific enemies. Use it now!";
 
     // -----------------------constructor-----------------------//
     public ColorBonus(Color color){

@@ -34,6 +34,13 @@ public class GameStatus {
         turn++;
     }
 
+    public int getRound() {
+        return round;
+    }
+
+    public int getTurn() {
+        return turn;
+    }
 
     public void setGameStatus(CurrentStatus status) {
         this.gameStatus = status;

@@ -24,8 +24,7 @@ public class GameGuide {
     private static final String AB_POWER = ArcaneBoost.getInstruction();
     private static final String TW_POWER = TimeWarp.getInstruction();
     private static final String ESSENCE_BONUS= EssenceBonus.getInstruction();
-    private static final String ROLL="Press R to roll the available dice";
-    private static final String SELECT_DICE="Enter the number corresponding to your choice:";
+    private static final String ROLL="Press Enter to roll";
 
 
     public GameGuide() {
@@ -63,6 +62,7 @@ public class GameGuide {
             case AB_PROMPT:output= AB_POWER;break;
             case TW_PROMPT:output= TW_POWER;break;
             case ESSENCE_BONUS:output=ESSENCE_BONUS;break;
+            case ROLL:output=ROLL;break;
             default:output="";
         }
         System.out.println(output);
@@ -101,37 +101,12 @@ public class GameGuide {
         }
         System.out.println("]");
     }
-    public void displayNumberedCreatures(Creature[] creatures){
-        System.out.print("[");
-        for(int i=0;i<creatures.length;i++){
-            System.out.print((i+1)+"-"+creatures[i].getName());
-            if(i<creatures.length-1){
-                System.out.print(", ");
-            }
-        }
-        System.out.println("]");
-    }
+
     public boolean getUserBooleanChoice(){
         System.out.printf("(1) Yes%n(2) No%n");
         int choice=getUserChoice(1,2);
         return choice==1;
     }
-    public int getUserIntChoice() {
-        int validValue;
-        while (true) {
-            try {
-                System.out.println("Enter valid number");
-                validValue = sc.nextInt();
-                break;
-
-            } catch (InputMismatchException e) {
-                sc.nextLine(); //Clears buffer
-            }
-
-        }
-        return validValue;
-    }
-
     public void closeScanner(){
         sc.close();
     }

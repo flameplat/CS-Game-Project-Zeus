@@ -11,6 +11,12 @@ public class ScoreSheet {
     //--------------------------Attributes--------------------------//
     private final Realm[] realms;
     private String string;
+    private static final String RED_COLOR = "\u001B[31m";
+    private static final String GREEN_COLOR = "\u001B[32m";
+    private static final String BLUE_COLOR = "\u001B[34m";
+    private static final String MAGENTA_COLOR = "\u001B[35m";
+    private static final String YELLOW_COLOR = "\u001B[33m";
+    private static final String RESET_COLOR = "\u001B[0m";
     //--------------------------Constructor--------------------------//
     public ScoreSheet(Realm[] realmsReference){
         this.realms=realmsReference;
@@ -27,14 +33,31 @@ public class ScoreSheet {
     }
     public void displayScoreSheet(){
         updateScoreSheet();
-        System.out.println(string);
+        displayRedRealm();
+        displayGreenRealm();
+        displayBlueRealm();
+        displayMagentaRealm();
+        displayYellowRealm();
     }
     public void displayRedRealm(){
-        System.out.println(realms[Color.RED.ordinal()]);
+        System.out.println(RED_COLOR+realms[0]+RESET_COLOR);
     }
-    public void displayGreenRealm(){
-        System.out.println(realms[Color.GREEN.ordinal()]);
+    public void displayGreenRealm() {
+        System.out.println(GREEN_COLOR + realms[1] + RESET_COLOR);
     }
+
+    public void displayBlueRealm() {
+        System.out.println(BLUE_COLOR + realms[2] + RESET_COLOR);
+    }
+
+    public void displayMagentaRealm() {
+        System.out.println(MAGENTA_COLOR + realms[3] + RESET_COLOR);
+    }
+
+    public void displayYellowRealm() {
+        System.out.println(YELLOW_COLOR + realms[4] + RESET_COLOR);
+    }
+
     @Override
     public String toString(){
         updateScoreSheet();

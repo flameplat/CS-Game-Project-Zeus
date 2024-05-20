@@ -3,6 +3,7 @@ package game.engine;
 import game.realms.*;
 import game.utilities.Color;
 
+
 public class GameScore {
     //--------------------------Attributes--------------------------//
     // all of the scores for the Realms
@@ -10,9 +11,8 @@ public class GameScore {
     private int totalScore;
     private final String playerName;
     private final Realm[] realms;
-
     //--------------------------Constructor--------------------------//
-    public GameScore(Realm[] realms,String playerName) {
+    public GameScore(Realm[] realms, String playerName) {
         this.playerName=playerName;
         this.realms=realms;
         totalElementalCrests = 0;
@@ -28,15 +28,14 @@ public class GameScore {
 
 
     public void updateGameScore(){
-        //Reset attributes to recalculate them
         totalScore=0;
-        totalElementalCrests=0;
         for (Realm realm : realms) {
             totalScore += realm.getTotalScore();
-            totalElementalCrests += realm.getNoElementalCrests();
         }
     }
-
+    public void receiveElementalCrest(){
+        totalElementalCrests++;
+    }
     public int getYellowRealmScore() {
         return realms[Color.YELLOW.ordinal()].getTotalScore();
     }
@@ -59,7 +58,10 @@ public class GameScore {
     public void setTotalScore(int score){
         this.totalScore=score;
     }
-    public int getFinalScore(){
+    public int getTotalElementalCrests() {
+        return totalElementalCrests;
+    }
+    public int getTotalScore() {
         updateGameScore();
         int minScore=realms[0].getTotalScore();
         for(int i=0;i<5;i++){
@@ -70,21 +72,12 @@ public class GameScore {
         totalScore+=totalElementalCrests*minScore;
         return totalScore;
     }
-
-    public int getTotalElementalCrests() {
-        return totalElementalCrests;
-    }
-
-    public int getTotalScore() {
-        return totalScore;
-    }
     private int getTotalScoreForColor(Color color) {
         return realms[color.ordinal()].getTotalScore();
     }
 
     @Override
     public String toString(){
-        updateGameScore();
         StringBuilder sb = new StringBuilder();
 
         // Player Name row
@@ -106,10 +99,10 @@ public class GameScore {
         sb.append("-".repeat(45)).append("\n");
 
         // Total Elemental Crests row
-        sb.append(String.format("%-40s", "Total Elemental Crests")).append(totalElementalCrests).append("\n");
+        sb.append(String.format("%-40s", "Total Elemental Crests")).append(getTotalElementalCrests()).append("\n");
 
         // Final Score row
-        sb.append(String.format("%-40s", "Final Score")).append(getFinalScore()).append("\n");
+        sb.append(String.format("%-40s", "Final Score")).append(getTotalScore()).append("\n");
 
         return sb.toString();
     }

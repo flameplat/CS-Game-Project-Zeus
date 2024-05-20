@@ -1,7 +1,6 @@
 package game.engine;
 
 import game.collectibles.*;
-import game.creatures.Creature;
 import game.creatures.Dragon;
 import game.creatures.Guardian;
 import game.dice.*;
@@ -27,8 +26,6 @@ public class CLIGameController extends GameController {
     private static int MAX_NUMBER_OF_TURNS;
     private static Collectibles[] roundRewards;
     private static int MAX_NUMBER_OF_ROUNDS;
-    private static int playerNumber=1;
-
 
     static {
         Properties gameProperties = new Properties();
@@ -78,7 +75,6 @@ public class CLIGameController extends GameController {
         sc = new Scanner(System.in);
         activePlayer = gameBoard.getPlayer1();
         passivePlayer = gameBoard.getPlayer2();
-
     }
 
     // -----------------------Methods-----------------------//
@@ -125,7 +121,6 @@ public class CLIGameController extends GameController {
             systemManager.exit();
         }
         gameGuide.displayInstructions(Instruction.GAME);
-
     }
 
     private void checkArcaneBoost(Player player) {
@@ -158,7 +153,7 @@ public class CLIGameController extends GameController {
     }
 
     private void playExtraTurn(Player player) {
-        System.out.println(player.getScoreSheet());
+        player.getScoreSheet().displayScoreSheet();
         LinkedList<Dice> notSelectedByPlayer = new LinkedList<>();
         DiceStatus filter = player.getPlayerStatus() == PlayerStatus.ACTIVE ? DiceStatus.ACTIVE_PLAYER_SELECTED : DiceStatus.PASSIVE_PLAYER_SELECTED;
         for (Dice i : diceArray) {
@@ -168,20 +163,13 @@ public class CLIGameController extends GameController {
         }
         Dice[] diceNotSelectedByPlayer = notSelectedByPlayer.toArray(Dice[]::new);
         try {
-            Dice selectedDie = selectValidDie(player, diceNotSelectedByPlayer, false);
-            selectedDie.setDiceStatus(filter);
+            Dice selectedDie = selectValidDie(player, diceNotSelectedByPlayer, false,filter);
             Move validMove = selectValidMove(player, selectedDie);
             makeMove(player, validMove);
-            if (player.getRealm(validMove.getDice()).checkReward()) {
-                Collectibles[] rewards = player.getRealm(validMove.getDice()).getReward();
-                processRewardQueue(player, rewards);
-            }
         } catch (NoAvailableMovesException e) {
             System.out.println("Ohh bad luck...there are no possible moves, turn lost!");
         }
         performAntiCheatServiceChecks(player);
-
-
     }
 
     private boolean checkTimeWarp(Player player) {
@@ -254,13 +242,9 @@ public class CLIGameController extends GameController {
                         new RedDice(5),
                         new RedDice(6)};
                 try {
-                    Dice selectedDie = selectValidDie(player, redDice, false);
+                    Dice selectedDie = selectValidDie(player, redDice, false,DiceStatus.TURN_SELECTED);
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
-                    if (player.getRealm(Color.RED).checkReward()) {
-                        Collectibles[] rewards = player.getRealm(Color.RED).getReward();
-                        processRewardQueue(player, rewards);
-                    }
 
                 } catch (NoAvailableMovesException e) {
                     System.out.println("Ohh bad luck...no possible moves, bonus lost!");
@@ -271,7 +255,7 @@ public class CLIGameController extends GameController {
                 // Define green dice
                 GreenRealm greenRealm=(GreenRealm)player.getRealm(Color.GREEN);
                 LinkedList<Guardian> aliveCreatures = greenRealm.getAliveCreatures();
-                Creature[] allCreatures=((GreenRealm)player.getRealm(Color.GREEN)).getAllCreatures();
+                Guardian[] allCreatures=((GreenRealm)player.getRealm(Color.GREEN)).getAllCreatures();
                 try {
                     if(aliveCreatures.isEmpty() || !greenRealm.isRealmAvailable()){
                         throw new NoAvailableMovesException();
@@ -292,10 +276,6 @@ public class CLIGameController extends GameController {
                         }
                     }
 
-                    if (player.getRealm(Color.GREEN).checkReward()) {
-                        Collectibles[] rewards = player.getRealm(Color.GREEN).getReward();
-                        processRewardQueue(player, rewards);
-                    }
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
                     System.out.println("Ohh bad luck...no possible moves, bonus lost!");
@@ -308,13 +288,9 @@ public class CLIGameController extends GameController {
                         new BlueDice(6)};
                 try {
                     // Select a valid die and move
-                    Dice selectedDie = selectValidDie(player, blueDice, false);
+                    Dice selectedDie = selectValidDie(player, blueDice, false,DiceStatus.TURN_SELECTED);
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
-                    if (player.getRealm(Color.BLUE).checkReward()) {
-                        Collectibles[] rewards = player.getRealm(Color.BLUE).getReward();
-                        processRewardQueue(player, rewards);
-                    }
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
                     System.out.println("Ohh bad luck...no possible moves, bonus lost!");
@@ -327,13 +303,9 @@ public class CLIGameController extends GameController {
                         new MagentaDice(6)};
                 try {
                     // Select a valid die and move
-                    Dice selectedDie = selectValidDie(player, magentaDice, false);
+                    Dice selectedDie = selectValidDie(player, magentaDice, false,DiceStatus.TURN_SELECTED);
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
-                    if (player.getRealm(Color.MAGENTA).checkReward()) {
-                        Collectibles[] rewards = player.getRealm(Color.MAGENTA).getReward();
-                        processRewardQueue(player, rewards);
-                    }
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
                     System.out.println("Ohh bad luck...no possible moves, bonus lost!");
@@ -346,13 +318,9 @@ public class CLIGameController extends GameController {
                         new YellowDice(6)};
                 try {
                     // Select a valid die and move
-                    Dice selectedDie = selectValidDie(player, yellowDice, false);
+                    Dice selectedDie = selectValidDie(player, yellowDice, false,DiceStatus.TURN_SELECTED);
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
-                    if (player.getRealm(Color.YELLOW).checkReward()) {
-                        Collectibles[] rewards = player.getRealm(Color.YELLOW).getReward();
-                        processRewardQueue(player, rewards);
-                    }
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
                     System.out.println("Ohh bad luck...no possible moves, bonus lost!");
@@ -389,10 +357,7 @@ public class CLIGameController extends GameController {
             if (reward instanceof ColorBonus) {
                 playColorBonus(player, ((ColorBonus) reward).getColor());
             } else {
-                if (!(reward instanceof ElementalCrest)) {
-                    player.receivePower(reward);
-                }
-
+                player.receiveCollectible(reward);
             }
         }
     }
@@ -424,7 +389,7 @@ public class CLIGameController extends GameController {
 
     //Selects a valid die (has an available move in player)
     //Prints given dice if no moves or prints filtered dice then the selected die
-    private Dice selectValidDie(Player player, Dice[] dice, boolean checkTimeWarp) throws NoAvailableMovesException {
+    private Dice selectValidDie(Player player, Dice[] dice, boolean checkTimeWarp,DiceStatus diceStatus) throws NoAvailableMovesException {
         Dice selectedDie;
         LinkedList<Dice> filteredDice;
         if (getPossibleMovesForDice(player, dice).length == 0) {
@@ -466,7 +431,7 @@ public class CLIGameController extends GameController {
         System.out.println(selectedDie);
         if (selectedDie instanceof WhiteDice) {
             System.out.println("Choose which realm to play with Arcane Prism");
-            selectedDie.setDiceStatus(DiceStatus.TURN_SELECTED);
+            selectedDie.setDiceStatus(diceStatus);
             //RED, GREEN, BLUE, MAGENTA, YELLOW
             Dice[] possibleDice = {
                     new RedDice(selectedDie.getValue()),
@@ -474,8 +439,9 @@ public class CLIGameController extends GameController {
                     new BlueDice(selectedDie.getValue()),
                     new MagentaDice(selectedDie.getValue()),
                     new YellowDice(selectedDie.getValue())};
-            return selectValidDie(player, possibleDice, false);
+            return selectValidDie(player, possibleDice, false,diceStatus);
         }
+        selectedDie.setDiceStatus(diceStatus);
         return selectedDie;
     }
 
@@ -488,11 +454,6 @@ public class CLIGameController extends GameController {
         }
         return diceWithMoves;
     }
-
-    public GameGuide getGameGuide() {
-        return gameGuide;
-    }
-
     private Move selectValidMove(Player player, Dice selectedDie) {
 
         if (selectedDie instanceof RedDice) {
@@ -531,16 +492,13 @@ public class CLIGameController extends GameController {
         System.out.println("Here is your score sheet");
         activePlayer.getScoreSheet().displayScoreSheet();
         Dice[] availableDice = getAvailableDice();
-        gameGuide.displayNumberedChoice(availableDice);
         gameGuide.displayInstructions(Instruction.ROLL);
-        //Press enter to roll
-        System.out.println("Press Enter to roll");
         sc.nextLine();
         rollDice();
         Dice selectedDie;
         while (true) {
             try {
-                selectedDie = selectValidDie(activePlayer, availableDice, true);
+                selectedDie = selectValidDie(activePlayer, availableDice, true,DiceStatus.TURN_SELECTED);
                 selectDice(selectedDie, activePlayer);
                 break;
             } catch (NoAvailableMovesException e) {
@@ -551,15 +509,8 @@ public class CLIGameController extends GameController {
                 }
             }
         }
-
-
         Move selectedMove = selectValidMove(activePlayer, selectedDie);
-        selectedDie = selectedMove.getDice();
         makeMove(activePlayer, selectedMove);
-        if (selectedDie != null && activePlayer.getRealm(selectedDie).checkReward()) {
-            Collectibles[] rewards = activePlayer.getRealm(selectedDie).getReward();
-            processRewardQueue(activePlayer, rewards);
-        }
         //Choosing a die, move (check if move is valid,if not choose another die)
         //execute move
         //All dice of value less than selected die's value goes to forgotten realm
@@ -570,23 +521,18 @@ public class CLIGameController extends GameController {
     private void playPassiveTurn() {
         System.out.println(passivePlayer.getName());
         gameGuide.displayInstructions(Instruction.PASSIVE_TURN);
-        System.out.println(passivePlayer.getScoreSheet());
+        passivePlayer.getScoreSheet().displayScoreSheet();
         Dice[] temp = getForgottenRealmDice();
         Dice selectedDie;
         try {
-            selectedDie = selectValidDie(passivePlayer, temp, false);
+            selectedDie = selectValidDie(passivePlayer, temp, false,DiceStatus.TURN_SELECTED);
         } catch (NoAvailableMovesException e) {
             System.out.println("Ohh bad luck...No possible moves!");
             System.out.println("Passive turn lost!");
             return;
         }
         Move selectedMove = selectValidMove(passivePlayer, selectedDie);
-        selectedDie = selectedMove.getDice();
         makeMove(passivePlayer, selectedMove);
-        if (selectedDie != null && passivePlayer.getRealm(selectedDie).checkReward()) {
-            Collectibles[] rewards = passivePlayer.getRealm(selectedDie).getReward();
-            processRewardQueue(passivePlayer, rewards);
-        }
         performAntiCheatServiceChecks(passivePlayer);
     }
 
@@ -614,7 +560,7 @@ public class CLIGameController extends GameController {
                 if (gameBoard.getPlayer1() != null && playerName.equals(gameBoard.getPlayer1().getName())) {
                     throw new InvalidPlayerNameException("Name already in use!");
                 }
-                return new Player(playerName,playerNumber++);
+                return new Player(playerName);
             } catch (InvalidPlayerNameException e) {
                 System.out.println(e.getMessage());
                 sc.nextLine();  // Clear the buffer
@@ -879,8 +825,6 @@ public class CLIGameController extends GameController {
         }
         try {
             dice.setDiceStatus(DiceStatus.TURN_SELECTED);
-            player.setSelectedDie(dice);
-
             for (Dice diceFromArray : diceArray) {
                 if (diceFromArray.getDiceStatus() == DiceStatus.AVAILABLE && diceFromArray.getValue() < dice.getValue()) {
                     diceFromArray.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
@@ -909,7 +853,12 @@ public class CLIGameController extends GameController {
                 return false;
             }
             Realm realm = player.getRealm(move.getDice());
-            return realm.attack(move);
+            realm.attack(move);
+            if(realm.checkReward()){
+                processRewardQueue(player,realm.getReward());
+            }
+            return true;
+
         } catch (NullPointerException e) {
             System.err.println(e.getMessage());
             return false;
@@ -949,36 +898,27 @@ public class CLIGameController extends GameController {
         gameGuide.closeScanner();
         sc.close();
         System.out.println(activePlayer.getName());
-        System.out.println(activePlayer.getScoreSheet());
+        activePlayer.getScoreSheet().displayScoreSheet();
         System.out.println("*".repeat(100));
         System.out.println(passivePlayer.getName());
-        System.out.println(passivePlayer.getScoreSheet());
+        passivePlayer.getScoreSheet().displayScoreSheet();
         System.out.println("*".repeat(100));
         System.out.println(activePlayer.getGameScore());
         System.out.println(passivePlayer.getGameScore());
 
-        int diff = activePlayer.getGameScore().getFinalScore() - passivePlayer.getGameScore().getFinalScore();
+        int diff = activePlayer.getGameScore().getTotalScore() - passivePlayer.getGameScore().getTotalScore();
         if (diff == 0) {
             System.out.println("Draw!");
         } else {
             if (diff > 0) {
                 //Active player is the winner
                 System.out.println(activePlayer + " is the winner!");
-                if(activePlayer.getPlayerNumber()==1){
-                    gameStatus.setGameStatus(CurrentStatus.PLAYER_1_WINS);
-                }
-                else{
-                    gameStatus.setGameStatus(CurrentStatus.PLAYER_2_WINS);
-                }
+                gameStatus.setGameStatus(CurrentStatus.PLAYER_1_WINS);
 
             } else {
                 System.out.println(passivePlayer + " is the winner!");
-                if(passivePlayer.getPlayerNumber()==1){
-                    gameStatus.setGameStatus(CurrentStatus.PLAYER_1_WINS);
-                }
-                else{
-                    gameStatus.setGameStatus(CurrentStatus.PLAYER_2_WINS);
-                }
+                gameStatus.setGameStatus(CurrentStatus.PLAYER_2_WINS);
+
             }
         }
 

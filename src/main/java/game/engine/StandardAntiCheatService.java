@@ -103,8 +103,8 @@ public class StandardAntiCheatService implements AntiCheatService{
                 }
             }
         }
-        int finalScore=player1.getGameScore().getFinalScore();
-        if(player.getGameScore().getFinalScore()>finalScore){
+        int finalScore=player1.getGameScore().getTotalScore();
+        if(player.getGameScore().getTotalScore()>finalScore){
             throw new InvalidFinalScoreCheat();
         }
     }

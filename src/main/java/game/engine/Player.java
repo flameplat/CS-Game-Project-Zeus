@@ -1,5 +1,6 @@
 package game.engine;
 
+import game.collectibles.ElementalCrest;
 import game.utilities.Color;
 import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
@@ -21,22 +22,19 @@ public class Player {
     private final GameScore gameScore;
     private PlayerStatus playerStatus;
     private static int id=1;
-    private int playerNumber;
     private final String name;
-    private Dice selectedDie;
     private LinkedList<ArcaneBoost> arcaneBoosts;
     private static final Map<String, Integer> collectibleCounters = new HashMap<>();
     private LinkedList<TimeWarp> timeWarps;
 
     //----------------------Constructor--------------------------//
-    public Player(String name,int playerNumber) throws InvalidPlayerNameException, MissingGameFilesException {
+    public Player(String name) throws InvalidPlayerNameException, MissingGameFilesException {
         if (name.isEmpty()) {
             throw new InvalidPlayerNameException("Name cannot be empty");
         }
         if (checkSpecialCharacters(name)) {
             throw new InvalidPlayerNameException("Name cannot contain special characters");
         }
-        this.playerNumber=playerNumber;
         this.name = name;
         initializeRealms();
         scoreSheet = new ScoreSheet(realms);
@@ -45,13 +43,6 @@ public class Player {
         arcaneBoosts=new LinkedList<>();
     }
 
-    public int getPlayerNumber() {
-        return playerNumber;
-    }
-
-    public void setPlayerNumber(int playerNumber) {
-        this.playerNumber = playerNumber;
-    }
 
     public Player(){
         this.name = String.format("Player %d",id);
@@ -76,9 +67,6 @@ public class Player {
         return !name.matches(regex);
     }
 
-    public static int getId() {
-        return id;
-    }
 
     /**
      * Initialize all realms at the start of initialization of the player
@@ -99,15 +87,18 @@ public class Player {
      * Receives the power and set its status to ENABLE.
      * @return true if the power was successfully received, false otherwise
      */
-    public boolean receivePower(Collectibles power){
+    public boolean receiveCollectible(Collectibles collectible){
+        if(collectible instanceof ElementalCrest){
+            this.gameScore.receiveElementalCrest();
+        }
         //The player only receives 2 powers AB and TW
-        if(power instanceof ArcaneBoost){
-            arcaneBoosts.addLast((ArcaneBoost) power);
+        if(collectible instanceof ArcaneBoost){
+            arcaneBoosts.addLast((ArcaneBoost) collectible);
             collectibleCounters.put("ArcaneBoost",collectibleCounters.getOrDefault("ArcaneBoost", 0) + 1);
             return true;
         }
-        if(power instanceof TimeWarp){
-            timeWarps.addLast((TimeWarp) power);
+        if(collectible instanceof TimeWarp){
+            timeWarps.addLast((TimeWarp) collectible);
             collectibleCounters.put("TimeWarp",collectibleCounters.getOrDefault("TimeWarp", 0) + 1);
             return true;
         }
@@ -197,11 +188,4 @@ public class Player {
         return playerStatus;
     }
 
-    public Dice getSelectedDie() {
-        return selectedDie;
-    }
-
-    public void setSelectedDie(Dice selectedDie) {
-        this.selectedDie = selectedDie;
-    }
 }
