@@ -426,6 +426,9 @@ public class CLIGameController extends GameController {
             }
             while (checkTimeWarp && checkTimeWarp(player)) {
                 filteredDice = filterDiceWithPossibleMoves(player, dice);
+                if(filteredDice.isEmpty()){
+                    throw new NoAvailableMovesException();
+                }
                 gameGuide.displayNumberedChoice(dice);
                 if (filteredDice.size() != dice.length) {
                     System.out.println("Possible Dice to choose from:");
