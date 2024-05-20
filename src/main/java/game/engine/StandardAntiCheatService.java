@@ -11,7 +11,6 @@ import game.utilities.Color;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class StandardAntiCheatService implements AntiCheatService{
     private final Map<Player,Map<String,Integer>> previousCollectibles;
@@ -25,8 +24,7 @@ public class StandardAntiCheatService implements AntiCheatService{
     @Override
     public void checkPlayerScore(Player player) throws CheatDetectedException {
         int currentScore=player.getGameScore().getTotalScore();
-        Random r=new Random();
-        int limit=r.nextInt(100)+100;
+        int limit=70;
         if(previousScores.containsKey(player)){
             if((currentScore-previousScores.get(player))<0){
                 throw new NegativeScoreException();
@@ -61,14 +59,24 @@ public class StandardAntiCheatService implements AntiCheatService{
 
     @Override
     public void checkPlayerReward(Player player) throws RewardCheatException {
-        if(player.getTotalArcaneBoostPowersCollected()> Collectibles.getCounter("ArcaneBoost")/2
-        || player.getTotalTimeWarpPowersCollected()> Collectibles.getCounter("TimeWarp")/2){
+        if(player.getTotalArcaneBoostPowersCollected()> Collectibles.getCounter("ArcaneBoost")
+        || player.getTotalTimeWarpPowersCollected()> Collectibles.getCounter("TimeWarp")){
             throw new RewardCheatException();
         }
-        if(previousCollectibles.containsKey(player) && previousCollectibles.get(player).containsKey("TimeWarp") && previousCollectibles.get(player).containsKey("ArcaneBoost")){
-            if(previousCollectibles.get(player).get("TimeWarp")>(Collectibles.getCounter("TimeWarp")/2+1)
-            || previousCollectibles.get(player).get("ArcaneBoost")>(Collectibles.getCounter("ArcaneBoost")/2+1)){
-                throw new RewardCheatException();
+        if (previousCollectibles.containsKey(player)) {
+            if (previousCollectibles.get(player).containsKey("TimeWarp")) {
+                int previousTimeWarp = previousCollectibles.get(player).get("TimeWarp");
+                int currentTimeWarp = Collectibles.getCounter("TimeWarp");
+                if (previousTimeWarp > currentTimeWarp) {
+                    throw new RewardCheatException("Time Warp cheat detected!");
+                }
+            }
+            if (previousCollectibles.get(player).containsKey("ArcaneBoost")) {
+                int previousArcaneBoost = previousCollectibles.get(player).get("ArcaneBoost");
+                int currentArcaneBoost = Collectibles.getCounter("ArcaneBoost");
+                if (previousArcaneBoost > currentArcaneBoost) {
+                    throw new RewardCheatException("Arcane Boost cheat detected!");
+                }
             }
         }
         previousCollectibles.put(player,previousCollectibles.getOrDefault(player,new HashMap<>()));
