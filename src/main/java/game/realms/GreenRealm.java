@@ -19,7 +19,7 @@ public class GreenRealm extends Realm{
     private static final Color realmColor=Color.GREEN;
     private final Object[] rowRewards;
     private final Guardian[] gardians;
-    private final int[] score;
+    private int[] score;
     private final Object[] colRewards;
     private int count;
     private final LinkedList<Move> possibleMoves;
@@ -28,7 +28,7 @@ public class GreenRealm extends Realm{
     // -----------------------Constructor-----------------------//
     public GreenRealm(){
 
-        this.score= new int[]{1,2,4,7,11,16,22,29,37,46,56};
+        this.score= new int[11];
         this.possibleMoves=new LinkedList<>();
         this.rowRewards=new Object[3];
         this.colRewards=new Object[4];
@@ -168,12 +168,14 @@ public class GreenRealm extends Realm{
                         "+-----------------------------------+\n" +
                         "|  R  |%s   |%s   |%s   |%s   |     |\n" +
                         "+-----------------------------------------------------------------------+\n" +
-                        "|  S  |1    |2    |4    |7    |11   |16   |22   |29   |37   |46   |56   |\n" +
+                        "|  S  |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |\n" +
                         "+-----------------------------------------------------------------------+\n\n\n",
                 mainArray[0][0], mainArray[0][1], mainArray[0][2], mainArray[0][3], rowRewards[0],
                 mainArray[1][0], mainArray[1][1], mainArray[1][2], mainArray[1][3], rowRewards[1],
                 mainArray[2][0], (mainArray[2][1].toString().length() == 1) ? mainArray[2][1] + " " : mainArray[2][1], (mainArray[2][2].toString().length() == 1) ? mainArray[2][2] + " " : mainArray[2][2], (mainArray[2][3].toString().length() == 1) ? mainArray[2][3] + " " : mainArray[2][3], rowRewards[2],
-                colRewards[0], colRewards[1], colRewards[2], colRewards[3]);
+                colRewards[0], colRewards[1], colRewards[2], colRewards[3],
+                score[0]<10?score[0]+" ":score[0],score[1]<10?score[1]+" ":score[1],score[2]<10?score[2]+" ":score[2],score[3]<10?score[3]+" ":score[3],score[4]<10?score[4]+" ":score[4],score[5]<10?score[5]+" ":score[5],score[6]<10?score[6]+" ":score[6],score[7]<10?score[7]+" ":score[7],score[8]<10?score[8]+" ":score[8],score[9]<10?score[9]+" ":score[9],score[10]<10?score[10]+" ":score[10]
+        );
     }
 
 
@@ -193,6 +195,8 @@ public class GreenRealm extends Realm{
         }
         return null;
     }
+
+
     public LinkedList<Guardian> getAliveCreatures(){
         LinkedList<Guardian> aliveGardians=new LinkedList<>();
         for(Guardian g:gardians){
@@ -207,10 +211,14 @@ public class GreenRealm extends Realm{
     }
     private void loadProperties() {
         Properties properties = new Properties();
+        Properties gaiaScoreProperties=new Properties();
         try{
             FileInputStream fileInputStream=new FileInputStream("src/main/resources/config/TerrasHeartlandRewards.properties");
+            FileInputStream gaiaScoreStream=new FileInputStream("src/main/resources/config/TerrasHeartlandScores.properties");
             properties.load(fileInputStream);
+            gaiaScoreProperties.load(gaiaScoreStream);
             fileInputStream.close();
+            gaiaScoreStream.close();
         }
         catch (IOException e){
             System.out.println("File Not Found");
@@ -226,5 +234,14 @@ public class GreenRealm extends Realm{
             Collectibles collectible=Collectibles.getCollectibleFromString(reward);
             colRewards[i]=(collectible==null)?"X ":collectible;
         }
+        try{
+            for(int i=0;i<score.length;i++){
+                score[i]=Integer.parseInt(gaiaScoreProperties.getProperty("attack"+(i+1)));
+            }
+        }
+        catch (NumberFormatException e){
+            score=new int[]{1,2,4,7,11,16,22,29,37,46,56};
+        }
+
     }
 }

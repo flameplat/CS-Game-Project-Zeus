@@ -58,14 +58,13 @@ public class CLIGameController extends GameController {
     private final Scanner sc; //Will be closed at the end of the game
     private final GameStatus gameStatus;
     private final GameGuide gameGuide;
-    private final StandardAntiCheatService standardAntiCheatService;
+    private final StandardAntiCheatService standardAntiCheatService=new StandardAntiCheatService();
     private Player activePlayer;
     private Player passivePlayer;
 
     // -----------------------Constructor-----------------------//
     public CLIGameController() {
         systemManager = new SystemManager();
-        standardAntiCheatService = new StandardAntiCheatService();
         systemManager.performSystemChecks();
         gameGuide = new GameGuide();
         gameBoard = new GameBoard();
@@ -80,6 +79,7 @@ public class CLIGameController extends GameController {
     // -----------------------Methods-----------------------//
     @Override
     public void startGame() {
+        standardAntiCheatService.initMasterPlayer();
         mainMenu();
         Player player1 = getPlayerName("Enter Player 1 name: ");
         gameBoard.setPlayer1(player1);
@@ -89,6 +89,8 @@ public class CLIGameController extends GameController {
         player2.setPlayerStatus(PlayerStatus.PASSIVE);
         activePlayer = player1;
         passivePlayer = player2;
+        performAntiCheatServiceChecks(activePlayer);
+        performAntiCheatServiceChecks(passivePlayer);
         for (int i = 0; i < MAX_NUMBER_OF_ROUNDS; i++) {
             gameStatus.resetTurn();
             System.out.println("Round " + (i + 1));
@@ -105,8 +107,6 @@ public class CLIGameController extends GameController {
             }
             playRound();
             switchPlayer();
-            performAntiCheatServiceChecks(activePlayer);
-            performAntiCheatServiceChecks(passivePlayer);
             gameStatus.incrementRound();
         }
         endGame();
@@ -169,7 +169,6 @@ public class CLIGameController extends GameController {
         } catch (NoAvailableMovesException e) {
             System.out.println("Ohh bad luck...there are no possible moves, turn lost!");
         }
-        performAntiCheatServiceChecks(player);
     }
 
     private boolean checkTimeWarp(Player player) {
@@ -331,8 +330,6 @@ public class CLIGameController extends GameController {
             default:
                 System.err.println("Invalid color bonus: "+color);
         }
-        performAntiCheatServiceChecks(player);
-
     }
 
     private void processRewardQueue(Player player, Collectibles[] rewards) {
@@ -517,7 +514,6 @@ public class CLIGameController extends GameController {
         //Choosing a die, move (check if move is valid,if not choose another die)
         //execute move
         //All dice of value less than selected die's value goes to forgotten realm
-        performAntiCheatServiceChecks(activePlayer);
         gameStatus.incrementTurn();
     }
 
@@ -536,7 +532,6 @@ public class CLIGameController extends GameController {
         }
         Move selectedMove = selectValidMove(passivePlayer, selectedDie);
         makeMove(passivePlayer, selectedMove);
-        performAntiCheatServiceChecks(passivePlayer);
     }
 
     private void displayRealms(Player player) {
@@ -860,6 +855,7 @@ public class CLIGameController extends GameController {
             if(realm.checkReward()){
                 processRewardQueue(player,realm.getReward());
             }
+            performAntiCheatServiceChecks(player);
             return true;
 
         } catch (NullPointerException e) {
@@ -896,7 +892,9 @@ public class CLIGameController extends GameController {
             systemManager.exit("Cheat detected!");
         }
     }
-
+    public Collectibles[] getRoundRewards(){
+        return roundRewards;
+    }
     private void endGame() {
         gameGuide.closeScanner();
         sc.close();

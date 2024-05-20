@@ -16,20 +16,89 @@ public class StandardAntiCheatService implements AntiCheatService{
     private final Map<Player,Map<String,Integer>> previousCollectibles;
     private final Map<Player, Integer> previousScores;
     private final Dice[] previousDice;
+    private final Player master;
+    private int scoreLimit;
     public StandardAntiCheatService(){
+        //MASTER PLAYER plays the game with max attacks
+        master=new Player();
         this.previousScores=new HashMap<>();
         this.previousCollectibles=new HashMap<>();
         this.previousDice=new Dice[6];
     }
+    public void initMasterPlayer(){
+        CLIGameController controller=new CLIGameController();
+        Collectibles[] roundRewards=controller.getRoundRewards();
+        for(Collectibles r:roundRewards){
+            master.receiveCollectible(r);
+        }
+        scoreLimit=0;
+        RedRealm redRealm= (RedRealm) master.getRealms()[0];
+        GreenRealm greenRealm= (GreenRealm) master.getRealms()[1];
+        Move[] redMoves=redRealm.getRealmMoves();
+        for(Collectibles r:controller.getRoundRewards()){
+            master.receiveCollectible(r);
+        }
+        int previousScore=0;
+        int currentScore;
+        for(Move move:redMoves){
+
+            redRealm.attack(move);
+            if(redRealm.checkReward()){
+                Collectibles[] rewards=redRealm.getReward();
+                for(Collectibles r: rewards){
+                    master.receiveCollectible(r);
+                }
+            }
+            currentScore=redRealm.getTotalScore();
+            if(scoreLimit<currentScore-previousScore){
+                scoreLimit=currentScore-previousScore;
+            }
+            previousScore=currentScore;
+        }
+        previousScore=0;
+        Move[] greenMoves=greenRealm.getRealmMoves();
+        for(Move move:greenMoves){
+            greenRealm.attack(move);
+            if(greenRealm.checkReward()){
+                Collectibles[] rewards=greenRealm.getReward();
+                for(Collectibles r: rewards){
+                    master.receiveCollectible(r);
+                }
+            }
+            currentScore=greenRealm.getTotalScore();
+            if(scoreLimit<currentScore-previousScore){
+                scoreLimit=currentScore-previousScore;
+            }
+            previousScore=currentScore;
+        }
+        previousScore=0;
+        for(int i=2;i<5;i++){
+            Realm realm=master.getRealms()[i];
+            while (realm.isRealmAvailable()){
+                Move m=realm.getRealmMoves()[realm.getRealmMoves().length-1];
+                realm.attack(m);
+                if(realm.checkReward()){
+                    Collectibles[] rewards=realm.getReward();
+                    for(Collectibles r: rewards){
+                        master.receiveCollectible(r);
+                    }
+                }
+                currentScore=realm.getTotalScore();
+                if(scoreLimit<currentScore-previousScore){
+                    scoreLimit=currentScore-previousScore;
+                }
+                previousScore=currentScore;
+            }
+        }
+    }
     @Override
     public void checkPlayerScore(Player player) throws CheatDetectedException {
-        int currentScore=player.getGameScore().getTotalScore();
-        int limit=70;
+        int currentScore=player.getGameScore().getCurrentScore();
         if(previousScores.containsKey(player)){
             if((currentScore-previousScores.get(player))<0){
                 throw new NegativeScoreException();
             }
-            if((currentScore-previousScores.get(player))>limit){
+            if((currentScore-previousScores.get(player))>scoreLimit){
                 throw new HighScoreException();
             }
         }
@@ -79,47 +148,28 @@ public class StandardAntiCheatService implements AntiCheatService{
                 }
             }
         }
+        if(player.getGameScore().getTotalElementalCrests()>master.getGameScore().getTotalElementalCrests()){
+            throw new RewardCheatException();
+        }
         previousCollectibles.put(player,player.getCollectiblesCounters());
     }
     @Override
     public void checkPlayerFinalScore(Player player) throws InvalidFinalScoreCheat {
-        CLIGameController controller=new CLIGameController();
-        Player player1=controller.getActivePlayer();
-        RedRealm redRealm= (RedRealm) player1.getRealms()[0];
-        GreenRealm greenRealm= (GreenRealm) player1.getRealms()[1];
-        Move[] redMoves=redRealm.getRealmMoves();
-        for(Move move:redMoves){
-            redRealm.attack(move);
-            if(redRealm.checkReward()){
-                redRealm.getReward();
+        Realm[] playerRealms=player.getRealms();
+
+        for(int i=0;i<playerRealms.length;i++){
+            if(playerRealms[i].getTotalScore()>master.getRealms()[i].getTotalScore()){
+                throw new InvalidFinalScoreCheat();
             }
         }
-        Move[] greenMoves=greenRealm.getRealmMoves();
-        for(Move move:greenMoves){
-            greenRealm.attack(move);
-            if(greenRealm.checkReward()){
-                greenRealm.getReward();
-            }
-        }
-        for(int i=2;i<5;i++){
-            Realm realm=player1.getRealms()[i];
-            while (realm.isRealmAvailable()){
-                Move m=realm.getRealmMoves()[realm.getRealmMoves().length-1];
-                realm.attack(m);
-                if(realm.checkReward()){
-                    realm.getReward();
-                }
-            }
-        }
-        int finalScore=player1.getGameScore().getTotalScore();
-        if(player.getGameScore().getTotalScore()>finalScore){
+        if(player.getGameScore().getTotalScore()>master.getGameScore().getTotalScore()){
             throw new InvalidFinalScoreCheat();
         }
     }
 
     @Override
     public void handlePlayerScore(Player player) {
-        //Resets player score to previous score
+
         if(previousScores.containsKey(player)){
             player.getGameScore().setTotalScore(previousScores.get(player));
         }

@@ -60,16 +60,12 @@ public class GameScore {
     }
 
     public int getTotalElementalCrests() {
-        int elementalCrestsFromRealms=0;
-        for(Realm r:realms){
-            elementalCrestsFromRealms+=r.getNoElementalCrests();
-        }
-        if(totalElementalCrests==0){
-            totalElementalCrests=elementalCrestsFromRealms;
-        }
         return totalElementalCrests;
     }
-
+    public int getCurrentScore(){
+        updateGameScore();
+        return totalScore;
+    }
     public int getTotalScore() {
         updateGameScore();
         int minScore=realms[0].getTotalScore();

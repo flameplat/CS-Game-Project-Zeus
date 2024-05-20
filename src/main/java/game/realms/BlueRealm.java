@@ -28,13 +28,13 @@ public class BlueRealm extends Realm{
     private final Collectibles[] rewardProperties;
     private static final String name="\u001B[34m"+"Blue Realm"+"\u001B[0m";
     private static final Color realmColor=Color.BLUE;
-    private final int[] score;
+    private int[] score;
     private final String[] attackValues;
     private final String[] rewardValues;
 
     //-----------------------Constructor-----------------------//
     public BlueRealm() {
-
+        this.score=new int[11];
         attackValues=new String[11];
         rewardValues=new String[11];
         for(int i=0;i<11;i++){
@@ -42,14 +42,14 @@ public class BlueRealm extends Realm{
         }
         serpent1 =new Serpent(1,5);
         serpent2=new Serpent(2,6);
-        rewardProperties=getRewardsProperties("src/main/resources/config/TideAbyssRewards.properties");
+        rewardProperties=getRewardsProperties();
         possibleMoveS1=new PriorityQueue<>();
         possibleMoveS2=new PriorityQueue<>();
         for(int i=1;i<7;i++){
             possibleMoveS1.add(new Move(new BlueDice(i),serpent1));
             possibleMoveS2.add(new Move(new BlueDice(i),serpent2));
         }
-        this.score=new int[]{1,3,6,10,15,21,28,36,45,55,66};
+
         hitcount=0;
     }
     // -----------------------Methods-----------------------//
@@ -130,7 +130,7 @@ public class BlueRealm extends Realm{
 
     @Override
     public String toString() {
-        String string=String.format("Tide Abyss: Hydra Serpents (BLUE REALM):\n" +
+        return String.format("Tide Abyss: Hydra Serpents (BLUE REALM):\n" +
                 "+-----------------------------------------------------------------------+\n" +
                 "|  #  |H11  |H12  |H13  |H14  |H15  |H21  |H22  |H23  |H24  |H25  |H26  |\n" +
                 "+-----------------------------------------------------------------------+\n" +
@@ -138,11 +138,11 @@ public class BlueRealm extends Realm{
                 "|  C  |≥1   |≥2   |≥3   |≥4   |≥5   |≥1   |≥2   |≥3   |≥4   |≥5   |≥6   |\n" +
                 "|  R  |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |\n" +
                 "+-----------------------------------------------------------------------+\n" +
-                "|  S  |1    |3    |6    |10   |15   |21   |28   |36   |45   |55   |66   |\n" +
+                "|  S  |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |%s   |\n" +
                 "+-----------------------------------------------------------------------+\n\n\n",
                 attackValues[0],attackValues[1],attackValues[2],attackValues[3],attackValues[4],attackValues[5],attackValues[6],attackValues[7],attackValues[8],attackValues[9],attackValues[10],
-                rewardValues[0],rewardValues[1],rewardValues[2],rewardValues[3],rewardValues[4],rewardValues[5],rewardValues[6],rewardValues[7],rewardValues[8],rewardValues[9],rewardValues[10]);
-        return string;
+                rewardValues[0],rewardValues[1],rewardValues[2],rewardValues[3],rewardValues[4],rewardValues[5],rewardValues[6],rewardValues[7],rewardValues[8],rewardValues[9],rewardValues[10],
+                score[0]<10?score[0]+" ":score[0],score[1]<10?score[1]+" ":score[1],score[2]<10?score[2]+" ":score[2],score[3]<10?score[3]+" ":score[3],score[4]<10?score[4]+" ":score[4],score[5]<10?score[5]+" ":score[5],score[6]<10?score[6]+" ":score[6],score[7]<10?score[7]+" ":score[7],score[8]<10?score[8]+" ":score[8],score[9]<10?score[9]+" ":score[9],score[10]<10?score[10]+" ":score[10]);
     }
 
     @Override
@@ -178,17 +178,30 @@ public class BlueRealm extends Realm{
 
 
 
-    private Collectibles[] getRewardsProperties(String path) {
+    private Collectibles[] getRewardsProperties() {
+        Properties serpentsScoreProperties=new Properties();
         Properties properties = new Properties();
         Collectibles []rewardProperties=new Collectibles[11] ;
         try{
-            FileInputStream fileInputStream=new FileInputStream(path);
+            FileInputStream fileInputStream=new FileInputStream("src/main/resources/config/TideAbyssRewards.properties");
             properties.load(fileInputStream);
+            FileInputStream fileInputStream2=new FileInputStream("src/main/resources/config/TideAbyssScores.properties");
+            serpentsScoreProperties.load(fileInputStream2);
+            fileInputStream2.close();
             fileInputStream.close();
         }
         catch (IOException e){
             System.out.println("File Not Found");
         }
+        try{
+            for(int i=0;i<score.length;i++){
+                score[i]=Integer.parseInt(serpentsScoreProperties.getProperty("hit"+(i+1)+"Score"));
+            }
+        }
+        catch (NumberFormatException e){
+            score=new int[]{1,3,6,10,15,21,28,36,45,55,66};
+        }
+
         for (int i = 0; i < 11; i++) {
 
             String reward = properties.getProperty("hit"+(i+1)+"Reward");

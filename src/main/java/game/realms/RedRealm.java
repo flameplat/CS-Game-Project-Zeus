@@ -25,9 +25,11 @@ public class RedRealm extends Realm {
     private int noElementalCrests;
     private final LinkedList<Move> redMoves;
     private LinkedList<Collectibles> realmRewards;
+    private int[] dragonsScore;
 
     // -----------------------Constructor-----------------------//
     public RedRealm() {
+        this.dragonsScore=new int[4];
         this.totalRealmScore = 0;
         this.noElementalCrests = 0;
         this.collectibles = getRewardsProperties();
@@ -71,25 +73,38 @@ public class RedRealm extends Realm {
     // NA->0
     private Dragon[] initDragons() {
         dragons = new Dragon[4];
-        dragons[0] = new Dragon(new Object[] { 3, 2, 1, "X" }, 10, 1);
-        dragons[1] = new Dragon(new Object[] { 6, 1, "X", 3 }, 14, 2);
-        dragons[2] = new Dragon(new Object[] { 5, "X", 2, 4 }, 16, 3);
-        dragons[3] = new Dragon(new Object[] { "X", 5, 4, 6 }, 20, 4);
+        dragons[0] = new Dragon(new Object[] { 3, 2, 1, "X" }, dragonsScore[0], 1);
+        dragons[1] = new Dragon(new Object[] { 6, 1, "X", 3 }, dragonsScore[1], 2);
+        dragons[2] = new Dragon(new Object[] { 5, "X", 2, 4 }, dragonsScore[2], 3);
+        dragons[3] = new Dragon(new Object[] { "X", 5, 4, 6 }, dragonsScore[3], 4);
         return dragons;
     }
 
     private Object[] getRewardsProperties() {
         Properties properties = new Properties();
+        Properties dragonScoreProperties=new Properties();
         Object[] rewardProperties = new Object[5];
         try {
+            FileInputStream dragonScoreFileInputStream=new FileInputStream("src/main/resources/config/EmberfallDominionScores.properties");
             FileInputStream fileInputStream = new FileInputStream(
                     "src/main/resources/config/EmberfallDominionRewards.properties");
             properties.load(fileInputStream);
+            dragonScoreProperties.load(dragonScoreFileInputStream);
+            dragonScoreFileInputStream.close();
             fileInputStream.close();
         } catch (IOException e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
+        try{
+            for(int i=0;i<dragonsScore.length;i++){
+                dragonsScore[i]=Integer.parseInt(dragonScoreProperties.getProperty("dragon"+(i+1)));
+            }
+        }
+        catch (NumberFormatException e){
+            dragonsScore=new int[]{10,14,16,20};
+        }
+
         for (int i = 0; i < 5; i++) {
             String diagonal_reward = properties.getProperty("diagonalReward");
             if (diagonal_reward != null) {
@@ -259,13 +274,13 @@ public class RedRealm extends Realm {
                 "|  T  |%s    |X    |%s    |%s    |%s   |\n" +
                 "|  H  |X    |%s    |%s    |%s    |%s   |\n" +
                 "+-----------------------------------+\n" +
-                "|  S  |10   |14   |16   |20   |%s   |\n" +
+                "|  S  |%s   |%s   |%s   |%s   |%s   |\n" +
                 "+-----------------------------------+\n\n\n", dragons[0].getHealth()[0], dragons[1].getHealth()[0],
                 dragons[2].getHealth()[0], collectibles[0],
                 dragons[0].getHealth()[1], dragons[1].getHealth()[1], dragons[3].getHealth()[1], collectibles[1],
                 dragons[0].getHealth()[2], dragons[2].getHealth()[2], dragons[3].getHealth()[2], collectibles[2],
                 dragons[1].getHealth()[3], dragons[2].getHealth()[3], dragons[3].getHealth()[3], collectibles[3],
-                collectibles[4]);
+                (dragonsScore[0]<10)?dragonsScore[0]+" ":dragonsScore[0],(dragonsScore[1]<10)?dragonsScore[1]+" ":dragonsScore[1],(dragonsScore[2]<10)?dragonsScore[2]+" ":dragonsScore[2],(dragonsScore[3]<10)?dragonsScore[3]+" ":dragonsScore[3], collectibles[4]);
     }
 
     @Override

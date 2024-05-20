@@ -8,7 +8,9 @@ import game.engine.Move;
 import game.dice.*;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Properties;
+
 import game.collectibles.*;
 
 
@@ -184,6 +186,7 @@ public class MagentaRealm extends Realm{
                 rewardValues[0],rewardValues[1],rewardValues[2],rewardValues[3],rewardValues[4],rewardValues[5],rewardValues[6],rewardValues[7],rewardValues[8],rewardValues[9],rewardValues[10]);
     }
 
+
     @Override
     public Move[] getRealmMoves() {
         return realmPossibleMoves;
@@ -196,5 +199,6 @@ public class MagentaRealm extends Realm{
         }
         return null;
     }
+
 
 }
