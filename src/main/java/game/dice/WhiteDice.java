@@ -2,16 +2,18 @@ package game.dice;
 
 import game.utilities.Color;
 
-public class WhiteDice extends Dice{
+public class WhiteDice extends Dice {
+    private static final Color color = Color.WHITE;
     private DiceStatus status;
-    private static final Color color=Color.WHITE;
     private int value; // value of the dices
+
     // -----------------------constructor-----------------------//
-    public WhiteDice(int value){
+    public WhiteDice(int value) {
         this.value = value;
-        this.status=DiceStatus.AVAILABLE;
+        this.status = DiceStatus.AVAILABLE;
     }
-    public WhiteDice(){
+
+    public WhiteDice() {
         this(1);
     }
 
@@ -23,14 +25,16 @@ public class WhiteDice extends Dice{
         return String.format("%s(%d)", color, value);
     }
 
-    public void setValue(int value){
-        this.value=value;
-    }
     // getter for the dice value
     public int getValue() {
         return value;
     }
-    public Color getRealm(){
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public Color getRealm() {
         return color;
     }
 
@@ -41,9 +45,10 @@ public class WhiteDice extends Dice{
 
     @Override
     public void setDiceStatus(DiceStatus status) {
-        this.status=status;
+        this.status = status;
     }
-    public boolean equals(Object o){
+
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -51,6 +56,6 @@ public class WhiteDice extends Dice{
             return false;
         }
         WhiteDice other = (WhiteDice) o;
-        return (color==other.getRealm())&&(value==other.getValue());
+        return (color == other.getRealm()) && (value == other.getValue());
     }
 }

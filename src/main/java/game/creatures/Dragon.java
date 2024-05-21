@@ -21,6 +21,10 @@ public class Dragon extends Creature {
         this.dragonNumber = dragonNumber;
     }
 
+    public Dragon() {
+        this.dragonNumber = 1;
+    }
+
     // -----------------------Methods-----------------------//
     @Override
     public boolean isAlive() {
@@ -76,10 +80,6 @@ public class Dragon extends Creature {
 
     public Object[] getHealth() {
         return health;
-    }
-
-    public Dragon() {
-        this.dragonNumber = 1;
     }
 
     public boolean equals(Object o) {

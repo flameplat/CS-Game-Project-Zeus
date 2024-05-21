@@ -1,10 +1,10 @@
 package game.realms;
 
-import game.collectibles.*;
-import game.utilities.Color;
+import game.collectibles.Collectibles;
 import game.creatures.Creature;
-import game.engine.Move;
 import game.dice.Dice;
+import game.engine.Move;
+import game.utilities.Color;
 
 public abstract class Realm {
     // -----------------------Abstract methods-----------------------//
@@ -16,6 +16,7 @@ public abstract class Realm {
 
     /* Method to return the status of the realm */
     public abstract int getStatus();
+
     public abstract boolean isRealmAvailable();
 
     /* Method to return the rewards of the realm */
@@ -23,11 +24,17 @@ public abstract class Realm {
 
     /* Method to check whether there is a reward or not after attacking */
     public abstract boolean checkReward();
+
     public abstract boolean attack(Move move);
+
     public abstract int getTotalScore();
+
     public abstract int getNoElementalCrests();
+
     public abstract String toString();
+
     public abstract Move[] getRealmMoves();
+
     public abstract Creature getCreature(Dice dice);
 
 

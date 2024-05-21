@@ -2,19 +2,21 @@ package game.dice;
 
 import game.utilities.Color;
 
-public class RedDice extends Dice{
-    private static final Color color=Color.RED;
+public class RedDice extends Dice {
+    private static final Color color = Color.RED;
     private static final String RESET = "\u001B[0m";
     private static final String RED = "\u001B[31m";
     private int dragonNumber;
     private DiceStatus status;
     private int value; // value of the dices
+
     // -----------------------constructor-----------------------//
     public RedDice(int value) {
         this.value = value;
-        this.status=DiceStatus.AVAILABLE;
+        this.status = DiceStatus.AVAILABLE;
     }
-    public RedDice(){
+
+    public RedDice() {
         this(1);
     }
 
@@ -23,17 +25,19 @@ public class RedDice extends Dice{
     // getter for the dice color
     @Override
     public String toString() {
-        return String.format(RED+"%s(%d)"+RESET, color, value);
+        return String.format(RED + "%s(%d)" + RESET, color, value);
     }
 
-    public void setValue(int value){
-        this.value=value;
-    }
     // getter for the dice value
     public int getValue() {
         return value;
     }
-    public Color getRealm(){
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public Color getRealm() {
         return color;
     }
 
@@ -44,16 +48,19 @@ public class RedDice extends Dice{
 
     @Override
     public void setDiceStatus(DiceStatus status) {
-        this.status=status;
+        this.status = status;
     }
-    public void selectsDragon(int dragonNumber){
-        this.dragonNumber=dragonNumber;
+
+    public void selectsDragon(int dragonNumber) {
+        this.dragonNumber = dragonNumber;
     }
+
     //Should be used in the redRealm when getting creature by red die
-    public int getDragonNumber(){
+    public int getDragonNumber() {
         return dragonNumber;
     }
-    public boolean equals(Object o){
+
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -61,6 +68,6 @@ public class RedDice extends Dice{
             return false;
         }
         RedDice other = (RedDice) o;
-        return (color==other.getRealm())&&(value==other.getValue());
+        return (color == other.getRealm()) && (value == other.getValue());
     }
 }

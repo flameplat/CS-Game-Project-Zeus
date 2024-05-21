@@ -2,18 +2,20 @@ package game.dice;
 
 import game.utilities.Color;
 
-public class YellowDice extends Dice{
-    private DiceStatus status;
-    private static final Color color=Color.YELLOW;
+public class YellowDice extends Dice {
+    private static final Color color = Color.YELLOW;
     private static final String RESET = "\u001B[0m";
     private static final String YELLOW = "\u001B[33m";
+    private DiceStatus status;
     private int value; // value of the dices
+
     // -----------------------constructor-----------------------//
     public YellowDice(int value) {
         this.value = value;
-        this.status=DiceStatus.AVAILABLE;
+        this.status = DiceStatus.AVAILABLE;
     }
-    public YellowDice(){
+
+    public YellowDice() {
         this(1);
     }
 
@@ -22,17 +24,19 @@ public class YellowDice extends Dice{
     // getter for the dice color
     @Override
     public String toString() {
-        return String.format(YELLOW+"%s(%d)"+RESET, color, value);
+        return String.format(YELLOW + "%s(%d)" + RESET, color, value);
     }
 
-    public void setValue(int value){
-        this.value=value;
-    }
     // getter for the dice value
     public int getValue() {
         return value;
     }
-    public Color getRealm(){
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public Color getRealm() {
         return color;
     }
 
@@ -43,9 +47,10 @@ public class YellowDice extends Dice{
 
     @Override
     public void setDiceStatus(DiceStatus status) {
-        this.status=status;
+        this.status = status;
     }
-    public boolean equals(Object o){
+
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -53,6 +58,6 @@ public class YellowDice extends Dice{
             return false;
         }
         YellowDice other = (YellowDice) o;
-        return (color==other.getRealm())&&(value==other.getValue());
+        return (color == other.getRealm()) && (value == other.getValue());
     }
 }

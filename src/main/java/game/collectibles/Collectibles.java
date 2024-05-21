@@ -45,5 +45,6 @@ public abstract class Collectibles {
 
     @Override
     public abstract String toString();
+
     public abstract String getName();
 }

@@ -1,25 +1,26 @@
 package game.creatures;
 
-public class Lion extends Creature{
+public class Lion extends Creature {
     private boolean status;
     private int totalHits;
 
     public Lion() {
-        this.status=true;
-        this.totalHits=0;
+        this.status = true;
+        this.totalHits = 0;
     }
 
     @Override
     public boolean attack() {
-        if(isAlive()){
+        if (isAlive()) {
             totalHits++;
-            if(totalHits==11){
-                status=false;
+            if (totalHits == 11) {
+                status = false;
             }
             return true;
         }
         return false;
     }
+
     @Override
     public boolean isAlive() {
         return status;
@@ -35,7 +36,8 @@ public class Lion extends Creature{
     public String toString() {
         return "Lion";
     }
-    public boolean equals(Object o){
+
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }

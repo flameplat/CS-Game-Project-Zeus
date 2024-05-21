@@ -1,12 +1,11 @@
 package game.engine;
 
-import game.utilities.ColorComparator;
-import game.dice.Dice;
 import game.creatures.Creature;
+import game.dice.Dice;
+import game.utilities.ColorComparator;
 
 
-
-public class Move implements Comparable<Move>{
+public class Move implements Comparable<Move> {
     // -----------------------Attributes-----------------------//
     private final Creature creature;
     private final Dice dice;
@@ -14,7 +13,7 @@ public class Move implements Comparable<Move>{
 
     // -----------------------Constructor-----------------------//
     public Move(Dice dice, Creature creature) {
-        this.dice=dice;
+        this.dice = dice;
         this.creature = creature;
     }
 
@@ -24,24 +23,26 @@ public class Move implements Comparable<Move>{
     }
 
     @Override
-    public String toString(){
-        return "["+dice.toString()+", "+creature.toString()+"]";
+    public String toString() {
+        return "[" + dice.toString() + ", " + creature.toString() + "]";
     }
-    public Dice getDice(){
+
+    public Dice getDice() {
         return dice;
     }
 
 
     @Override
     public int compareTo(Move o) {
-        int color= (new ColorComparator().compare(dice.getRealm(), o.getDice().getRealm()));
-        if(color==0){
+        int color = (new ColorComparator().compare(dice.getRealm(), o.getDice().getRealm()));
+        if (color == 0) {
             return Integer.compare(dice.getValue(), o.getDice().getValue());
         }
         return color;
     }
+
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }

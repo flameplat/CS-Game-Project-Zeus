@@ -1,14 +1,14 @@
 package game.engine;
 
-import game.collectibles.ElementalCrest;
-import game.utilities.Color;
 import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
+import game.collectibles.ElementalCrest;
 import game.collectibles.TimeWarp;
 import game.dice.Dice;
 import game.exceptions.InvalidPlayerNameException;
 import game.exceptions.MissingGameFilesException;
 import game.realms.*;
+import game.utilities.Color;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,15 +16,15 @@ import java.util.Map;
 
 
 public class Player {
-    //----------------------Attributes--------------------------//
-    private Realm[] realms;
+    private static final Map<String, Integer> collectibleCounters = new HashMap<>();
+    private static int id = 1;
     private final ScoreSheet scoreSheet;
     private final GameScore gameScore;
-    private PlayerStatus playerStatus;
-    private static int id=1;
     private final String name;
+    //----------------------Attributes--------------------------//
+    private Realm[] realms;
+    private PlayerStatus playerStatus;
     private LinkedList<ArcaneBoost> arcaneBoosts;
-    private static final Map<String, Integer> collectibleCounters = new HashMap<>();
     private LinkedList<TimeWarp> timeWarps;
 
     //----------------------Constructor--------------------------//
@@ -38,25 +38,27 @@ public class Player {
         this.name = name;
         initializeRealms();
         scoreSheet = new ScoreSheet(realms);
-        gameScore = new GameScore(realms,name);
-        timeWarps=new LinkedList<>();
-        arcaneBoosts=new LinkedList<>();
+        gameScore = new GameScore(realms, name);
+        timeWarps = new LinkedList<>();
+        arcaneBoosts = new LinkedList<>();
     }
 
 
-    public Player(){
-        this.name = String.format("Player %d",id);
+    public Player() {
+        this.name = String.format("Player %d", id);
         initializeRealms();
         scoreSheet = new ScoreSheet(realms);
-        gameScore = new GameScore(realms,name);
+        gameScore = new GameScore(realms, name);
         id++;
-        timeWarps=new LinkedList<>();
-        arcaneBoosts=new LinkedList<>();
+        timeWarps = new LinkedList<>();
+        arcaneBoosts = new LinkedList<>();
     }
-    public Map<String, Integer> getCollectiblesCounters(){
+
+    public Map<String, Integer> getCollectiblesCounters() {
         return collectibleCounters;
     }
     //----------------------Methods--------------------------//
+
     /**
      * Check if player name contains special characters
      *
@@ -71,41 +73,41 @@ public class Player {
     /**
      * Initialize all realms at the start of initialization of the player
      */
-    private void initializeRealms(){
+    private void initializeRealms() {
         //RED, GREEN, BLUE, MAGENTA, YELLOW
-        realms=new Realm[5];
-        realms[0]=new RedRealm();
-        realms[1]=new GreenRealm();
-        realms[2]=new BlueRealm();
-        realms[3]=new MagentaRealm();
-        realms[4]=new YellowRealm();
+        realms = new Realm[5];
+        realms[0] = new RedRealm();
+        realms[1] = new GreenRealm();
+        realms[2] = new BlueRealm();
+        realms[3] = new MagentaRealm();
+        realms[4] = new YellowRealm();
     }
-    public void setPlayerStatus(PlayerStatus status){
-        this.playerStatus=status;
-    }
+
     /**
      * Receives the power and set its status to ENABLE.
      */
-    public void receiveCollectible(Collectibles collectible){
-        if(collectible instanceof ElementalCrest){
+    public void receiveCollectible(Collectibles collectible) {
+        if (collectible instanceof ElementalCrest) {
             this.gameScore.receiveElementalCrest();
         }
         //The player only receives 2 powers AB and TW
-        if(collectible instanceof ArcaneBoost){
+        if (collectible instanceof ArcaneBoost) {
             arcaneBoosts.addLast((ArcaneBoost) collectible);
-            collectibleCounters.put("ArcaneBoost",collectibleCounters.getOrDefault("ArcaneBoost", 0) + 1);
+            collectibleCounters.put("ArcaneBoost", collectibleCounters.getOrDefault("ArcaneBoost", 0) + 1);
             return;
         }
-        if(collectible instanceof TimeWarp){
+        if (collectible instanceof TimeWarp) {
             timeWarps.addLast((TimeWarp) collectible);
-            collectibleCounters.put("TimeWarp",collectibleCounters.getOrDefault("TimeWarp", 0) + 1);
+            collectibleCounters.put("TimeWarp", collectibleCounters.getOrDefault("TimeWarp", 0) + 1);
         }
     }
-    public void resetRewards(){
-        this.arcaneBoosts=new LinkedList<>();
-        this.timeWarps=new LinkedList<>();
+
+    public void resetRewards() {
+        this.arcaneBoosts = new LinkedList<>();
+        this.timeWarps = new LinkedList<>();
     }
-    public ScoreSheet getScoreSheet(){
+
+    public ScoreSheet getScoreSheet() {
         return scoreSheet;
     }
 
@@ -115,12 +117,13 @@ public class Player {
 
     // Check the player's Time Warp powers array
     // Return true if available, false otherwise
-    public boolean isTimeWarpAvailable(){
+    public boolean isTimeWarpAvailable() {
         return !timeWarps.isEmpty();
     }
+
     // Check the player's Arcane Boost powers array
     // Return true if available, false otherwise
-    public boolean isArcaneBoostAvailable(){
+    public boolean isArcaneBoostAvailable() {
         return !arcaneBoosts.isEmpty();
     }
 
@@ -128,61 +131,74 @@ public class Player {
      * Use the Time Warp power and set its status to USED.
      */
     public void useTimeWarpPower() {
-        if(!timeWarps.isEmpty()) {
+        if (!timeWarps.isEmpty()) {
             timeWarps.remove();
         }
     }
+
     /**
      * Use the Arcane Boost power and set its status to USED.
      */
     public void useArcaneBoostPower() {
-        if(!arcaneBoosts.isEmpty()){
+        if (!arcaneBoosts.isEmpty()) {
             arcaneBoosts.remove();
         }
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
+
     //Returns total Time Warps collected and unused
-    public int getTotalTimeWarpPowersCollected(){
+    public int getTotalTimeWarpPowersCollected() {
         return timeWarps.size();
     }
+
     //Returns total Arcane Boosts collected and unused
-    public int getTotalArcaneBoostPowersCollected(){
+    public int getTotalArcaneBoostPowersCollected() {
         return arcaneBoosts.size();
     }
 
-    public ArcaneBoost[] getArcaneBoosts(){
+    public ArcaneBoost[] getArcaneBoosts() {
         return arcaneBoosts.toArray(ArcaneBoost[]::new);
     }
-    public TimeWarp[] getTimeWarps(){
+
+    public TimeWarp[] getTimeWarps() {
         return timeWarps.toArray(TimeWarp[]::new);
     }
-    public Realm getRealm(Color color){
+
+    public Realm getRealm(Color color) {
         return realms[color.ordinal()];
     }
-    public Realm[] getRealms(){
+
+    public Realm[] getRealms() {
         return realms;
     }
-    public Realm getRealm(Dice dice){
-        if(dice.getRealm()==Color.WHITE){
+
+    public Realm getRealm(Dice dice) {
+        if (dice.getRealm() == Color.WHITE) {
             System.err.println("There is no white realm");
             return null;
         }
-        for(Realm i:realms){
-            if(dice.getRealm()==i.getColor()){
+        for (Realm i : realms) {
+            if (dice.getRealm() == i.getColor()) {
                 return i;
             }
         }
         return null;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return name;
     }
 
     public PlayerStatus getPlayerStatus() {
         return playerStatus;
+    }
+
+    public void setPlayerStatus(PlayerStatus status) {
+        this.playerStatus = status;
     }
 
 }

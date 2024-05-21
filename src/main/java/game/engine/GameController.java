@@ -1,7 +1,8 @@
 package game.engine;
 
-import game.dice.*;
-import game.collectibles.*;
+import game.collectibles.ArcaneBoost;
+import game.collectibles.TimeWarp;
+import game.dice.Dice;
 
 /**
  * Abstract class representing the controller for the game.
@@ -19,21 +20,21 @@ public abstract class GameController {
      * ensuring that the turn-taking mechanism functions correctly.
      *
      * @return {@code true} if the switch was successful,
-     *         {@code false} otherwise.
+     * {@code false} otherwise.
      */
     public abstract boolean switchPlayer();
 
     /**
      * Rolls all available dice for the current turn, assigning each a random
      * number from 1 to 6.
-     * 
+     *
      * @return An array of the currently rolled {@code Dice}.
      */
     public abstract Dice[] rollDice();
 
     /**
      * Gets the dice available for rolling or rerolling.
-     * 
+     *
      * @return An array of {@code Dice} available for the current turn.
      */
     public abstract Dice[] getAvailableDice();
@@ -83,28 +84,28 @@ public abstract class GameController {
 
     /**
      * Gets the current game board, including all players and all score sheets.
-     * 
+     *
      * @return The current {@code GameBoard} object.
      */
     public abstract GameBoard getGameBoard();
 
     /**
      * Gets the current active player's information.
-     * 
+     *
      * @return The active {@code Player} object.
      */
     public abstract Player getActivePlayer();
 
     /**
      * Gets the current passive player's information.
-     * 
+     *
      * @return The passive {@code Player} object.
      */
     public abstract Player getPassivePlayer();
 
     /**
      * Gets the score sheet for a given player.
-     * 
+     *
      * @param player The player to get the current score sheet for.
      * @return The {@code ScoreSheet} object for a given player.
      */
@@ -113,7 +114,7 @@ public abstract class GameController {
     /**
      * Gets the current game status, including round and turn information for the
      * current active player.
-     * 
+     *
      * @return The current {@code GameStatus} object.
      */
     public abstract GameStatus getGameStatus();
@@ -121,7 +122,7 @@ public abstract class GameController {
     /**
      * Gets the current score of the game, including scores in each realm, number of
      * elemental crests, and the total score for a given player.
-     * 
+     *
      * @param player The player to determine current score for.
      * @return The current {@code GameScore} object.
      */
@@ -132,7 +133,7 @@ public abstract class GameController {
      *
      * @param player The player to get the current TimeWarp powers for.
      * @return An array of {@code TimeWarp} objects representing the TimeWarp powers
-     *         for a given player.
+     * for a given player.
      */
     public abstract TimeWarp[] getTimeWarpPowers(Player player);
 
@@ -141,18 +142,18 @@ public abstract class GameController {
      *
      * @param player The player to get the current ArcaneBoost powers for.
      * @return An array of {@code ArcaneBoost} objects representing the ArcaneBoost
-     *         powers for a given player.
+     * powers for a given player.
      */
     public abstract ArcaneBoost[] getArcaneBoostPowers(Player player);
 
     /**
      * Selects a die and adds it to the player class, then moves
      * all other dice with less value to the Forgotten Realm.
-     * 
+     *
      * @param player The player who selected the die.
      * @param dice   The dice to be selected.
      * @return {@code true} if the selection was successful,
-     *         {@code false} otherwise.
+     * {@code false} otherwise.
      */
     public abstract boolean selectDice(Dice dice, Player player);
 
@@ -163,7 +164,7 @@ public abstract class GameController {
      * @param move   The move to be executed, including the selected dice and
      *               target creature.
      * @return {@code true} if the move is successfully completed,
-     *         {@code false} otherwise.
+     * {@code false} otherwise.
      */
     public abstract boolean makeMove(Player player, Move move);
 }

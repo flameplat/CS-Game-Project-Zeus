@@ -58,7 +58,7 @@ public class CLIGameController extends GameController {
     private final Scanner sc; //Will be closed at the end of the game
     private final GameStatus gameStatus;
     private final GameGuide gameGuide;
-    private final StandardAntiCheatService standardAntiCheatService=new StandardAntiCheatService();
+    private final StandardAntiCheatService standardAntiCheatService = new StandardAntiCheatService();
     private Player activePlayer;
     private Player passivePlayer;
 
@@ -163,7 +163,7 @@ public class CLIGameController extends GameController {
         }
         Dice[] diceNotSelectedByPlayer = notSelectedByPlayer.toArray(Dice[]::new);
         try {
-            Dice selectedDie = selectValidDie(player, diceNotSelectedByPlayer, false,filter);
+            Dice selectedDie = selectValidDie(player, diceNotSelectedByPlayer, false, filter);
             Move validMove = selectValidMove(player, selectedDie);
             makeMove(player, validMove);
         } catch (NoAvailableMovesException e) {
@@ -202,9 +202,9 @@ public class CLIGameController extends GameController {
             while (true) {
                 displayRealms(player);
                 System.out.println("Possible realms to choose from:");
-                for(int i=0;i<availableRealms.size();i++){
+                for (int i = 0; i < availableRealms.size(); i++) {
                     System.out.print(availableRealms.get(i).getName());
-                    if(i!=availableRealms.size()-1){
+                    if (i != availableRealms.size() - 1) {
                         System.out.print(", ");
                     }
                 }
@@ -241,7 +241,7 @@ public class CLIGameController extends GameController {
                         new RedDice(5),
                         new RedDice(6)};
                 try {
-                    Dice selectedDie = selectValidDie(player, redDice, false,DiceStatus.TURN_SELECTED);
+                    Dice selectedDie = selectValidDie(player, redDice, false, DiceStatus.TURN_SELECTED);
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
 
@@ -252,27 +252,26 @@ public class CLIGameController extends GameController {
             }
             case GREEN: {
                 // Define green dice
-                GreenRealm greenRealm=(GreenRealm)player.getRealm(Color.GREEN);
+                GreenRealm greenRealm = (GreenRealm) player.getRealm(Color.GREEN);
                 LinkedList<Guardian> aliveCreatures = greenRealm.getAliveCreatures();
-                Guardian[] allCreatures=((GreenRealm)player.getRealm(Color.GREEN)).getAllCreatures();
+                Guardian[] allCreatures = ((GreenRealm) player.getRealm(Color.GREEN)).getAllCreatures();
                 try {
-                    if(aliveCreatures.isEmpty() || !greenRealm.isRealmAvailable()){
+                    if (aliveCreatures.isEmpty() || !greenRealm.isRealmAvailable()) {
                         throw new NoAvailableMovesException();
                     }
                     gameGuide.displayCreatures(allCreatures);
                     System.out.println("Choose a Gaia to attack:");
-                    while(true){
-                        int choice=gameGuide.getUserChoice(2,12);
-                        try{
-                            if(!aliveCreatures.contains(allCreatures[choice-2])){
+                    while (true) {
+                        int choice = gameGuide.getUserChoice(2, 12);
+                        try {
+                            if (!aliveCreatures.contains(allCreatures[choice - 2])) {
                                 throw new InvalidMoveException();
                             }
-                            System.out.println(allCreatures[choice-2].getName());
-                            greenRealm.attack(new Move(new GreenDice(allCreatures[choice-2].getScore()),allCreatures[choice-2]));
+                            System.out.println(allCreatures[choice - 2].getName());
+                            greenRealm.attack(new Move(new GreenDice(allCreatures[choice - 2].getScore()), allCreatures[choice - 2]));
                             break;
-                        }
-                        catch (InvalidMoveException e){
-                            System.out.println(allCreatures[choice-2].getName()+" is dead, choose another Gaia");
+                        } catch (InvalidMoveException e) {
+                            System.out.println(allCreatures[choice - 2].getName() + " is dead, choose another Gaia");
                         }
                     }
 
@@ -288,7 +287,7 @@ public class CLIGameController extends GameController {
                         new BlueDice(6)};
                 try {
                     // Select a valid die and move
-                    Dice selectedDie = selectValidDie(player, blueDice, false,DiceStatus.TURN_SELECTED);
+                    Dice selectedDie = selectValidDie(player, blueDice, false, DiceStatus.TURN_SELECTED);
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
                 } catch (NoAvailableMovesException e) {
@@ -303,7 +302,7 @@ public class CLIGameController extends GameController {
                         new MagentaDice(6)};
                 try {
                     // Select a valid die and move
-                    Dice selectedDie = selectValidDie(player, magentaDice, false,DiceStatus.TURN_SELECTED);
+                    Dice selectedDie = selectValidDie(player, magentaDice, false, DiceStatus.TURN_SELECTED);
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
                 } catch (NoAvailableMovesException e) {
@@ -318,7 +317,7 @@ public class CLIGameController extends GameController {
                         new YellowDice(6)};
                 try {
                     // Select a valid die and move
-                    Dice selectedDie = selectValidDie(player, yellowDice, false,DiceStatus.TURN_SELECTED);
+                    Dice selectedDie = selectValidDie(player, yellowDice, false, DiceStatus.TURN_SELECTED);
                     Move selectedMove = selectValidMove(player, selectedDie);
                     makeMove(player, selectedMove);
                 } catch (NoAvailableMovesException e) {
@@ -328,7 +327,7 @@ public class CLIGameController extends GameController {
                 break;
             }
             default:
-                System.err.println("Invalid color bonus: "+color);
+                System.err.println("Invalid color bonus: " + color);
         }
     }
 
@@ -389,7 +388,7 @@ public class CLIGameController extends GameController {
 
     //Selects a valid die (has an available move in player)
     //Prints given dice if no moves or prints filtered dice then the selected die
-    private Dice selectValidDie(Player player, Dice[] dice, boolean checkTimeWarp,DiceStatus diceStatus) throws NoAvailableMovesException {
+    private Dice selectValidDie(Player player, Dice[] dice, boolean checkTimeWarp, DiceStatus diceStatus) throws NoAvailableMovesException {
         Dice selectedDie;
         LinkedList<Dice> filteredDice;
         if (getPossibleMovesForDice(player, dice).length == 0) {
@@ -404,7 +403,7 @@ public class CLIGameController extends GameController {
             }
             while (checkTimeWarp && checkTimeWarp(player)) {
                 filteredDice = filterDiceWithPossibleMoves(player, dice);
-                if(filteredDice.isEmpty()){
+                if (filteredDice.isEmpty()) {
                     throw new NoAvailableMovesException();
                 }
                 gameGuide.displayNumberedChoice(dice);
@@ -439,7 +438,7 @@ public class CLIGameController extends GameController {
                     new BlueDice(selectedDie.getValue()),
                     new MagentaDice(selectedDie.getValue()),
                     new YellowDice(selectedDie.getValue())};
-            return selectValidDie(player, possibleDice, false,diceStatus);
+            return selectValidDie(player, possibleDice, false, diceStatus);
         }
         selectedDie.setDiceStatus(diceStatus);
         return selectedDie;
@@ -454,6 +453,7 @@ public class CLIGameController extends GameController {
         }
         return diceWithMoves;
     }
+
     private Move selectValidMove(Player player, Dice selectedDie) {
 
         if (selectedDie instanceof RedDice) {
@@ -498,7 +498,7 @@ public class CLIGameController extends GameController {
         Dice selectedDie;
         while (true) {
             try {
-                selectedDie = selectValidDie(activePlayer, availableDice, true,DiceStatus.TURN_SELECTED);
+                selectedDie = selectValidDie(activePlayer, availableDice, true, DiceStatus.TURN_SELECTED);
                 selectDice(selectedDie, activePlayer);
                 break;
             } catch (NoAvailableMovesException e) {
@@ -524,7 +524,7 @@ public class CLIGameController extends GameController {
         Dice[] temp = getForgottenRealmDice();
         Dice selectedDie;
         try {
-            selectedDie = selectValidDie(passivePlayer, temp, false,DiceStatus.TURN_SELECTED);
+            selectedDie = selectValidDie(passivePlayer, temp, false, DiceStatus.TURN_SELECTED);
         } catch (NoAvailableMovesException e) {
             System.out.println("Ohh bad luck...No possible moves!");
             System.out.println("Passive turn lost!");
@@ -852,8 +852,8 @@ public class CLIGameController extends GameController {
             }
             Realm realm = player.getRealm(move.getDice());
             realm.attack(move);
-            if(realm.checkReward()){
-                processRewardQueue(player,realm.getReward());
+            if (realm.checkReward()) {
+                processRewardQueue(player, realm.getReward());
             }
             performAntiCheatServiceChecks(player);
             return true;
@@ -892,9 +892,11 @@ public class CLIGameController extends GameController {
             systemManager.exit("Cheat detected!");
         }
     }
-    public Collectibles[] getRoundRewards(){
+
+    public Collectibles[] getRoundRewards() {
         return roundRewards;
     }
+
     private void endGame() {
         gameGuide.closeScanner();
         sc.close();

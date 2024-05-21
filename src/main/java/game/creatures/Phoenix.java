@@ -1,25 +1,26 @@
 package game.creatures;
 
-public class Phoenix extends Creature{
+public class Phoenix extends Creature {
     private boolean status;
     private int totalHits;
 
     public Phoenix() {
-        this.status=true;
-        int totalHits=0;
+        this.status = true;
+        int totalHits = 0;
     }
 
     @Override
     public boolean attack() {
-        if(isAlive()){
+        if (isAlive()) {
             totalHits++;
-            if(totalHits==11){
-                status=false;
+            if (totalHits == 11) {
+                status = false;
             }
             return true;
         }
         return false;
     }
+
     @Override
     public boolean isAlive() {
         return status;
@@ -35,7 +36,8 @@ public class Phoenix extends Creature{
     public String toString() {
         return "Phoenix";
     }
-    public boolean equals(Object o){
+
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }

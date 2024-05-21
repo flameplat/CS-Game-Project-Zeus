@@ -2,20 +2,21 @@ package game.dice;
 
 import game.utilities.Color;
 
-public class MagentaDice extends Dice{
-    private DiceStatus status;
+public class MagentaDice extends Dice {
     private static final String RESET = "\u001B[0m";
     private static final String MAGENTA = "\u001B[35m";
-    private static final Color color=Color.MAGENTA;
+    private static final Color color = Color.MAGENTA;
+    private DiceStatus status;
     private int value; // value of the dices
+
     // -----------------------constructor-----------------------//
     public MagentaDice(int value) {
         this.value = value;
-        this.status=DiceStatus.AVAILABLE;
+        this.status = DiceStatus.AVAILABLE;
 
     }
 
-    public MagentaDice(){
+    public MagentaDice() {
         this(1);
     }
 
@@ -24,17 +25,19 @@ public class MagentaDice extends Dice{
     // getter for the dice color
     @Override
     public String toString() {
-        return String.format(MAGENTA+"%s(%d)"+RESET, color, value);
+        return String.format(MAGENTA + "%s(%d)" + RESET, color, value);
     }
 
-    public void setValue(int value){
-        this.value=value;
-    }
     // getter for the dice value
     public int getValue() {
         return value;
     }
-    public Color getRealm(){
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public Color getRealm() {
         return color;
     }
 
@@ -45,9 +48,10 @@ public class MagentaDice extends Dice{
 
     @Override
     public void setDiceStatus(DiceStatus status) {
-        this.status=status;
+        this.status = status;
     }
-    public boolean equals(Object o){
+
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -55,6 +59,6 @@ public class MagentaDice extends Dice{
             return false;
         }
         MagentaDice other = (MagentaDice) o;
-        return (color==other.getRealm())&&(value==other.getValue());
+        return (color == other.getRealm()) && (value == other.getValue());
     }
 }

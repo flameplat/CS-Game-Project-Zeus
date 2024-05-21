@@ -1,24 +1,27 @@
 package game.creatures;
 
-public class Guardian extends Creature{
+public class Guardian extends Creature {
     private final int score;
     private boolean status;
 
-    public Guardian(int score){
-        this.score=score;
-        this.status=true;
+    public Guardian(int score) {
+        this.score = score;
+        this.status = true;
     }
-    public Guardian(){
+
+    public Guardian() {
         this(1);
     }
+
     @Override
     public boolean attack() {
-        if(isAlive()){
-            status=false;
+        if (isAlive()) {
+            status = false;
             return true;
         }
         return false;
     }
+
     @Override
     public boolean isAlive() {
         return status;
@@ -32,29 +35,30 @@ public class Guardian extends Creature{
 
     @Override
     public String toString() {
-        if(isAlive()){
+        if (isAlive()) {
             return String.valueOf(score);
         }
         return "X";
 
     }
-    public String getName(){
+
+    public String getName() {
         String color;
-        if(status){
-            color="\u001B[32m";
+        if (status) {
+            color = "\u001B[32m";
+        } else {
+            color = "\u001B[37m";
         }
-        else{
-            color="\u001B[37m";
-        }
-        return color+"Gaia "+score+"\u001B[0m";
+        return color + "Gaia " + score + "\u001B[0m";
     }
-    public boolean equals(Object o){
+
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        return score==((Guardian) o).score;
+        return score == ((Guardian) o).score;
     }
 }

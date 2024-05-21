@@ -7,6 +7,7 @@ public class ColorComparator implements Comparator<Color> {
     public int compare(Color o1, Color o2) {
         return getColorPriority(o1) - getColorPriority(o2);
     }
+
     private int getColorPriority(Color color) {
         return color.ordinal();
     }

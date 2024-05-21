@@ -5,14 +5,16 @@ public abstract class Creature {
     public abstract boolean isAlive(); // check wheather the creature is dead or alive
 
     public abstract int getScore(); // get score of creature
+
     @Override
     public abstract String toString();
     // ------------------Concrete Methods------------------//
 
-    public boolean attack(){
+    public boolean attack() {
         return false;
     }
-    public String getName(){
+
+    public String getName() {
         return null;
     }
 
