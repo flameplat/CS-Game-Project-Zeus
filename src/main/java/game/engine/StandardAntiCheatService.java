@@ -175,12 +175,8 @@ public class StandardAntiCheatService implements AntiCheatService{
 
     @Override
     public void handlePlayerScore(Player player) {
-
-        if(previousScores.containsKey(player)){
-            player.getGameScore().setTotalScore(previousScores.get(player));
-        }
+        player.getGameScore().setCheatPenalty(((player.getGameScore().getCurrentScore()-previousScores.get(player))/scoreLimit)*100-100);
     }
-
     @Override
     public void handleDiceCheat(Dice[] dice) {
         System.arraycopy(previousDice, 0, dice, 0, dice.length);

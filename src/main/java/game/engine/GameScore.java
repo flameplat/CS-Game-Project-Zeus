@@ -11,18 +11,23 @@ public class GameScore {
     private int totalScore;
     private final String playerName;
     private final Realm[] realms;
+    private int cheatPenalty;
+    private int test;
     //--------------------------Constructor--------------------------//
     public GameScore(Realm[] realms, String playerName) {
         this.playerName=playerName;
         this.realms=realms;
         totalElementalCrests = 0;
         totalScore = 0;
+        this.cheatPenalty=0;
     }
     public GameScore(){
         this.realms=new Realm[]{new RedRealm(),new GreenRealm(),new BlueRealm(),new MagentaRealm(),new YellowRealm()};
         this.playerName="NULL";
         totalElementalCrests = 0;
         totalScore = 0;
+        this.cheatPenalty=0;
+
     }
     //--------------------------Methods--------------------------//
 
@@ -55,16 +60,16 @@ public class GameScore {
     public int getBlueRealmScore() {
         return realms[Color.BLUE.ordinal()].getTotalScore();
     }
-    public void setTotalScore(int score){
-        this.totalScore=score;
-    }
 
+    public void setCheatPenalty(int cheatPenalty){
+        this.cheatPenalty=cheatPenalty;
+    }
     public int getTotalElementalCrests() {
         return totalElementalCrests;
     }
     public int getCurrentScore(){
         updateGameScore();
-        return totalScore;
+        return totalScore-(cheatPenalty*totalScore)/100;
     }
     public int getTotalScore() {
         updateGameScore();
@@ -75,7 +80,7 @@ public class GameScore {
             }
         }
         totalScore+=totalElementalCrests*minScore;
-        return totalScore;
+        return totalScore-(cheatPenalty*totalScore)/100;
     }
     private int getTotalScoreForColor(Color color) {
         return realms[color.ordinal()].getTotalScore();
