@@ -105,6 +105,9 @@ public class StandardAntiCheatService implements AntiCheatService {
                 throw new NegativeScoreException();
             }
             if ((currentScore - previousScores.get(player)) > scoreLimit) {
+                System.err.println("Current score: "+currentScore);
+                System.out.println("Previous score: "+previousScores.get(player));
+                System.out.println("Score limit: "+scoreLimit);
                 throw new HighScoreException();
             }
         }

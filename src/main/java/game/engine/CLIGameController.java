@@ -192,7 +192,7 @@ public class CLIGameController extends GameController {
 
     private void playEssenceBonus(Player player) {
         gameGuide.displayInstructions(Instruction.ESSENCE_BONUS);
-        System.out.println(player.getScoreSheet());
+        player.getScoreSheet().displayScoreSheet();
         Realm[] realms = player.getRealms();
         LinkedList<Realm> availableRealms = Stream.of(realms)
                 .filter(Realm::isRealmAvailable)
@@ -361,6 +361,14 @@ public class CLIGameController extends GameController {
         }
     }
 
+    private void delay(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException ignored) {
+
+        }
+    }
+
     private void playRound() {
         System.out.println(activePlayer.getName());
         gameGuide.displayInstructions(Instruction.ROUND);
@@ -490,6 +498,7 @@ public class CLIGameController extends GameController {
     private void playTurn() {
         gameGuide.displayInstructions(Instruction.TURN);
         System.out.println("Here is your score sheet");
+        delay(2000);
         activePlayer.getScoreSheet().displayScoreSheet();
         Dice[] availableDice = getAvailableDice();
         gameGuide.displayInstructions(Instruction.ROLL);
@@ -852,10 +861,10 @@ public class CLIGameController extends GameController {
             }
             Realm realm = player.getRealm(move.getDice());
             realm.attack(move);
+            performAntiCheatServiceChecks(player);
             if (realm.checkReward()) {
                 processRewardQueue(player, realm.getReward());
             }
-            performAntiCheatServiceChecks(player);
             return true;
 
         } catch (NullPointerException e) {
@@ -882,11 +891,11 @@ public class CLIGameController extends GameController {
             standardAntiCheatService.handleRewardCheat(player);
         } catch (NegativeScoreException e) {
             System.err.println("Cheat detected in score of player: " + player.getName());
-            System.out.println("Score is below zero!");
+            System.err.println("Score is below zero!");
             standardAntiCheatService.handlePlayerScore(player);
         } catch (HighScoreException e) {
             System.err.println("Cheat detected in score of player: " + player.getName());
-            System.out.println("Score is invalid: " + player.getGameScore().getTotalScore());
+            System.err.println("Score is invalid: " + player.getGameScore().getTotalScore());
             standardAntiCheatService.handlePlayerScore(player);
         } catch (CheatDetectedException e) {
             systemManager.exit("Cheat detected!");
