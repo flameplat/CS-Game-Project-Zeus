@@ -917,7 +917,6 @@ public class CLIGameController extends GameController {
         System.out.println("*".repeat(100));
         System.out.println(activePlayer.getGameScore());
         System.out.println(passivePlayer.getGameScore());
-
         int diff = activePlayer.getGameScore().getTotalScore() - passivePlayer.getGameScore().getTotalScore();
         if (diff == 0) {
             System.out.println("Draw!");

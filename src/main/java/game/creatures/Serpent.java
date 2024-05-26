@@ -1,31 +1,19 @@
+
 package game.creatures;
 
-public class Serpent extends Creature {
-    private boolean status;
-    private int headNumber;
-    private int id;
-    private int totalHits;
+public class Serpent extends Creature{
+    private boolean status =true;
+    private int headNumber = 1;
+    private int score = 0;
 
-    public Serpent(int id, int headNumber) {
-        this.status = true;
-        this.headNumber = headNumber;
-        this.totalHits = 0;
-        this.id = id;
+    public Serpent (int headNumber,boolean status ){
+        this.status=status;
+        this.headNumber=headNumber;
     }
-
-    public Serpent() {
-        this.status = true;
+    public Serpent(){
+        this.status=true;
     }
-
-    @Override
-    public boolean attack() {
-        if (isAlive()) {
-            totalHits++;
-            if (totalHits == headNumber) {
-                status = false;
-            }
-            return true;
-        }
+    public boolean attack(int value) {
         return false;
     }
 
@@ -34,24 +22,22 @@ public class Serpent extends Creature {
         return status;
     }
 
+    public int getHeadNumber(){
+        return headNumber;
+    }
+
     @Override
     public int getScore() {
-        return 0;
+        return score;
     }
-
     @Override
     public String toString() {
-        return "Hydra Serpent " + id;
+        return null;
     }
-
-    public int getSerpentNumber() {
-        return id;
+    public void setStatus(boolean status){
+        this.status=status;
     }
-
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        return o != null && getClass() == o.getClass();
+    public void setHeadNumber(int headNumber){//setter//
+        this.headNumber=headNumber;
     }
 }

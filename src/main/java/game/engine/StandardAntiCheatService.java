@@ -172,6 +172,7 @@ public class StandardAntiCheatService implements AntiCheatService {
 
         for (int i = 0; i < playerRealms.length; i++) {
             if (playerRealms[i].getTotalScore() > master.getRealms()[i].getTotalScore()) {
+                System.out.println(playerRealms[i]);
                 throw new InvalidFinalScoreCheat();
             }
         }
