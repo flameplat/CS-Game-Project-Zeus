@@ -1,7 +1,6 @@
 package game;
 
 import game.engine.CLIGameController;
-import game.engine.StandardAntiCheatService;
 
 
 public class Main {

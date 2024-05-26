@@ -94,6 +94,50 @@ public class GameGuide {
         }
         System.out.println(output);
     }
+    public String getInstruction(Instruction instruction){
+        String output;
+        switch (instruction) {
+            case GAME:
+                output = GAME;
+                break;
+            case ROUND:
+                output = ROUND;
+                break;
+            case TURN:
+                output = TURN;
+                break;
+            case FORGOTTEN_REALM:
+                output = FORGOTTEN_REALM;
+                break;
+            case AB_POWER:
+                output = ArcaneBoost.getInstruction();
+                break;
+            case TW_POWER:
+                output = TimeWarp.getInstruction();
+                break;
+            case PASSIVE_TURN:
+                output = PASSIVE_TURN;
+                break;
+            case COLOR_BONUS:
+                output = COLOR_BONUS;
+                break;
+            case AB_PROMPT:
+                output = AB_POWER;
+                break;
+            case TW_PROMPT:
+                output = TW_POWER;
+                break;
+            case ESSENCE_BONUS:
+                output = ESSENCE_BONUS;
+                break;
+            case ROLL:
+                output = ROLL;
+                break;
+            default:
+                output = "";
+        }
+        return output;
+    }
 
     public int getUserChoice(int minBound, int maxBound) {
         if (minBound > maxBound) {
@@ -138,5 +182,8 @@ public class GameGuide {
 
     public void closeScanner() {
         sc.close();
+    }
+    public void displayGameMode(){
+        System.out.printf("(1) Multiplayer%n(2) Singleplayer%n");
     }
 }

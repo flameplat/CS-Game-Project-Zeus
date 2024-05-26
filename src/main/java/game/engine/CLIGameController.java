@@ -21,11 +21,12 @@ import java.util.stream.Stream;
 public class CLIGameController extends GameController {
 
     // -----------------------Attributes-----------------------//
-    private static final String GAME_PROPERTIES_PATH = "src/main/resources/config/Game.properties";
-    private static final String ROUNDS_REWARDS_PATH = "src/main/resources/config/RoundsRewards.properties";
-    private static int MAX_NUMBER_OF_TURNS;
-    private static Collectibles[] roundRewards;
-    private static int MAX_NUMBER_OF_ROUNDS;
+    protected static final String GAME_PROPERTIES_PATH = "src/main/resources/config/Game.properties";
+    protected static final String ROUNDS_REWARDS_PATH = "src/main/resources/config/RoundsRewards.properties";
+    protected static int MAX_NUMBER_OF_TURNS;
+    protected static Collectibles[] roundRewards;
+    protected static int MAX_NUMBER_OF_ROUNDS;
+    protected GameMode gameMode;
 
     static {
         Properties gameProperties = new Properties();
@@ -52,15 +53,16 @@ public class CLIGameController extends GameController {
         }
     }
 
-    private final Dice[] diceArray;
-    private final GameBoard gameBoard;
-    private final SystemManager systemManager;
-    private final Scanner sc; //Will be closed at the end of the game
-    private final GameStatus gameStatus;
-    private final GameGuide gameGuide;
-    private final StandardAntiCheatService standardAntiCheatService = new StandardAntiCheatService();
-    private Player activePlayer;
-    private Player passivePlayer;
+
+    protected final Dice[] diceArray;
+    protected final GameBoard gameBoard;
+    protected final SystemManager systemManager;
+    protected final Scanner sc; //Will be closed at the end of the game
+    protected final GameStatus gameStatus;
+    protected final GameGuide gameGuide;
+    protected final StandardAntiCheatService standardAntiCheatService = new StandardAntiCheatService();
+    protected Player activePlayer;
+    protected Player passivePlayer;
 
     // -----------------------Constructor-----------------------//
     public CLIGameController() {
@@ -75,7 +77,6 @@ public class CLIGameController extends GameController {
         activePlayer = gameBoard.getPlayer1();
         passivePlayer = gameBoard.getPlayer2();
     }
-
     // -----------------------Methods-----------------------//
     @Override
     public void startGame() {
@@ -111,19 +112,22 @@ public class CLIGameController extends GameController {
         }
         endGame();
     }
-
-
     private void mainMenu() {
-        gameGuide.displayMenu();
-        int choice = gameGuide.getUserChoice(1, 2);
-        if (choice == 2) {
-            gameGuide.closeScanner();
-            systemManager.exit();
+        gameGuide.displayGameMode();
+        while(true){
+            int choice = gameGuide.getUserChoice(1, 2);
+            if (choice == 2) {
+                System.out.println("This option is WIP");
+            }
+            else{
+                gameMode=GameMode.SINGLEPLAYER;
+                break;
+            }
         }
         gameGuide.displayInstructions(Instruction.GAME);
     }
 
-    private void checkArcaneBoost(Player player) {
+    protected void checkArcaneBoost(Player player) {
         while (player.isArcaneBoostAvailable()) {
             displayArcaneBoostStatus(player);
             boolean choice = gameGuide.getUserBooleanChoice();
@@ -345,7 +349,7 @@ public class CLIGameController extends GameController {
         }
     }
 
-    private void performReward(Player player, Collectibles reward) {
+    protected void performReward(Player player, Collectibles reward) {
         if (reward == null) {
             return;
         }
@@ -369,7 +373,7 @@ public class CLIGameController extends GameController {
         }
     }
 
-    private void playRound() {
+    protected void playRound() {
         System.out.println(activePlayer.getName());
         gameGuide.displayInstructions(Instruction.ROUND);
         resetDice();
@@ -571,8 +575,6 @@ public class CLIGameController extends GameController {
             } catch (InvalidPlayerNameException e) {
                 System.out.println(e.getMessage());
                 sc.nextLine();  // Clear the buffer
-            } catch (MissingGameFilesException e) {
-                systemManager.exit(e.getMessage());
             }
         }
     }
@@ -873,7 +875,7 @@ public class CLIGameController extends GameController {
         }
     }
 
-    private void performAntiCheatServiceChecks(Player player) {
+    protected void performAntiCheatServiceChecks(Player player) {
         try {
             standardAntiCheatService.checkPlayerScore(player);
             standardAntiCheatService.checkDice(diceArray);
@@ -906,7 +908,7 @@ public class CLIGameController extends GameController {
         return roundRewards;
     }
 
-    private void endGame() {
+    protected void endGame() {
         gameGuide.closeScanner();
         sc.close();
         System.out.println(activePlayer.getName());

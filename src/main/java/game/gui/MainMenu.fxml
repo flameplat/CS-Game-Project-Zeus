@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.MainMenuController">
+   <children>
+      <ImageView fx:id="bg" fitHeight="600.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/mainMenu.jpeg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="button1" fitHeight="108.0" fitWidth="350.0" layoutX="125.0" layoutY="268.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/buttons/1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="button2" fitHeight="94.0" fitWidth="332.0" layoutX="130.0" layoutY="362.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/buttons/3.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="139.0" layoutY="295.0" onMouseClicked="#setGameModeMultiplayer" prefHeight="19.0" prefWidth="322.0" text="MultiPlayer" textFill="WHITE">
+         <font>
+            <Font name="MinionPro-Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="139.0" layoutY="392.0" onMouseClicked="#setGameModeSinglePlayer" prefHeight="18.0" prefWidth="322.0" text="SinglePlayer" textFill="WHITE">
+         <font>
+            <Font name="MinionPro-Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="hint" alignment="CENTER" layoutY="236.0" prefHeight="18.0" prefWidth="600.0" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

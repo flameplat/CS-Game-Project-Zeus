@@ -28,7 +28,7 @@ public class Player {
     private LinkedList<TimeWarp> timeWarps;
 
     //----------------------Constructor--------------------------//
-    public Player(String name) throws InvalidPlayerNameException, MissingGameFilesException {
+    public Player(String name) throws InvalidPlayerNameException {
         if (name.isEmpty()) {
             throw new InvalidPlayerNameException("Name cannot be empty");
         }
