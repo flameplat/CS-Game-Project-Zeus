@@ -51,6 +51,7 @@ public class PlayerDataController implements Initializable {
                 gameController.setPlayer1(player);
                 errorLabel.setText("");
                 mainLabel.setText("Enter Player 2 Name");
+                textField.setText("");
                 playersSubmitted++;
             } else {
                 if (gameController.getGameBoard().getPlayer1() != null && textField.getText().equals(gameController.getGameBoard().getPlayer1().getName())) {

@@ -12,59 +12,46 @@ import game.realms.RedRealm;
 import game.utilities.CollectiblesComparator;
 import game.utilities.Color;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
 
-public class GUIGameController extends CLIGameController {
+
+public class GUIGameController extends CLIGameController implements Initializable {
     @FXML
     private Label mainLabel;
     @FXML
-    private TextField textField;
+    private Button rollButton;
+
+    private SceneManager sceneManager;
+
     @FXML
-    private Label errorLabel;
-    @FXML
-    private Button submitButton;
-    private static int playersSubmitted=0;
+    private ImageView bg;
 
     public GUIGameController(){
         super();
     }
-
-    // -----------------------Methods-----------------------//
-    public void setPlayerName() {
-            try {
-                if (playersSubmitted < 1) {
-                    Player player = new Player(textField.getText());
-                    player.setPlayerStatus(PlayerStatus.ACTIVE);
-                    activePlayer=player;
-                    gameBoard.setPlayer1(player);
-                    errorLabel.setText("");
-                    playersSubmitted++;
-                } else {
-
-                    if (gameBoard.getPlayer1() != null && textField.getText().equals(gameBoard.getPlayer1().getName())) {
-                        throw new InvalidPlayerNameException("Name already in use!");
-                    }
-                    Player player = new Player(textField.getText());
-                    player.setPlayerStatus(PlayerStatus.PASSIVE);
-                    passivePlayer=player;
-                    gameBoard.setPlayer1(player);
-                    errorLabel.setText("");
-                    playersSubmitted++;
-                    startGame();
-                }
-            } catch (InvalidPlayerNameException e) {
-                errorLabel.setText(e.getMessage());
-            }
-
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Image mainBG=new Image(Objects.requireNonNull(getClass().getResource("/images/Wizards.jpeg")).toExternalForm());
+        bg.setImage(mainBG);
     }
+
+    public void setSceneManager(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
+    }
+    // -----------------------Methods-----------------------//
+
     public void setPlayer1(Player player){
         gameBoard.setPlayer1(player);
         activePlayer=player;
@@ -76,6 +63,7 @@ public class GUIGameController extends CLIGameController {
         player.setPlayerStatus(PlayerStatus.PASSIVE);
     }
     public void startGame() {
+
         for (int i = 0; i < MAX_NUMBER_OF_ROUNDS; i++) {
             gameStatus.resetTurn();
             System.out.println("Round " + (i + 1));
@@ -96,9 +84,10 @@ public class GUIGameController extends CLIGameController {
         }
         endGame();
     }
-    private void mainMenu() {
-        mainLabel.setText(gameGuide.getInstruction(Instruction.GAME));
+    public void start(){
+        sceneManager.switchMainMenuScene();
     }
+
     public void setGameMode(GameMode gameMode){
         this.gameMode=gameMode;
     }
@@ -125,14 +114,14 @@ public class GUIGameController extends CLIGameController {
         }
     }
 
-    private void displayArcaneBoostStatus(Player player) {
+    protected void displayArcaneBoostStatus(Player player) {
         System.out.println(player.getName());
         gameGuide.displayInstructions(Instruction.AB_PROMPT);
         int count = player.getTotalArcaneBoostPowersCollected();
         System.out.printf("You have %d Arcane Boost%s%n", count, count > 1 ? "s" : "");
     }
 
-    private void playExtraTurn(Player player) {
+    protected void playExtraTurn(Player player) {
         player.getScoreSheet().displayScoreSheet();
         LinkedList<Dice> notSelectedByPlayer = new LinkedList<>();
         DiceStatus filter = player.getPlayerStatus() == PlayerStatus.ACTIVE ? DiceStatus.ACTIVE_PLAYER_SELECTED : DiceStatus.PASSIVE_PLAYER_SELECTED;
@@ -151,7 +140,7 @@ public class GUIGameController extends CLIGameController {
         }
     }
 
-    private boolean checkTimeWarp(Player player) {
+    protected boolean checkTimeWarp(Player player) {
         if (player.isTimeWarpAvailable()) {
             displayTimeWarpStatus(player);
             boolean choice = gameGuide.getUserBooleanChoice();
@@ -164,13 +153,13 @@ public class GUIGameController extends CLIGameController {
         return false;
     }
 
-    private void displayTimeWarpStatus(Player player) {
+    protected void displayTimeWarpStatus(Player player) {
         int count = player.getTotalTimeWarpPowersCollected();
         gameGuide.displayInstructions(Instruction.TW_PROMPT);
         System.out.printf("You have %d Time Warp%s%n", count, count > 1 ? "s" : "");
     }
 
-    private void playEssenceBonus(Player player) {
+    protected void playEssenceBonus(Player player) {
         gameGuide.displayInstructions(Instruction.ESSENCE_BONUS);
         player.getScoreSheet().displayScoreSheet();
         Realm[] realms = player.getRealms();
@@ -209,7 +198,7 @@ public class GUIGameController extends CLIGameController {
 
     }
 
-    private void playColorBonus(Player player, Color color) {
+    protected void playColorBonus(Player player, Color color) {
         gameGuide.displayInstructions(Instruction.COLOR_BONUS);
         switch (color) {
             case RED: {
@@ -361,8 +350,6 @@ public class GUIGameController extends CLIGameController {
         playPassiveTurn();
         checkArcaneBoost(activePlayer);
         checkArcaneBoost(passivePlayer);
-
-
     }
 
     private boolean containsAvailableDie() {

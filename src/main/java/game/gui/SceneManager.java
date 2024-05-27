@@ -53,9 +53,12 @@ public class SceneManager {
     }
     public void switchGamePlayScene(){
         try{
-            root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("game/gui/GamePlay.fxml")));
+            FXMLLoader loader= new FXMLLoader(Objects.requireNonNull(getClass().getResource("GamePlay.fxml")));
+            root= loader.load();
+            GamePlayController gamePlayController=loader.getController();
             scene=new Scene(root);
             stage.setScene(scene);
+            stage.setResizable(true);
             stage.show();
         }
         catch (IOException e){

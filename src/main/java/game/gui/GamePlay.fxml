@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 
-<AnchorPane prefHeight="600.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.GameBoardController">
-
-</AnchorPane>
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.GamePlayController">
+   <children>
+      <VBox fx:id="player1ScoreSheetContainer" prefHeight="900.0" prefWidth="500.0" />
+      <VBox fx:id="gameBoardContainer" prefHeight="900.0" prefWidth="600.0" />
+      <VBox fx:id="player2ScoreSheetContainer" prefHeight="900.0" prefWidth="500.0" />
+   </children>
+</HBox>
