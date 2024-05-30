@@ -1,11 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.CompositeScoreSheetController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.CompositeScoreSheetController">
    <children>
-      <ImageView fx:id="bg" fitHeight="900.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" />
+      <AnchorPane fx:id="yellowRealm" layoutX="78.0" layoutY="830.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="129.0" prefWidth="462.0" />
+      <StackPane layoutX="156.0" layoutY="7.0" prefHeight="75.0" prefWidth="300.0">
+         <children>
+            <ImageView fx:id="playerNameImageView" fitHeight="80.0" fitWidth="419.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../resources/images/buttons/2.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="playerName" alignment="CENTER" prefHeight="34.0" prefWidth="301.0" text="Player Name">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+      <Pane layoutX="17.0" layoutY="20.0" prefHeight="161.0" prefWidth="123.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#70ffb4" height="160.0" stroke="BLACK" strokeType="INSIDE" width="123.0" />
+            <VBox alignment="CENTER" prefHeight="161.0" prefWidth="51.0">
+               <children>
+                  <ImageView fx:id="timeWarpImageView" fitHeight="47.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../resources/images/rewards/TimeWarp.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="arcaneBoostImageView" fitHeight="47.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../resources/images/rewards/ArcaneBoost.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="elementalCrestImageView" fitHeight="47.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../resources/images/rewards/ElementalCrest.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+            <Label fx:id="timeWarpLabel" alignment="CENTER" layoutX="70.0" layoutY="113.0" prefHeight="34.0" prefWidth="39.0" text="5">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="arcaneBoostLabel" alignment="CENTER" layoutX="70.0" layoutY="64.0" prefHeight="34.0" prefWidth="39.0" text="5">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="elementalCrestLabel" alignment="CENTER" layoutX="70.0" layoutY="17.0" prefHeight="34.0" prefWidth="39.0" text="5">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="363.0" layoutY="114.0" prefHeight="61.0" prefWidth="200.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dbff1f" height="61.0" layoutX="365.0" layoutY="114.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+      <Label fx:id="totalScoreLabel" alignment="CENTER" layoutX="344.0" layoutY="140.0" prefHeight="17.0" prefWidth="239.0" text="140">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="384.0" layoutY="114.0" prefHeight="32.0" prefWidth="160.0" text="Total Score">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
-</VBox>
+</AnchorPane>

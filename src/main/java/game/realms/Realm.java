@@ -4,7 +4,7 @@ import game.collectibles.Collectibles;
 import game.creatures.Creature;
 import game.dice.Dice;
 import game.engine.Move;
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 public abstract class Realm {
     // -----------------------Abstract methods-----------------------//
@@ -12,7 +12,7 @@ public abstract class Realm {
     public abstract String getName();
 
     /* Method to return the color of the realm */
-    public abstract Color getColor();
+    public abstract GameColor getColor();
 
     /* Method to return the status of the realm */
     public abstract int getStatus();

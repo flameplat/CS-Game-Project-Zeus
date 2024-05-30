@@ -10,7 +10,7 @@ import game.realms.Realm;
 import game.realms.RedRealm;
 import game.system.SystemManager;
 import game.utilities.CollectiblesComparator;
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -71,7 +71,7 @@ public class CLIGameController extends GameController {
         gameGuide = new GameGuide();
         gameBoard = new GameBoard();
         gameStatus = new GameStatus();
-        gameStatus.setGameStatus(CurrentStatus.IN_PROGRESS);
+        gameStatus.setGameStatus(CurrentStatus.ACTIVE_TURN);
         diceArray = gameBoard.getDice();
         sc = new Scanner(System.in);
         activePlayer = gameBoard.getPlayer1();
@@ -232,9 +232,9 @@ public class CLIGameController extends GameController {
 
     }
 
-    protected void playColorBonus(Player player, Color color) {
+    protected void playColorBonus(Player player, GameColor gameColor) {
         gameGuide.displayInstructions(Instruction.COLOR_BONUS);
-        switch (color) {
+        switch (gameColor) {
             case RED: {
                 Dice[] redDice = new Dice[]{
                         new RedDice(1),
@@ -255,9 +255,9 @@ public class CLIGameController extends GameController {
             }
             case GREEN: {
                 // Define green dice
-                GreenRealm greenRealm = (GreenRealm) player.getRealm(Color.GREEN);
+                GreenRealm greenRealm = (GreenRealm) player.getRealm(GameColor.GREEN);
                 LinkedList<Guardian> aliveCreatures = greenRealm.getAliveCreatures();
-                Guardian[] allCreatures = ((GreenRealm) player.getRealm(Color.GREEN)).getAllCreatures();
+                Guardian[] allCreatures = ((GreenRealm) player.getRealm(GameColor.GREEN)).getAllCreatures();
                 try {
                     if (aliveCreatures.isEmpty() || !greenRealm.isRealmAvailable()) {
                         throw new NoAvailableMovesException();
@@ -330,7 +330,7 @@ public class CLIGameController extends GameController {
                 break;
             }
             default:
-                System.err.println("Invalid color bonus: " + color);
+                System.err.println("Invalid color bonus: " + gameColor);
         }
     }
 
@@ -743,7 +743,7 @@ public class CLIGameController extends GameController {
             int diceValue = dice.getValue();
 
             // If the dice is white, iterate over all realms
-            if (dice.getRealm() == Color.WHITE) {
+            if (dice.getRealm() == GameColor.WHITE) {
                 for (Realm realm : player.getRealms()) {
                     Move[] realmMoves = realm.getRealmMoves();
                     for (Move move : realmMoves) {
@@ -858,7 +858,7 @@ public class CLIGameController extends GameController {
     @Override
     public boolean makeMove(Player player, Move move) {
         try {
-            if (move.getDice().getRealm() == Color.WHITE) {
+            if (move.getDice().getRealm() == GameColor.WHITE) {
                 return false;
             }
             Realm realm = player.getRealm(move.getDice());

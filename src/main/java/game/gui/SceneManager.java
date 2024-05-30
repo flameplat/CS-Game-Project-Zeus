@@ -40,7 +40,6 @@ public class SceneManager {
             FXMLLoader loader= new FXMLLoader(Objects.requireNonNull(getClass().getResource("PlayerData.fxml")));
             root= loader.load();
             PlayerDataController playerDataController=loader.getController();
-            playerDataController.setGameController(gameController);
             playerDataController.setSceneManager(this);
             scene=new Scene(root);
             stage.setScene(scene);
@@ -59,6 +58,7 @@ public class SceneManager {
             scene=new Scene(root);
             stage.setScene(scene);
             stage.setResizable(true);
+            //stage.setFullScreen(true);
             stage.show();
         }
         catch (IOException e){

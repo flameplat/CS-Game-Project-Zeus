@@ -1,9 +1,9 @@
 package game.dice;
 
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 public class YellowDice extends Dice {
-    private static final Color color = Color.YELLOW;
+    private static final GameColor GAME_COLOR = GameColor.YELLOW;
     private static final String RESET = "\u001B[0m";
     private static final String YELLOW = "\u001B[33m";
     private DiceStatus status;
@@ -24,7 +24,7 @@ public class YellowDice extends Dice {
     // getter for the dice color
     @Override
     public String toString() {
-        return String.format(YELLOW + "%s(%d)" + RESET, color, value);
+        return String.format(YELLOW + "%s(%d)" + RESET, GAME_COLOR, value);
     }
 
     // getter for the dice value
@@ -36,8 +36,8 @@ public class YellowDice extends Dice {
         this.value = value;
     }
 
-    public Color getRealm() {
-        return color;
+    public GameColor getRealm() {
+        return GAME_COLOR;
     }
 
     @Override
@@ -58,6 +58,6 @@ public class YellowDice extends Dice {
             return false;
         }
         YellowDice other = (YellowDice) o;
-        return (color == other.getRealm()) && (value == other.getValue());
+        return (GAME_COLOR == other.getRealm()) && (value == other.getValue());
     }
 }

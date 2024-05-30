@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.GamePlayController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.GamePlayController">
    <children>
-      <VBox fx:id="player1ScoreSheetContainer" prefHeight="900.0" prefWidth="500.0" />
-      <VBox fx:id="gameBoardContainer" prefHeight="900.0" prefWidth="600.0" />
-      <VBox fx:id="player2ScoreSheetContainer" prefHeight="900.0" prefWidth="500.0" />
+      <ImageView fx:id="backGround" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../resources/images/BG.png" />
+         </image>
+      </ImageView>
+      <HBox fillHeight="false" prefHeight="1080.0" prefWidth="1920.0">
+         <children>
+            <AnchorPane fx:id="player1ScoreSheetContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="600.0" />
+            <AnchorPane fx:id="gameBoardContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="720.0" />
+            <AnchorPane fx:id="player2ScoreSheetContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="600.0" />
+         </children>
+      </HBox>
    </children>
-</HBox>
+</AnchorPane>

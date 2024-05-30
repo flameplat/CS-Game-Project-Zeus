@@ -16,7 +16,6 @@ public class DiceRealms extends Application {
     public void start(Stage primaryStage) throws Exception {
         Image icon=new Image(Objects.requireNonNull(getClass().getResource("/images/icon.png")).toExternalForm());
         primaryStage.getIcons().add(icon);
-        primaryStage.setResizable(true);
         primaryStage.setTitle("Dice Realms");
         GUIGameController guiGameController=new GUIGameController();
         SceneManager sceneManager=new SceneManager(primaryStage,guiGameController);

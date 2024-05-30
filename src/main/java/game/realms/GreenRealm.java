@@ -7,7 +7,7 @@ import game.creatures.Guardian;
 import game.dice.Dice;
 import game.dice.GreenDice;
 import game.engine.Move;
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.util.Properties;
 
 public class GreenRealm extends Realm {
 
-    private static final Color realmColor = Color.GREEN;
+    private static final GameColor REALM_GAME_COLOR = GameColor.GREEN;
     // -----------------------Attributes-----------------------//
     private final Guardian[][] mainArray;
     private final Object[] rowRewards;
@@ -60,8 +60,8 @@ public class GreenRealm extends Realm {
     }
 
     @Override
-    public Color getColor() {
-        return realmColor;
+    public GameColor getColor() {
+        return REALM_GAME_COLOR;
     }
 
     @Override

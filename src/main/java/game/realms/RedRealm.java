@@ -8,7 +8,7 @@ import game.creatures.HitRegionsOfDragons;
 import game.dice.Dice;
 import game.dice.RedDice;
 import game.engine.Move;
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 public class RedRealm extends Realm {
-    private static final Color realmColor = Color.RED;
+    private static final GameColor REALM_GAME_COLOR = GameColor.RED;
     private static final String name = "\u001B[31m" + "Red Realm" + "\u001B[0m";
     private final LinkedList<Move> redMoves;
     // -----------------------Attributes-----------------------//
@@ -166,8 +166,8 @@ public class RedRealm extends Realm {
 
     // get the realm color
     @Override
-    public Color getColor() {
-        return realmColor;
+    public GameColor getColor() {
+        return REALM_GAME_COLOR;
     }
 
     // if possible moves array length ==0 there
@@ -291,7 +291,7 @@ public class RedRealm extends Realm {
 
     @Override
     public Creature getCreature(Dice dice) {
-        if (dice.getRealm() == Color.RED && dice instanceof RedDice && (dice.getValue() <= 6 && dice.getValue() >= 1)) {
+        if (dice.getRealm() == GameColor.RED && dice instanceof RedDice && (dice.getValue() <= 6 && dice.getValue() >= 1)) {
             if (((RedDice) dice).getDragonNumber() == 0) {
                 return dragons[0];
             }

@@ -10,11 +10,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class GameGuide {
-    private static final String GAME = String.format("Welcome to Dice Realms: Quest for the Elemental Crests!%n " +
-            "In this game, two players become wizards striving to conquer elemental realms %n" +
-            "and collect Elemental Crests. Players encounter creatures like Pyroclast Dragons, Gaia Guardians, %n" +
-            "Hydra Serpents, Majestic Phoenixes, and Solar Lions. To win, employ magic, strategy, and %n" +
-            "cunning to defeat creatures and claim crests. The goal: emerge as the most powerful mage in Eldoria.%n");
+    private static final String GAME = String.format("Welcome to Dice Realms: Quest for the Elemental Crests! " +
+            "In this game, two players become wizards striving to conquer elemental realms " +
+            "and collect Elemental Crests. Players encounter creatures like Pyroclast Dragons, Gaia Guardians," +
+            "Hydra Serpents, Majestic Phoenixes, and Solar Lions. To win, employ magic, strategy, and" +
+            "cunning to defeat creatures and claim crests. The goal: emerge as the most powerful mage in Eldoria.");
     private static final String ROUND = "You have maximum 3 rolls for the given dice, choose wisely";
     private static final String TURN = "Roll the available dice then choose one of them to spell";
     private static final String FORGOTTEN_REALM = "Choose a dice from the forgotten realm";

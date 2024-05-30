@@ -131,7 +131,7 @@ dice-realms-game-zeus
 
 ### game.collectibles
 
-The `game.collectibles` package contains classes for the various collectible items within the game; such as power-ups, elemental crest, color bonus, or the essence bonus.
+The `game.collectibles` package contains classes for the various collectible items within the game; such as power-ups, elemental crest, gameColor bonus, or the essence bonus.
 
 ### game.creatures
 
@@ -337,19 +337,19 @@ For each package, add the skeleton details for the class and duplicate as much a
 
 - **Package**: `game.collectibles`
 - **Type**: SubClass
-- **Description**: This class represents the color bonus.
+- **Description**: This class represents the gameColor bonus.
 
 #### Methods:
 
 1. `String toString()`
     - **Description**: Method that is used for printing a string of the properties of the collectible.
     - **Return Type**: `String`
-        - a string representation of the color bonus.
+        - a string representation of the gameColor bonus.
 
 2. `Color getColor()`
-    - **Description**: Retrieves the color of the collectible.
+    - **Description**: Retrieves the gameColor of the collectible.
     - **Return Type**: `Color`
-        - the color of the collectible.
+        - the gameColor of the collectible.
 
 3. `static String getInstruction()`
     - **Description**: Retrieves the instruction for the collectible.
@@ -357,9 +357,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the instruction for the collectible.
 
 4. `int compareTo(ColorBonus o)`
-    - **Description**: Compares this color bonus with another color bonus for order.
+    - **Description**: Compares this gameColor bonus with another gameColor bonus for order.
     - **Parameters**:
-        - `o`: the color bonus to be compared.
+        - `o`: the gameColor bonus to be compared.
     - **Return Type**: `int`
         - a negative integer, zero, or a positive integer as this collectible is less than, equal to, or greater than the specified collectible.
 
@@ -662,9 +662,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 3. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 4. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -689,7 +689,7 @@ For each package, add the skeleton details for the class and duplicate as much a
 1. `String toString()`
     - **Description**: Returns a string representation of the BlueDice object.
     - **Return Type**: `String`
-        - a string formatted as "color(value)" with the color in blue.
+        - a string formatted as "gameColor(value)" with the gameColor in blue.
 
 2. `void setValue(int value)`
     - **Description**: Sets the value of the dice.
@@ -703,9 +703,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 4. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 5. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -737,7 +737,7 @@ For each package, add the skeleton details for the class and duplicate as much a
 1. `String toString()`
     - **Description**: Returns a string representation of the GreenDice object.
     - **Return Type**: `String`
-        - a string formatted as "color(value)" with the color in green.
+        - a string formatted as "gameColor(value)" with the gameColor in green.
 
 2. `void setValue(int value)`
     - **Description**: Sets the value of the dice.
@@ -751,9 +751,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 4. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 5. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -785,7 +785,7 @@ For each package, add the skeleton details for the class and duplicate as much a
 1. `String toString()`
     - **Description**: Returns a string representation of the MagentaDice object.
     - **Return Type**: `String`
-        - a string formatted as "color(value)" with the color in magenta.
+        - a string formatted as "gameColor(value)" with the gameColor in magenta.
 
 2. `void setValue(int value)`
     - **Description**: Sets the value of the dice.
@@ -799,9 +799,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 4. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 5. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -833,7 +833,7 @@ For each package, add the skeleton details for the class and duplicate as much a
 1. `String toString()`
     - **Description**: Returns a string representation of the RedDice object.
     - **Return Type**: `String`
-        - a string formatted as "color(value)" with the color in red.
+        - a string formatted as "gameColor(value)" with the gameColor in red.
 
 2. `void setValue(int value)`
     - **Description**: Sets the value of the dice.
@@ -847,9 +847,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 4. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 5. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -893,7 +893,7 @@ For each package, add the skeleton details for the class and duplicate as much a
 1. `String toString()`
     - **Description**: Returns a string representation of the WhiteDice object.
     - **Return Type**: `String`
-        - a string formatted as "color(value)".
+        - a string formatted as "gameColor(value)".
 
 2. `void setValue(int value)`
     - **Description**: Sets the value of the dice.
@@ -907,9 +907,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 4. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 5. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -941,7 +941,7 @@ For each package, add the skeleton details for the class and duplicate as much a
 1. `String toString()`
     - **Description**: Returns a string representation of the YellowDice object.
     - **Return Type**: `String`
-        - a string formatted as "color(value)" with the color in yellow.
+        - a string formatted as "gameColor(value)" with the gameColor in yellow.
 
 2. `void setValue(int value)`
     - **Description**: Sets the value of the dice.
@@ -955,9 +955,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 4. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 5. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -1069,11 +1069,11 @@ For each package, add the skeleton details for the class and duplicate as much a
         - `player`: The player who receives the essence bonus.
     - **Return Type**: `void`
 
-7. `void playColorBonus(Player player, Color color)`
-    - **Description**: Executes the color bonus action for the player based on the specified color.
+7. `void playColorBonus(Player player, Color gameColor)`
+    - **Description**: Executes the gameColor bonus action for the player based on the specified gameColor.
     - **Parameters**:
-        - `player`: The player who receives the color bonus.
-        - `color`: The color for which the bonus action is executed.
+        - `player`: The player who receives the gameColor bonus.
+        - `gameColor`: The gameColor for which the bonus action is executed.
     - **Return Type**: `void`
 
 8. `void processRewardQueue(Player player, Collectibles[] rewards)`
@@ -1589,13 +1589,13 @@ For each package, add the skeleton details for the class and duplicate as much a
     - **Return Type**: `TimeWarp[]`
         - an array of Time Warp powers collected by the player.
 
-16. `public Realm getRealm(Color color)`
-    - **Description**: Retrieves the realm of the specified color.
+16. `public Realm getRealm(Color gameColor)`
+    - **Description**: Retrieves the realm of the specified gameColor.
     - **Parameters**:
-        - `color`: The color of the realm to retrieve.
+        - `gameColor`: The gameColor of the realm to retrieve.
             - Type: `Color`
     - **Return Type**: `Realm`
-        - the realm of the specified color.
+        - the realm of the specified gameColor.
 
 17. `public Realm[] getRealms()`
     - **Description**: Retrieves an array of all realms.
@@ -1708,9 +1708,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the name of the realm.
 
 2. `abstract Color getColor()`
-    - **Description**: Retrieves the color of the realm.
+    - **Description**: Retrieves the gameColor of the realm.
     - **Return Type**: `Color`
-        - the color of the realm.
+        - the gameColor of the realm.
 
 3. `abstract int getStatus()`
     - **Description**: Retrieves the status of the realm.
@@ -1791,9 +1791,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the name of the realm.
 
 4. `Color getColor()`
-    - **Description**: Retrieves the color of the realm.
+    - **Description**: Retrieves the gameColor of the realm.
     - **Return Type**: `Color`
-        - the color of the realm.
+        - the gameColor of the realm.
 
 5. `int getStatus()`
     - **Description**: Retrieves the status of the realm.
@@ -1871,9 +1871,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the name of the realm.
 
 3. `Color getColor()`
-    - **Description**: Retrieves the color of the realm.
+    - **Description**: Retrieves the gameColor of the realm.
     - **Return Type**: `Color`
-        - the color of the realm.
+        - the gameColor of the realm.
 
 4. `int getStatus()`
     - **Description**: Retrieves the status of the realm.
@@ -1958,9 +1958,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the name of the realm.
 
 6. `Color getColor()`
-    - **Description**: Retrieves the color of the realm.
+    - **Description**: Retrieves the gameColor of the realm.
     - **Return Type**: `Color`
-        - the color of the realm.
+        - the gameColor of the realm.
 
 7. `boolean isRealmAvailable()`
     - **Description**: Checks if the realm is available.
@@ -2028,9 +2028,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the name of the realm.
 
 3. `Color getColor()`
-    - **Description**: Retrieves the color of the realm.
+    - **Description**: Retrieves the gameColor of the realm.
     - **Return Type**: `Color`
-        - the color of the realm.
+        - the gameColor of the realm.
 
 4. `int getStatus()`
     - **Description**: Retrieves the status of the realm.
@@ -2112,9 +2112,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the name of the realm.
 
 4. `Color getColor()`
-    - **Description**: Retrieves the color of the realm.
+    - **Description**: Retrieves the gameColor of the realm.
     - **Return Type**: `Color`
-        - the color of the realm.
+        - the gameColor of the realm.
 
 5. `int getStatus()`
     - **Description**: Retrieves the status of the realm.
@@ -2222,24 +2222,24 @@ For each package, add the skeleton details for the class and duplicate as much a
 
 - **Package**: `game.utilities`
 - **Type**: class
-- **Description**: This class can compare between color.
+- **Description**: This class can compare between gameColor.
 
 #### Methods:
 
 `int compare(Color o1, Color o2)`
 - **Description**: Compares two colors based on their priority.
 - **Parameters**:
-    - `o1`: The first color object to compare.
-    - `o2`: The second color object to compare.
+    - `o1`: The first gameColor object to compare.
+    - `o2`: The second gameColor object to compare.
 - **Return Type**: `int`
-    - A negative integer, zero, or a positive integer as the first color has a lower priority, equal priority, or higher priority than the second color.
+    - A negative integer, zero, or a positive integer as the first gameColor has a lower priority, equal priority, or higher priority than the second gameColor.
 
-`int getColorPriority(Color color)`
-- **Description**: Retrieves the priority of a color.
+`int getColorPriority(Color gameColor)`
+- **Description**: Retrieves the priority of a gameColor.
 - **Parameters**:
-    - `color`: The color to get the priority for.
+    - `gameColor`: The gameColor to get the priority for.
 - **Return Type**: `int`
-    - The priority value of the color.
+    - The priority value of the gameColor.
 
 ### `Color` class
 

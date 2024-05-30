@@ -7,7 +7,7 @@ import game.creatures.Phoenix;
 import game.dice.Dice;
 import game.dice.MagentaDice;
 import game.engine.Move;
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.util.Properties;
 
 public class MagentaRealm extends Realm {
     // -----------------------Attributes-----------------------//
-    private static final Color realmColor = Color.MAGENTA;
+    private static final GameColor REALM_GAME_COLOR = GameColor.MAGENTA;
     private static final String name = "\u001B[35m" + "Magenta Realm" + "\u001B[0m";
     private final Collectibles[] collectibles;
     private final Move[] realmMoves;
@@ -94,8 +94,8 @@ public class MagentaRealm extends Realm {
     }
 
     @Override
-    public Color getColor() {
-        return realmColor;
+    public GameColor getColor() {
+        return REALM_GAME_COLOR;
     }
 
     @Override
@@ -194,7 +194,7 @@ public class MagentaRealm extends Realm {
 
     @Override
     public Creature getCreature(Dice dice) {
-        if (dice.getRealm() == Color.MAGENTA && (dice.getValue() <= 6 && dice.getValue() >= 1)) {
+        if (dice.getRealm() == GameColor.MAGENTA && (dice.getValue() <= 6 && dice.getValue() >= 1)) {
             return phoenix;
         }
         return null;

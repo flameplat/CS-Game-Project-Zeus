@@ -1,11 +1,11 @@
 package game.dice;
 
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 public class GreenDice extends Dice {
     private static final String RESET = "\u001B[0m";
     private static final String GREEN = "\u001B[32m";
-    private static final Color color = Color.GREEN;
+    private static final GameColor GAME_COLOR = GameColor.GREEN;
     private int value; // value of the dices
     private DiceStatus status;
 
@@ -24,7 +24,7 @@ public class GreenDice extends Dice {
     // getter for the dice color
     @Override
     public String toString() {
-        return String.format(GREEN + "%s(%d)" + RESET, color, value);
+        return String.format(GREEN + "%s(%d)" + RESET, GAME_COLOR, value);
     }
 
     // getter for the dice value
@@ -36,8 +36,8 @@ public class GreenDice extends Dice {
         this.value = value;
     }
 
-    public Color getRealm() {
-        return color;
+    public GameColor getRealm() {
+        return GAME_COLOR;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class GreenDice extends Dice {
             return false;
         }
         GreenDice other = (GreenDice) o;
-        return (color == other.getRealm()) && (value == other.getValue());
+        return (GAME_COLOR == other.getRealm()) && (value == other.getValue());
     }
 
 }

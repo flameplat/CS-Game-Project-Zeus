@@ -174,7 +174,7 @@ Develop a fully functional game that can be played through a Graphical User Inte
   - Display a dynamic tracknig of collected Elemental Crests
   - Display a dynamic tracknig of Arcane Boost powers and their status (active / used)
   - Display a dynamic tracknig of Time Warp powers and their status (active / used)
-  - Include a dynamic graphical representation of each player's ScoreSheet in their realm color, detailing hits, rewards, and scoring.
+  - Include a dynamic graphical representation of each player's ScoreSheet in their realm gameColor, detailing hits, rewards, and scoring.
   - Provide a designated area for dice rolling and Forgotten Realm.
 - **Game Over Scene**:
   - Show scores per realm, total crests collected, and the total score declaring the winner and protector of Eldoria.

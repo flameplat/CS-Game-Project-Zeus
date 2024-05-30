@@ -26,9 +26,10 @@ public class PlayerDataController implements Initializable {
     private Label errorLabel;
     @FXML
     private TextField textField;
-    private GUIGameController gameController;
     private static int playersSubmitted=0;
     private SceneManager sceneManager;
+    private static Player player1;
+    private static Player player2;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -38,9 +39,7 @@ public class PlayerDataController implements Initializable {
         button1.setImage(button);
         mainLabel.setText("Enter Player 1 Name");
     }
-    public void setGameController(GUIGameController gameController){
-        this.gameController=gameController;
-    }
+
     public void setSceneManager(SceneManager sceneManager){
         this.sceneManager=sceneManager;
     }
@@ -48,17 +47,21 @@ public class PlayerDataController implements Initializable {
         try {
             if (playersSubmitted < 1) {
                 Player player = new Player(textField.getText());
-                gameController.setPlayer1(player);
+                player1=player;
                 errorLabel.setText("");
                 mainLabel.setText("Enter Player 2 Name");
                 textField.setText("");
                 playersSubmitted++;
             } else {
-                if (gameController.getGameBoard().getPlayer1() != null && textField.getText().equals(gameController.getGameBoard().getPlayer1().getName())) {
+                if (player1 != null && textField.getText().equals(player1.getName())) {
                     throw new InvalidPlayerNameException("Name already in use!");
                 }
+                int maxLen=20;
+                if(textField.getText().length()>maxLen){
+                    throw new InvalidPlayerNameException("Name is too long. Max: "+maxLen+" characters");
+                }
                 Player player = new Player(textField.getText());
-                gameController.setPlayer2(player);
+                player2=player;
                 errorLabel.setText("");
                 playersSubmitted++;
                 sceneManager.switchGamePlayScene();
@@ -67,5 +70,11 @@ public class PlayerDataController implements Initializable {
             errorLabel.setText(e.getMessage());
         }
 
+    }
+    public static Player getPlayer1(){
+        return player1;
+    }
+    public static Player getPlayer2(){
+        return player2;
     }
 }

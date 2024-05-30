@@ -6,9 +6,9 @@ import game.collectibles.ElementalCrest;
 import game.collectibles.TimeWarp;
 import game.dice.Dice;
 import game.exceptions.InvalidPlayerNameException;
-import game.exceptions.MissingGameFilesException;
+import game.gui.CompositeScoreSheetController;
 import game.realms.*;
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -26,6 +26,7 @@ public class Player {
     private PlayerStatus playerStatus;
     private LinkedList<ArcaneBoost> arcaneBoosts;
     private LinkedList<TimeWarp> timeWarps;
+    private CompositeScoreSheetController scoreSheetController;
 
     //----------------------Constructor--------------------------//
     public Player(String name) throws InvalidPlayerNameException {
@@ -167,8 +168,8 @@ public class Player {
         return timeWarps.toArray(TimeWarp[]::new);
     }
 
-    public Realm getRealm(Color color) {
-        return realms[color.ordinal()];
+    public Realm getRealm(GameColor gameColor) {
+        return realms[gameColor.ordinal()];
     }
 
     public Realm[] getRealms() {
@@ -176,7 +177,7 @@ public class Player {
     }
 
     public Realm getRealm(Dice dice) {
-        if (dice.getRealm() == Color.WHITE) {
+        if (dice.getRealm() == GameColor.WHITE) {
             System.err.println("There is no white realm");
             return null;
         }
@@ -199,6 +200,13 @@ public class Player {
 
     public void setPlayerStatus(PlayerStatus status) {
         this.playerStatus = status;
+    }
+    public void setGUIScoreSheet(CompositeScoreSheetController scoreSheet){
+        this.scoreSheetController=scoreSheet;
+        this.scoreSheetController.setPlayer(this);
+    }
+    public CompositeScoreSheetController getScoreSheetController(){
+        return scoreSheetController;
     }
 
 }

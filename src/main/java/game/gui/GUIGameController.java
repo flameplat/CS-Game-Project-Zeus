@@ -3,6 +3,7 @@ package game.gui;
 import game.collectibles.*;
 import game.creatures.Dragon;
 import game.creatures.Guardian;
+import game.creatures.Lion;
 import game.dice.*;
 import game.engine.*;
 import game.exceptions.*;
@@ -10,16 +11,22 @@ import game.realms.GreenRealm;
 import game.realms.Realm;
 import game.realms.RedRealm;
 import game.utilities.CollectiblesComparator;
-import game.utilities.Color;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import game.utilities.GameColor;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,29 +36,197 @@ import java.util.stream.Stream;
 
 public class GUIGameController extends CLIGameController implements Initializable {
     @FXML
-    private Label mainLabel;
+    private Label gameText;
+    @FXML
+    private ImageView gameTextBox;
+
     @FXML
     private Button rollButton;
-
-    private SceneManager sceneManager;
+    @FXML
+    private ImageView rollButtonImage;
+    @FXML
+    private ImageView round1Reward;
+    @FXML
+    private ImageView round2Reward;
+    @FXML
+    private ImageView round3Reward;
+    @FXML
+    private ImageView round4Reward;
+    @FXML
+    private ImageView round5Reward;
+    @FXML
+    private ImageView round6Reward;
+    @FXML
+    private Label redDiceNumber;
+    @FXML
+    private Label greenDiceNumber;
+    @FXML
+    private Label blueDiceNumber;
+    @FXML
+    private Label magentaDiceNumber;
+    @FXML
+    private Label yellowDiceNumber;
+    @FXML
+    private Label whiteDiceNumber;
+    @FXML
+    private Button redDiceButton;
+    @FXML
+    private Button greenDiceButton;
+    @FXML
+    private Button blueDiceButton;
+    @FXML
+    private Button magentaDiceButton;
+    @FXML
+    private Button yellowDiceButton;
+    @FXML
+    private Button whiteDiceButton;
+    @FXML
+    private GridPane diceGrid;
 
     @FXML
-    private ImageView bg;
+    private GridPane forgottenRealmGrid;
+    @FXML
+    private StackPane redDice;
 
+    @FXML
+    private StackPane greenDice;
+
+    @FXML
+    private StackPane blueDice;
+
+    @FXML
+    private StackPane magentaDice;
+
+    @FXML
+    private StackPane yellowDice;
+
+    @FXML
+    private StackPane whiteDice;
+
+
+    @FXML
+    private GridPane roundsTable;
+    private SceneManager sceneManager;
+    private final Image transparentImage;
+    private final StackPane[] diceGUI;
+    Map<Player,CompositeScoreSheetController> playerScoreSheet;
     public GUIGameController(){
         super();
+        WritableImage transparentImage = new WritableImage(1, 1);
+        PixelWriter pixelWriter = transparentImage.getPixelWriter();
+        pixelWriter.setColor(0, 0, Color.rgb(0,0,0,0));
+        this.transparentImage = transparentImage;
+        diceGUI=new StackPane[6];
+        diceGUI[0]=redDice;
+        diceGUI[1]=greenDice;
+        diceGUI[2]=blueDice;
+        diceGUI[3]=magentaDice;
+        diceGUI[4]=yellowDice;
+        diceGUI[5]=whiteDice;
+        playerScoreSheet=new HashMap<>();
+        gameStatus.setGameStatus(CurrentStatus.ACTIVE_TURN);
     }
+
+    // -----------------------Methods-----------------------//
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Image mainBG=new Image(Objects.requireNonNull(getClass().getResource("/images/Wizards.jpeg")).toExternalForm());
-        bg.setImage(mainBG);
+        round1Reward.setImage(getRewardIcon(0,roundRewards));
+        round2Reward.setImage(getRewardIcon(1,roundRewards));
+        round3Reward.setImage(getRewardIcon(2,roundRewards));
+        round4Reward.setImage(getRewardIcon(3,roundRewards));
+        round5Reward.setImage(getRewardIcon(4,roundRewards));
+        round6Reward.setImage(getRewardIcon(5,roundRewards));
+        rollButtonImage.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/1.png")).toExternalForm()));
+        gameTextBox.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/textBox.png")).toExternalForm()));
+        gameText.setText(gameGuide.getInstruction(Instruction.GAME));
+        updateDiceValues();
+    }
+    public void updateDiceButtonsAvailability(){
+        if(gameStatus.getGameStatus()==CurrentStatus.ACTIVE_TURN){
+            //Disable forgottenRealm buttons
+            for(int i=0;i<diceArray.length;i++){
+                if(diceArray[i].getDiceStatus()==DiceStatus.FORGOTTEN_REALM){
+                    diceGUI[i].getChildren().stream()
+                            .filter(node -> node instanceof Button)
+                            .forEach(node -> node.setDisable(true));
+                }
+            }
+            return;
+        }
+        if(gameStatus.getGameStatus()==CurrentStatus.PASSIVE_TURN){
+            //Enable forgottenRealm
+            for(int i=0;i<diceArray.length;i++){
+                if(diceArray[i].getDiceStatus()==DiceStatus.FORGOTTEN_REALM){
+                    diceGUI[i].getChildren().stream()
+                            .filter(node -> node instanceof Button)
+                            .forEach(node -> node.setDisable(false));
+                }
+            }
+            return;
+        }
+        if(gameStatus.getGameStatus()==CurrentStatus.ARCANE_BOOST){
+            //Disable forgottenRealm buttons
+            for(int i=0;i<diceArray.length;i++){
+                diceGUI[i].getChildren().stream()
+                        .filter(node -> node instanceof Button)
+                        .forEach(node -> node.setDisable(false));
+                diceGUI[i].setOpacity(1);
+            }
+        }
+
+    }
+    public void setPlayer1ScoreSheet(CompositeScoreSheetController scoreSheet){
+        activePlayer.setGUIScoreSheet(scoreSheet);
+    }
+    public void setPlayer2ScoreSheet(CompositeScoreSheetController scoreSheet){
+        passivePlayer.setGUIScoreSheet(scoreSheet);
+    }
+    private void updateScoreSheets(){
+        activePlayer.getScoreSheetController().updateScoreSheet();
+        passivePlayer.getScoreSheetController().updateScoreSheet();
+    }
+    private void updateDiceValues(){
+        redDiceNumber.setText(String.valueOf(diceArray[0].getValue()));
+        greenDiceNumber.setText(String.valueOf(diceArray[1].getValue()));
+        blueDiceNumber.setText(String.valueOf(diceArray[2].getValue()));
+        magentaDiceNumber.setText(String.valueOf(diceArray[3].getValue()));
+        yellowDiceNumber.setText(String.valueOf(diceArray[4].getValue()));
+        whiteDiceNumber.setText(String.valueOf(diceArray[5].getValue()));
+    }
+
+    public Image getRewardIcon(int i,Collectibles[] rewards){
+        Image result;
+        if(rewards[i]==null){
+            return transparentImage;
+        }
+        switch (rewards[i].toString()){
+            case "TW":result=new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/TimeWarp.png")).toExternalForm());break;
+            case "AB":result=new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/ArcaneBoost.png")).toExternalForm());break;
+            case "EB":result=new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/EssenceBonus.png")).toExternalForm());break;
+            case "EC":result=new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/ElementalCrest.png")).toExternalForm());break;
+            default:result=new Image(Objects.requireNonNull(getClass().getResource("/images/icon.png")).toExternalForm());
+
+
+
+        }
+        return result;
+    }
+    private void moveDice(StackPane dice,GridPane grid) {
+        GridPane parent = (GridPane) dice.getParent();
+
+        Integer rowIndex = GridPane.getRowIndex(dice);
+        Integer columnIndex = GridPane.getColumnIndex(dice);
+
+        if (rowIndex == null) rowIndex = 0;
+        if (columnIndex == null) columnIndex = 0;
+
+        parent.getChildren().remove(dice);
+        grid.add(dice, columnIndex, rowIndex);
     }
 
     public void setSceneManager(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
     }
-    // -----------------------Methods-----------------------//
-
     public void setPlayer1(Player player){
         gameBoard.setPlayer1(player);
         activePlayer=player;
@@ -63,31 +238,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
         player.setPlayerStatus(PlayerStatus.PASSIVE);
     }
     public void startGame() {
-
-        for (int i = 0; i < MAX_NUMBER_OF_ROUNDS; i++) {
-            gameStatus.resetTurn();
-            System.out.println("Round " + (i + 1));
-            //Active player receives round reward
-            if (roundRewards[i] != null) {
-                performReward(activePlayer, roundRewards[i]);
-            }
-            playRound();
-            switchPlayer();
-            System.out.println("Round " + (i + 1));
-            //Active player receives round reward
-            if (roundRewards[i] != null) {
-                performReward(activePlayer, roundRewards[i]);
-            }
-            playRound();
-            switchPlayer();
-            gameStatus.incrementRound();
-        }
-        endGame();
-    }
-    public void start(){
         sceneManager.switchMainMenuScene();
     }
-
     public void setGameMode(GameMode gameMode){
         this.gameMode=gameMode;
     }
@@ -112,6 +264,17 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 break;
             }
         }
+    }
+    @FXML
+    public void high(){
+        highlightMoves(new Move[]{});
+    }
+    public void highlightMoves(Move[] moves){
+        activePlayer.getScoreSheetController().highlightPossibleMoves(moves);
+    }
+    @FXML
+    public void removeHighlight(){
+        activePlayer.getScoreSheetController().removeHighlight();
     }
 
     protected void displayArcaneBoostStatus(Player player) {
@@ -198,9 +361,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     }
 
-    protected void playColorBonus(Player player, Color color) {
+    protected void playColorBonus(Player player, GameColor gameColor) {
         gameGuide.displayInstructions(Instruction.COLOR_BONUS);
-        switch (color) {
+        switch (gameColor) {
             case RED: {
                 Dice[] redDice = new Dice[]{
                         new RedDice(1),
@@ -221,9 +384,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             case GREEN: {
                 // Define green dice
-                GreenRealm greenRealm = (GreenRealm) player.getRealm(Color.GREEN);
+                GreenRealm greenRealm = (GreenRealm) player.getRealm(GameColor.GREEN);
                 LinkedList<Guardian> aliveCreatures = greenRealm.getAliveCreatures();
-                Guardian[] allCreatures = ((GreenRealm) player.getRealm(Color.GREEN)).getAllCreatures();
+                Guardian[] allCreatures = ((GreenRealm) player.getRealm(GameColor.GREEN)).getAllCreatures();
                 try {
                     if (aliveCreatures.isEmpty() || !greenRealm.isRealmAvailable()) {
                         throw new NoAvailableMovesException();
@@ -296,7 +459,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 break;
             }
             default:
-                System.err.println("Invalid color bonus: " + color);
+                System.err.println("Invalid color bonus: " + gameColor);
         }
     }
 
@@ -318,7 +481,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         if (reward == null) {
             return;
         }
-        System.out.println(player.getName() + ", you received " + reward.getName() + "!");
+        gameText.setText(player.getName() + ", you received " + reward.getName() + "!");
         if (reward instanceof EssenceBonus) {
             playEssenceBonus(player);
         } else {
@@ -573,6 +736,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
      * @return An array of the currently rolled {@code Dice}.
      */
     @Override
+    @FXML
     public Dice[] rollDice() {
         //Rolling only rolls available dice
         Random random = new Random();
@@ -586,6 +750,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 dice.setValue(diceValue);
             }
         }
+        updateDiceValues();
         return diceArray;
     }
 
@@ -707,7 +872,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             int diceValue = dice.getValue();
 
             // If the dice is white, iterate over all realms
-            if (dice.getRealm() == Color.WHITE) {
+            if (dice.getRealm() == GameColor.WHITE) {
                 for (Realm realm : player.getRealms()) {
                     Move[] realmMoves = realm.getRealmMoves();
                     for (Move move : realmMoves) {
@@ -798,9 +963,15 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
         try {
             dice.setDiceStatus(DiceStatus.TURN_SELECTED);
+            diceGUI[dice.getRealm().ordinal()].getChildren().stream()
+                    .filter(node -> node instanceof Button)
+                    .forEach(node -> node.setDisable(true));
+            diceGUI[dice.getRealm().ordinal()].setOpacity(0.3);
             for (Dice diceFromArray : diceArray) {
                 if (diceFromArray.getDiceStatus() == DiceStatus.AVAILABLE && diceFromArray.getValue() < dice.getValue()) {
                     diceFromArray.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
+                    moveDice(diceGUI[dice.getRealm().ordinal()],forgottenRealmGrid);
+                    diceGUI[dice.getRealm().ordinal()].setOpacity(0.5);
                 }
             }
             return true;
@@ -815,6 +986,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         for (Dice i : diceArray) {
             if (i.getDiceStatus() == DiceStatus.AVAILABLE) {
                 i.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
+                moveDice(diceGUI[i.getRealm().ordinal()],forgottenRealmGrid);
             }
         }
     }
@@ -822,7 +994,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
     @Override
     public boolean makeMove(Player player, Move move) {
         try {
-            if (move.getDice().getRealm() == Color.WHITE) {
+            if (move.getDice().getRealm() == GameColor.WHITE) {
                 return false;
             }
             Realm realm = player.getRealm(move.getDice());

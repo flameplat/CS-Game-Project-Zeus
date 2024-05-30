@@ -1,7 +1,7 @@
 package game.engine;
 
 import game.realms.*;
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 
 public class GameScore {
@@ -46,23 +46,23 @@ public class GameScore {
     }
 
     public int getYellowRealmScore() {
-        return realms[Color.YELLOW.ordinal()].getTotalScore();
+        return realms[GameColor.YELLOW.ordinal()].getTotalScore();
     }
 
     public int getGreenRealmScore() {
-        return realms[Color.GREEN.ordinal()].getTotalScore();
+        return realms[GameColor.GREEN.ordinal()].getTotalScore();
     }
 
     public int getRedRealmScore() {
-        return realms[Color.RED.ordinal()].getTotalScore();
+        return realms[GameColor.RED.ordinal()].getTotalScore();
     }
 
     public int getMagentaRealmScore() {
-        return realms[Color.MAGENTA.ordinal()].getTotalScore();
+        return realms[GameColor.MAGENTA.ordinal()].getTotalScore();
     }
 
     public int getBlueRealmScore() {
-        return realms[Color.BLUE.ordinal()].getTotalScore();
+        return realms[GameColor.BLUE.ordinal()].getTotalScore();
     }
 
     public void setCheatPenalty(int cheatPenalty) {
@@ -90,8 +90,8 @@ public class GameScore {
         return totalScore - (cheatPenalty * totalScore) / 100;
     }
 
-    private int getTotalScoreForColor(Color color) {
-        return realms[color.ordinal()].getTotalScore();
+    private int getTotalScoreForColor(GameColor gameColor) {
+        return realms[gameColor.ordinal()].getTotalScore();
     }
 
     @Override
@@ -112,7 +112,7 @@ public class GameScore {
         for (int i = 0; i < 5; i++) {
             sb.append(String.format("%-20s", colors[i] + " Realm"));
             sb.append(String.format("%-20d", realms[i].getNoElementalCrests()));
-            sb.append(String.format("%-20d", getTotalScoreForColor(Color.values()[i]))).append("\n");
+            sb.append(String.format("%-20d", getTotalScoreForColor(GameColor.values()[i]))).append("\n");
         }
         sb.append("-".repeat(45)).append("\n");
 

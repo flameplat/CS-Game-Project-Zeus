@@ -1,6 +1,6 @@
 package game.collectibles;
 
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,15 +23,15 @@ public abstract class Collectibles {
             case "essencebonus":
                 return new EssenceBonus();
             case "redbonus":
-                return new ColorBonus(Color.RED);
+                return new ColorBonus(GameColor.RED);
             case "bluebonus":
-                return new ColorBonus(Color.BLUE);
+                return new ColorBonus(GameColor.BLUE);
             case "greenbonus":
-                return new ColorBonus(Color.GREEN);
+                return new ColorBonus(GameColor.GREEN);
             case "magentabonus":
-                return new ColorBonus(Color.MAGENTA);
+                return new ColorBonus(GameColor.MAGENTA);
             case "yellowbonus":
-                return new ColorBonus(Color.YELLOW);
+                return new ColorBonus(GameColor.YELLOW);
             case "elementalcrest":
                 return new ElementalCrest();
             default:

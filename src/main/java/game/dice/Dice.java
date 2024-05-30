@@ -1,13 +1,13 @@
 package game.dice;
 
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 public abstract class Dice {
 
     //-----------------------Attributes-----------------------//
 
-    public static Dice getNewDice(Color color, int value) {
-        switch (color) {
+    public static Dice getNewDice(GameColor gameColor, int value) {
+        switch (gameColor) {
             case RED:
                 return new RedDice(value);
             case GREEN:
@@ -30,7 +30,7 @@ public abstract class Dice {
     //-------------------------Methods------------------------//
     public abstract void setValue(int value);
 
-    public abstract Color getRealm();
+    public abstract GameColor getRealm();
 
     public abstract DiceStatus getDiceStatus();
 

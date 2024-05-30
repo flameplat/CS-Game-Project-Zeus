@@ -7,7 +7,7 @@ import game.creatures.Lion;
 import game.dice.Dice;
 import game.dice.YellowDice;
 import game.engine.Move;
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.Properties;
 
 public class YellowRealm extends Realm {
-    private static final Color realmColor = Color.YELLOW;
+    private static final GameColor REALM_GAME_COLOR = GameColor.YELLOW;
     private static final String name = "\u001B[33m" + "Yellow Realm" + "\u001B[0m";
     private final LinkedList<Move> realmMoves;
     private final Lion lion;
@@ -76,10 +76,20 @@ public class YellowRealm extends Realm {
     public String getName() {
         return name;
     }
+    public Object[] getScoreValues(){
+        return score;
+    }
+    public String[] getRewardValues(){
+        return rewardValues;
+    }
+
+    public int getCountHits() {
+        return countHits;
+    }
 
     @Override
-    public Color getColor() {
-        return realmColor;
+    public GameColor getColor() {
+        return REALM_GAME_COLOR;
     }
 
     @Override
@@ -172,7 +182,7 @@ public class YellowRealm extends Realm {
 
     @Override
     public Creature getCreature(Dice dice) {
-        if (dice.getRealm() == Color.YELLOW && (dice.getValue() <= 6 && dice.getValue() >= 1)) {
+        if (dice.getRealm() == GameColor.YELLOW && (dice.getValue() <= 6 && dice.getValue() >= 1)) {
             return lion;
         }
         return null;
