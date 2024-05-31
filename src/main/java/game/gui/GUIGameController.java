@@ -81,6 +81,19 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private Button yellowDiceButton;
     @FXML
     private Button whiteDiceButton;
+    //------------------------------------------BUTTONS FLAG------------------------------------------//
+    private boolean redDiceButtonFlag;
+    private boolean greenDiceButtonFlag;
+    private boolean blueDiceButtonFlag;
+    private boolean magentaDiceButtonFlag;
+    private boolean yellowDiceButtonFlag;
+    private boolean whiteDiceButtonFlag;
+    private boolean timeWarpButtonFlag;
+    private boolean arcaneBoostButtonFlag;
+    private boolean skipButtonFlag;
+    private boolean rollButtonFlag;
+    //------------------------------------------------------------------------------------------------//
+
     @FXML
     private GridPane diceGrid;
     @FXML
@@ -426,11 +439,46 @@ public class GUIGameController extends CLIGameController implements Initializabl
         disableSkipButton();
         disableForgottenRealmButtons();
     }
+    private void clearFlags(){
+        redDiceButtonFlag=false;
+        greenDiceButtonFlag=false;
+        blueDiceButtonFlag=false;
+        magentaDiceButtonFlag=false;
+        yellowDiceButtonFlag=false;
+        whiteDiceButtonFlag=false;
+        timeWarpButtonFlag=false;
+        arcaneBoostButtonFlag=false;
+        skipButtonFlag=false;
+        rollButtonFlag=false;
+    }
 
     //------------------------------------------------------HOVER METHODS-------------------------------------------------------//
     @FXML
-    public void redDiceHover() {
+    public void redDiceButtonHoverOn() {
         highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, diceArray[0]));
+    }
+    @FXML
+    public void greenDiceButtonHoverOn() {
+        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, diceArray[1]));
+    }
+    @FXML
+    public void blueDiceButtonHoverOn() {
+        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, diceArray[2]));
+    }
+    @FXML
+    public void magentaDiceButtonHoverOn() {
+        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, diceArray[3]));
+    }
+    @FXML
+    public void yellowDiceButtonHoverOn() {
+        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, diceArray[4]));
+    }
+    @FXML
+    public void whiteDiceButtonHoverOn() {
+        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, diceArray[5]));
+    }
+    public void diceButtonHoverOff(){
+        removeScoreSheetHighlight();
     }
 
 
@@ -493,33 +541,112 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     //------------------------------------------------------BUTTONS FUNCTIONS-------------------------------------------------------//
-    public void redDiceButton() {
-        if (getPossibleMovesForADie(currentPlayer, diceArray[0]).length == 0) {
-            gameText.setText("There are no possible moves for this die");
-        } else {
+    public void redDiceButtonClick() {
+        try{
+            if (getPossibleMovesForADie(currentPlayer, diceArray[0]).length == 0) {
+                throw new InvalidMoveException();
+            }
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[0])[0]);
+            redDiceButtonFlag=true;
+        }
+        catch(InvalidMoveException e){
+            gameText.setText("There are no possible moves for "+diceArray[3]);
         }
     }
 
-    public void greenDiceButton() {
+    public void greenDiceButtonClick() {
+        try{
+            if (getPossibleMovesForADie(currentPlayer, diceArray[1]).length == 0) {
+                throw new InvalidMoveException();
+            }
+            makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[1])[0]);
+            greenDiceButtonFlag=true;
+
+        }
+        catch(InvalidMoveException e){
+            gameText.setText("There are no possible moves for "+diceArray[1]);
+        }
+    }
+
+    public void blueDiceButtonClick(){
+        try{
+            if (getPossibleMovesForADie(currentPlayer, diceArray[2]).length == 0) {
+                throw new InvalidMoveException();
+            }
+            makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[2])[0]);
+            blueDiceButtonFlag=true;
+
+        }
+        catch(InvalidMoveException e){
+            gameText.setText("There are no possible moves for "+diceArray[2]);
+        }
+    }
+
+    public void magentaDiceButtonClick() {
+        try{
+            if (getPossibleMovesForADie(currentPlayer, diceArray[3]).length == 0) {
+                throw new InvalidMoveException();
+            }
+            makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[3])[0]);
+            magentaDiceButtonFlag=true;
+
+        }
+        catch(InvalidMoveException e){
+            gameText.setText("There are no possible moves for "+diceArray[3]);
+        }
+    }
+
+    public void yellowDiceButtonClick() {
+        try{
+            if (getPossibleMovesForADie(currentPlayer, diceArray[4]).length == 0) {
+                throw new InvalidMoveException();
+            }
+                makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[4])[0]);
+                yellowDiceButtonFlag=true;
+
+        }
+        catch(InvalidMoveException e){
+            gameText.setText("There are no possible moves for "+diceArray[4]);
+        }
 
     }
 
-    public void blueDiceButton() {
+    public void whiteDiceButtonClick() {
+        try{
+            if (getPossibleMovesForADie(currentPlayer, diceArray[5]).length == 0) {
+                throw new InvalidMoveException();
+            }
+            //TODO switch to realms picker scene
+            makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[5])[0]);
+            whiteDiceButtonFlag=true;
 
+        }
+        catch(InvalidMoveException e){
+            gameText.setText("There are no possible moves for "+diceArray[5]);
+        }
     }
-
-    public void magentaDiceButton() {
-
-    }
-
-    public void yellowDiceButton() {
-
-    }
-
-    public void whiteDiceButton() {
-
-    }
+    //------------------------------------------------------GATHERING DATA FROM OTHER SCENES-------------------------------------------------------//
+//    private Move getUserInput(String scene){
+//        final Move userInput=null;
+//        javafx.application.Platform.runLater(() -> {
+//            sceneManager.switchRealmPickerScene("scene2", (input) -> {
+//                userInput = input;
+//                synchronized (userInput) {
+//                    userInput.notify();
+//                }
+//            });
+//        });
+//        // Wait for user input to be collected
+//        synchronized (userInput) {
+//            while (userInput== null) {
+//                try {
+//                    userInput.wait();
+//                } catch (InterruptedException e) {
+//                    Thread.currentThread().interrupt();
+//                }
+//            }
+//        }
+//    }
 
     //------------------------------------------------------GAME LOGIC METHODS-------------------------------------------------------//
     @Override

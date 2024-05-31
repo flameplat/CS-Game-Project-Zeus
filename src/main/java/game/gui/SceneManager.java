@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.w3c.dom.UserDataHandler;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -65,6 +66,29 @@ public class SceneManager {
                 GamePlayController.setSceneManager(this);
                 scene=new Scene(root);
                 scenes.put("GamePlayScene",scene);
+                stage.setScene(scene);
+                stage.setResizable(true);
+                stage.show();
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+    public void switchRealmPickerScene(UserDataHandler userDataHandler){
+        if(scenes.containsKey("RealmPickerScene")){
+            stage.setScene(scenes.get("RealmPickerScene"));
+            stage.setResizable(true);
+            stage.show();
+        }
+        else{
+            try{
+                FXMLLoader loader= new FXMLLoader(Objects.requireNonNull(getClass().getResource("RealmPicker.fxml")));
+                root= loader.load();
+                GamePlayController.setSceneManager(this);
+                //loader.getController()
+                scene=new Scene(root);
+                scenes.put("RealmPickerScene",scene);
                 stage.setScene(scene);
                 stage.setResizable(true);
                 stage.show();

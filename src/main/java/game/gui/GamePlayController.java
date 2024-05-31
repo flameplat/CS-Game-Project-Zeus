@@ -33,7 +33,7 @@ public class GamePlayController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            Image mainBG=new Image(Objects.requireNonNull(getClass().getResource("/images/BG.png")).toExternalForm());
+            Image mainBG=new Image(Objects.requireNonNull(getClass().getResource("/images/RetroDice.png")).toExternalForm());
             backGround.setImage(mainBG);
             // Load and configure Player 1 Composite ScoreSheet
             FXMLLoader player1Loader = new FXMLLoader(getClass().getResource("CompositeScoreSheet.fxml"));
