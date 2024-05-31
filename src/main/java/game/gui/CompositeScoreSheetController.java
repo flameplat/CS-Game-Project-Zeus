@@ -70,7 +70,7 @@ public class CompositeScoreSheetController implements Initializable {
         updateScoreSheet();
     }
     public void highlightPossibleMoves(Move[] moves){
-        yellowRealmScoreSheetController.highlightMoves();
+        yellowRealmScoreSheetController.highlightMoves(moves);
     }
     public void removeHighlight(){
         yellowRealmScoreSheetController.removeHighlight();

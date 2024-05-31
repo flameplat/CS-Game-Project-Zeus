@@ -1,6 +1,7 @@
 package game.gui;
 
 import game.utilities.GameColor;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,6 +13,7 @@ import java.util.function.Consumer;
 
 public class RealmPickerController implements Initializable {
     private Consumer<GameColor> userInputHandler;
+    @FXML
     private ImageView backGroundImageView;
 
     @Override
@@ -21,6 +23,25 @@ public class RealmPickerController implements Initializable {
     }
     public void setOnUserInput(Consumer<GameColor> handler){
         this.userInputHandler=handler;
+    }
+    @FXML
+    public void chooseRedRealm(){
+    }
+    @FXML
+    public void chooseGreenRealm(){
+
+    }
+    @FXML
+    public void chooseBlueRealm(){
+
+    }
+    @FXML
+    public void chooseMagentaRealm(){
+
+    }
+    @FXML
+    public void chooseYellowRealm(){
+
     }
 
 

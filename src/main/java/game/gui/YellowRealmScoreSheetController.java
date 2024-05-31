@@ -4,6 +4,7 @@ import game.creatures.Lion;
 import game.dice.YellowDice;
 import game.engine.Move;
 import game.realms.YellowRealm;
+import game.utilities.GameColor;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -71,14 +72,20 @@ public class YellowRealmScoreSheetController implements Initializable {
     public void setRealm(YellowRealm yellowRealm){
         this.yellowRealm=yellowRealm;
     }
-    public void highlightMoves(){
-        if(yellowRealm.isRealmAvailable()){
-            int col=yellowRealm.getCountHits();
-            highlightCell(0,col+1,"yellow");
-            highlightCell(1,col+1,"yellow");
-            highlightCell(2,col+1,"yellow");
-            highlightCell(3,col+1,"yellow");
+    public void highlightMoves(Move[] moves){
+        for (Move move : moves) {
+            if(move.getDice().getRealm()== GameColor.YELLOW){
+                if(yellowRealm.isRealmAvailable()){
+                    int col=yellowRealm.getCountHits();
+                    highlightCell(0,col+1,"yellow");
+                    highlightCell(1,col+1,"yellow");
+                    highlightCell(2,col+1,"yellow");
+                    highlightCell(3,col+1,"yellow");
+                }
+                break;
+            }
         }
+
     }
     public void removeHighlight(){
         for(int i=0;i<4;i++){

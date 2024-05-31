@@ -150,10 +150,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private StackPane rollButtonStackPane;
     private final double lowOpacity = 0.5;
     private final double highOpacity = 1;
-    private final int longDelay = 0;
-    private final int mediumDelay = 0;
+
     //This player points to the current player whether passive or active or arcaneBoost enabled
     private Player currentPlayer;
+    private CompletableFuture<Void> moveFuture;
+    private CompletableFuture<Void> moveFuture2;
 
     public GUIGameController() {
         super();
@@ -305,12 +306,12 @@ public class GUIGameController extends CLIGameController implements Initializabl
             diceGUI[dice.getRealm().ordinal()].getChildren().stream()
                     .filter(node -> node instanceof Button)
                     .forEach(node -> node.setDisable(true));
-            diceGUI[dice.getRealm().ordinal()].setOpacity(0.3);
+            diceGUI[dice.getRealm().ordinal()].setOpacity(lowOpacity);
             for (Dice diceFromArray : diceArray) {
                 if (diceFromArray.getDiceStatus() == DiceStatus.AVAILABLE && diceFromArray.getValue() < dice.getValue()) {
                     diceFromArray.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
-                    moveDice(diceGUI[dice.getRealm().ordinal()], forgottenRealmGrid);
-                    diceGUI[dice.getRealm().ordinal()].setOpacity(0.5);
+                    moveDice(diceGUI[diceFromArray.getRealm().ordinal()], forgottenRealmGrid);
+                    diceGUI[diceFromArray.getRealm().ordinal()].setOpacity(lowOpacity);
                 }
             }
             return true;
@@ -364,10 +365,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private void disableForgottenRealmButtons() {
         for (int i = 0; i < diceArray.length; i++) {
             if (diceArray[i].getDiceStatus() == DiceStatus.FORGOTTEN_REALM) {
-                diceGUI[i].getChildren().stream()
-                        .filter(node -> node instanceof Button)
-                        .forEach(node -> node.setDisable(true));
-                diceGUI[i].setOpacity(lowOpacity);
+                forgottenRealmGrid.setDisable(true);
             }
         }
         forgottenRealmGrid.setOpacity(lowOpacity);
@@ -376,10 +374,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private void enableForgottenRealmButtons() {
         for (int i = 0; i < diceArray.length; i++) {
             if (diceArray[i].getDiceStatus() == DiceStatus.FORGOTTEN_REALM) {
-                diceGUI[i].getChildren().stream()
-                        .filter(node -> node instanceof Button)
-                        .forEach(node -> node.setDisable(false));
-                diceGUI[i].setOpacity(highOpacity);
+                forgottenRealmGrid.setDisable(false);
             }
         }
         forgottenRealmGrid.setOpacity(highOpacity);
@@ -388,9 +383,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private void disableMainBoardDiceButtons() {
         for (int i = 0; i < diceArray.length; i++) {
             if (diceArray[i].getDiceStatus() == DiceStatus.AVAILABLE) {
-                diceGUI[i].getChildren().stream()
-                        .filter(node -> node instanceof Button)
-                        .forEach(node -> node.setDisable(true));
+                diceGrid.setDisable(true);
             }
         }
         diceGrid.setOpacity(lowOpacity);
@@ -406,19 +399,10 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private void enableMainBoardDiceButtons() {
         for (int i = 0; i < diceArray.length; i++) {
             if (diceArray[i].getDiceStatus() == DiceStatus.AVAILABLE) {
-                diceGUI[i].getChildren().stream()
-                        .filter(node -> node instanceof Button)
-                        .forEach(node -> node.setDisable(false));
+                diceGrid.setDisable(false);
             }
         }
         diceGrid.setOpacity(highOpacity);
-    }
-
-    private void enableDiceButton(StackPane dice) {
-        dice.getChildren().stream()
-                .filter(node -> node instanceof Button)
-                .forEach(node -> node.setDisable(false));
-        dice.setOpacity(highOpacity);
     }
 
     private void disableRollButton() {
@@ -541,68 +525,91 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     //------------------------------------------------------BUTTONS FUNCTIONS-------------------------------------------------------//
+    @FXML
     public void redDiceButtonClick() {
         try{
             if (getPossibleMovesForADie(currentPlayer, diceArray[0]).length == 0) {
                 throw new InvalidMoveException();
             }
-            makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[0])[0]);
-            redDiceButtonFlag=true;
+            Platform.runLater(()-> {
+                selectDice(diceArray[0], currentPlayer);
+                makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[0])[0]);
+                redDiceButtonFlag = true;
+                moveFuture.complete(null);
+            });
+
         }
         catch(InvalidMoveException e){
             gameText.setText("There are no possible moves for "+diceArray[3]);
         }
     }
-
+    @FXML
     public void greenDiceButtonClick() {
         try{
             if (getPossibleMovesForADie(currentPlayer, diceArray[1]).length == 0) {
                 throw new InvalidMoveException();
             }
-            makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[1])[0]);
-            greenDiceButtonFlag=true;
+            Platform.runLater(()->{
+                selectDice(diceArray[1],currentPlayer);
+                makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[1])[0]);
+                greenDiceButtonFlag=true;
+                moveFuture.complete(null);
+            });
+
 
         }
         catch(InvalidMoveException e){
             gameText.setText("There are no possible moves for "+diceArray[1]);
         }
     }
-
+    @FXML
     public void blueDiceButtonClick(){
         try{
             if (getPossibleMovesForADie(currentPlayer, diceArray[2]).length == 0) {
                 throw new InvalidMoveException();
             }
-            makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[2])[0]);
-            blueDiceButtonFlag=true;
+            Platform.runLater(()-> {
+                selectDice(diceArray[2], currentPlayer);
+                makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[2])[0]);
+                blueDiceButtonFlag = true;
+                moveFuture.complete(null);
+            });
 
         }
         catch(InvalidMoveException e){
             gameText.setText("There are no possible moves for "+diceArray[2]);
         }
     }
-
+    @FXML
     public void magentaDiceButtonClick() {
         try{
             if (getPossibleMovesForADie(currentPlayer, diceArray[3]).length == 0) {
                 throw new InvalidMoveException();
             }
-            makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[3])[0]);
-            magentaDiceButtonFlag=true;
+            Platform.runLater(()-> {
+                selectDice(diceArray[3], currentPlayer);
+                makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[3])[0]);
+                magentaDiceButtonFlag = true;
+                moveFuture.complete(null);
+            });
 
         }
         catch(InvalidMoveException e){
             gameText.setText("There are no possible moves for "+diceArray[3]);
         }
     }
-
+    @FXML
     public void yellowDiceButtonClick() {
         try{
             if (getPossibleMovesForADie(currentPlayer, diceArray[4]).length == 0) {
                 throw new InvalidMoveException();
             }
+            Platform.runLater(()-> {
+                selectDice(diceArray[4], currentPlayer);
                 makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[4])[0]);
-                yellowDiceButtonFlag=true;
+                yellowDiceButtonFlag = true;
+                moveFuture.complete(null);
+            });
 
         }
         catch(InvalidMoveException e){
@@ -610,20 +617,39 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
 
     }
-
+    @FXML
     public void whiteDiceButtonClick() {
         try{
             if (getPossibleMovesForADie(currentPlayer, diceArray[5]).length == 0) {
                 throw new InvalidMoveException();
-            }
-            //TODO switch to realms picker scene
-            makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[5])[0]);
-            whiteDiceButtonFlag=true;
+            }Platform.runLater(()-> {
+                selectDice(diceArray[5], currentPlayer);
 
+                makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[5])[0]);
+                whiteDiceButtonFlag = true;
+                moveFuture.complete(null);
+            });
         }
         catch(InvalidMoveException e){
             gameText.setText("There are no possible moves for "+diceArray[5]);
         }
+    }
+    @FXML
+    public void skipButtonClick(){
+        moveFuture.complete(null);
+        skipButtonFlag=true;
+    }
+    @FXML
+    public void timeWarpButtonClick(){
+        activePlayer.useTimeWarpPower();
+        rollDice();
+        checkTimeWarp(activePlayer);
+        updateScoreSheets();
+    }
+    @FXML
+    public void arcaneBoostButtonClick(){
+        moveFuture.complete(null);
+        arcaneBoostButtonFlag=true;
     }
     //------------------------------------------------------GATHERING DATA FROM OTHER SCENES-------------------------------------------------------//
 //    private Move getUserInput(String scene){
@@ -689,7 +715,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     protected CompletableFuture<Void> playRoundGUI() {
         gameText.setText(gameGuide.getInstruction(Instruction.ROUND));
-        delay(longDelay);
         resetDice();
 
         CompletableFuture<Void> roundFuture = CompletableFuture.completedFuture(null);
@@ -700,7 +725,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
                 Platform.runLater(() -> {
                     gameText.setText(gameGuide.getInstruction(Instruction.TURN));
-                    delay(mediumDelay);
                     updateSceneStatus();
                     enableRollButton();
                     updateScoreSheets();
@@ -734,20 +758,23 @@ public class GUIGameController extends CLIGameController implements Initializabl
                     throw new NoAvailableMovesException();
                 }
                 enableMainBoardDiceButtons();
-
-                updateScoreSheets();
-                gameStatus.incrementTurn();
-                turnFuture.complete(null);
+                checkTimeWarp(activePlayer);
+                moveFuture=new CompletableFuture<>();
+                moveFuture.thenRun(()->{
+                    updateScoreSheets();
+                    gameStatus.incrementTurn();
+                    disableMainBoardDiceButtons();
+                    turnFuture.complete(null);
+                });
             } catch (NoAvailableMovesException e) {
                 if (checkTimeWarp(activePlayer)) {
                     gameText.setText("No possible moves available. Use Time Warp?");
                     enableTimeWarpButton();
                     enableSkipButton();
-
                     timeWarpButton.setOnAction(timeWarpEvent -> {
                         disableTimeWarpButton();
                         disableSkipButton();
-                        // Apply Time Warp logic
+                        rollDice();
                         playTurn();
                         turnFuture.complete(null);
                     });
@@ -793,7 +820,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     protected void playExtraTurn(Player player) {
-        player.getScoreSheet().displayScoreSheet();
         LinkedList<Dice> notSelectedByPlayer = new LinkedList<>();
         DiceStatus filter = player.getPlayerStatus() == PlayerStatus.ACTIVE ? DiceStatus.ACTIVE_PLAYER_SELECTED : DiceStatus.PASSIVE_PLAYER_SELECTED;
         for (Dice i : diceArray) {
@@ -812,10 +838,14 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     protected void checkArcaneBoost(Player player) {
-        while (player.isArcaneBoostAvailable()) {
-            displayArcaneBoostStatus(player);
-            boolean choice = gameGuide.getUserBooleanChoice();
-            if (choice) {
+        moveFuture =new CompletableFuture<>();
+        if(player.isArcaneBoostAvailable()){
+            gameText.setText("Arcane boost is available");
+            enableArcaneBoostButton();
+            enableSkipButton();
+        }
+        moveFuture.thenRun(()->{
+            if(arcaneBoostButtonFlag){
                 try {
                     if (getPossibleMovesForDice(player, diceArray).length == 0) {
                         throw new NoAvailableMovesException();
@@ -823,14 +853,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
                     player.useArcaneBoostPower();
                     playExtraTurn(player);
                 } catch (NoAvailableMovesException e) {
-                    System.out.println("No available moves for current dice");
-                    System.out.println("You can't use Arcane Boost");
-                    break;
+                    gameText.setText("No available moves for current dice"+" "+"You can't use Arcane Boost");;
                 }
-            } else {
-                break;
             }
-        }
+            clearFlags();
+        });
     }
 
     protected boolean checkTimeWarp(Player player) {
@@ -856,6 +883,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (realm.checkReward()) {
                 processRewardQueue(player, realm.getReward());
             }
+            Platform.runLater(this::updateScoreSheets);
             return true;
 
         } catch (NullPointerException e) {
@@ -863,21 +891,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
             return false;
         }
     }
-
-
-    protected void displayArcaneBoostStatus(Player player) {
-        System.out.println(player.getName());
-        gameGuide.displayInstructions(Instruction.AB_PROMPT);
-        int count = player.getTotalArcaneBoostPowersCollected();
-        System.out.printf("You have %d Arcane Boost%s%n", count, count > 1 ? "s" : "");
-    }
-
-    protected void displayTimeWarpStatus(Player player) {
-        int count = player.getTotalTimeWarpPowersCollected();
-        gameGuide.displayInstructions(Instruction.TW_PROMPT);
-        System.out.printf("You have %d Time Warp%s%n", count, count > 1 ? "s" : "");
-    }
-
 
     //------------------------------------------------------REWARD METHODS-------------------------------------------------------//
 
@@ -899,8 +912,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         if (reward == null) {
             return;
         }
-        gameText.setText(player.getName() + ", you received " + reward.getName() + "!");
-        delay(3000);
+
         if (reward instanceof EssenceBonus) {
             playEssenceBonus(player);
         } else {
@@ -910,6 +922,10 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 player.receiveCollectible(reward);
             }
         }
+        Platform.runLater(()->{
+            gameText.setText(player.getName() + ", you received " + reward.getName() + "!");
+            updateScoreSheets();
+        });
     }
 
     protected void playColorBonus(Player player, GameColor gameColor) {
@@ -1055,13 +1071,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     //------------------------------------------------------SECONDARY METHODS-------------------------------------------------------//
 
-    private void delay(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException ignored) {
 
-        }
-    }
 
 
     private boolean containsAvailableDie() {
