@@ -11,35 +11,36 @@ import game.realms.GreenRealm;
 import game.realms.Realm;
 import game.realms.RedRealm;
 import game.utilities.CollectiblesComparator;
+import game.utilities.GameColor;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import game.utilities.GameColor;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.net.URL;
-import java.sql.SQLOutput;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-
-
 public class GUIGameController extends CLIGameController implements Initializable {
+    private final Image transparentImage;
+    private StackPane[] diceGUI;
+    Map<Player, CompositeScoreSheetController> playerScoreSheet;
     @FXML
     private Label gameText;
     @FXML
     private ImageView gameTextBox;
-
     @FXML
     private Button rollButton;
     @FXML
@@ -82,136 +83,166 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private Button whiteDiceButton;
     @FXML
     private GridPane diceGrid;
-
     @FXML
     private GridPane forgottenRealmGrid;
-    @FXML
-    private StackPane redDice;
-
-    @FXML
-    private StackPane greenDice;
-
-    @FXML
-    private StackPane blueDice;
-
-    @FXML
-    private StackPane magentaDice;
-
-    @FXML
-    private StackPane yellowDice;
-
-    @FXML
-    private StackPane whiteDice;
-
 
     @FXML
     private GridPane roundsTable;
     private SceneManager sceneManager;
-    private final Image transparentImage;
-    private final StackPane[] diceGUI;
-    Map<Player,CompositeScoreSheetController> playerScoreSheet;
-    public GUIGameController(){
+    @FXML
+    private ImageView forgottenRealmImageView;
+    @FXML
+    private ImageView timeWarpImageView;
+    @FXML
+    private ImageView arcaneBoostImageView;
+    @FXML
+    private ImageView skipButtonImageView;
+    @FXML
+    private StackPane redDice;
+    @FXML
+    private StackPane greenDice;
+    @FXML
+    private StackPane blueDice;
+    @FXML
+    private StackPane magentaDice;
+    @FXML
+    private StackPane yellowDice;
+    @FXML
+    private StackPane whiteDice;
+    @FXML
+    private StackPane timeWarpStackPane;
+    @FXML
+    private StackPane arcaneBoostStackPane;
+    @FXML
+    private StackPane skipButtonStackPane;
+    @FXML
+    private Button timeWarpButton;
+    @FXML
+    private Button arcaneBoostButton;
+    @FXML
+    private Button skipButton;
+    @FXML
+    private Label currentPlayerLabel;
+    @FXML
+    private Label currentGameStatusLabel;
+    @FXML
+    private ImageView currentGameStatusImageView;
+    @FXML
+    private ImageView currentPlayerImageView;
+    @FXML
+    private Label turnLabel;
+    @FXML
+    private ImageView turnImageView;
+    @FXML
+    private StackPane rollButtonStackPane;
+    private final double lowOpacity = 0.5;
+    private final double highOpacity = 1;
+    private final int longDelay = 0;
+    private final int mediumDelay = 0;
+    //This player points to the current player whether passive or active or arcaneBoost enabled
+    private Player currentPlayer;
+
+    public GUIGameController() {
         super();
         WritableImage transparentImage = new WritableImage(1, 1);
         PixelWriter pixelWriter = transparentImage.getPixelWriter();
-        pixelWriter.setColor(0, 0, Color.rgb(0,0,0,0));
+        pixelWriter.setColor(0, 0, Color.rgb(0, 0, 0, 0));
         this.transparentImage = transparentImage;
-        diceGUI=new StackPane[6];
-        diceGUI[0]=redDice;
-        diceGUI[1]=greenDice;
-        diceGUI[2]=blueDice;
-        diceGUI[3]=magentaDice;
-        diceGUI[4]=yellowDice;
-        diceGUI[5]=whiteDice;
-        playerScoreSheet=new HashMap<>();
+        playerScoreSheet = new HashMap<>();
         gameStatus.setGameStatus(CurrentStatus.ACTIVE_TURN);
     }
 
-    // -----------------------Methods-----------------------//
+
+    //------------------------------------------------------ONE TIME METHODS-------------------------------------------------------//
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        round1Reward.setImage(getRewardIcon(0,roundRewards));
-        round2Reward.setImage(getRewardIcon(1,roundRewards));
-        round3Reward.setImage(getRewardIcon(2,roundRewards));
-        round4Reward.setImage(getRewardIcon(3,roundRewards));
-        round5Reward.setImage(getRewardIcon(4,roundRewards));
-        round6Reward.setImage(getRewardIcon(5,roundRewards));
+        round1Reward.setImage(getRewardIcon(0, roundRewards));
+        round2Reward.setImage(getRewardIcon(1, roundRewards));
+        round3Reward.setImage(getRewardIcon(2, roundRewards));
+        round4Reward.setImage(getRewardIcon(3, roundRewards));
+        round5Reward.setImage(getRewardIcon(4, roundRewards));
+        round6Reward.setImage(getRewardIcon(5, roundRewards));
+        diceGUI = new StackPane[6];
+        diceGUI[0] = redDice;
+        diceGUI[1] = greenDice;
+        diceGUI[2] = blueDice;
+        diceGUI[3] = magentaDice;
+        diceGUI[4] = yellowDice;
+        diceGUI[5] = whiteDice;
         rollButtonImage.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/1.png")).toExternalForm()));
         gameTextBox.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/textBox.png")).toExternalForm()));
-        gameText.setText(gameGuide.getInstruction(Instruction.GAME));
+        forgottenRealmImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/ForgottenRealm.png")).toExternalForm()));
+        timeWarpImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/TimeWarp.png")).toExternalForm()));
+        arcaneBoostImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/ArcaneBoost.png")).toExternalForm()));
+        skipButtonImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/3.png")).toExternalForm()));
+        currentGameStatusImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/2.png")).toExternalForm()));
+        currentPlayerImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/2.png")).toExternalForm()));
+        turnImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/2.png")).toExternalForm()));
+        gameText.setText(gameGuide.getInstruction(Instruction.TURN));
         updateDiceValues();
+        disableAllButtons();
     }
-    public void updateDiceButtonsAvailability(){
-        if(gameStatus.getGameStatus()==CurrentStatus.ACTIVE_TURN){
-            //Disable forgottenRealm buttons
-            for(int i=0;i<diceArray.length;i++){
-                if(diceArray[i].getDiceStatus()==DiceStatus.FORGOTTEN_REALM){
-                    diceGUI[i].getChildren().stream()
-                            .filter(node -> node instanceof Button)
-                            .forEach(node -> node.setDisable(true));
-                }
-            }
-            return;
-        }
-        if(gameStatus.getGameStatus()==CurrentStatus.PASSIVE_TURN){
-            //Enable forgottenRealm
-            for(int i=0;i<diceArray.length;i++){
-                if(diceArray[i].getDiceStatus()==DiceStatus.FORGOTTEN_REALM){
-                    diceGUI[i].getChildren().stream()
-                            .filter(node -> node instanceof Button)
-                            .forEach(node -> node.setDisable(false));
-                }
-            }
-            return;
-        }
-        if(gameStatus.getGameStatus()==CurrentStatus.ARCANE_BOOST){
-            //Disable forgottenRealm buttons
-            for(int i=0;i<diceArray.length;i++){
-                diceGUI[i].getChildren().stream()
-                        .filter(node -> node instanceof Button)
-                        .forEach(node -> node.setDisable(false));
-                diceGUI[i].setOpacity(1);
-            }
-        }
+
+    public void setSceneManager(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
+    }
+
+    public void setPlayer1(Player player) {
+        gameBoard.setPlayer1(player);
+        activePlayer = player;
+        player.setPlayerStatus(PlayerStatus.ACTIVE);
+        currentPlayer = activePlayer;
+        updateSceneStatus();
 
     }
-    public void setPlayer1ScoreSheet(CompositeScoreSheetController scoreSheet){
+
+    public void setPlayer2(Player player) {
+        gameBoard.setPlayer2(player);
+        passivePlayer = player;
+        player.setPlayerStatus(PlayerStatus.PASSIVE);
+    }
+
+    public void setPlayer1ScoreSheet(CompositeScoreSheetController scoreSheet) {
         activePlayer.setGUIScoreSheet(scoreSheet);
     }
-    public void setPlayer2ScoreSheet(CompositeScoreSheetController scoreSheet){
+
+    public void setPlayer2ScoreSheet(CompositeScoreSheetController scoreSheet) {
         passivePlayer.setGUIScoreSheet(scoreSheet);
     }
-    private void updateScoreSheets(){
-        activePlayer.getScoreSheetController().updateScoreSheet();
-        passivePlayer.getScoreSheetController().updateScoreSheet();
-    }
-    private void updateDiceValues(){
-        redDiceNumber.setText(String.valueOf(diceArray[0].getValue()));
-        greenDiceNumber.setText(String.valueOf(diceArray[1].getValue()));
-        blueDiceNumber.setText(String.valueOf(diceArray[2].getValue()));
-        magentaDiceNumber.setText(String.valueOf(diceArray[3].getValue()));
-        yellowDiceNumber.setText(String.valueOf(diceArray[4].getValue()));
-        whiteDiceNumber.setText(String.valueOf(diceArray[5].getValue()));
-    }
 
-    public Image getRewardIcon(int i,Collectibles[] rewards){
+    public Image getRewardIcon(int i, Collectibles[] rewards) {
         Image result;
-        if(rewards[i]==null){
+        if (rewards[i] == null) {
             return transparentImage;
         }
-        switch (rewards[i].toString()){
-            case "TW":result=new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/TimeWarp.png")).toExternalForm());break;
-            case "AB":result=new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/ArcaneBoost.png")).toExternalForm());break;
-            case "EB":result=new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/EssenceBonus.png")).toExternalForm());break;
-            case "EC":result=new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/ElementalCrest.png")).toExternalForm());break;
-            default:result=new Image(Objects.requireNonNull(getClass().getResource("/images/icon.png")).toExternalForm());
-
+        switch (rewards[i].toString()) {
+            case "TW":
+                result = new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/TimeWarp.png")).toExternalForm());
+                break;
+            case "AB":
+                result = new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/ArcaneBoost.png")).toExternalForm());
+                break;
+            case "EB":
+                result = new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/EssenceBonus.png")).toExternalForm());
+                break;
+            case "EC":
+                result = new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/ElementalCrest.png")).toExternalForm());
+                break;
+            default:
+                result = new Image(Objects.requireNonNull(getClass().getResource("/images/icon.png")).toExternalForm());
 
 
         }
         return result;
     }
-    private void moveDice(StackPane dice,GridPane grid) {
+
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
+    }
+
+    //------------------------------------------------------DICE RELATED METHODS & UPDATERS-------------------------------------------------------//
+
+    private void moveDice(StackPane dice, GridPane grid) {
         GridPane parent = (GridPane) dice.getParent();
 
         Integer rowIndex = GridPane.getRowIndex(dice);
@@ -224,24 +255,433 @@ public class GUIGameController extends CLIGameController implements Initializabl
         grid.add(dice, columnIndex, rowIndex);
     }
 
-    public void setSceneManager(SceneManager sceneManager) {
-        this.sceneManager = sceneManager;
+
+    @FXML
+    public Dice[] rollDice() {
+        //Rolling only rolls available dice
+        Random random = new Random();
+        int diceValue;
+        //Dice values are from 1 to 6
+        int diceMaxBound = 6;
+        int diceMinBound = 1;
+        for (Dice dice : diceArray) {
+            if (dice != null && dice.getDiceStatus() == DiceStatus.AVAILABLE) {
+                diceValue = random.nextInt(diceMaxBound - diceMinBound + 1) + diceMinBound;
+                dice.setValue(diceValue);
+            }
+        }
+        updateDiceValues();
+        return diceArray;
     }
-    public void setPlayer1(Player player){
-        gameBoard.setPlayer1(player);
-        activePlayer=player;
-        player.setPlayerStatus(PlayerStatus.ACTIVE);
+
+    private void resetDice() {
+        for (int i = 0; i < diceArray.length; i++) {
+            diceArray[i].setDiceStatus(DiceStatus.AVAILABLE);
+            moveDice(diceGUI[i], diceGrid);
+        }
     }
-    public void setPlayer2(Player player){
-        gameBoard.setPlayer2(player);
-        passivePlayer=player;
-        player.setPlayerStatus(PlayerStatus.PASSIVE);
+
+    @Override
+    public boolean selectDice(Dice dice, Player player) {
+        if (dice == null || player == null) {
+            System.err.println("Error: Dice or Player cannot be null.");
+            return false;
+        }
+        try {
+            dice.setDiceStatus(DiceStatus.TURN_SELECTED);
+            diceGUI[dice.getRealm().ordinal()].getChildren().stream()
+                    .filter(node -> node instanceof Button)
+                    .forEach(node -> node.setDisable(true));
+            diceGUI[dice.getRealm().ordinal()].setOpacity(0.3);
+            for (Dice diceFromArray : diceArray) {
+                if (diceFromArray.getDiceStatus() == DiceStatus.AVAILABLE && diceFromArray.getValue() < dice.getValue()) {
+                    diceFromArray.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
+                    moveDice(diceGUI[dice.getRealm().ordinal()], forgottenRealmGrid);
+                    diceGUI[dice.getRealm().ordinal()].setOpacity(0.5);
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred: " + e.getMessage());
+            return false;
+        }
     }
+
+    private void moveDiceToForgottenRealm() {
+        //Moves the rest of the dice unselected by active player to forgotten realm
+        for (Dice i : diceArray) {
+            if (i.getDiceStatus() == DiceStatus.AVAILABLE) {
+                i.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
+                moveDice(diceGUI[i.getRealm().ordinal()], forgottenRealmGrid);
+            }
+        }
+    }
+
+    //------------------------------------------------------BUTTONS AVAILABILITY METHODS-------------------------------------------------------//
+    private void disableArcaneBoostButton() {
+        arcaneBoostButton.setDisable(true);
+        arcaneBoostStackPane.setOpacity(lowOpacity);
+    }
+
+    private void disableTimeWarpButton() {
+        timeWarpButton.setDisable(true);
+        timeWarpStackPane.setOpacity(lowOpacity);
+    }
+
+    private void disableSkipButton() {
+        skipButton.setDisable(true);
+        skipButtonStackPane.setOpacity(lowOpacity);
+    }
+
+    private void enableArcaneBoostButton() {
+        arcaneBoostButton.setDisable(false);
+        arcaneBoostStackPane.setOpacity(highOpacity);
+    }
+
+    private void enableTimeWarpButton() {
+        timeWarpButton.setDisable(false);
+        timeWarpStackPane.setOpacity(highOpacity);
+    }
+
+    private void enableSkipButton() {
+        skipButton.setDisable(false);
+        skipButtonStackPane.setOpacity(highOpacity);
+    }
+
+    private void disableForgottenRealmButtons() {
+        for (int i = 0; i < diceArray.length; i++) {
+            if (diceArray[i].getDiceStatus() == DiceStatus.FORGOTTEN_REALM) {
+                diceGUI[i].getChildren().stream()
+                        .filter(node -> node instanceof Button)
+                        .forEach(node -> node.setDisable(true));
+                diceGUI[i].setOpacity(lowOpacity);
+            }
+        }
+        forgottenRealmGrid.setOpacity(lowOpacity);
+    }
+
+    private void enableForgottenRealmButtons() {
+        for (int i = 0; i < diceArray.length; i++) {
+            if (diceArray[i].getDiceStatus() == DiceStatus.FORGOTTEN_REALM) {
+                diceGUI[i].getChildren().stream()
+                        .filter(node -> node instanceof Button)
+                        .forEach(node -> node.setDisable(false));
+                diceGUI[i].setOpacity(highOpacity);
+            }
+        }
+        forgottenRealmGrid.setOpacity(highOpacity);
+    }
+
+    private void disableMainBoardDiceButtons() {
+        for (int i = 0; i < diceArray.length; i++) {
+            if (diceArray[i].getDiceStatus() == DiceStatus.AVAILABLE) {
+                diceGUI[i].getChildren().stream()
+                        .filter(node -> node instanceof Button)
+                        .forEach(node -> node.setDisable(true));
+            }
+        }
+        diceGrid.setOpacity(lowOpacity);
+    }
+
+    private void disableDiceButton(StackPane dice) {
+        dice.getChildren().stream()
+                .filter(node -> node instanceof Button)
+                .forEach(node -> node.setDisable(false));
+        dice.setOpacity(lowOpacity);
+    }
+
+    private void enableMainBoardDiceButtons() {
+        for (int i = 0; i < diceArray.length; i++) {
+            if (diceArray[i].getDiceStatus() == DiceStatus.AVAILABLE) {
+                diceGUI[i].getChildren().stream()
+                        .filter(node -> node instanceof Button)
+                        .forEach(node -> node.setDisable(false));
+            }
+        }
+        diceGrid.setOpacity(highOpacity);
+    }
+
+    private void enableDiceButton(StackPane dice) {
+        dice.getChildren().stream()
+                .filter(node -> node instanceof Button)
+                .forEach(node -> node.setDisable(false));
+        dice.setOpacity(highOpacity);
+    }
+
+    private void disableRollButton() {
+        rollButton.setDisable(true);
+        rollButtonStackPane.setOpacity(lowOpacity);
+    }
+
+    private void enableRollButton() {
+        rollButton.setDisable(false);
+        rollButtonStackPane.setOpacity(highOpacity);
+    }
+
+    private void disableAllButtons() {
+        disableRollButton();
+        disableMainBoardDiceButtons();
+        disableArcaneBoostButton();
+        disableTimeWarpButton();
+        disableSkipButton();
+        disableForgottenRealmButtons();
+    }
+
+    //------------------------------------------------------HOVER METHODS-------------------------------------------------------//
+    @FXML
+    public void redDiceHover() {
+        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, diceArray[0]));
+    }
+
+
+    public void highlightPossibleMoves(Move[] moves) {
+        currentPlayer.getScoreSheetController().highlightPossibleMoves(moves);
+    }
+
+    @FXML
+    public void removeScoreSheetHighlight() {
+        currentPlayer.getScoreSheetController().removeHighlight();
+    }
+
+    //------------------------------------------------------UPDATERS-------------------------------------------------------//
+    private void highlightCurrentRound() {
+        removeRoundTableHighlight();
+        int round = gameStatus.getRound();
+        highlightCell(round, "LawnGreen");
+    }
+
+    private void removeRoundTableHighlight() {
+        for (int i = 0; i < roundsTable.getColumnCount(); i++) {
+            highlightCell(i, null);
+        }
+    }
+
+    private void highlightCell(int column, String color) {
+        for (Node node : roundsTable.getChildren()) {
+            if (node instanceof Label) {
+                Integer colIndex = GridPane.getColumnIndex(node);
+                if (colIndex != null && colIndex == column) {
+                    if (color == null) {
+                        node.setStyle("");
+                        break;
+                    }
+                    node.setStyle(String.format("-fx-background-color: %s;", color));
+                    break;
+                }
+            }
+        }
+    }
+
+    private void updateScoreSheets() {
+        activePlayer.getScoreSheetController().updateScoreSheet();
+        passivePlayer.getScoreSheetController().updateScoreSheet();
+    }
+
+    private void updateDiceValues() {
+        redDiceNumber.setText(String.valueOf(diceArray[0].getValue()));
+        greenDiceNumber.setText(String.valueOf(diceArray[1].getValue()));
+        blueDiceNumber.setText(String.valueOf(diceArray[2].getValue()));
+        magentaDiceNumber.setText(String.valueOf(diceArray[3].getValue()));
+        yellowDiceNumber.setText(String.valueOf(diceArray[4].getValue()));
+        whiteDiceNumber.setText(String.valueOf(diceArray[5].getValue()));
+    }
+
+    private void updateSceneStatus() {
+        currentPlayerLabel.setText(currentPlayer.getName());
+        currentGameStatusLabel.setText(gameStatus.getGameStatus().toString());
+        turnLabel.setText("Turn " + gameStatus.getTurn());
+    }
+
+    //------------------------------------------------------BUTTONS FUNCTIONS-------------------------------------------------------//
+    public void redDiceButton() {
+        if (getPossibleMovesForADie(currentPlayer, diceArray[0]).length == 0) {
+            gameText.setText("There are no possible moves for this die");
+        } else {
+            makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, diceArray[0])[0]);
+        }
+    }
+
+    public void greenDiceButton() {
+
+    }
+
+    public void blueDiceButton() {
+
+    }
+
+    public void magentaDiceButton() {
+
+    }
+
+    public void yellowDiceButton() {
+
+    }
+
+    public void whiteDiceButton() {
+
+    }
+
+    //------------------------------------------------------GAME LOGIC METHODS-------------------------------------------------------//
+    @Override
     public void startGame() {
-        sceneManager.switchMainMenuScene();
+        standardAntiCheatService.initMasterPlayer();
+        performAntiCheatServiceChecks(activePlayer);
+        performAntiCheatServiceChecks(passivePlayer);
+
+        CompletableFuture<Void> gameFuture = CompletableFuture.completedFuture(null);
+
+        for (int i = 0; i < MAX_NUMBER_OF_ROUNDS; i++) {
+            final int roundIndex = i;
+            gameFuture = gameFuture.thenCompose(v -> {
+                gameStatus.resetTurn();
+                updateSceneStatus();
+                highlightCurrentRound();
+
+                CompletableFuture<Void> roundFuture = CompletableFuture.completedFuture(null);
+
+                if (roundRewards[roundIndex] != null) {
+                    performReward(activePlayer, roundRewards[roundIndex]);
+                }
+
+                roundFuture = roundFuture.thenCompose(v2 -> playRoundGUI());
+                roundFuture = roundFuture.thenCompose(v2 -> {
+                    switchPlayer();
+                    gameStatus.resetTurn();
+                    updateSceneStatus();
+                    if (roundRewards[roundIndex] != null) {
+                        performReward(activePlayer, roundRewards[roundIndex]);
+                    }
+                    return playRoundGUI();
+                });
+                return roundFuture.thenRun(gameStatus::incrementRound);
+            });
+        }
+
+        gameFuture.thenRun(this::endGame);
     }
-    public void setGameMode(GameMode gameMode){
-        this.gameMode=gameMode;
+
+    protected CompletableFuture<Void> playRoundGUI() {
+        gameText.setText(gameGuide.getInstruction(Instruction.ROUND));
+        delay(longDelay);
+        resetDice();
+
+        CompletableFuture<Void> roundFuture = CompletableFuture.completedFuture(null);
+
+        for (int i = 0; (i < MAX_NUMBER_OF_TURNS) && containsAvailableDie(); i++) {
+            roundFuture = roundFuture.thenCompose(v -> {
+                CompletableFuture<Void> rollingFuture = new CompletableFuture<>();
+
+                Platform.runLater(() -> {
+                    gameText.setText(gameGuide.getInstruction(Instruction.TURN));
+                    delay(mediumDelay);
+                    updateSceneStatus();
+                    enableRollButton();
+                    updateScoreSheets();
+
+                    rollButton.setOnAction(event -> {
+                        rollDice();
+                        disableRollButton();
+                        rollingFuture.complete(null);
+                    });
+                });
+
+                return rollingFuture.thenCompose(v2 -> playTurn());
+            });
+        }
+
+        return roundFuture.thenRun(() -> {
+            moveDiceToForgottenRealm();
+            playPassiveTurn();
+            checkArcaneBoost(activePlayer);
+            checkArcaneBoost(passivePlayer);
+        });
+    }
+
+    private CompletableFuture<Void> playTurn() {
+        currentPlayer = activePlayer;
+        CompletableFuture<Void> turnFuture = new CompletableFuture<>();
+        Platform.runLater(() -> {
+            Dice[] availableDice = getAvailableDice();
+            try {
+                if (availableDice.length == 0) {
+                    throw new NoAvailableMovesException();
+                }
+                enableMainBoardDiceButtons();
+
+                updateScoreSheets();
+                gameStatus.incrementTurn();
+                turnFuture.complete(null);
+            } catch (NoAvailableMovesException e) {
+                if (checkTimeWarp(activePlayer)) {
+                    gameText.setText("No possible moves available. Use Time Warp?");
+                    enableTimeWarpButton();
+                    enableSkipButton();
+
+                    timeWarpButton.setOnAction(timeWarpEvent -> {
+                        disableTimeWarpButton();
+                        disableSkipButton();
+                        // Apply Time Warp logic
+                        playTurn();
+                        turnFuture.complete(null);
+                    });
+
+                    skipButton.setOnAction(skipEvent -> {
+                        disableTimeWarpButton();
+                        disableSkipButton();
+                        disableMainBoardDiceButtons();
+                        turnFuture.completeExceptionally(e);
+                    });
+                } else {
+                    turnFuture.completeExceptionally(e);
+                    disableMainBoardDiceButtons();
+                }
+            }
+        });
+
+        return turnFuture.handle((result, throwable) -> {
+            if (throwable != null) {
+                gameText.setText("Turn skipped");
+            } else {
+                gameText.setText("End of turn");
+            }
+            return null;
+        });
+    }
+
+    private void playPassiveTurn() {
+        System.out.println(passivePlayer.getName());
+        gameGuide.displayInstructions(Instruction.PASSIVE_TURN);
+        passivePlayer.getScoreSheet().displayScoreSheet();
+        Dice[] temp = getForgottenRealmDice();
+        Dice selectedDie;
+        try {
+            selectedDie = selectValidDie(passivePlayer, temp, false, DiceStatus.TURN_SELECTED);
+        } catch (NoAvailableMovesException e) {
+            System.out.println("Ohh bad luck...No possible moves!");
+            System.out.println("Passive turn lost!");
+            return;
+        }
+        Move selectedMove = selectValidMove(passivePlayer, selectedDie);
+        makeMove(passivePlayer, selectedMove);
+    }
+
+    protected void playExtraTurn(Player player) {
+        player.getScoreSheet().displayScoreSheet();
+        LinkedList<Dice> notSelectedByPlayer = new LinkedList<>();
+        DiceStatus filter = player.getPlayerStatus() == PlayerStatus.ACTIVE ? DiceStatus.ACTIVE_PLAYER_SELECTED : DiceStatus.PASSIVE_PLAYER_SELECTED;
+        for (Dice i : diceArray) {
+            if (i.getDiceStatus() != filter) {
+                notSelectedByPlayer.add(i);
+            }
+        }
+        Dice[] diceNotSelectedByPlayer = notSelectedByPlayer.toArray(Dice[]::new);
+        try {
+            Dice selectedDie = selectValidDie(player, diceNotSelectedByPlayer, false, filter);
+            Move validMove = selectValidMove(player, selectedDie);
+            makeMove(player, validMove);
+        } catch (NoAvailableMovesException e) {
+            System.out.println("Ohh bad luck...there are no possible moves, turn lost!");
+        }
     }
 
     protected void checkArcaneBoost(Player player) {
@@ -265,17 +705,38 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
         }
     }
-    @FXML
-    public void high(){
-        highlightMoves(new Move[]{});
+
+    protected boolean checkTimeWarp(Player player) {
+        if (player.isTimeWarpAvailable()) {
+            gameText.setText("You can use Time Warp!");
+            enableTimeWarpButton();
+            return true;
+        }
+        gameText.setText("");
+        disableTimeWarpButton();
+        return false;
     }
-    public void highlightMoves(Move[] moves){
-        activePlayer.getScoreSheetController().highlightPossibleMoves(moves);
+
+    @Override
+    public boolean makeMove(Player player, Move move) {
+        try {
+            if (move.getDice().getRealm() == GameColor.WHITE) {
+                return false;
+            }
+            Realm realm = player.getRealm(move.getDice());
+            realm.attack(move);
+            performAntiCheatServiceChecks(player);
+            if (realm.checkReward()) {
+                processRewardQueue(player, realm.getReward());
+            }
+            return true;
+
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
     }
-    @FXML
-    public void removeHighlight(){
-        activePlayer.getScoreSheetController().removeHighlight();
-    }
+
 
     protected void displayArcaneBoostStatus(Player player) {
         System.out.println(player.getName());
@@ -284,81 +745,44 @@ public class GUIGameController extends CLIGameController implements Initializabl
         System.out.printf("You have %d Arcane Boost%s%n", count, count > 1 ? "s" : "");
     }
 
-    protected void playExtraTurn(Player player) {
-        player.getScoreSheet().displayScoreSheet();
-        LinkedList<Dice> notSelectedByPlayer = new LinkedList<>();
-        DiceStatus filter = player.getPlayerStatus() == PlayerStatus.ACTIVE ? DiceStatus.ACTIVE_PLAYER_SELECTED : DiceStatus.PASSIVE_PLAYER_SELECTED;
-        for (Dice i : diceArray) {
-            if (i.getDiceStatus() != filter) {
-                notSelectedByPlayer.add(i);
-            }
-        }
-        Dice[] diceNotSelectedByPlayer = notSelectedByPlayer.toArray(Dice[]::new);
-        try {
-            Dice selectedDie = selectValidDie(player, diceNotSelectedByPlayer, false, filter);
-            Move validMove = selectValidMove(player, selectedDie);
-            makeMove(player, validMove);
-        } catch (NoAvailableMovesException e) {
-            System.out.println("Ohh bad luck...there are no possible moves, turn lost!");
-        }
-    }
-
-    protected boolean checkTimeWarp(Player player) {
-        if (player.isTimeWarpAvailable()) {
-            displayTimeWarpStatus(player);
-            boolean choice = gameGuide.getUserBooleanChoice();
-            if (choice) {
-                player.useTimeWarpPower();
-                rollDice();
-                return true;
-            }
-        }
-        return false;
-    }
-
     protected void displayTimeWarpStatus(Player player) {
         int count = player.getTotalTimeWarpPowersCollected();
         gameGuide.displayInstructions(Instruction.TW_PROMPT);
         System.out.printf("You have %d Time Warp%s%n", count, count > 1 ? "s" : "");
     }
 
-    protected void playEssenceBonus(Player player) {
-        gameGuide.displayInstructions(Instruction.ESSENCE_BONUS);
-        player.getScoreSheet().displayScoreSheet();
-        Realm[] realms = player.getRealms();
-        LinkedList<Realm> availableRealms = Stream.of(realms)
-                .filter(Realm::isRealmAvailable)
-                .collect(Collectors.toCollection(LinkedList::new));
 
-        if (availableRealms.size() != realms.length) {
-            while (true) {
-                displayRealms(player);
-                System.out.println("Possible realms to choose from:");
-                for (int i = 0; i < availableRealms.size(); i++) {
-                    System.out.print(availableRealms.get(i).getName());
-                    if (i != availableRealms.size() - 1) {
-                        System.out.print(", ");
-                    }
-                }
-                System.out.println();
-                int choice = gameGuide.getUserChoice(1, realms.length);
-                try {
-                    if (!availableRealms.contains(realms[choice - 1])) {
-                        throw new InvalidMoveException();
-                    }
-                    playColorBonus(player, realms[choice - 1].getColor());
-                    break;
-                } catch (InvalidMoveException e) {
-                    System.out.printf("%s is not available%n", realms[choice - 1].getName());
-                    System.out.println("Choose another realm");
-                }
+    //------------------------------------------------------REWARD METHODS-------------------------------------------------------//
+
+    private void processRewardQueue(Player player, Collectibles[] rewards) {
+        LinkedList<Collectibles> list = new LinkedList<>();
+        for (Collectibles r : rewards) {
+            if (r != null) {
+                list.add(r);
             }
-        } else {
-            displayRealms(player);
-            playColorBonus(player, realms[gameGuide.getUserChoice(1, realms.length) - 1].getColor());
         }
+        PriorityQueue<Collectibles> priorityQueue = new PriorityQueue<>(new CollectiblesComparator());
+        priorityQueue.addAll(list);
+        while (!priorityQueue.isEmpty()) {
+            performReward(player, priorityQueue.remove());
+        }
+    }
 
-
+    protected void performReward(Player player, Collectibles reward) {
+        if (reward == null) {
+            return;
+        }
+        gameText.setText(player.getName() + ", you received " + reward.getName() + "!");
+        delay(3000);
+        if (reward instanceof EssenceBonus) {
+            playEssenceBonus(player);
+        } else {
+            if (reward instanceof ColorBonus) {
+                playColorBonus(player, ((ColorBonus) reward).getColor());
+            } else {
+                player.receiveCollectible(reward);
+            }
+        }
     }
 
     protected void playColorBonus(Player player, GameColor gameColor) {
@@ -463,35 +887,46 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
-    private void processRewardQueue(Player player, Collectibles[] rewards) {
-        LinkedList<Collectibles> list = new LinkedList<>();
-        for (Collectibles r : rewards) {
-            if (r != null) {
-                list.add(r);
+    protected void playEssenceBonus(Player player) {
+        gameGuide.displayInstructions(Instruction.ESSENCE_BONUS);
+        player.getScoreSheet().displayScoreSheet();
+        Realm[] realms = player.getRealms();
+        LinkedList<Realm> availableRealms = Stream.of(realms)
+                .filter(Realm::isRealmAvailable)
+                .collect(Collectors.toCollection(LinkedList::new));
+
+        if (availableRealms.size() != realms.length) {
+            while (true) {
+                displayRealms(player);
+                System.out.println("Possible realms to choose from:");
+                for (int i = 0; i < availableRealms.size(); i++) {
+                    System.out.print(availableRealms.get(i).getName());
+                    if (i != availableRealms.size() - 1) {
+                        System.out.print(", ");
+                    }
+                }
+                System.out.println();
+                int choice = gameGuide.getUserChoice(1, realms.length);
+                try {
+                    if (!availableRealms.contains(realms[choice - 1])) {
+                        throw new InvalidMoveException();
+                    }
+                    playColorBonus(player, realms[choice - 1].getColor());
+                    break;
+                } catch (InvalidMoveException e) {
+                    System.out.printf("%s is not available%n", realms[choice - 1].getName());
+                    System.out.println("Choose another realm");
+                }
             }
+        } else {
+            displayRealms(player);
+            playColorBonus(player, realms[gameGuide.getUserChoice(1, realms.length) - 1].getColor());
         }
-        PriorityQueue<Collectibles> priorityQueue = new PriorityQueue<>(new CollectiblesComparator());
-        priorityQueue.addAll(list);
-        while (!priorityQueue.isEmpty()) {
-            performReward(player, priorityQueue.remove());
-        }
+
+
     }
 
-    protected void performReward(Player player, Collectibles reward) {
-        if (reward == null) {
-            return;
-        }
-        gameText.setText(player.getName() + ", you received " + reward.getName() + "!");
-        if (reward instanceof EssenceBonus) {
-            playEssenceBonus(player);
-        } else {
-            if (reward instanceof ColorBonus) {
-                playColorBonus(player, ((ColorBonus) reward).getColor());
-            } else {
-                player.receiveCollectible(reward);
-            }
-        }
-    }
+    //------------------------------------------------------SECONDARY METHODS-------------------------------------------------------//
 
     private void delay(int ms) {
         try {
@@ -501,19 +936,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
-    protected void playRound() {
-        System.out.println(activePlayer.getName());
-        gameGuide.displayInstructions(Instruction.ROUND);
-        resetDice();
-        for (int i = 0; (i < MAX_NUMBER_OF_TURNS) & (containsAvailableDie()); i++) {
-            System.out.println("Turn " + (i + 1));
-            playTurn();
-        }
-        moveDiceToForgottenRealm();
-        playPassiveTurn();
-        checkArcaneBoost(activePlayer);
-        checkArcaneBoost(passivePlayer);
-    }
 
     private boolean containsAvailableDie() {
         for (Dice i : diceArray) {
@@ -582,129 +1004,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
         return selectedDie;
     }
 
-    private LinkedList<Dice> filterDiceWithPossibleMoves(Player player, Dice[] dice) {
-        LinkedList<Dice> diceWithMoves = new LinkedList<>();
-        for (Dice i : dice) {
-            if (getPossibleMovesForADie(player, i).length != 0) {
-                diceWithMoves.add(i);
-            }
-        }
-        return diceWithMoves;
-    }
-
-    private Move selectValidMove(Player player, Dice selectedDie) {
-
-        if (selectedDie instanceof RedDice) {
-            return selectMoveForRedDice(player, (RedDice) selectedDie);
-        }
-        return getPossibleMovesForADie(player, selectedDie)[0];
-    }
-
-    private Move selectMoveForRedDice(Player player, RedDice redDice) {
-        player.getScoreSheet().displayRedRealm();
-        Move[] moves = getPossibleMovesForADie(player, redDice);
-        System.out.println("Choose a Dragon to attack");
-        Map<Integer, Move> moveDragonMap = new HashMap<>();
-        for (Move move : moves) {
-            moveDragonMap.put(((Dragon) move.getCreature()).getDragonNumber(), move);
-        }
-        while (true) {
-            System.out.print("Possible dragons to attack: ");
-            moveDragonMap.forEach((dragonNumber, move) -> System.out.print(dragonNumber + "  "));
-            System.out.println();
-            int dragonNumber = gameGuide.getUserChoice(1, 4);
-            try {
-                if (!moveDragonMap.containsKey(dragonNumber)) {
-                    throw new InvalidMoveException();
-                }
-                return moveDragonMap.get(dragonNumber);
-            } catch (InvalidMoveException e) {
-                System.out.println("Can't attack Dragon " + dragonNumber);
-                System.out.println("Choose another dragon");
-            }
-        }
-    }
-
-    private void playTurn() {
-        gameGuide.displayInstructions(Instruction.TURN);
-        System.out.println("Here is your score sheet");
-        delay(2000);
-        activePlayer.getScoreSheet().displayScoreSheet();
-        Dice[] availableDice = getAvailableDice();
-        gameGuide.displayInstructions(Instruction.ROLL);
-        sc.nextLine();
-        rollDice();
-        Dice selectedDie;
-        while (true) {
-            try {
-                selectedDie = selectValidDie(activePlayer, availableDice, true, DiceStatus.TURN_SELECTED);
-                selectDice(selectedDie, activePlayer);
-                break;
-            } catch (NoAvailableMovesException e) {
-                System.out.println("Ohh bad luck...No possible moves!");
-                if (!checkTimeWarp(activePlayer)) {
-                    System.out.println("Turn lost!");
-                    return;
-                }
-            }
-        }
-        Move selectedMove = selectValidMove(activePlayer, selectedDie);
-        makeMove(activePlayer, selectedMove);
-        //Choosing a die, move (check if move is valid,if not choose another die)
-        //execute move
-        //All dice of value less than selected die's value goes to forgotten realm
-        gameStatus.incrementTurn();
-    }
-
-    private void playPassiveTurn() {
-        System.out.println(passivePlayer.getName());
-        gameGuide.displayInstructions(Instruction.PASSIVE_TURN);
-        passivePlayer.getScoreSheet().displayScoreSheet();
-        Dice[] temp = getForgottenRealmDice();
-        Dice selectedDie;
-        try {
-            selectedDie = selectValidDie(passivePlayer, temp, false, DiceStatus.TURN_SELECTED);
-        } catch (NoAvailableMovesException e) {
-            System.out.println("Ohh bad luck...No possible moves!");
-            System.out.println("Passive turn lost!");
-            return;
-        }
-        Move selectedMove = selectValidMove(passivePlayer, selectedDie);
-        makeMove(passivePlayer, selectedMove);
-    }
-
-    private void displayRealms(Player player) {
-        Realm[] realms = player.getRealms();
-        StringBuilder result = new StringBuilder();
-        result.append("[");
-        for (int i = 0; i < realms.length; i++) {
-
-            result.append(i + 1).append("-");
-            result.append(realms[i].getName());
-            if (i < realms.length - 1) {
-                result.append(", ");
-            }
-        }
-        result.append("]");
-        System.out.println(result);
-    }
-
-
-    private Player getPlayerName(String prompt) {
-        while (true) {
-            try {
-                System.out.println(prompt);
-                String playerName = sc.nextLine();
-                if (gameBoard.getPlayer1() != null && playerName.equals(gameBoard.getPlayer1().getName())) {
-                    throw new InvalidPlayerNameException("Name already in use!");
-                }
-                return new Player(playerName);
-            } catch (InvalidPlayerNameException e) {
-                System.out.println(e.getMessage());
-                sc.nextLine();  // Clear the buffer
-            }
-        }
-    }
 
     @Override
     public boolean switchPlayer() {
@@ -721,6 +1020,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             } else {
                 flag = false;
             }
+            currentPlayer = activePlayer;
 
         } catch (NullPointerException e) {
             System.err.println("Invalid Switch: " + e.getMessage());
@@ -729,56 +1029,12 @@ public class GUIGameController extends CLIGameController implements Initializabl
         return flag;
     }
 
-    /**
-     * Rolls all available dice for the current turn, assigning each a random
-     * number from 1 to 6.
-     *
-     * @return An array of the currently rolled {@code Dice}.
-     */
-    @Override
-    @FXML
-    public Dice[] rollDice() {
-        //Rolling only rolls available dice
-        Random random = new Random();
-        int diceValue;
-        //Dice values are from 1 to 6
-        int diceMaxBound = 6;
-        int diceMinBound = 1;
-        for (Dice dice : diceArray) {
-            if (dice != null && dice.getDiceStatus() == DiceStatus.AVAILABLE) {
-                diceValue = random.nextInt(diceMaxBound - diceMinBound + 1) + diceMinBound;
-                dice.setValue(diceValue);
-            }
-        }
-        updateDiceValues();
-        return diceArray;
-    }
-
-    /**
-     * Resets dice status to be all available
-     * Used at the beginning of each round
-     */
-    private void resetDice() {
-        for (Dice i : diceArray) {
-            i.setDiceStatus(DiceStatus.AVAILABLE);
-        }
-    }
 
     /**
      * Gets the dice available for rolling or rerolling.
      *
      * @return An array of {@code Dice} available for the current turn.
      */
-    @Override
-    public Dice[] getAvailableDice() {
-        LinkedList<Dice> list = new LinkedList<>();
-        for (Dice i : diceArray) {
-            if (i.getDiceStatus() == DiceStatus.AVAILABLE) {
-                list.add(i);
-            }
-        }
-        return list.toArray(Dice[]::new);
-    }
 
     /**
      * Gets all six dice, providing their current state and value within the
@@ -789,30 +1045,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
      *
      * @return An array of all six {@code Dice}, with each die's state and value.
      */
-    @Override
-    public Dice[] getAllDice() {
-        return diceArray;
-    }
 
-    /**
-     * Gets all dice located in the forgotten realm
-     *
-     * @return An array of all dice in the forgotten realm
-     */
-    @Override
-    public Dice[] getForgottenRealmDice() {
-        LinkedList<Dice> list = new LinkedList<>();
-        for (Dice i : diceArray) {
-            if (i.getDiceStatus() == DiceStatus.FORGOTTEN_REALM) {
-                list.add(i);
-            }
-        }
-        Dice[] result = new Dice[list.size()];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = list.get(i);
-        }
-        return result;
-    }
 
     @Override
     public Move[] getAllPossibleMoves(Player player) {
@@ -870,7 +1103,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         try {
             LinkedList<Move> possibleMoves = new LinkedList<>();
             int diceValue = dice.getValue();
-
+            //We could have made it recursive but refused to do so for code simplicity
             // If the dice is white, iterate over all realms
             if (dice.getRealm() == GameColor.WHITE) {
                 for (Realm realm : player.getRealms()) {
@@ -905,111 +1138,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     }
 
-    @Override
-    public GameBoard getGameBoard() {
-        return gameBoard;
-    }
-
-    @Override
-    public Player getActivePlayer() {
-        return activePlayer;
-    }
-
-    @Override
-    public Player getPassivePlayer() {
-        return passivePlayer;
-    }
-
-    @Override
-    public ScoreSheet getScoreSheet(Player player) {
-        return player.getScoreSheet();
-    }
-
-    @Override
-    public GameStatus getGameStatus() {
-        return gameStatus;
-    }
-
-    @Override
-    public GameScore getGameScore(Player player) {
-        if (player != null) {
-            return player.getGameScore();
-        }
-        System.err.println("Cannot get player Game score since player is null");
-        return new GameScore();
-    }
-
-    @Override
-    public TimeWarp[] getTimeWarpPowers(Player player) {
-        if (player != null) {
-            return player.getTimeWarps();
-        }
-        return new TimeWarp[0];
-    }
-
-    @Override
-    public ArcaneBoost[] getArcaneBoostPowers(Player player) {
-        if (player != null) {
-            return player.getArcaneBoosts();
-        }
-        return new ArcaneBoost[0];
-    }
-
-    @Override
-    public boolean selectDice(Dice dice, Player player) {
-        if (dice == null || player == null) {
-            System.err.println("Error: Dice or Player cannot be null.");
-            return false;
-        }
-        try {
-            dice.setDiceStatus(DiceStatus.TURN_SELECTED);
-            diceGUI[dice.getRealm().ordinal()].getChildren().stream()
-                    .filter(node -> node instanceof Button)
-                    .forEach(node -> node.setDisable(true));
-            diceGUI[dice.getRealm().ordinal()].setOpacity(0.3);
-            for (Dice diceFromArray : diceArray) {
-                if (diceFromArray.getDiceStatus() == DiceStatus.AVAILABLE && diceFromArray.getValue() < dice.getValue()) {
-                    diceFromArray.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
-                    moveDice(diceGUI[dice.getRealm().ordinal()],forgottenRealmGrid);
-                    diceGUI[dice.getRealm().ordinal()].setOpacity(0.5);
-                }
-            }
-            return true;
-        } catch (Exception e) {
-            System.err.println("An unexpected error occurred: " + e.getMessage());
-            return false;
-        }
-    }
-
-    private void moveDiceToForgottenRealm() {
-        //Moves the rest of the dice unselected by active player to forgotten realm
-        for (Dice i : diceArray) {
-            if (i.getDiceStatus() == DiceStatus.AVAILABLE) {
-                i.setDiceStatus(DiceStatus.FORGOTTEN_REALM);
-                moveDice(diceGUI[i.getRealm().ordinal()],forgottenRealmGrid);
-            }
-        }
-    }
-
-    @Override
-    public boolean makeMove(Player player, Move move) {
-        try {
-            if (move.getDice().getRealm() == GameColor.WHITE) {
-                return false;
-            }
-            Realm realm = player.getRealm(move.getDice());
-            realm.attack(move);
-            performAntiCheatServiceChecks(player);
-            if (realm.checkReward()) {
-                processRewardQueue(player, realm.getReward());
-            }
-            return true;
-
-        } catch (NullPointerException e) {
-            System.err.println(e.getMessage());
-            return false;
-        }
-    }
 
     protected void performAntiCheatServiceChecks(Player player) {
         try {
@@ -1080,7 +1208,4 @@ public class GUIGameController extends CLIGameController implements Initializabl
         System.out.println("  ZZZZ  EEEEE   UUU   SSSS");
         systemManager.exit();
     }
-
-
-
 }

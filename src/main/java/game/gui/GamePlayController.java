@@ -1,5 +1,6 @@
 package game.gui;
 
+import game.engine.GameMode;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,6 +27,7 @@ public class GamePlayController implements Initializable {
     private AnchorPane player2ScoreSheetContainer;
     @FXML
     private ImageView backGround;
+    private static SceneManager sceneManager;
 
 
     @Override
@@ -42,21 +44,26 @@ public class GamePlayController implements Initializable {
             FXMLLoader gameBoardLoader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
             AnchorPane gameBoard = gameBoardLoader.load();
             GUIGameController guiGameController=gameBoardLoader.getController();
-            guiGameController.setPlayer1(PlayerDataController.getPlayer1());
-            guiGameController.setPlayer2(PlayerDataController.getPlayer2());
-            guiGameController.setPlayer1ScoreSheet(player1Controller);
-
+            guiGameController.setSceneManager(sceneManager);
+            if(MainMenuController.getGameMode()==GameMode.MULTIPLAYER){
+                guiGameController.setPlayer1(PlayerDataController.getPlayer1());
+                guiGameController.setPlayer2(PlayerDataController.getPlayer2());
+                guiGameController.setPlayer1ScoreSheet(player1Controller);
+                guiGameController.setGameMode(GameMode.MULTIPLAYER);
+            }
             gameBoardContainer.getChildren().add(gameBoard);
-
-
             // Load and configure Player 2 Composite ScoreSheet
             FXMLLoader player2Loader = new FXMLLoader(getClass().getResource("CompositeScoreSheet.fxml"));
             AnchorPane player2ScoreSheet = player2Loader.load();
             CompositeScoreSheetController player2Controller = player2Loader.getController();
             player2ScoreSheetContainer.getChildren().add(player2ScoreSheet);
             guiGameController.setPlayer2ScoreSheet(player2Controller);
+            guiGameController.startGame();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static void setSceneManager(SceneManager sceneManager){
+        GamePlayController.sceneManager =sceneManager;
     }
 }

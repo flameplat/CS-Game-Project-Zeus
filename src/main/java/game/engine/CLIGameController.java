@@ -456,7 +456,7 @@ public class CLIGameController extends GameController {
         return selectedDie;
     }
 
-    private LinkedList<Dice> filterDiceWithPossibleMoves(Player player, Dice[] dice) {
+    protected LinkedList<Dice> filterDiceWithPossibleMoves(Player player, Dice[] dice) {
         LinkedList<Dice> diceWithMoves = new LinkedList<>();
         for (Dice i : dice) {
             if (getPossibleMovesForADie(player, i).length != 0) {
@@ -466,7 +466,7 @@ public class CLIGameController extends GameController {
         return diceWithMoves;
     }
 
-    private Move selectValidMove(Player player, Dice selectedDie) {
+    protected Move selectValidMove(Player player, Dice selectedDie) {
 
         if (selectedDie instanceof RedDice) {
             return selectMoveForRedDice(player, (RedDice) selectedDie);
@@ -547,7 +547,7 @@ public class CLIGameController extends GameController {
         makeMove(passivePlayer, selectedMove);
     }
 
-    private void displayRealms(Player player) {
+    protected void displayRealms(Player player) {
         Realm[] realms = player.getRealms();
         StringBuilder result = new StringBuilder();
         result.append("[");

@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 public class MainMenuController implements Initializable {
     @FXML
     private Label hint;
-    private GUIGameController gameController;
     private SceneManager sceneManager;
     @FXML
     private ImageView bg;
@@ -24,6 +23,8 @@ public class MainMenuController implements Initializable {
     @FXML
     private ImageView button2;
 
+    private static GameMode gameMode;
+
     public MainMenuController(){
 
     }
@@ -31,15 +32,11 @@ public class MainMenuController implements Initializable {
     public void setSceneManager(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
     }
-
-    public void setGameController(GUIGameController gameController) {
-        this.gameController = gameController;
-    }
     public void setGameModeSinglePlayer(){
         this.hint.setText("This option is WIP");
     }
     public void setGameModeMultiplayer(){
-        gameController.setGameMode(GameMode.MULTIPLAYER);
+        gameMode=GameMode.MULTIPLAYER;
         sceneManager.switchPlayerDataScene();
     }
 
@@ -52,5 +49,8 @@ public class MainMenuController implements Initializable {
         bg.setImage(mainBG);
         button1.setImage(multiPlayerButton);
         button2.setImage(singlePlayerButton);
+    }
+    public static GameMode getGameMode(){
+        return gameMode;
     }
 }

@@ -17,8 +17,7 @@ public class DiceRealms extends Application {
         Image icon=new Image(Objects.requireNonNull(getClass().getResource("/images/icon.png")).toExternalForm());
         primaryStage.getIcons().add(icon);
         primaryStage.setTitle("Dice Realms");
-        GUIGameController guiGameController=new GUIGameController();
-        SceneManager sceneManager=new SceneManager(primaryStage,guiGameController);
+        SceneManager sceneManager=new SceneManager(primaryStage);
         sceneManager.switchMainMenuScene();
     }
 }

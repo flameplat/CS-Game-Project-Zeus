@@ -25,8 +25,6 @@ public class GameGuide {
     private static final String ESSENCE_BONUS = EssenceBonus.getInstruction();
     private static final String ROLL = "Press Enter to roll";
     private final Scanner sc;
-
-
     public GameGuide() {
         this.sc = new Scanner(System.in);
     }
