@@ -399,7 +399,7 @@ public class CLIGameController extends GameController {
 
     //Selects a valid die (has an available move in player)
     //Prints given dice if no moves or prints filtered dice then the selected die
-    private Dice selectValidDie(Player player, Dice[] dice, boolean checkTimeWarp, DiceStatus diceStatus) throws NoAvailableMovesException {
+    protected Dice selectValidDie(Player player, Dice[] dice, boolean checkTimeWarp, DiceStatus diceStatus) throws NoAvailableMovesException {
         Dice selectedDie;
         LinkedList<Dice> filteredDice;
         if (getPossibleMovesForDice(player, dice).length == 0) {

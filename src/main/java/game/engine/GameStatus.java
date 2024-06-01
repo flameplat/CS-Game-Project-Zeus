@@ -46,5 +46,8 @@ public class GameStatus {
     public int getTurn() {
         return turn;
     }
+    public void setRound(int round){
+        this.round=round;
+    }
 
 }

@@ -63,4 +63,7 @@ public class BlueDice extends Dice {
         BlueDice other = (BlueDice) o;
         return (GAME_COLOR == other.getRealm()) && (value == other.getValue());
     }
+    public String getName(){
+        return String.format("%s(%d)", GAME_COLOR, value);
+    }
 }

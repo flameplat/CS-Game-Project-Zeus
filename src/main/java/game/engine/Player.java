@@ -42,6 +42,8 @@ public class Player {
         gameScore = new GameScore(realms, name);
         timeWarps = new LinkedList<>();
         arcaneBoosts = new LinkedList<>();
+        isArcaneBoostSkipped=false;
+        isArcaneBoostUsed=false;
     }
 
 
@@ -53,6 +55,8 @@ public class Player {
         id++;
         timeWarps = new LinkedList<>();
         arcaneBoosts = new LinkedList<>();
+        isArcaneBoostSkipped=false;
+        isArcaneBoostUsed=false;
     }
 
     public Map<String, Integer> getCollectiblesCounters() {
@@ -143,6 +147,7 @@ public class Player {
     public void useArcaneBoostPower() {
         if (!arcaneBoosts.isEmpty()) {
             arcaneBoosts.remove();
+            isArcaneBoostUsed=true;
         }
     }
 
@@ -207,6 +212,20 @@ public class Player {
     }
     public CompositeScoreSheetController getScoreSheetController(){
         return scoreSheetController;
+    }
+    private boolean isArcaneBoostSkipped;
+    private boolean isArcaneBoostUsed;
+    public boolean isArcaneBoostSkipped(){
+        return isArcaneBoostSkipped;
+    }
+    public void setArcaneBoostSkipped(boolean state){
+        isArcaneBoostSkipped=state;
+    }
+    public boolean isArcaneBoostUsed(){
+        return isArcaneBoostUsed;
+    }
+    public void resetArcaneBoostUsage(){
+        isArcaneBoostUsed=false;
     }
 
 }

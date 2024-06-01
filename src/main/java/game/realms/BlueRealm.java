@@ -40,6 +40,9 @@ public class BlueRealm extends Realm{
     private static final GameColor REALM_GAME_COLOR = GameColor.BLUE;
     private final String[] attackValues;
     private final String[] rewardValues;
+    private static final String RESET = "\u001B[0m";
+    private static final String BLUE = "\u001B[34m";
+
 
     //-----------------------Constructor-----------------------//
     public BlueRealm() {
@@ -70,7 +73,7 @@ public class BlueRealm extends Realm{
     // -----------------------Methods-----------------------//
     @Override
     public String getName() {
-        return name;
+        return  (BLUE + "Blue Realm" + RESET);
     }
 
     @Override

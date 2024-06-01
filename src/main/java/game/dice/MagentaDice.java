@@ -27,6 +27,9 @@ public class MagentaDice extends Dice {
     public String toString() {
         return String.format(MAGENTA + "%s(%d)" + RESET, GAME_COLOR, value);
     }
+    public String getName(){
+        return String.format("%s(%d)", GAME_COLOR, value);
+    }
 
     // getter for the dice value
     public int getValue() {

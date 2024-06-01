@@ -12,18 +12,16 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 public class RealmPickerController implements Initializable {
-    private Consumer<GameColor> userInputHandler;
+
     @FXML
     private ImageView backGroundImageView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Image mainBG=new Image(Objects.requireNonNull(getClass().getResource("/images/RetroDice.png")).toExternalForm());
+        Image mainBG=new Image(Objects.requireNonNull(getClass().getResource("/images/RealmsCreatures.png")).toExternalForm());
         backGroundImageView.setImage(mainBG);
     }
-    public void setOnUserInput(Consumer<GameColor> handler){
-        this.userInputHandler=handler;
-    }
+
     @FXML
     public void chooseRedRealm(){
     }

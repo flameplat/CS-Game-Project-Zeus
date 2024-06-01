@@ -60,5 +60,8 @@ public class GreenDice extends Dice {
         GreenDice other = (GreenDice) o;
         return (GAME_COLOR == other.getRealm()) && (value == other.getValue());
     }
+    public String getName(){
+        return String.format("%s(%d)", GAME_COLOR, value);
+    }
 
 }

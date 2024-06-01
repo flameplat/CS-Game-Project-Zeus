@@ -35,5 +35,6 @@ public abstract class Dice {
     public abstract DiceStatus getDiceStatus();
 
     public abstract void setDiceStatus(DiceStatus status);
+    public abstract String getName();
 
 }
