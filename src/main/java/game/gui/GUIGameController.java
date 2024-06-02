@@ -842,7 +842,12 @@ public class GUIGameController extends CLIGameController implements Initializabl
         activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
         activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
         activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
-        playEssenceBonus(activePlayer);
+        playColorBonus(activePlayer,GameColor.YELLOW);
+        playColorBonus(activePlayer,GameColor.RED);
+        playColorBonus(activePlayer,GameColor.BLUE);
+        playColorBonus(activePlayer,GameColor.GREEN);
+        playColorBonus(activePlayer,GameColor.MAGENTA);
+        //playEssenceBonus(activePlayer);
     }
 
     @Override
