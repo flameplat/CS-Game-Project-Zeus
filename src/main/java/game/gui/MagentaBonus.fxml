@@ -13,7 +13,7 @@
             <Image url="@../../../resources/images/MagentaRealmBG.jpg" />
          </image>
       </ImageView>
-      <StackPane layoutX="277.0" layoutY="198.0" prefHeight="150.0" prefWidth="200.0">
+      <StackPane layoutX="350.0" layoutY="198.0" prefHeight="150.0" prefWidth="200.0">
          <children>
             <ImageView fitHeight="503.0" fitWidth="601.0" pickOnBounds="true" preserveRatio="true">
                <image>
