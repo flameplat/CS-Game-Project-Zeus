@@ -8,9 +8,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
+
 
 public class SceneManager {
     private final Stage stage;
@@ -66,30 +65,44 @@ public class SceneManager {
 
     private Stage realmStage;
 
-    public void showRealmStage(String resourceFileName){
-        try{
+
+    public void showRealmStage(String resourceFileName) {
+
+
+        try {
+            // Load the FXML file
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(resourceFileName)));
-            root = loader.load();
-            RealmController realmController=loader.getController();
+            Parent root = loader.load();
+
+            // Initialize the controller
+            RealmController realmController = loader.getController();
             realmController.setSceneManager(this);
+            realmController.setGuiGameController(guiGameController);
+
+            // Create the scene and stage
             Scene realmScene = new Scene(root);
             realmStage = new Stage();
             realmStage.setScene(realmScene);
             realmStage.initModality(Modality.APPLICATION_MODAL);
             realmStage.initOwner(stage);
-            realmController.setGuiGameController(guiGameController);
-            realmController.setSceneManager(this);
             realmStage.setResizable(false);
+
+            // Handle stage close request
             realmStage.setOnCloseRequest(Event::consume);
+
             realmStage.showAndWait();
-            stage.toFront();
-        } catch (IOException e){
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        stage.toFront();
+
     }
 
-    public void closeRealmStage(){
-        realmStage.close();
+    public void closeRealmStage() {
+        if (realmStage != null) {
+            realmStage.close();
+        }
     }
 
     public void showRedRealmStage(){
