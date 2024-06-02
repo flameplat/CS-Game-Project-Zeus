@@ -692,6 +692,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
     @FXML
     public void arcaneBoostButtonClick(){
         enableMainBoardDiceButtons();
+        disableSkipButton();
         currentPlayer.useArcaneBoostPower();
         if(!currentPlayer.isArcaneBoostAvailable()){
             disableArcaneBoostButton();
@@ -706,6 +707,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             selectDice(diceArray[0], currentPlayer);
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[0])[0]);
+            disableMainBoardDiceButtons();
+            disableForgottenRealmButtons();
             manageTurnCycle();
         }
         catch(InvalidMoveException e){
@@ -721,9 +724,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             selectDice(diceArray[1],currentPlayer);
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[1])[0]);
+            disableMainBoardDiceButtons();
+            disableForgottenRealmButtons();
             manageTurnCycle();
-
-
         }
         catch(InvalidMoveException e){
             gameText.setText("There are no possible moves for "+refDiceArray[1].getName());
@@ -737,6 +740,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             selectDice(diceArray[2], currentPlayer);
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[2])[0]);
+            disableMainBoardDiceButtons();
+            disableForgottenRealmButtons();
             manageTurnCycle();
         }
         catch(InvalidMoveException e){
@@ -751,6 +756,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             selectDice(diceArray[3], currentPlayer);
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[3])[0]);
+            disableMainBoardDiceButtons();
+            disableForgottenRealmButtons();
             manageTurnCycle();
 
         }
@@ -766,6 +773,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             selectDice(diceArray[4], currentPlayer);
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[4])[0]);
+            disableMainBoardDiceButtons();
+            disableForgottenRealmButtons();
             manageTurnCycle();
         }
         catch(InvalidMoveException e){

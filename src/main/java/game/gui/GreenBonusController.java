@@ -88,4 +88,8 @@ public class GreenBonusController implements  Initializable  {
     public void AttackGaia11(ActionEvent event) {
 
     }
+    private static SceneManager sceneManager;
+    public static void setSceneManager(SceneManager sceneManager){
+        GreenBonusController.sceneManager=sceneManager;
+    }
 }

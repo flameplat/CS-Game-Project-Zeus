@@ -16,6 +16,7 @@ public class RealmPickerController implements Initializable {
     @FXML
     private ImageView backGroundImageView;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Image mainBG=new Image(Objects.requireNonNull(getClass().getResource("/images/RealmsCreatures.png")).toExternalForm());
@@ -40,6 +41,10 @@ public class RealmPickerController implements Initializable {
     @FXML
     public void chooseYellowRealm(){
 
+    }
+    private static SceneManager sceneManager;
+    public static void setSceneManager(SceneManager sceneManager){
+        RealmPickerController.sceneManager=sceneManager;
     }
 
 

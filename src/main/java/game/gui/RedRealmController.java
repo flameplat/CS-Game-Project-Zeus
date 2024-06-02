@@ -76,5 +76,9 @@ public class RedRealmController implements Initializable {
     public void attckHeartD4(ActionEvent event) {
 
     }
+    private static SceneManager sceneManager;
+    public static void setSceneManager(SceneManager sceneManager){
+        RedRealmController.sceneManager=sceneManager;
+    }
 
 }
