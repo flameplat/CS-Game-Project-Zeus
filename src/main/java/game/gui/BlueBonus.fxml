@@ -20,7 +20,7 @@
                   <Image url="@../../../resources/images/BlueSerpant.png" />
                </image>
             </ImageView>
-            <Button fx:id="serpantButton" mnemonicParsing="false" onAction="#AttcakSerpant" prefHeight="428.0" prefWidth="426.0" text="Button" visible="false" />
+            <Button fx:id="serpantButton" mnemonicParsing="false" onAction="#AttcakSerpant" opacity="0.0" prefHeight="428.0" prefWidth="426.0" text="Button" />
          </children>
       </StackPane>
    </children>

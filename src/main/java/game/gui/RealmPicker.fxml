@@ -19,7 +19,7 @@
       </ImageView>
       <StackPane layoutY="531.0" prefHeight="48.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="redImageView" fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/3.png" />
                </image>
@@ -34,7 +34,7 @@
       </StackPane>
       <StackPane layoutX="214.0" layoutY="531.0" prefHeight="48.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="greenImageView" fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/3.png" />
                </image>
@@ -49,7 +49,7 @@
       </StackPane>
       <StackPane layoutX="426.0" layoutY="531.0" prefHeight="48.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="blueImageView" fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/3.png" />
                </image>
@@ -64,7 +64,7 @@
       </StackPane>
       <StackPane layoutX="638.0" layoutY="531.0" prefHeight="48.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="magentaImageView" fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/3.png" />
                </image>
@@ -79,7 +79,7 @@
       </StackPane>
       <StackPane layoutX="852.0" layoutY="531.0" prefHeight="48.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="yellowImageView" fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/3.png" />
                </image>
@@ -94,7 +94,7 @@
       </StackPane>
       <StackPane layoutX="392.0" layoutY="-23.0" prefHeight="48.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="74.0" fitWidth="299.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="mainImageView" fitHeight="74.0" fitWidth="299.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/3.png" />
                </image>

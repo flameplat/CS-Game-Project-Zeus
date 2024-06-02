@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class MainMenuController implements Initializable {
+public class MainMenuController implements Initializable ,GameController{
     @FXML
     private Label hint;
     private SceneManager sceneManager;

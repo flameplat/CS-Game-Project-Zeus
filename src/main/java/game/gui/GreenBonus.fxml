@@ -51,7 +51,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button fx:id="Gaia2" mnemonicParsing="false" onAction="#AttackGaia2" prefHeight="121.0" prefWidth="148.0" text="Button" visible="false" />
+            <Button fx:id="Gaia2" mnemonicParsing="false" onAction="#AttackGaia2" opacity="0.0" prefHeight="121.0" prefWidth="148.0" text="Button" />
          </children></StackPane>
       <StackPane layoutX="-8.0" layoutY="343.0" prefHeight="208.0" prefWidth="231.0">
          <children>
@@ -81,7 +81,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button fx:id="Gaia1" mnemonicParsing="false" onAction="#AttackGaia1" prefHeight="124.0" prefWidth="146.0" text="Button" visible="false" />
+            <Button fx:id="Gaia1" mnemonicParsing="false" onAction="#AttackGaia1" opacity="0.0" prefHeight="124.0" prefWidth="146.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="438.0" layoutY="75.0" prefHeight="208.0" prefWidth="231.0">
@@ -112,7 +112,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button fx:id="Gaia4" mnemonicParsing="false" onAction="#AttackGaia4" prefHeight="124.0" prefWidth="146.0" text="Button" visible="false" />
+            <Button fx:id="Gaia4" mnemonicParsing="false" onAction="#AttackGaia4" opacity="0.0" prefHeight="124.0" prefWidth="146.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="298.0" layoutY="683.0" prefHeight="208.0" prefWidth="231.0">
@@ -143,7 +143,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button fx:id="Gaia11" mnemonicParsing="false" onAction="#AttackGaia11" prefHeight="119.0" prefWidth="139.0" text="Button" visible="false" />
+            <Button fx:id="Gaia11" mnemonicParsing="false" onAction="#AttackGaia11" opacity="0.0" prefHeight="119.0" prefWidth="139.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="645.0" layoutY="97.0" prefHeight="208.0" prefWidth="231.0">
@@ -174,7 +174,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button fx:id="Gaia5" mnemonicParsing="false" onAction="#AttackGaia5" prefHeight="134.0" prefWidth="143.0" text="Button" visible="false" />
+            <Button fx:id="Gaia5" mnemonicParsing="false" onAction="#AttackGaia5" opacity="0.0" prefHeight="134.0" prefWidth="143.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="939.0" layoutY="258.0" prefHeight="208.0" prefWidth="231.0">
@@ -205,7 +205,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button fx:id="Gaia6" mnemonicParsing="false" onAction="#AttackGaia6" prefHeight="130.0" prefWidth="141.0" text="Button" visible="false" />
+            <Button fx:id="Gaia6" mnemonicParsing="false" onAction="#AttackGaia6" opacity="0.0" prefHeight="130.0" prefWidth="141.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="487.0" layoutY="683.0" prefHeight="208.0" prefWidth="231.0">
@@ -236,7 +236,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button fx:id="Gaia10" mnemonicParsing="false" onAction="#AttackGaia10" prefHeight="129.0" prefWidth="142.0" text="Button" visible="false" />
+            <Button fx:id="Gaia10" mnemonicParsing="false" onAction="#AttackGaia10" opacity="0.0" prefHeight="129.0" prefWidth="142.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="673.0" layoutY="683.0" prefHeight="208.0" prefWidth="231.0">
@@ -267,7 +267,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button fx:id="Gaia9" mnemonicParsing="false" onAction="#AttackGaia9" prefHeight="129.0" prefWidth="145.0" text="Button" visible="false" />
+            <Button fx:id="Gaia9" mnemonicParsing="false" onAction="#AttackGaia9" opacity="0.0" prefHeight="129.0" prefWidth="145.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="833.0" layoutY="598.0" prefHeight="208.0" prefWidth="231.0">
@@ -298,7 +298,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button fx:id="Gaia8" mnemonicParsing="false" onAction="#AttackGaia8" prefHeight="126.0" prefWidth="148.0" text="Button" visible="false" />
+            <Button fx:id="Gaia8" mnemonicParsing="false" onAction="#AttackGaia8" opacity="0.0" prefHeight="126.0" prefWidth="148.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="919.0" layoutY="456.0" prefHeight="208.0" prefWidth="231.0">
@@ -329,7 +329,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button fx:id="Gaia7" mnemonicParsing="false" onAction="#AttackGaia7" prefHeight="128.0" prefWidth="146.0" text="Button" visible="false" />
+            <Button fx:id="Gaia7" mnemonicParsing="false" onAction="#AttackGaia7" opacity="0.0" prefHeight="128.0" prefWidth="146.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="262.0" layoutY="97.0" prefHeight="208.0" prefWidth="231.0">
@@ -360,8 +360,13 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button fx:id="Gaia3" mnemonicParsing="false" onAction="#AttackGaia3" prefHeight="129.0" prefWidth="143.0" text="Button" visible="false" />
+            <Button fx:id="Gaia3" mnemonicParsing="false" onAction="#AttackGaia3" opacity="0.0" prefHeight="129.0" prefWidth="143.0" text="Button" />
          </children>
       </StackPane>
+      <Label fx:id="label" alignment="CENTER" layoutX="20.0" layoutY="33.0" prefHeight="17.0" prefWidth="1172.0" textFill="WHITE">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

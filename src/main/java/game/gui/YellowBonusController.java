@@ -12,7 +12,7 @@ import javafx.scene.image.ImageView;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
-public class YellowBonusController implements Initializable  {
+public class YellowBonusController implements Initializable ,RealmController {
     @FXML private Button LionButton;
     @FXML private ImageView LionImageView;
     @FXML private ImageView BG;
@@ -24,16 +24,16 @@ public class YellowBonusController implements Initializable  {
         LionImageView.setImage(creature);
     }
     public void AttackLion() {
-        sceneManager.closeYellowRealmStage();
+        sceneManager.closeRealmStage();
         guiGameController.makeMove(currentPlayer,possibleMove);
     }
-    private static SceneManager sceneManager;
-    public static void setSceneManager(SceneManager sceneManager){
-        YellowBonusController.sceneManager=sceneManager;
+    private SceneManager sceneManager;
+    public void setSceneManager(SceneManager sceneManager){
+        this.sceneManager=sceneManager;
     }
-    private static GUIGameController guiGameController;
-    public static void setGuiGameController(GUIGameController guiGameController){
-        YellowBonusController.guiGameController=guiGameController;
+    private GUIGameController guiGameController;
+    public void setGuiGameController(GUIGameController guiGameController){
+        this.guiGameController=guiGameController;
     }
     private static Player currentPlayer;
     public static void setCurrentPlayer(Player currentPlayer){

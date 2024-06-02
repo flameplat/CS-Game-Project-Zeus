@@ -13,9 +13,9 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class GamePlayController implements Initializable {
+public class GamePlayController implements Initializable,GameController {
 
-    private static SceneManager sceneManager;
+    private SceneManager sceneManager;
     @FXML
     private AnchorPane player1ScoreSheetContainer;
     @FXML
@@ -25,8 +25,8 @@ public class GamePlayController implements Initializable {
     @FXML
     private ImageView backGround;
 
-    public static void setSceneManager(SceneManager sceneManager) {
-        GamePlayController.sceneManager = sceneManager;
+    public void setSceneManager(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
     }
 
     @Override

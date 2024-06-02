@@ -3,13 +3,11 @@ package game.gui;
 import game.engine.Player;
 import game.realms.Realm;
 import game.utilities.GameColor;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
@@ -18,7 +16,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 
-public class RealmPickerController implements Initializable {
+public class RealmPickerController implements Initializable,RealmController {
 
     @FXML
     private ImageView backGroundImageView;
@@ -30,38 +28,42 @@ public class RealmPickerController implements Initializable {
     @FXML private Rectangle magentaRealmRectangle;
     @FXML private Rectangle yellowRealmRectangle;
 
+    @FXML private ImageView mainImageView;
+    @FXML private ImageView redImageView;
+    @FXML private ImageView greenImageView;
+    @FXML private ImageView blueImageView;
+    @FXML private ImageView magentaImageView;
+    @FXML private ImageView yellowImageView;
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Image mainBG=new Image(Objects.requireNonNull(getClass().getResource("/images/RealmsCreatures.png")).toExternalForm());
+        Image button=new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/3.png")).toExternalForm());
         backGroundImageView.setImage(mainBG);
         addHoverEffect(redRealmRectangle);
         addHoverEffect(greenRealmRectangle);
         addHoverEffect(blueRealmRectangle);
         addHoverEffect(magentaRealmRectangle);
         addHoverEffect(yellowRealmRectangle);
+        redImageView.setImage(button);
+        greenImageView.setImage(button);
+        blueImageView.setImage(button);
+        magentaImageView.setImage(button);
+        yellowImageView.setImage(button);
+        mainImageView.setImage(button);
     }
     private void addHoverEffect(Rectangle rectangle) {
-        rectangle.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                rectangle.setOpacity(0.3);
-            }
-        });
+        rectangle.setOnMouseEntered(event -> rectangle.setOpacity(0.3));
 
-        rectangle.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                rectangle.setOpacity(0);
-            }
-        });
+        rectangle.setOnMouseExited(event -> rectangle.setOpacity(0));
     }
 
     @FXML
     public void chooseRedRealm(){
-        if(possibleRealms.contains(currentPlayer.getRealm(GameColor.RED))){
-            sceneManager.showRealmPickerStage();
+        if(possibleRealms.contains(GameColor.RED)){
+            sceneManager.closeRealmStage();
             guiGameController.playColorBonus(currentPlayer,GameColor.RED);
         }
         else {
@@ -70,39 +72,59 @@ public class RealmPickerController implements Initializable {
     }
     @FXML
     public void chooseGreenRealm(){
-        sceneManager.showRealmPickerStage();
-        guiGameController.playColorBonus(currentPlayer,GameColor.GREEN);
+        if(possibleRealms.contains(GameColor.GREEN)){
+            sceneManager.closeRealmStage();
+            guiGameController.playColorBonus(currentPlayer,GameColor.GREEN);
+        }
+        else {
+            label.setText("Not Available");
+        }
     }
     @FXML
     public void chooseBlueRealm(){
-        sceneManager.showRealmPickerStage();
-        guiGameController.playColorBonus(currentPlayer,GameColor.BLUE);
+        if(possibleRealms.contains(GameColor.BLUE)){
+            sceneManager.closeRealmStage();
+            guiGameController.playColorBonus(currentPlayer,GameColor.BLUE);
+        }
+        else {
+            label.setText("Not Available");
+        }
     }
     @FXML
     public void chooseMagentaRealm(){
-        sceneManager.showRealmPickerStage();
-        guiGameController.playColorBonus(currentPlayer,GameColor.MAGENTA);
+        if(possibleRealms.contains(GameColor.MAGENTA)){
+            sceneManager.closeRealmStage();
+            guiGameController.playColorBonus(currentPlayer,GameColor.MAGENTA);
+        }
+        else {
+            label.setText("Not Available");
+        }
     }
     @FXML
     public void chooseYellowRealm(){
-        sceneManager.showRealmPickerStage();
-        guiGameController.playColorBonus(currentPlayer,GameColor.YELLOW);
+        if(possibleRealms.contains(GameColor.YELLOW)){
+            sceneManager.closeRealmStage();
+            guiGameController.playColorBonus(currentPlayer,GameColor.YELLOW);
+        }
+        else {
+            label.setText("Not Available");
+        }
     }
 
-    private static SceneManager sceneManager;
-    public static void setSceneManager(SceneManager sceneManager){
-        RealmPickerController.sceneManager=sceneManager;
+    private  SceneManager sceneManager;
+    public  void setSceneManager(SceneManager sceneManager){
+        this.sceneManager=sceneManager;
     }
     private static Player currentPlayer;
     public static void setCurrentPlayer(Player currentPlayer){
         RealmPickerController.currentPlayer=currentPlayer;
     }
-    private static GUIGameController guiGameController;
-    public static void setGuiGameController(GUIGameController guiGameController){
-        RealmPickerController.guiGameController=guiGameController;
+    private  GUIGameController guiGameController;
+    public  void setGuiGameController(GUIGameController guiGameController){
+        this.guiGameController=guiGameController;
     }
-    private static LinkedList<Realm> possibleRealms;
-    public static void setPossibleRealms(LinkedList<Realm> possibleRealms){
+    private static LinkedList<GameColor> possibleRealms;
+    public static void setPossibleRealms(LinkedList<GameColor> possibleRealms){
         RealmPickerController.possibleRealms=possibleRealms;
     }
 

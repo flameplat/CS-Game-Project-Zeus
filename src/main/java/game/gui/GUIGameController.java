@@ -4,6 +4,7 @@ import game.collectibles.Collectibles;
 import game.collectibles.ColorBonus;
 import game.collectibles.EssenceBonus;
 import game.creatures.Dragon;
+import game.creatures.Lion;
 import game.dice.*;
 import game.engine.*;
 import game.exceptions.InvalidMoveException;
@@ -11,14 +12,11 @@ import game.exceptions.NoAvailableMovesException;
 import game.realms.GreenRealm;
 import game.realms.Realm;
 import game.realms.RedRealm;
-import game.realms.YellowRealm;
 import game.utilities.CollectiblesComparator;
 import game.utilities.GameColor;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,12 +28,11 @@ import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-public class GUIGameController extends CLIGameController implements Initializable {
+public class GUIGameController extends CLIGameController implements Initializable,GameController {
     private final Image transparentImage;
     private final double lowOpacity = 0.5;
     private final double highOpacity = 1;
@@ -45,8 +42,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private Label gameText;
     @FXML
     private ImageView gameTextBox;
-    @FXML
-    private Button rollButton;
     @FXML
     private ImageView rollButtonImage;
     @FXML
@@ -150,7 +145,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     //This player points to the current player whether passive or active or arcaneBoost enabled
     private Player currentPlayer;
-    private CompletableFuture<Void> moveFuture;
     //------------------------------------------------------BUTTONS FUNCTIONS-------------------------------------------------------//
     private int realRounds = 1;
     private boolean arcanePrismEnabled;
@@ -541,7 +535,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 enableSkipButton();
             } else {
                 gameText.setText("No available moves for current dice. Turn Lost");
-                delay(3000);
                 manageTurnCycle();
             }
         }
@@ -549,15 +542,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
             enableTimeWarpButton();
         }
     }
-
-    private void delay(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException ignored) {
-
-        }
-    }
-
     @FXML
     public void skipButtonClick() {
         disableSkipButton();
@@ -786,9 +770,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     }
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
 
     @FXML
     public void whiteDiceButtonClick() {
@@ -857,6 +838,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
         currentPlayer = activePlayer;
         gameStatus.setGameStatus(CurrentStatus.ACTIVE_TURN);
         refDiceArray = diceArray;
+        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
+        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
+        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
+        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
+        playEssenceBonus(activePlayer);
     }
 
     @Override
@@ -897,11 +883,12 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     protected void performReward(Player player, Collectibles reward) {
-        gameText.setText(player.getName() + ", you received " + reward.getName() + "!");
-        updateScoreSheets();
         if (reward == null) {
             return;
         }
+        gameText.setText(player.getName() + ", you received " + reward.getName() + "!");
+        updateScoreSheets();
+
 
         if (reward instanceof EssenceBonus) {
             playEssenceBonus(player);
@@ -916,7 +903,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     protected void playColorBonus(Player player, GameColor gameColor) {
-        gameGuide.displayInstructions(Instruction.COLOR_BONUS);
         switch (gameColor) {
             case RED: {
                 try {
@@ -929,7 +915,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
                     sceneManager.showRedRealmStage();
                 } catch (NoAvailableMovesException e) {
                     gameText.setText("Ohh bad luck...no possible moves, bonus lost!");
-                    delay(2000);
                 }
                 break;
             }
@@ -946,7 +931,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
                     gameText.setText("Ohh bad luck...no possible moves, bonus lost!");
-                    delay(2000);
                 }
                 break;
             }
@@ -962,7 +946,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
                     gameText.setText("Ohh bad luck...no possible moves, bonus lost!");
-                    delay(2000);
                 }
                 break;
             }
@@ -978,7 +961,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
                     gameText.setText("Ohh bad luck...no possible moves, bonus lost!");
-                    delay(2000);
                 }
                 break;
             }
@@ -994,7 +976,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
                     gameText.setText("Ohh bad luck...no possible moves, bonus lost!");
-                    delay(2000);
                 }
                 break;
             }
@@ -1004,11 +985,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     protected void playEssenceBonus(Player player) {
-        gameGuide.displayInstructions(Instruction.ESSENCE_BONUS);
-        player.getScoreSheet().displayScoreSheet();
         Realm[] realms = player.getRealms();
-        LinkedList<Realm> availableRealms = Stream.of(realms)
-                .filter(Realm::isRealmAvailable)
+        LinkedList<GameColor> availableRealms = Stream.of(realms)
+                .filter(Realm::isRealmAvailable).map(Realm::getColor)
                 .collect(Collectors.toCollection(LinkedList::new));
         if(!availableRealms.isEmpty()){
             RealmPickerController.setPossibleRealms(availableRealms);
@@ -1029,36 +1008,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
         return false;
     }
-
-
-    @Override
-    public boolean switchPlayer() {
-        boolean flag;
-        try {
-            if (activePlayer != passivePlayer && activePlayer.getPlayerStatus() == PlayerStatus.ACTIVE &&
-                    passivePlayer.getPlayerStatus() == PlayerStatus.PASSIVE) {
-                activePlayer.setPlayerStatus(PlayerStatus.PASSIVE);
-                passivePlayer.setPlayerStatus(PlayerStatus.ACTIVE);
-                Player temp = activePlayer;
-                activePlayer = passivePlayer;
-                passivePlayer = temp;
-                flag = true;
-            } else {
-                flag = false;
-            }
-        } catch (NullPointerException e) {
-            System.err.println("Invalid Switch: " + e.getMessage());
-            flag = false;
-        }
-        return flag;
-    }
-
-
-    /**
-     * Gets the dice available for rolling or rerolling.
-     *
-     * @return An array of {@code Dice} available for the current turn.
-     */
 
     /**
      * Gets all six dice, providing their current state and value within the

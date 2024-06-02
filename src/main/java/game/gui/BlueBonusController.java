@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.ResourceBundle;
-public class BlueBonusController implements Initializable {
+public class BlueBonusController implements Initializable,RealmController {
     @FXML
     private Button serpantButton;
     @FXML
@@ -27,16 +27,16 @@ public class BlueBonusController implements Initializable {
         serpantImageView.setImage(creature);
     }
     public void AttcakSerpant () {
-        sceneManager.closeBlueRealmStage();
+        sceneManager.closeRealmStage();
         guiGameController.makeMove(currentPlayer,possibleMove);
     }
-    private static SceneManager sceneManager;
-    public static void setSceneManager(SceneManager sceneManager){
-        BlueBonusController.sceneManager=sceneManager;
+    private SceneManager sceneManager;
+    public void setSceneManager(SceneManager sceneManager){
+        this.sceneManager=sceneManager;
     }
-    private static GUIGameController guiGameController;
-    public static void setGuiGameController(GUIGameController guiGameController){
-        BlueBonusController.guiGameController=guiGameController;
+    private GUIGameController guiGameController;
+    public void setGuiGameController(GUIGameController guiGameController){
+        this.guiGameController=guiGameController;
     }
     private static Move possibleMove;
     public static void setPossibleMove(Move move){

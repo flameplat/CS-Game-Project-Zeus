@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class PlayerDataController implements Initializable {
+public class PlayerDataController implements Initializable,GameController {
     @FXML
     private ImageView bg;
     @FXML

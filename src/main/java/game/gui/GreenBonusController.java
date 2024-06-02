@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.ResourceBundle;
-public class GreenBonusController implements  Initializable  {
+public class GreenBonusController implements  Initializable,RealmController  {
     @FXML private Button Gaia1;
     @FXML private Button Gaia2;
     @FXML private Button Gaia3;
@@ -119,19 +119,19 @@ public class GreenBonusController implements  Initializable  {
     // Common method to perform the attack
     private void performAttack(Move move, String gaiaNumber) {
         if (possibleMoves.contains(move)) {
-            sceneManager.closeGreenRealmStage();
+            sceneManager.closeRealmStage();
             guiGameController.makeMove(currentPlayer, move);
         } else {
             label.setText(gaiaNumber + " is Dead");
         }
     }
-    private static SceneManager sceneManager;
-    public static void setSceneManager(SceneManager sceneManager){
-        GreenBonusController.sceneManager=sceneManager;
+    private SceneManager sceneManager;
+    public void setSceneManager(SceneManager sceneManager){
+        this.sceneManager=sceneManager;
     }
-    private static GUIGameController guiGameController;
-    public static void setGuiGameController(GUIGameController guiGameController){
-        GreenBonusController.guiGameController=guiGameController;
+    private GUIGameController guiGameController;
+    public void setGuiGameController(GUIGameController guiGameController){
+        this.guiGameController=guiGameController;
     }
     private static LinkedList<Move> possibleMoves;
     public static void setPossibleMoves(Move[] moves){

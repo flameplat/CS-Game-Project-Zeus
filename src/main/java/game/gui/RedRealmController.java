@@ -16,19 +16,7 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class RedRealmController implements Initializable {
-    @FXML private Button FaceD1;
-    @FXML private Button WingD1;
-    @FXML private Button TailD1;
-    @FXML private Button FaceD2;
-    @FXML private Button WingD2;
-    @FXML private Button HeartD2;
-    @FXML private Button FaceD3;
-    @FXML private Button TailD3;
-    @FXML private Button HeartD3;
-    @FXML private Button WingD4;
-    @FXML private Button TailD4;
-    @FXML private Button HeartD4;
+public class RedRealmController implements Initializable ,RealmController{
     @FXML private Label label;
     @FXML private ImageView BG;
     @FXML private ImageView dragon1;
@@ -46,179 +34,75 @@ public class RedRealmController implements Initializable {
         dragon3.setImage(dragons);
         dragon4.setImage(dragons);
     }
+    public void attack(int dieValue, int dragonNumber) {
+        RedDice die = new RedDice(dieValue);
+        die.selectsDragon(dragonNumber);
+        Move move = new Move(die, currentPlayer.getRealm(die).getCreature(die));
+
+        if (possibleMoves.contains(move)) {
+            sceneManager.closeRealmStage();
+            guiGameController.makeMove(currentPlayer, move);
+        } else {
+            label.setText("You can't attack this part");
+            possibleAttackLabel.setText("Chosen Die: " + possibleMoves.get(0).getDice().getName());
+        }
+    }
+
     public void attckFaceD1() {
-        RedDice die=new RedDice(3);
-        die.selectsDragon(1);
-        Move move=new Move(die,currentPlayer.getRealm(die).getCreature(die));
-        if(possibleMoves.contains(move)){
-            sceneManager.closeRedRealmStage();
-            guiGameController.makeMove(currentPlayer,move);
-        }
-        else{
-            label.setText("You can't attack this part");
-            possibleAttackLabel.setText("Chosen Die: "+possibleMoves.get(0).getDice().getName());
-        }
+        attack(3, 1);
     }
+
     public void attckWingD1() {
-        RedDice die=new RedDice(2);
-        die.selectsDragon(1);
-        Move move=new Move(die,currentPlayer.getRealm(die).getCreature(die));
-        if(possibleMoves.contains(move)){
-            sceneManager.closeRedRealmStage();
-            guiGameController.makeMove(currentPlayer,move);
-        }
-        else{
-            label.setText("You can't attack this part");
-            possibleAttackLabel.setText("Chosen Die: "+possibleMoves.get(0).getDice().getName());
-
-        }
+        attack(2, 1);
     }
+
     public void attckTailD1() {
-        RedDice die=new RedDice(1);
-        die.selectsDragon(1);
-        Move move=new Move(die,currentPlayer.getRealm(die).getCreature(die));
-        if(possibleMoves.contains(move)){
-            sceneManager.closeRedRealmStage();
-            guiGameController.makeMove(currentPlayer,move);
-        }
-        else{
-            label.setText("You can't attack this part");
-            possibleAttackLabel.setText("Chosen Die: "+possibleMoves.get(0).getDice().getName());
-
-        }
+        attack(1, 1);
     }
+
     public void attckFaceD2() {
-        RedDice die=new RedDice(6);
-        die.selectsDragon(2);
-        Move move=new Move(die,currentPlayer.getRealm(die).getCreature(die));
-        if(possibleMoves.contains(move)){
-            sceneManager.closeRedRealmStage();
-            guiGameController.makeMove(currentPlayer,move);
-        }
-        else{
-            label.setText("You can't attack this part");
-            possibleAttackLabel.setText("Chosen Die: "+possibleMoves.get(0).getDice().getName());
-
-        }
+        attack(6, 2);
     }
+
     public void attckWingD2() {
-        RedDice die=new RedDice(1);
-        die.selectsDragon(2);
-        Move move=new Move(die,currentPlayer.getRealm(die).getCreature(die));
-        if(possibleMoves.contains(move)){
-            sceneManager.closeRedRealmStage();
-            guiGameController.makeMove(currentPlayer,move);
-        }
-        else{
-            label.setText("You can't attack this part");
-            possibleAttackLabel.setText("Chosen Die: "+possibleMoves.get(0).getDice().getName());
-
-        }
+        attack(1, 2);
     }
+
     public void attckHeartD2() {
-        RedDice die=new RedDice(3);
-        die.selectsDragon(2);
-        Move move=new Move(die,currentPlayer.getRealm(die).getCreature(die));
-        if(possibleMoves.contains(move)){
-            sceneManager.closeRedRealmStage();
-            guiGameController.makeMove(currentPlayer,move);
-        }
-        else{
-            label.setText("You can't attack this part");
-            possibleAttackLabel.setText("Chosen Die: "+possibleMoves.get(0).getDice().getName());
-
-        }
+        attack(3, 2);
     }
+
     public void attckFaceD3() {
-        RedDice die=new RedDice(5);
-        die.selectsDragon(3);
-        Move move=new Move(die,currentPlayer.getRealm(die).getCreature(die));
-        if(possibleMoves.contains(move)){
-            sceneManager.closeRedRealmStage();
-            guiGameController.makeMove(currentPlayer,move);
-        }
-        else{
-            label.setText("You can't attack this part");
-            possibleAttackLabel.setText("Chosen Die: "+possibleMoves.get(0).getDice().getName());
-
-        }
+        attack(5, 3);
     }
+
     public void attckTailD3() {
-        RedDice die=new RedDice(2);
-        die.selectsDragon(3);
-        Move move=new Move(die,currentPlayer.getRealm(die).getCreature(die));
-        if(possibleMoves.contains(move)){
-            sceneManager.closeRedRealmStage();
-            guiGameController.makeMove(currentPlayer,move);
-        }
-        else{
-            label.setText("You can't attack this part");
-            possibleAttackLabel.setText("Chosen Die: "+possibleMoves.get(0).getDice().getName());
-
-        }
+        attack(2, 3);
     }
+
     public void attckHeartD3() {
-        RedDice die=new RedDice(4);
-        die.selectsDragon(3);
-        Move move=new Move(die,currentPlayer.getRealm(die).getCreature(die));
-        if(possibleMoves.contains(move)){
-            sceneManager.closeRedRealmStage();
-            guiGameController.makeMove(currentPlayer,move);
-        }
-        else{
-            label.setText("You can't attack this part");
-            possibleAttackLabel.setText("Chosen Die: "+possibleMoves.get(0).getDice().getName());
-
-        }
+        attack(4, 3);
     }
+
     public void attckWingD4() {
-        RedDice die=new RedDice(5);
-        die.selectsDragon(4);
-        Move move=new Move(die,currentPlayer.getRealm(die).getCreature(die));
-        if(possibleMoves.contains(move)){
-            sceneManager.closeRedRealmStage();
-            guiGameController.makeMove(currentPlayer,move);
-        }
-        else{
-            label.setText("You can't attack this part");
-            possibleAttackLabel.setText("Chosen Die: "+possibleMoves.get(0).getDice().getName());
-
-        }
-
+        attack(5, 4);
     }
+
     public void attckTailD4() {
-        RedDice die=new RedDice(4);
-        die.selectsDragon(4);
-        Move move=new Move(die,currentPlayer.getRealm(die).getCreature(die));
-        if(possibleMoves.contains(move)){
-            sceneManager.closeRedRealmStage();
-            guiGameController.makeMove(currentPlayer,move);
-        }
-        else{
-            label.setText("You can't attack this part");
-            possibleAttackLabel.setText("Chosen Die: "+possibleMoves.get(0).getDice().getName());
-        }
+        attack(4, 4);
     }
+
     public void attckHeartD4() {
-        RedDice die=new RedDice(6);
-        die.selectsDragon(4);
-        Move move=new Move(die,currentPlayer.getRealm(die).getCreature(die));
-        if(possibleMoves.contains(move)){
-            sceneManager.closeRedRealmStage();
-            guiGameController.makeMove(currentPlayer,move);
-        }
-        else{
-            label.setText("You can't attack this part");
-            possibleAttackLabel.setText("Chosen Die: "+possibleMoves.get(0).getDice().getName());
-        }
+        attack(6, 4);
     }
-    private static SceneManager sceneManager;
-    public static void setSceneManager(SceneManager sceneManager){
-        RedRealmController.sceneManager=sceneManager;
+
+    private SceneManager sceneManager;
+    public void setSceneManager(SceneManager sceneManager){
+        this.sceneManager=sceneManager;
     }
-    private static GUIGameController guiGameController;
-    public static void setGuiGameController(GUIGameController guiGameController){
-        RedRealmController.guiGameController=guiGameController;
+    private GUIGameController guiGameController;
+    public void setGuiGameController(GUIGameController guiGameController){
+       this.guiGameController=guiGameController;
     }
     private static Player currentPlayer;
     private static LinkedList<Move> possibleMoves;

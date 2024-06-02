@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
-public class MagentaBonusController implements Initializable  {
+public class MagentaBonusController implements Initializable,RealmController {
     @FXML private Button PhoenixButton;
     @FXML private ImageView PhoenixImageView;
     @FXML private ImageView BG;
@@ -22,16 +22,16 @@ public class MagentaBonusController implements Initializable  {
     PhoenixImageView.setImage(creature);
     }
     public void AttackPhoenix() {
-        sceneManager.showMagentaRealmStage();
+        sceneManager.closeRealmStage();
         guiGameController.makeMove(currentPlayer,possibleMove);
     }
-    private static SceneManager sceneManager;
-    private static GUIGameController guiGameController;
-    public static void setGuiGameController(GUIGameController guiGameController){
-        MagentaBonusController.guiGameController=guiGameController;
+    private SceneManager sceneManager;
+    private GUIGameController guiGameController;
+    public void setGuiGameController(GUIGameController guiGameController){
+        this.guiGameController=guiGameController;
     }
-    public static void setSceneManager(SceneManager sceneManager){
-        MagentaBonusController.sceneManager=sceneManager;
+    public void setSceneManager(SceneManager sceneManager){
+        this.sceneManager=sceneManager;
     }
     private static Player currentPlayer;
     public static void setCurrentPlayer(Player currentPlayer){
