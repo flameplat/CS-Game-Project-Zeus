@@ -847,7 +847,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         playColorBonus(activePlayer,GameColor.BLUE);
         playColorBonus(activePlayer,GameColor.GREEN);
         playColorBonus(activePlayer,GameColor.MAGENTA);
-        //playEssenceBonus(activePlayer);
+        playEssenceBonus(activePlayer);
     }
 
     @Override
@@ -908,84 +908,43 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     protected void playColorBonus(Player player, GameColor gameColor) {
-        switch (gameColor) {
-            case RED: {
-                try {
-                    Move[] moves = player.getRealm(gameColor).getRealmMoves();
-                    if (moves.length == 0) {
-                        throw new NoAvailableMovesException();
-                    }
-                    RedRealmController.setPossibleMoves(moves);
+        try {
+            Move[] possibleMoves = player.getRealm(gameColor).getRealmMoves();
+            if (possibleMoves.length == 0) {
+                throw new NoAvailableMovesException();
+            }
+
+            switch (gameColor) {
+                case RED:
+                    RedRealmController.setPossibleMoves(possibleMoves);
                     RedRealmController.setCurrentPlayer(player);
                     sceneManager.showRedRealmStage();
-                } catch (NoAvailableMovesException e) {
-                    gameText.setText("Ohh bad luck...no possible moves, bonus lost!");
-                }
-                break;
-            }
-            case GREEN: {
-                try {
-                    Move[] possibleMoves = player.getRealm(gameColor).getRealmMoves();
-                    if (possibleMoves.length == 0) {
-                        throw new NoAvailableMovesException();
-                    }
+                    break;
+                case GREEN:
                     GreenBonusController.setPossibleMoves(possibleMoves);
                     GreenBonusController.setCurrentPlayer(player);
                     sceneManager.showGreenRealmStage();
-
-                } catch (NoAvailableMovesException e) {
-                    // Handle case where no moves are available
-                    gameText.setText("Ohh bad luck...no possible moves, bonus lost!");
-                }
-                break;
-            }
-            case BLUE: {
-                try {
-                    Move[] possibleMoves = player.getRealm(gameColor).getRealmMoves();
-                    if (possibleMoves.length == 0) {
-                        throw new NoAvailableMovesException();
-                    }
-                    BlueBonusController.setPossibleMove(possibleMoves[possibleMoves.length-1]);
+                    break;
+                case BLUE:
+                    BlueBonusController.setPossibleMove(possibleMoves[possibleMoves.length - 1]);
                     BlueBonusController.setCurrentPlayer(player);
                     sceneManager.showBlueRealmStage();
-                } catch (NoAvailableMovesException e) {
-                    // Handle case where no moves are available
-                    gameText.setText("Ohh bad luck...no possible moves, bonus lost!");
-                }
-                break;
-            }
-            case MAGENTA: {
-                try {
-                    Move[] possibleMoves = player.getRealm(gameColor).getRealmMoves();
-                    if (possibleMoves.length == 0) {
-                        throw new NoAvailableMovesException();
-                    }
+                    break;
+                case MAGENTA:
                     MagentaBonusController.setCurrentPlayer(player);
-                    MagentaBonusController.setPossibleMove(new Move(new MagentaDice(6),player.getRealm(gameColor).getCreature(new MagentaDice(6))));
+                    MagentaBonusController.setPossibleMove(new Move(new MagentaDice(6), player.getRealm(gameColor).getCreature(new MagentaDice(6))));
                     sceneManager.showMagentaRealmStage();
-                } catch (NoAvailableMovesException e) {
-                    // Handle case where no moves are available
-                    gameText.setText("Ohh bad luck...no possible moves, bonus lost!");
-                }
-                break;
-            }
-            case YELLOW: {
-                try {
-                    Move[] possibleMoves = player.getRealm(gameColor).getRealmMoves();
-                    if (possibleMoves.length == 0) {
-                        throw new NoAvailableMovesException();
-                    }
+                    break;
+                case YELLOW:
                     YellowBonusController.setCurrentPlayer(player);
-                    YellowBonusController.setPossibleMove(new Move(new YellowDice(6),player.getRealm(gameColor).getCreature(new YellowDice(6))));
+                    YellowBonusController.setPossibleMove(new Move(new YellowDice(6), player.getRealm(gameColor).getCreature(new YellowDice(6))));
                     sceneManager.showYellowRealmStage();
-                } catch (NoAvailableMovesException e) {
-                    // Handle case where no moves are available
-                    gameText.setText("Ohh bad luck...no possible moves, bonus lost!");
-                }
-                break;
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid color bonus: " + gameColor);
             }
-            default:
-                System.err.println("Invalid color bonus: " + gameColor);
+        } catch (NoAvailableMovesException e) {
+            gameText.setText("Ohh bad luck...no possible moves, bonus lost!");
         }
     }
 
