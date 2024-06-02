@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="896.0" prefWidth="1204.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.GreenBonusController">
    <children>
-      <ImageView fx:id="BG" fitHeight="933.0" fitWidth="1903.0" layoutX="-181.0" layoutY="-18.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="BG" fitHeight="896.0" fitWidth="1204.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../resources/images/GreenRealmBG.jpeg" />
          </image>
@@ -25,7 +25,7 @@
       </ImageView>
       <StackPane layoutX="86.0" layoutY="189.0" prefHeight="208.0" prefWidth="231.0">
          <children>
-            <ImageView fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ImageButton2" fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/greenButtons.jpeg" />
                </image>
@@ -55,7 +55,7 @@
          </children></StackPane>
       <StackPane layoutX="-8.0" layoutY="343.0" prefHeight="208.0" prefWidth="231.0">
          <children>
-            <ImageView fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ImageButton1" fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/greenButtons.jpeg" />
                </image>
@@ -86,7 +86,7 @@
       </StackPane>
       <StackPane layoutX="438.0" layoutY="75.0" prefHeight="208.0" prefWidth="231.0">
          <children>
-            <ImageView fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ImageButton4" fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/greenButtons.jpeg" />
                </image>
@@ -115,9 +115,9 @@
             <Button fx:id="Gaia4" mnemonicParsing="false" onAction="#AttackGaia4" prefHeight="124.0" prefWidth="146.0" text="Button" visible="false" />
          </children>
       </StackPane>
-      <StackPane layoutX="299.0" layoutY="702.0" prefHeight="208.0" prefWidth="231.0">
+      <StackPane layoutX="298.0" layoutY="683.0" prefHeight="208.0" prefWidth="231.0">
          <children>
-            <ImageView fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ImageButton11" fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/greenButtons.jpeg" />
                </image>
@@ -148,7 +148,7 @@
       </StackPane>
       <StackPane layoutX="645.0" layoutY="97.0" prefHeight="208.0" prefWidth="231.0">
          <children>
-            <ImageView fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ImageButton5" fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/greenButtons.jpeg" />
                </image>
@@ -179,7 +179,7 @@
       </StackPane>
       <StackPane layoutX="939.0" layoutY="258.0" prefHeight="208.0" prefWidth="231.0">
          <children>
-            <ImageView fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ImageButton6" fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/greenButtons.jpeg" />
                </image>
@@ -208,9 +208,9 @@
             <Button fx:id="Gaia6" mnemonicParsing="false" onAction="#AttackGaia6" prefHeight="130.0" prefWidth="141.0" text="Button" visible="false" />
          </children>
       </StackPane>
-      <StackPane layoutX="484.0" layoutY="702.0" prefHeight="208.0" prefWidth="231.0">
+      <StackPane layoutX="487.0" layoutY="683.0" prefHeight="208.0" prefWidth="231.0">
          <children>
-            <ImageView fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ImageButton10" fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/greenButtons.jpeg" />
                </image>
@@ -241,7 +241,7 @@
       </StackPane>
       <StackPane layoutX="673.0" layoutY="683.0" prefHeight="208.0" prefWidth="231.0">
          <children>
-            <ImageView fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ImageButton9" fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/greenButtons.jpeg" />
                </image>
@@ -270,9 +270,9 @@
             <Button fx:id="Gaia9" mnemonicParsing="false" onAction="#AttackGaia9" prefHeight="129.0" prefWidth="145.0" text="Button" visible="false" />
          </children>
       </StackPane>
-      <StackPane layoutX="833.0" layoutY="620.0" prefHeight="208.0" prefWidth="231.0">
+      <StackPane layoutX="833.0" layoutY="598.0" prefHeight="208.0" prefWidth="231.0">
          <children>
-            <ImageView fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ImageButton8" fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/greenButtons.jpeg" />
                </image>
@@ -303,7 +303,7 @@
       </StackPane>
       <StackPane layoutX="919.0" layoutY="456.0" prefHeight="208.0" prefWidth="231.0">
          <children>
-            <ImageView fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ImageButton7" fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/greenButtons.jpeg" />
                </image>
@@ -334,7 +334,7 @@
       </StackPane>
       <StackPane layoutX="262.0" layoutY="97.0" prefHeight="208.0" prefWidth="231.0">
          <children>
-            <ImageView fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ImageButton3" fitHeight="185.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/buttons/greenButtons.jpeg" />
                </image>
@@ -363,10 +363,5 @@
             <Button fx:id="Gaia3" mnemonicParsing="false" onAction="#AttackGaia3" prefHeight="129.0" prefWidth="143.0" text="Button" visible="false" />
          </children>
       </StackPane>
-      <Label fx:id="label" alignment="CENTER" layoutX="172.0" layoutY="44.0" prefHeight="17.0" prefWidth="802.0" textFill="WHITE">
-         <font>
-            <Font size="28.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>
