@@ -1,11 +1,12 @@
 package game.gui;
 
-import javafx.fxml.FXML;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.w3c.dom.UserDataHandler;
+
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -147,7 +148,13 @@ public class SceneManager {
             redRealmStage = new Stage();
             redRealmStage.setScene(scenes.get("RedRealmScene"));
             redRealmStage.setResizable(true);
-            redRealmStage.show();
+            redRealmStage.initModality(Modality.APPLICATION_MODAL);
+            redRealmStage.initOwner(stage);
+            RedRealmController.setGuiGameController(guiGameController);
+            redRealmStage.setResizable(false);
+            redRealmStage.setOnCloseRequest(Event::consume);
+            redRealmStage.showAndWait();
+            stage.toFront();
         } else {
             try{
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("RedRealm.fxml")));
@@ -156,9 +163,13 @@ public class SceneManager {
                 Scene redRealmScene = new Scene(root);
                 redRealmStage = new Stage();
                 redRealmStage.setScene(redRealmScene);
+                redRealmStage.initModality(Modality.APPLICATION_MODAL);
+                redRealmStage.initOwner(stage);
                 RedRealmController.setGuiGameController(guiGameController);
-                redRealmStage.setResizable(true);
-                redRealmStage.show();
+                redRealmStage.setResizable(false);
+                redRealmStage.setOnCloseRequest(Event::consume);
+                redRealmStage.showAndWait();
+                stage.toFront();
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -183,9 +194,13 @@ public class SceneManager {
                 Scene yellowRealmScene = new Scene(root);
                 yellowRealmStage = new Stage();
                 yellowRealmStage.setScene(yellowRealmScene);
+                yellowRealmStage.initModality(Modality.APPLICATION_MODAL);
+                yellowRealmStage.initOwner(stage);
                 YellowBonusController.setGuiGameController(guiGameController);
-                yellowRealmStage.setResizable(true);
-                yellowRealmStage.show();
+                yellowRealmStage.setResizable(false);
+                yellowRealmStage.setOnCloseRequest(Event::consume);
+                yellowRealmStage.showAndWait();
+                stage.toFront();
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -233,8 +248,8 @@ public class SceneManager {
             try{
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("BlueBonus.fxml")));
                 root = loader.load();
-                BlueBonusController.setSceneManager(this);
-                BlueBonusController.setGuiGameController(guiGameController);
+                //BlueBonusController.setSceneManager(this);
+                //BlueBonusController.setGuiGameController(guiGameController);
                 Scene blueRealmScene = new Scene(root);
                 blueRealmStage = new Stage();
                 blueRealmStage.setScene(blueRealmScene);
@@ -251,4 +266,4 @@ public class SceneManager {
     }
 }
 
-}
+

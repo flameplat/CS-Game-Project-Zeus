@@ -20,7 +20,7 @@
                   <Image url="@../../../resources/images/YellowLion.png" />
                </image>
             </ImageView>
-            <Button fx:id="LionButton" mnemonicParsing="false" onAction="#AttackLion" prefHeight="647.0" prefWidth="599.0" text="Button" visible="false" />
+            <Button fx:id="LionButton" mnemonicParsing="false" onAction="#AttackLion" opacity="0.0" prefHeight="647.0" prefWidth="599.0" text="Button" />
          </children>
       </StackPane>
    </children>

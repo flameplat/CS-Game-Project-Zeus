@@ -13,14 +13,14 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="896.0" prefWidth="1204.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.RedRealmController">
    <children>
-      <ImageView id="RedRealmBackground" fitHeight="905.0" fitWidth="1209.0" layoutX="-1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="RedRealmBackground" fx:id="BG" fitHeight="905.0" fitWidth="1209.0" layoutX="-1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../resources/images/redRealmBackground.jpg" />
          </image>
       </ImageView>
       <StackPane layoutX="72.0" layoutY="223.0" prefHeight="84.0" prefWidth="184.0">
          <children>
-            <Label fx:id="text" onMouseMoved="#mouseonit" onMouseReleased="#mouseOffit" prefHeight="80.0" prefWidth="135.0" text="face:3">
+            <Label fx:id="text" prefHeight="80.0" prefWidth="135.0" text="face:3">
                <font>
                   <Font size="32.0" />
                </font>
@@ -41,7 +41,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="FaceD1" fx:id="FaceD1" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD1" prefHeight="42.0" prefWidth="133.0" text="Button" visible="false" />
+            <Button id="FaceD1" fx:id="FaceD1" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD1" opacity="0.0" prefHeight="42.0" prefWidth="133.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="37.0" layoutY="288.0" prefHeight="111.0" prefWidth="226.0">
@@ -67,7 +67,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="WingD1" fx:id="WingD1" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#attckWingD1" prefHeight="42.0" prefWidth="115.0" text="Button" visible="false" />
+            <Button id="WingD1" fx:id="WingD1" focusTraversable="false" mnemonicParsing="false" onAction="#attckWingD1" opacity="0.0" prefHeight="42.0" prefWidth="115.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="52.0" layoutY="377.0" prefHeight="98.0" prefWidth="163.0">
@@ -93,7 +93,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="TailD1" fx:id="TailD1" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#attckTailD1" prefHeight="64.0" prefWidth="110.0" text="Button" visible="false" />
+            <Button id="TailD1" fx:id="TailD1" focusTraversable="false" mnemonicParsing="false" onAction="#attckTailD1" opacity="0.0" prefHeight="64.0" prefWidth="110.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="396.0" layoutY="240.0" prefHeight="64.0" prefWidth="96.0">
@@ -119,7 +119,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="FaceD2" fx:id="FaceD2" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD2" prefHeight="55.0" prefWidth="92.0" text="Button" visible="false" />
+            <Button id="FaceD2" fx:id="FaceD2" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD2" opacity="0.0" prefHeight="55.0" prefWidth="92.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="392.0" layoutY="308.0" prefHeight="71.0" prefWidth="125.0">
@@ -145,7 +145,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="WingD2" fx:id="WingD2" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#attckWingD2" prefHeight="42.0" prefWidth="112.0" text="Button" visible="false" />
+            <Button id="WingD2" fx:id="WingD2" focusTraversable="false" mnemonicParsing="false" onAction="#attckWingD2" opacity="0.0" prefHeight="42.0" prefWidth="112.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="382.0" layoutY="394.0" prefHeight="64.0" prefWidth="145.0">
@@ -171,7 +171,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="HeartD2" fx:id="HeartD2" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#attckHeartD2" prefHeight="42.0" prefWidth="98.0" text="Button" visible="false" />
+            <Button id="HeartD2" fx:id="HeartD2" focusTraversable="false" mnemonicParsing="false" onAction="#attckHeartD2" opacity="0.0" prefHeight="42.0" prefWidth="98.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="719.0" layoutY="240.0" prefHeight="50.0" prefWidth="85.0">
@@ -197,7 +197,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="FaceD3" fx:id="FaceD3" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD3" prefHeight="42.0" prefWidth="78.0" text="Button" visible="false" />
+            <Button id="FaceD3" fx:id="FaceD3" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD3" opacity="0.0" prefHeight="42.0" prefWidth="78.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="982.0" layoutY="240.0" prefHeight="50.0" prefWidth="102.0">
@@ -223,7 +223,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="WingD4" fx:id="WingD4" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#attckWingD4" prefHeight="42.0" prefWidth="96.0" text="Button" visible="false" />
+            <Button id="WingD4" fx:id="WingD4" focusTraversable="false" mnemonicParsing="false" onAction="#attckWingD4" opacity="0.0" prefHeight="42.0" prefWidth="96.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="983.0" layoutY="319.0" prefHeight="50.0" prefWidth="85.0">
@@ -249,7 +249,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="TailD4" fx:id="TailD4" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#attckTailD4" prefHeight="42.0" prefWidth="78.0" text="Button" visible="false" />
+            <Button id="TailD4" fx:id="TailD4" focusTraversable="false" mnemonicParsing="false" onAction="#attckTailD4" opacity="0.0" prefHeight="42.0" prefWidth="78.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="713.0" layoutY="319.0" prefHeight="50.0" prefWidth="85.0">
@@ -275,7 +275,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="TailD3" fx:id="TailD3" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#attckTailD3" prefHeight="42.0" prefWidth="78.0" text="Button" visible="false" />
+            <Button id="TailD3" fx:id="TailD3" focusTraversable="false" mnemonicParsing="false" onAction="#attckTailD3" opacity="0.0" prefHeight="42.0" prefWidth="78.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="713.0" layoutY="401.0" prefHeight="50.0" prefWidth="125.0">
@@ -301,7 +301,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="HeartD3" fx:id="HeartD3" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#attckHeartD3" prefHeight="42.0" prefWidth="98.0" text="Button" visible="false" />
+            <Button id="HeartD3" fx:id="HeartD3" focusTraversable="false" mnemonicParsing="false" onAction="#attckHeartD3" opacity="0.0" prefHeight="42.0" prefWidth="98.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="982.0" layoutY="401.0" prefHeight="50.0" prefWidth="125.0">
@@ -327,7 +327,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="HeartD4" fx:id="HeartD4" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#attckHeartD4" prefHeight="44.0" prefWidth="104.0" text="Button" visible="false" />
+            <Button id="HeartD4" fx:id="HeartD4" focusTraversable="false" mnemonicParsing="false" onAction="#attckHeartD4" opacity="0.0" prefHeight="44.0" prefWidth="104.0" text="Button" />
          </children>
       </StackPane>
       <Label layoutX="72.0" layoutY="181.0" text="Dragon1">
@@ -414,25 +414,35 @@
             </RadialGradient>
          </textFill>
       </Label>
-      <ImageView fitHeight="252.0" fitWidth="295.0" layoutX="329.0" layoutY="507.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="dragon2" fitHeight="252.0" fitWidth="295.0" layoutX="329.0" layoutY="507.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../resources/images/RedDragon.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="252.0" fitWidth="295.0" layoutX="630.0" layoutY="507.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="dragon3" fitHeight="252.0" fitWidth="295.0" layoutX="630.0" layoutY="507.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../resources/images/RedDragon.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="252.0" fitWidth="295.0" layoutX="922.0" layoutY="507.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="dragon4" fitHeight="252.0" fitWidth="295.0" layoutX="922.0" layoutY="507.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../resources/images/RedDragon.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="252.0" fitWidth="295.0" layoutX="38.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="dragon1" fitHeight="252.0" fitWidth="295.0" layoutX="38.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../resources/images/RedDragon.png" />
          </image>
       </ImageView>
+      <Label fx:id="label" alignment="CENTER" layoutX="-2.0" layoutY="63.0" prefHeight="64.0" prefWidth="1204.0" textFill="WHITE">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <Label fx:id="possibleAttackLabel" alignment="CENTER" layoutX="-3.0" layoutY="798.0" prefHeight="42.0" prefWidth="1204.0" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

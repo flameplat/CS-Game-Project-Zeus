@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class DiceRealms extends Application {
+    private static SceneManager sceneManager;
 
     public static void main(String[] args) {
         launch(args);
@@ -17,7 +18,10 @@ public class DiceRealms extends Application {
         Image icon=new Image(Objects.requireNonNull(getClass().getResource("/images/icon.png")).toExternalForm());
         primaryStage.getIcons().add(icon);
         primaryStage.setTitle("Dice Realms");
-        SceneManager sceneManager=new SceneManager(primaryStage);
+        sceneManager=new SceneManager(primaryStage);
         sceneManager.switchMainMenuScene();
+    }
+    public static SceneManager getSceneManager(){
+        return sceneManager;
     }
 }

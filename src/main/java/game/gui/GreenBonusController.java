@@ -1,4 +1,6 @@
 package game.gui;
+import game.engine.Move;
+import game.engine.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 public class GreenBonusController implements  Initializable  {
@@ -95,5 +99,13 @@ public class GreenBonusController implements  Initializable  {
     private static GUIGameController guiGameController;
     public static void setGuiGameController(GUIGameController guiGameController){
         GreenBonusController.guiGameController=guiGameController;
+    }
+    private static LinkedList<Move> possibleMoves;
+    public static void setPossibleMoves(Move[] moves){
+        GreenBonusController.possibleMoves = new LinkedList<>(Arrays.asList(moves));
+    }
+    private static Player currentPlayer;
+    public static void setCurrentPlayer(Player currentPlayer){
+        GreenBonusController.currentPlayer=currentPlayer;
     }
 }

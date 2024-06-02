@@ -43,7 +43,7 @@ public class GamePlayController implements Initializable {
             FXMLLoader gameBoardLoader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
             AnchorPane gameBoard = gameBoardLoader.load();
             GUIGameController guiGameController = gameBoardLoader.getController();
-            guiGameController.setSceneManager(sceneManager);
+            guiGameController.setSceneManager(DiceRealms.getSceneManager());
             if (MainMenuController.getGameMode() == GameMode.MULTIPLAYER) {
                 guiGameController.setPlayer1(PlayerDataController.getPlayer1());
                 guiGameController.setPlayer2(PlayerDataController.getPlayer2());

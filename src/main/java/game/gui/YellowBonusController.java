@@ -1,4 +1,8 @@
 package game.gui;
+import game.creatures.Lion;
+import game.dice.YellowDice;
+import game.engine.Move;
+import game.engine.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,8 +23,10 @@ public class YellowBonusController implements Initializable  {
         BG.setImage(mainBG);
         LionImageView.setImage(creature);
     }
-    public void AttackLion(ActionEvent event) {
-
+    public void AttackLion() {
+        Move move =new Move(new YellowDice(6),new Lion());
+        sceneManager.closeYellowRealmStage();
+        guiGameController.makeMove(currentPlayer,move);
     }
     private static SceneManager sceneManager;
     public static void setSceneManager(SceneManager sceneManager){
@@ -29,5 +35,9 @@ public class YellowBonusController implements Initializable  {
     private static GUIGameController guiGameController;
     public static void setGuiGameController(GUIGameController guiGameController){
         YellowBonusController.guiGameController=guiGameController;
+    }
+    private static Player currentPlayer;
+    public static void setCurrentPlayer(Player currentPlayer){
+        YellowBonusController.currentPlayer=currentPlayer;
     }
 }
