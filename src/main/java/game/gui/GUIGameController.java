@@ -838,7 +838,16 @@ public class GUIGameController extends CLIGameController implements Initializabl
         currentPlayer = activePlayer;
         gameStatus.setGameStatus(CurrentStatus.ACTIVE_TURN);
         refDiceArray = diceArray;
-//
+        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
+        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
+        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
+        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
+        playColorBonus(activePlayer,GameColor.YELLOW);
+        playColorBonus(activePlayer,GameColor.RED);
+        playColorBonus(activePlayer,GameColor.BLUE);
+        playColorBonus(activePlayer,GameColor.GREEN);
+        playColorBonus(activePlayer,GameColor.MAGENTA);
+        playEssenceBonus(activePlayer);
     }
 
     @Override
@@ -949,6 +958,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             RealmPickerController.setCurrentPlayer(player);
             sceneManager.showRealmPickerStage();
         }
+
     }
 
     //------------------------------------------------------SECONDARY METHODS-------------------------------------------------------//

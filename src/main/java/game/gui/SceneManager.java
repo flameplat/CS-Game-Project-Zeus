@@ -95,7 +95,7 @@ public class SceneManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        stage.toFront();
+
 
     }
 

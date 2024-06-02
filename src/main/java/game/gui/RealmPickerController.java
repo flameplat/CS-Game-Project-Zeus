@@ -61,50 +61,34 @@ public class RealmPickerController implements Initializable,RealmController {
     }
 
     @FXML
-    public void chooseRedRealm(){
-        if(possibleRealms.contains(GameColor.RED)){
-            sceneManager.closeRealmStage();
-            guiGameController.playColorBonus(currentPlayer,GameColor.RED);
-        }
-        else {
-            label.setText("Not Available");
-        }
+    public void chooseRedRealm() {
+        chooseRealm(GameColor.RED);
     }
+
     @FXML
-    public void chooseGreenRealm(){
-        if(possibleRealms.contains(GameColor.GREEN)){
-            sceneManager.closeRealmStage();
-            guiGameController.playColorBonus(currentPlayer,GameColor.GREEN);
-        }
-        else {
-            label.setText("Not Available");
-        }
+    public void chooseGreenRealm() {
+        chooseRealm(GameColor.GREEN);
     }
+
     @FXML
-    public void chooseBlueRealm(){
-        if(possibleRealms.contains(GameColor.BLUE)){
-            sceneManager.closeRealmStage();
-            guiGameController.playColorBonus(currentPlayer,GameColor.BLUE);
-        }
-        else {
-            label.setText("Not Available");
-        }
+    public void chooseBlueRealm() {
+        chooseRealm(GameColor.BLUE);
     }
+
     @FXML
-    public void chooseMagentaRealm(){
-        if(possibleRealms.contains(GameColor.MAGENTA)){
-            sceneManager.closeRealmStage();
-            guiGameController.playColorBonus(currentPlayer,GameColor.MAGENTA);
-        }
-        else {
-            label.setText("Not Available");
-        }
+    public void chooseMagentaRealm() {
+        chooseRealm(GameColor.MAGENTA);
     }
+
     @FXML
-    public void chooseYellowRealm(){
-        if(possibleRealms.contains(GameColor.YELLOW)){
+    public void chooseYellowRealm() {
+        chooseRealm(GameColor.YELLOW);
+    }
+
+    private void chooseRealm(GameColor realmColor) {
+        if(possibleRealms.contains(realmColor)){
             sceneManager.closeRealmStage();
-            guiGameController.playColorBonus(currentPlayer,GameColor.YELLOW);
+            guiGameController.playColorBonus(currentPlayer, realmColor);
         }
         else {
             label.setText("Not Available");

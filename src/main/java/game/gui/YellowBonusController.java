@@ -30,7 +30,6 @@ public class YellowBonusController implements Initializable ,RealmController {
     private SceneManager sceneManager;
 
     public void setSceneManager(SceneManager sceneManager){
-        System.out.println("Here is the scene");
         this.sceneManager=sceneManager;
     }
     private GUIGameController guiGameController;
