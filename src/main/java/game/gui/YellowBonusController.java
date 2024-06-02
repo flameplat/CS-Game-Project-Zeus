@@ -24,9 +24,8 @@ public class YellowBonusController implements Initializable  {
         LionImageView.setImage(creature);
     }
     public void AttackLion() {
-        Move move =new Move(new YellowDice(6),new Lion());
         sceneManager.closeYellowRealmStage();
-        guiGameController.makeMove(currentPlayer,move);
+        guiGameController.makeMove(currentPlayer,possibleMove);
     }
     private static SceneManager sceneManager;
     public static void setSceneManager(SceneManager sceneManager){
@@ -39,5 +38,9 @@ public class YellowBonusController implements Initializable  {
     private static Player currentPlayer;
     public static void setCurrentPlayer(Player currentPlayer){
         YellowBonusController.currentPlayer=currentPlayer;
+    }
+    private static Move possibleMove;
+    public static void setPossibleMove(Move move){
+        YellowBonusController.possibleMove=move;
     }
 }

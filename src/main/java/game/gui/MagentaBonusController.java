@@ -1,4 +1,6 @@
 package game.gui;
+import game.engine.Move;
+import game.engine.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,8 +21,9 @@ public class MagentaBonusController implements Initializable  {
     BG.setImage(mainBG);
     PhoenixImageView.setImage(creature);
     }
-    public void AttackPhoenix(ActionEvent event) {
-
+    public void AttackPhoenix() {
+        sceneManager.showMagentaRealmStage();
+        guiGameController.makeMove(currentPlayer,possibleMove);
     }
     private static SceneManager sceneManager;
     private static GUIGameController guiGameController;
@@ -30,4 +33,13 @@ public class MagentaBonusController implements Initializable  {
     public static void setSceneManager(SceneManager sceneManager){
         MagentaBonusController.sceneManager=sceneManager;
     }
+    private static Player currentPlayer;
+    public static void setCurrentPlayer(Player currentPlayer){
+        MagentaBonusController.currentPlayer=currentPlayer;
+    }
+    private static Move possibleMove;
+    public static void setPossibleMove(Move move){
+        MagentaBonusController.possibleMove=move;
+    }
+
 }

@@ -11,6 +11,7 @@ import game.exceptions.NoAvailableMovesException;
 import game.realms.GreenRealm;
 import game.realms.Realm;
 import game.realms.RedRealm;
+import game.realms.YellowRealm;
 import game.utilities.CollectiblesComparator;
 import game.utilities.GameColor;
 import javafx.application.Platform;
@@ -896,6 +897,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     protected void performReward(Player player, Collectibles reward) {
+        gameText.setText(player.getName() + ", you received " + reward.getName() + "!");
+        updateScoreSheets();
         if (reward == null) {
             return;
         }
@@ -909,10 +912,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 player.receiveCollectible(reward);
             }
         }
-        Platform.runLater(() -> {
-            gameText.setText(player.getName() + ", you received " + reward.getName() + "!");
-            updateScoreSheets();
-        });
+
     }
 
     protected void playColorBonus(Player player, GameColor gameColor) {
@@ -956,8 +956,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
                     if (possibleMoves.length == 0) {
                         throw new NoAvailableMovesException();
                     }
-                    //BlueBonusController.setPossibleMoves(possibleMoves);
-                    //BlueBonusController.setCurrentPlayer(player);
+                    BlueBonusController.setPossibleMove(possibleMoves[possibleMoves.length-1]);
+                    BlueBonusController.setCurrentPlayer(player);
                     sceneManager.showBlueRealmStage();
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
@@ -972,8 +972,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
                     if (possibleMoves.length == 0) {
                         throw new NoAvailableMovesException();
                     }
-                    //BlueBonusController.setPossibleMoves(possibleMoves);
-                    //BlueBonusController.setCurrentPlayer(player);
+                    MagentaBonusController.setCurrentPlayer(player);
+                    MagentaBonusController.setPossibleMove(new Move(new MagentaDice(6),player.getRealm(gameColor).getCreature(new MagentaDice(6))));
                     sceneManager.showMagentaRealmStage();
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
@@ -988,8 +988,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
                     if (possibleMoves.length == 0) {
                         throw new NoAvailableMovesException();
                     }
-                    //BlueBonusController.setPossibleMoves(possibleMoves);
-                    //BlueBonusController.setCurrentPlayer(player);
+                    YellowBonusController.setCurrentPlayer(player);
+                    YellowBonusController.setPossibleMove(new Move(new YellowDice(6),player.getRealm(gameColor).getCreature(new YellowDice(6))));
                     sceneManager.showYellowRealmStage();
                 } catch (NoAvailableMovesException e) {
                     // Handle case where no moves are available
@@ -1010,35 +1010,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
         LinkedList<Realm> availableRealms = Stream.of(realms)
                 .filter(Realm::isRealmAvailable)
                 .collect(Collectors.toCollection(LinkedList::new));
-
-        if (availableRealms.size() != realms.length) {
-            while (true) {
-                displayRealms(player);
-                System.out.println("Possible realms to choose from:");
-                for (int i = 0; i < availableRealms.size(); i++) {
-                    System.out.print(availableRealms.get(i).getName());
-                    if (i != availableRealms.size() - 1) {
-                        System.out.print(", ");
-                    }
-                }
-                System.out.println();
-                int choice = gameGuide.getUserChoice(1, realms.length);
-                try {
-                    if (!availableRealms.contains(realms[choice - 1])) {
-                        throw new InvalidMoveException();
-                    }
-                    playColorBonus(player, realms[choice - 1].getColor());
-                    break;
-                } catch (InvalidMoveException e) {
-                    System.out.printf("%s is not available%n", realms[choice - 1].getName());
-                    System.out.println("Choose another realm");
-                }
-            }
-        } else {
-            displayRealms(player);
-            playColorBonus(player, realms[gameGuide.getUserChoice(1, realms.length) - 1].getColor());
+        if(!availableRealms.isEmpty()){
+            RealmPickerController.setPossibleRealms(availableRealms);
+            RealmPickerController.setCurrentPlayer(player);
+            sceneManager.showRealmPickerStage();
         }
-
 
     }
 

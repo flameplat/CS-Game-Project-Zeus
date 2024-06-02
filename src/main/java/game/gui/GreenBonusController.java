@@ -1,6 +1,8 @@
 package game.gui;
+import game.dice.GreenDice;
 import game.engine.Move;
 import game.engine.Player;
+import game.utilities.GameColor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,6 +28,7 @@ public class GreenBonusController implements  Initializable  {
     @FXML private Button Gaia9;
     @FXML private Button Gaia10;
     @FXML private Button Gaia11;
+    @FXML private Label label;
     @FXML private ImageView BG;
     @FXML private ImageView ImageButton1;
     @FXML private ImageView ImageButton2;
@@ -59,38 +62,68 @@ public class GreenBonusController implements  Initializable  {
         ImageButton10.setImage(buttons);
         ImageButton11.setImage(buttons);
     }
-    public void AttackGaia1(ActionEvent event) {
-
+    public void AttackGaia1() {
+        Move move = new Move(new GreenDice(2), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(2)));
+        performAttack(move, "Gaia 1");
     }
-    public void AttackGaia2(ActionEvent event) {
-
+    public void AttackGaia2() {
+        Move move = new Move(new GreenDice(3), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(3)));
+        performAttack(move, "Gaia 2");
     }
-    public void AttackGaia3(ActionEvent event) {
 
+    public void AttackGaia3() {
+        Move move = new Move(new GreenDice(4), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(4)));
+        performAttack(move, "Gaia 3");
     }
-    public void AttackGaia4(ActionEvent event) {
 
+    public void AttackGaia4() {
+        Move move = new Move(new GreenDice(5), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(5)));
+        performAttack(move, "Gaia 4");
     }
-    public void AttackGaia5(ActionEvent event) {
 
+    public void AttackGaia5() {
+        Move move = new Move(new GreenDice(6), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(6)));
+        performAttack(move, "Gaia 5");
     }
-    public void AttackGaia6(ActionEvent event) {
 
+    public void AttackGaia6() {
+        Move move = new Move(new GreenDice(7), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(7)));
+        performAttack(move, "Gaia 6");
     }
-    public void AttackGaia7(ActionEvent event) {
 
+    public void AttackGaia7() {
+        Move move = new Move(new GreenDice(8), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(8)));
+        performAttack(move, "Gaia 7");
     }
-    public void AttackGaia8(ActionEvent event) {
 
+    public void AttackGaia8() {
+        Move move = new Move(new GreenDice(9), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(9)));
+        performAttack(move, "Gaia 8");
     }
-    public void AttackGaia9(ActionEvent event) {
 
+    public void AttackGaia9() {
+        Move move = new Move(new GreenDice(10), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(10)));
+        performAttack(move, "Gaia 9");
     }
-    public void AttackGaia10(ActionEvent event) {
 
+    public void AttackGaia10() {
+        Move move = new Move(new GreenDice(11), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(11)));
+        performAttack(move, "Gaia 10");
     }
-    public void AttackGaia11(ActionEvent event) {
 
+    public void AttackGaia11() {
+        Move move = new Move(new GreenDice(12), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(12)));
+        performAttack(move, "Gaia 11");
+    }
+
+    // Common method to perform the attack
+    private void performAttack(Move move, String gaiaNumber) {
+        if (possibleMoves.contains(move)) {
+            sceneManager.closeGreenRealmStage();
+            guiGameController.makeMove(currentPlayer, move);
+        } else {
+            label.setText(gaiaNumber + " is Dead");
+        }
     }
     private static SceneManager sceneManager;
     public static void setSceneManager(SceneManager sceneManager){
