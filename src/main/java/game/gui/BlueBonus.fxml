@@ -6,17 +6,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <AnchorPane prefHeight="896.0" prefWidth="1204.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.BlueBonusController">
    <children>
-      <ImageView fitHeight="896.0" fitWidth="1204.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="BG" fitHeight="896.0" fitWidth="1204.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../resources/images/BlueBG.jpg" />
          </image>
       </ImageView>
       <StackPane layoutX="284.0" layoutY="224.0" prefHeight="425.0" prefWidth="530.0">
          <children>
-            <ImageView fitHeight="429.0" fitWidth="431.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="serpantImageView" fitHeight="429.0" fitWidth="431.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/images/BlueSerpant.png" />
                </image>
