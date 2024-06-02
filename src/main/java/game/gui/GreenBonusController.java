@@ -92,4 +92,8 @@ public class GreenBonusController implements  Initializable  {
     public static void setSceneManager(SceneManager sceneManager){
         GreenBonusController.sceneManager=sceneManager;
     }
+    private static GUIGameController guiGameController;
+    public static void setGuiGameController(GUIGameController guiGameController){
+        GreenBonusController.guiGameController=guiGameController;
+    }
 }

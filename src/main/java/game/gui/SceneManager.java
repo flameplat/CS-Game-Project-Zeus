@@ -123,13 +123,14 @@ public class SceneManager {
             greenRealmStage.show();
         } else {
             try{
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("GreenRealm.fxml")));
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("GreenBonus.fxml")));
                 root = loader.load();
                 GreenBonusController.setSceneManager(this);
                 Scene greenRealmScene = new Scene(root);
                 greenRealmStage = new Stage();
                 greenRealmStage.setScene(greenRealmScene);
                 greenRealmStage.setResizable(true);
+                GreenBonusController.setGuiGameController(guiGameController);
                 greenRealmStage.show();
             } catch (IOException e){
                 e.printStackTrace();
@@ -155,6 +156,7 @@ public class SceneManager {
                 Scene redRealmScene = new Scene(root);
                 redRealmStage = new Stage();
                 redRealmStage.setScene(redRealmScene);
+                RedRealmController.setGuiGameController(guiGameController);
                 redRealmStage.setResizable(true);
                 redRealmStage.show();
             } catch (IOException e){
@@ -175,12 +177,13 @@ public class SceneManager {
             yellowRealmStage.show();
         } else {
             try{
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("YellowRealm.fxml")));
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("YellowBonus.fxml")));
                 root = loader.load();
                 YellowBonusController.setSceneManager(this);
                 Scene yellowRealmScene = new Scene(root);
                 yellowRealmStage = new Stage();
                 yellowRealmStage.setScene(yellowRealmScene);
+                YellowBonusController.setGuiGameController(guiGameController);
                 yellowRealmStage.setResizable(true);
                 yellowRealmStage.show();
             } catch (IOException e){
@@ -201,10 +204,11 @@ public class SceneManager {
             magentaRealmStage.show();
         } else {
             try{
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("MagentaRealm.fxml")));
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("MagentaBonus.fxml")));
                 root = loader.load();
                 MagentaBonusController.setSceneManager(this);
                 Scene magentaRealmScene = new Scene(root);
+                MagentaBonusController.setGuiGameController(guiGameController);
                 magentaRealmStage = new Stage();
                 magentaRealmStage.setScene(magentaRealmScene);
                 magentaRealmStage.setResizable(true);
@@ -227,9 +231,10 @@ public class SceneManager {
             blueRealmStage.show();
         } else {
             try{
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("BlueRealm.fxml")));
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("BlueBonus.fxml")));
                 root = loader.load();
                 BlueBonusController.setSceneManager(this);
+                BlueBonusController.setGuiGameController(guiGameController);
                 Scene blueRealmScene = new Scene(root);
                 blueRealmStage = new Stage();
                 blueRealmStage.setScene(blueRealmScene);

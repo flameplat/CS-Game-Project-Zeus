@@ -22,4 +22,12 @@ public class MagentaBonusController implements Initializable  {
     public void AttackPhoenix(ActionEvent event) {
 
     }
+    private static SceneManager sceneManager;
+    private static GUIGameController guiGameController;
+    public static void setGuiGameController(GUIGameController guiGameController){
+        MagentaBonusController.guiGameController=guiGameController;
+    }
+    public static void setSceneManager(SceneManager sceneManager){
+        MagentaBonusController.sceneManager=sceneManager;
+    }
 }

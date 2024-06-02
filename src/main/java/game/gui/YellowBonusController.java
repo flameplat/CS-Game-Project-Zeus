@@ -22,4 +22,12 @@ public class YellowBonusController implements Initializable  {
     public void AttackLion(ActionEvent event) {
 
     }
+    private static SceneManager sceneManager;
+    public static void setSceneManager(SceneManager sceneManager){
+        YellowBonusController.sceneManager=sceneManager;
+    }
+    private static GUIGameController guiGameController;
+    public static void setGuiGameController(GUIGameController guiGameController){
+        YellowBonusController.guiGameController=guiGameController;
+    }
 }

@@ -80,5 +80,9 @@ public class RedRealmController implements Initializable {
     public static void setSceneManager(SceneManager sceneManager){
         RedRealmController.sceneManager=sceneManager;
     }
+    private static GUIGameController guiGameController;
+    public static void setGuiGameController(GUIGameController guiGameController){
+        RedRealmController.guiGameController=guiGameController;
+    }
 
 }
