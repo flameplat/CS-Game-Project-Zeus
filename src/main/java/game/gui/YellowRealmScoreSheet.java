@@ -1,12 +1,8 @@
 package game.gui;
 
-import game.creatures.Lion;
-import game.dice.YellowDice;
 import game.engine.Move;
 import game.realms.YellowRealm;
 import game.utilities.GameColor;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -14,10 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class YellowRealmScoreSheetController implements Initializable {
+public class YellowRealmScoreSheet implements Initializable {
     @FXML private GridPane gridPane;
     @FXML private Label hit1ScoreLabel;
     @FXML private Label hit2ScoreLabel;
@@ -61,7 +56,7 @@ public class YellowRealmScoreSheetController implements Initializable {
     }
     public void updateScoreSheet(){
         Object[] hitScore=yellowRealm.getScoreValues();
-        for(int i=0;i<scoreLabels.length;i++){
+        for(int i=0;i<yellowRealm.getCountHits();i++){
             scoreLabels[i].setText(hitScore[i].toString());
         }
         String[] rewardValues=yellowRealm.getRewardValues();
@@ -77,10 +72,9 @@ public class YellowRealmScoreSheetController implements Initializable {
             if(move.getDice().getRealm()== GameColor.YELLOW){
                 if(yellowRealm.isRealmAvailable()){
                     int col=yellowRealm.getCountHits();
-                    highlightCell(0,col+1,"yellow");
-                    highlightCell(1,col+1,"yellow");
-                    highlightCell(2,col+1,"yellow");
-                    highlightCell(3,col+1,"yellow");
+                    highlightCell(0,col+1,"white");
+                    highlightCell(1,col+1,"white");
+                    highlightCell(2,col+1,"white");
                 }
                 break;
             }

@@ -2,6 +2,7 @@ package game.gui;
 
 import game.engine.Move;
 import game.engine.Player;
+import game.realms.MagentaRealm;
 import game.realms.Realm;
 import game.realms.YellowRealm;
 import javafx.fxml.FXML;
@@ -21,9 +22,12 @@ import java.util.ResourceBundle;
 public class CompositeScoreSheetController implements Initializable {
     @FXML
     private ImageView bg;
-    private YellowRealmScoreSheetController yellowRealmScoreSheetController;
+    private YellowRealmScoreSheet yellowRealmScoreSheet;
+    private MagentaRealmScoreSheet magentaRealmScoreSheet;
     @FXML
     private AnchorPane yellowRealm;
+    @FXML
+    private AnchorPane magentaRealm;
     private Realm[] realms;
     @FXML
     private Label playerName;
@@ -36,6 +40,8 @@ public class CompositeScoreSheetController implements Initializable {
     @FXML private Label timeWarpLabel;
     @FXML private Label arcaneBoostLabel;
     @FXML private Label elementalCrestLabel;
+    @FXML private Label timeWarpLabelUsed;
+    @FXML private Label arcaneBoostLabelUsed;
     @FXML private Label totalScoreLabel;
     private Player player;
     @Override
@@ -48,7 +54,12 @@ public class CompositeScoreSheetController implements Initializable {
             FXMLLoader yellowRealmLoader = new FXMLLoader(getClass().getResource("YellowRealmScoreSheet.fxml"));
             AnchorPane yellowRealmScene = yellowRealmLoader.load();
             yellowRealm.getChildren().add(yellowRealmScene);
-            yellowRealmScoreSheetController=yellowRealmLoader.getController();
+            yellowRealmScoreSheet =yellowRealmLoader.getController();
+            FXMLLoader magentaRealmLoader = new FXMLLoader(getClass().getResource("MagentaRealmScoreSheet.fxml"));
+            AnchorPane magentaRealmScene = magentaRealmLoader.load();
+            magentaRealm.getChildren().add(magentaRealmScene);
+            magentaRealmScoreSheet=magentaRealmLoader.getController();
+
         }
         catch (IOException e){
             e.printStackTrace();
@@ -56,23 +67,29 @@ public class CompositeScoreSheetController implements Initializable {
 
     }
     public void updateScoreSheet(){
-        yellowRealmScoreSheetController.updateScoreSheet();
+        yellowRealmScoreSheet.updateScoreSheet();
+        magentaRealmScoreSheet.updateScoreSheet();
         timeWarpLabel.setText(String.valueOf(player.getTotalTimeWarpPowersCollected()));
         elementalCrestLabel.setText(String.valueOf(player.getGameScore().getTotalElementalCrests()));
         arcaneBoostLabel.setText(String.valueOf(player.getTotalArcaneBoostPowersCollected()));
         totalScoreLabel.setText(String.valueOf(player.getGameScore().getTotalScore()));
+        timeWarpLabelUsed.setText(String.valueOf(player.getTimeWarpsUsed()));
+        arcaneBoostLabelUsed.setText(String.valueOf(player.getArcaneBoostsUsed()));
     }
     public void setPlayer(Player player){
         this.player=player;
         this.playerName.setText(player.toString());
         this.realms=player.getRealms();
-        yellowRealmScoreSheetController.setRealm((YellowRealm) realms[4]);
+        yellowRealmScoreSheet.setRealm((YellowRealm) realms[4]);
+        magentaRealmScoreSheet.setRealm((MagentaRealm) realms[3]);
         updateScoreSheet();
     }
     public void highlightPossibleMoves(Move[] moves){
-        yellowRealmScoreSheetController.highlightMoves(moves);
+        yellowRealmScoreSheet.highlightMoves(moves);
+        magentaRealmScoreSheet.highlightMoves(moves);
     }
     public void removeHighlight(){
-        yellowRealmScoreSheetController.removeHighlight();
+        yellowRealmScoreSheet.removeHighlight();
+        magentaRealmScoreSheet.removeHighlight();
     }
 }

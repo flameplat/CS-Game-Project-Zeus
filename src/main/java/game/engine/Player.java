@@ -27,6 +27,8 @@ public class Player {
     private LinkedList<ArcaneBoost> arcaneBoosts;
     private LinkedList<TimeWarp> timeWarps;
     private CompositeScoreSheetController scoreSheetController;
+    private int timeWarpsUsed;
+    private int arcaneBoostsUsed;
 
     //----------------------Constructor--------------------------//
     public Player(String name) throws InvalidPlayerNameException {
@@ -46,6 +48,13 @@ public class Player {
         isArcaneBoostUsed=false;
     }
 
+    public int getArcaneBoostsUsed() {
+        return arcaneBoostsUsed;
+    }
+
+    public int getTimeWarpsUsed() {
+        return timeWarpsUsed;
+    }
 
     public Player() {
         this.name = String.format("Player %d", id);
@@ -138,6 +147,7 @@ public class Player {
     public void useTimeWarpPower() {
         if (!timeWarps.isEmpty()) {
             timeWarps.remove();
+            timeWarpsUsed++;
         }
     }
 
@@ -148,6 +158,7 @@ public class Player {
         if (!arcaneBoosts.isEmpty()) {
             arcaneBoosts.remove();
             isArcaneBoostUsed=true;
+            arcaneBoostsUsed++;
         }
     }
 

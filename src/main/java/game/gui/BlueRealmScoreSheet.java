@@ -1,7 +1,6 @@
 package game.gui;
 
 import game.engine.Move;
-import game.realms.MagentaRealm;
 import game.realms.YellowRealm;
 import game.utilities.GameColor;
 import javafx.fxml.FXML;
@@ -11,11 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
-public class MagentaRealmScoreSheet implements Initializable {
-    @FXML private GridPane gridPane;
+public class BlueRealmScoreSheet implements Initializable {
+    @FXML
+    private GridPane gridPane;
     @FXML private Label hit1ScoreLabel;
     @FXML private Label hit2ScoreLabel;
     @FXML private Label hit3ScoreLabel;
@@ -39,10 +38,9 @@ public class MagentaRealmScoreSheet implements Initializable {
     @FXML private Label hit9RewardLabel;
     @FXML private Label hit10RewardLabel;
     @FXML private Label hit11RewardLabel;
-    private MagentaRealm magentaRealm;
+    private YellowRealm yellowRealm;
     private Label[] scoreLabels;
     private Label[] rewardLabels;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,28 +56,26 @@ public class MagentaRealmScoreSheet implements Initializable {
 
     }
     public void updateScoreSheet(){
-        int[] hitScore=magentaRealm.getScoreValues();
-        for(int i=0;i< magentaRealm.getCounterHits();i++){
-            scoreLabels[i].setText(String.valueOf(hitScore[i]));
+        Object[] hitScore=yellowRealm.getScoreValues();
+        for(int i=0;i<yellowRealm.getCountHits();i++){
+            scoreLabels[i].setText(hitScore[i].toString());
         }
-        String[] rewardValues=magentaRealm.getRewardValues();
+        String[] rewardValues=yellowRealm.getRewardValues();
         for(int i=0;i<rewardValues.length;i++){
             rewardLabels[i].setText(rewardValues[i]);
         }
     }
-    public void setRealm(MagentaRealm yellowRealm){
-        this.magentaRealm=yellowRealm;
+    public void setRealm(YellowRealm yellowRealm){
+        this.yellowRealm=yellowRealm;
     }
     public void highlightMoves(Move[] moves){
         for (Move move : moves) {
-            if(move.getDice().getRealm()== GameColor.MAGENTA){
-                if(magentaRealm.isRealmAvailable()){
-                    if(magentaRealm.getRealmMoves()[0].getDice().getValue()<=move.getDice().getValue()){
-                        int col=magentaRealm.getCounterHits();
-                        highlightCell(0,col+1,"white");
-                        highlightCell(1,col+1,"white");
-                        highlightCell(2,col+1,"white");
-                    }
+            if(move.getDice().getRealm()== GameColor.YELLOW){
+                if(yellowRealm.isRealmAvailable()){
+                    int col=yellowRealm.getCountHits();
+                    highlightCell(0,col+1,"white");
+                    highlightCell(1,col+1,"white");
+                    highlightCell(2,col+1,"white");
                 }
                 break;
             }

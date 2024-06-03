@@ -42,7 +42,8 @@ public class MagentaRealm extends Realm {
         totalRealmScore = 0;
         this.score = new int[11];
         this.noElementalCrests = 0;
-        this.realmMoves = new Move[]{new Move(new MagentaDice(1), phoenix),
+        this.realmMoves = new Move[]{
+                new Move(new MagentaDice(1), phoenix),
                 new Move(new MagentaDice(2), phoenix),
                 new Move(new MagentaDice(3), phoenix),
                 new Move(new MagentaDice(4), phoenix),
@@ -61,6 +62,9 @@ public class MagentaRealm extends Realm {
             }
         }
         this.realmPossibleMoves = list.toArray(Move[]::new);
+    }
+    public int getCounterHits(){
+        return counterHits;
     }
 
     private Collectibles[] getRewardsProperties() {
@@ -198,6 +202,12 @@ public class MagentaRealm extends Realm {
             return phoenix;
         }
         return null;
+    }
+    public int[] getScoreValues(){
+        return score;
+    }
+    public String[] getRewardValues(){
+        return rewardValues;
     }
 
 

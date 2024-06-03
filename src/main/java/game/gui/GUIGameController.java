@@ -426,32 +426,32 @@ public class GUIGameController extends CLIGameController implements Initializabl
     //------------------------------------------------------HOVER METHODS-------------------------------------------------------//
     @FXML
     public void redDiceButtonHoverOn() {
-        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, diceArray[0]));
+        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, refDiceArray[0]));
     }
 
     @FXML
     public void greenDiceButtonHoverOn() {
-        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, diceArray[1]));
+        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, refDiceArray[1]));
     }
 
     @FXML
     public void blueDiceButtonHoverOn() {
-        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, diceArray[2]));
+        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, refDiceArray[2]));
     }
 
     @FXML
     public void magentaDiceButtonHoverOn() {
-        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, diceArray[3]));
+        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, refDiceArray[3]));
     }
 
     @FXML
     public void yellowDiceButtonHoverOn() {
-        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, diceArray[4]));
+        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, refDiceArray[4]));
     }
 
     @FXML
     public void whiteDiceButtonHoverOn() {
-        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, diceArray[5]));
+        highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, refDiceArray[5]));
     }
 
     public void diceButtonHoverOff() {
@@ -780,6 +780,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             whiteDieParent = (GridPane) whiteDice.getParent();
             selectDice(diceArray[5], currentPlayer);
             disableGrid(whiteDieParent);
+            disableTimeWarpButton();
             Dice selectedDie = diceArray[5];
             arcanePrismEnabled = true;
             refDiceArray = new Dice[]{
@@ -838,16 +839,16 @@ public class GUIGameController extends CLIGameController implements Initializabl
         currentPlayer = activePlayer;
         gameStatus.setGameStatus(CurrentStatus.ACTIVE_TURN);
         refDiceArray = diceArray;
-        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
-        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
-        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
-        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
-        playColorBonus(activePlayer,GameColor.YELLOW);
-        playColorBonus(activePlayer,GameColor.RED);
-        playColorBonus(activePlayer,GameColor.BLUE);
-        playColorBonus(activePlayer,GameColor.GREEN);
-        playColorBonus(activePlayer,GameColor.MAGENTA);
-        playEssenceBonus(activePlayer);
+//        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
+//        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
+//        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
+//        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
+//        playColorBonus(activePlayer,GameColor.YELLOW);
+//        playColorBonus(activePlayer,GameColor.RED);
+//        playColorBonus(activePlayer,GameColor.BLUE);
+//        playColorBonus(activePlayer,GameColor.GREEN);
+//        playColorBonus(activePlayer,GameColor.MAGENTA);
+//        playEssenceBonus(activePlayer);
     }
 
     @Override

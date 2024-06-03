@@ -486,5 +486,15 @@
             </GridPane>
          </children>
       </StackPane>
+      <StackPane layoutX="20.0" layoutY="689.0" prefHeight="25.0" prefWidth="200.0">
+         <children>
+            <Rectangle arcHeight="20.0" arcWidth="20.0" height="38.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+            <Label alignment="CENTER" prefHeight="25.0" prefWidth="192.0" text="Forgotten Realm" textFill="WHITE">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>
