@@ -61,6 +61,29 @@ public class GreenBonusController implements  Initializable,RealmController  {
         ImageButton9.setImage(buttons);
         ImageButton10.setImage(buttons);
         ImageButton11.setImage(buttons);
+        Gaia1.setOnMouseEntered(e -> hoverGaia1());
+        Gaia2.setOnMouseEntered(e -> hoverGaia2());
+        Gaia3.setOnMouseEntered(e -> hoverGaia3());
+        Gaia4.setOnMouseEntered(e -> hoverGaia4());
+        Gaia5.setOnMouseEntered(e -> hoverGaia5());
+        Gaia6.setOnMouseEntered(e -> hoverGaia6());
+        Gaia7.setOnMouseEntered(e -> hoverGaia7());
+        Gaia8.setOnMouseEntered(e -> hoverGaia8());
+        Gaia9.setOnMouseEntered(e -> hoverGaia9());
+        Gaia10.setOnMouseEntered(e -> hoverGaia10());
+        Gaia11.setOnMouseEntered(e -> hoverGaia11());
+        Gaia1.setOnMouseExited(e -> removeHoverHighlight());
+        Gaia2.setOnMouseExited(e -> removeHoverHighlight());
+        Gaia3.setOnMouseExited(e -> removeHoverHighlight());
+        Gaia4.setOnMouseExited(e -> removeHoverHighlight());
+        Gaia5.setOnMouseExited(e -> removeHoverHighlight());
+        Gaia6.setOnMouseExited(e -> removeHoverHighlight());
+        Gaia7.setOnMouseExited(e -> removeHoverHighlight());
+        Gaia8.setOnMouseExited(e -> removeHoverHighlight());
+        Gaia9.setOnMouseExited(e -> removeHoverHighlight());
+        Gaia10.setOnMouseExited(e -> removeHoverHighlight());
+        Gaia11.setOnMouseExited(e -> removeHoverHighlight());
+
     }
     public void AttackGaia1() {
         Move move = new Move(new GreenDice(2), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(2)));
@@ -114,6 +137,63 @@ public class GreenBonusController implements  Initializable,RealmController  {
     public void AttackGaia11() {
         Move move = new Move(new GreenDice(12), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(12)));
         performAttack(move, "Gaia 11");
+    }
+
+    public void hoverGaia1(){
+        Move move = new Move(new GreenDice(2), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(2)));
+        currentPlayer.getScoreSheetController().highlightPossibleMoves(new Move[]{move});
+    }
+    public void hoverGaia2() {
+        Move move = new Move(new GreenDice(3), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(3)));
+        currentPlayer.getScoreSheetController().highlightPossibleMoves(new Move[]{move});
+    }
+
+    public void hoverGaia3() {
+        Move move = new Move(new GreenDice(4), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(4)));
+        currentPlayer.getScoreSheetController().highlightPossibleMoves(new Move[]{move});
+    }
+
+    public void hoverGaia4() {
+        Move move = new Move(new GreenDice(5), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(5)));
+        currentPlayer.getScoreSheetController().highlightPossibleMoves(new Move[]{move});
+    }
+
+    public void hoverGaia5() {
+        Move move = new Move(new GreenDice(6), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(6)));
+        currentPlayer.getScoreSheetController().highlightPossibleMoves(new Move[]{move});
+    }
+
+    public void hoverGaia6() {
+        Move move = new Move(new GreenDice(7), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(7)));
+        currentPlayer.getScoreSheetController().highlightPossibleMoves(new Move[]{move});
+    }
+
+    public void hoverGaia7() {
+        Move move = new Move(new GreenDice(8), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(8)));
+        currentPlayer.getScoreSheetController().highlightPossibleMoves(new Move[]{move});
+    }
+
+    public void hoverGaia8() {
+        Move move = new Move(new GreenDice(9), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(9)));
+        currentPlayer.getScoreSheetController().highlightPossibleMoves(new Move[]{move});
+    }
+
+    public void hoverGaia9() {
+        Move move = new Move(new GreenDice(10), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(10)));
+        currentPlayer.getScoreSheetController().highlightPossibleMoves(new Move[]{move});
+    }
+
+    public void hoverGaia10() {
+        Move move = new Move(new GreenDice(11), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(11)));
+        currentPlayer.getScoreSheetController().highlightPossibleMoves(new Move[]{move});
+    }
+
+    public void hoverGaia11() {
+        Move move = new Move(new GreenDice(12), currentPlayer.getRealm(GameColor.GREEN).getCreature(new GreenDice(12)));
+        currentPlayer.getScoreSheetController().highlightPossibleMoves(new Move[]{move});
+    }
+    public void removeHoverHighlight(){
+        currentPlayer.getScoreSheetController().removeHighlight();
     }
 
     // Common method to perform the attack
