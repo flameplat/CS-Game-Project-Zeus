@@ -1,6 +1,7 @@
 package game.gui;
 
 import game.engine.Move;
+import game.realms.BlueRealm;
 import game.realms.YellowRealm;
 import game.utilities.GameColor;
 import javafx.fxml.FXML;
@@ -38,9 +39,24 @@ public class BlueRealmScoreSheet implements Initializable {
     @FXML private Label hit9RewardLabel;
     @FXML private Label hit10RewardLabel;
     @FXML private Label hit11RewardLabel;
-    private YellowRealm yellowRealm;
+
+    @FXML private Label score1Label;
+    @FXML private Label score2Label;
+    @FXML private Label score3Label;
+    @FXML private Label score4Label;
+    @FXML private Label score5Label;
+    @FXML private Label score6Label;
+    @FXML private Label score7Label;
+    @FXML private Label score8Label;
+    @FXML private Label score9Label;
+    @FXML private Label score10Label;
+    @FXML private Label score11Label;
+    private Label[] fixedScoreLabels;
+
+    private BlueRealm blueRealm;
     private Label[] scoreLabels;
     private Label[] rewardLabels;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -53,30 +69,40 @@ public class BlueRealmScoreSheet implements Initializable {
                 hit1RewardLabel, hit2RewardLabel, hit3RewardLabel, hit4RewardLabel, hit5RewardLabel,
                 hit6RewardLabel, hit7RewardLabel, hit8RewardLabel, hit9RewardLabel, hit10RewardLabel, hit11RewardLabel
         };
+        fixedScoreLabels = new Label[] {
+                score1Label, score2Label, score3Label, score4Label, score5Label,
+                score6Label, score7Label, score8Label, score9Label, score10Label, score11Label
+        };
 
     }
     public void updateScoreSheet(){
-        Object[] hitScore=yellowRealm.getScoreValues();
-        for(int i=0;i<yellowRealm.getCountHits();i++){
-            scoreLabels[i].setText(hitScore[i].toString());
+        String[] hitScore=blueRealm.getAttackValues();
+        for(int i=0;i<blueRealm.getHitcount();i++){
+            scoreLabels[i].setText(hitScore[i]);
         }
-        String[] rewardValues=yellowRealm.getRewardValues();
+        String[] rewardValues=blueRealm.getRewardValues();
         for(int i=0;i<rewardValues.length;i++){
             rewardLabels[i].setText(rewardValues[i]);
         }
+        int[] scoreSheetValues = blueRealm.getScoreSheetValues();
+        for (int i = 0; i < scoreSheetValues.length; i++) {
+            fixedScoreLabels[i].setText(String.valueOf(scoreSheetValues[i]));
+        }
     }
-    public void setRealm(YellowRealm yellowRealm){
-        this.yellowRealm=yellowRealm;
+    private int[] score=new int[]{1,2,3,4,5,1,2,3,4,5,6};
+    public void setRealm(BlueRealm blueRealm){
+        this.blueRealm=blueRealm;
     }
     public void highlightMoves(Move[] moves){
         for (Move move : moves) {
-            if(move.getDice().getRealm()== GameColor.YELLOW){
-                if(yellowRealm.isRealmAvailable()){
-                    int col=yellowRealm.getCountHits();
-                    highlightCell(0,col+1,"white");
-                    highlightCell(1,col+1,"white");
-                    highlightCell(2,col+1,"white");
-                }
+            if(move.getDice().getRealm()== GameColor.BLUE
+                    && blueRealm.isRealmAvailable()
+                    && move.getDice().getValue()>=score[blueRealm.getHitcount()]) {
+                int col=blueRealm.getHitcount();
+                highlightCell(0,col+1,"white");
+                highlightCell(1,col+1,"white");
+                highlightCell(2,col+1,"white");
+                highlightCell(3,col+1,"white");
                 break;
             }
         }
@@ -94,7 +120,6 @@ public class BlueRealmScoreSheet implements Initializable {
             if (node instanceof Label) {
                 Integer rowIndex = GridPane.getRowIndex(node);
                 Integer colIndex = GridPane.getColumnIndex(node);
-
                 if (rowIndex != null && colIndex != null && rowIndex == row && colIndex == column) {
                     if(color == "null"){
                         node.setStyle("");

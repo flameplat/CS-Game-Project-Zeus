@@ -181,6 +181,18 @@ public class GreenRealm extends Realm {
                 score[0] < 10 ? score[0] + " " : score[0], score[1] < 10 ? score[1] + " " : score[1], score[2] < 10 ? score[2] + " " : score[2], score[3] < 10 ? score[3] + " " : score[3], score[4] < 10 ? score[4] + " " : score[4], score[5] < 10 ? score[5] + " " : score[5], score[6] < 10 ? score[6] + " " : score[6], score[7] < 10 ? score[7] + " " : score[7], score[8] < 10 ? score[8] + " " : score[8], score[9] < 10 ? score[9] + " " : score[9], score[10] < 10 ? score[10] + " " : score[10]
         );
     }
+    public Guardian[][] getMainArray(){
+        return mainArray;
+    }
+    public Object[] getColRewards(){
+        return colRewards;
+    }
+    public int[] getScore(){
+        return score;
+    }
+    public Object[] getRowRewards(){
+        return rowRewards;
+    }
 
 
     @Override

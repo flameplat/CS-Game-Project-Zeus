@@ -135,6 +135,22 @@ public class BlueRealm extends Realm{
                 scoreSheetValues[0],scoreSheetValues[1],scoreSheetValues[2],scoreSheetValues[3],scoreSheetValues[4],scoreSheetValues[5],
                 scoreSheetValues[6],scoreSheetValues[7],scoreSheetValues[8],scoreSheetValues[9],scoreSheetValues[10]);
     }
+
+    public int[] getScoreSheetValues() {
+        return scoreSheetValues;
+    }
+
+    public String[] getAttackValues() {
+        return attackValues;
+    }
+
+    public String[] getRewardValues() {
+        return rewardValues;
+    }
+    public int getHitcount(){
+        return hitcount;
+    }
+
     @Override //just returns an array of 1 element as the game controller gets an array from each realm
     public Collectibles[] getReward() {
         Collectibles[] temp=new Collectibles[1];
@@ -324,4 +340,5 @@ public class BlueRealm extends Realm{
     public boolean isSerpent1Alive(){
         return serpent1[S1HeadNumber-1].isAlive();
     }
+
 }

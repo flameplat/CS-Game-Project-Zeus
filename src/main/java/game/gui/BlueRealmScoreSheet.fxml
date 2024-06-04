@@ -75,6 +75,17 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2200ff" height="31.0" stroke="BLACK" strokeType="INSIDE" width="458.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="S" textFill="WHITE" GridPane.rowIndex="3" />
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="#" textFill="WHITE" />
+            <Label fx:id="score1Label" alignment="CENTER" prefHeight="33.0" prefWidth="41.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="score2Label" alignment="CENTER" prefHeight="46.0" prefWidth="41.0" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="score3Label" alignment="CENTER" prefHeight="36.0" prefWidth="41.0" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label fx:id="score4Label" alignment="CENTER" prefHeight="41.0" prefWidth="41.0" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label fx:id="score5Label" alignment="CENTER" prefHeight="38.0" prefWidth="42.0" textFill="WHITE" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Label fx:id="score6Label" alignment="CENTER" prefHeight="42.0" prefWidth="42.0" textFill="WHITE" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+            <Label fx:id="score7Label" alignment="CENTER" prefHeight="42.0" prefWidth="42.0" textFill="WHITE" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+            <Label fx:id="score8Label" alignment="CENTER" prefHeight="40.0" prefWidth="42.0" textFill="WHITE" GridPane.columnIndex="8" GridPane.rowIndex="3" />
+            <Label fx:id="score9Label" alignment="CENTER" prefHeight="49.0" prefWidth="42.0" textFill="WHITE" GridPane.columnIndex="9" GridPane.rowIndex="3" />
+            <Label fx:id="score10Label" alignment="CENTER" prefHeight="48.0" prefWidth="42.0" textFill="WHITE" GridPane.columnIndex="10" GridPane.rowIndex="3" />
+            <Label fx:id="score11Label" alignment="CENTER" prefHeight="62.0" prefWidth="42.0" textFill="WHITE" GridPane.columnIndex="11" GridPane.rowIndex="3" />
          </children>
       </GridPane>
       <StackPane layoutX="2.0" prefHeight="24.0" prefWidth="273.0">
