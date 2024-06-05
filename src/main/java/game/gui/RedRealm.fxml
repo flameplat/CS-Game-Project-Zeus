@@ -41,7 +41,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="FaceD1" fx:id="FaceD1" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD1" opacity="0.0" prefHeight="42.0" prefWidth="133.0" text="Button" />
+            <Button id="FaceD1" fx:id="FaceD1" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD1" onMouseEntered="#hoverFaceD1" onMouseExited="#removeHighlight" opacity="0.0" prefHeight="42.0" prefWidth="133.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="37.0" layoutY="288.0" prefHeight="111.0" prefWidth="226.0">
@@ -67,7 +67,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="WingD1" fx:id="WingD1" focusTraversable="false" mnemonicParsing="false" onAction="#attckWingD1" opacity="0.0" prefHeight="42.0" prefWidth="115.0" text="Button" />
+            <Button id="WingD1" fx:id="WingD1" focusTraversable="false" mnemonicParsing="false" onAction="#attckWingD1" onMouseEntered="#hoverWingD1" onMouseExited="#removeHighlight" opacity="0.0" prefHeight="42.0" prefWidth="115.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="52.0" layoutY="377.0" prefHeight="98.0" prefWidth="163.0">
@@ -93,7 +93,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="TailD1" fx:id="TailD1" focusTraversable="false" mnemonicParsing="false" onAction="#attckTailD1" opacity="0.0" prefHeight="64.0" prefWidth="110.0" text="Button" />
+            <Button id="TailD1" fx:id="TailD1" focusTraversable="false" mnemonicParsing="false" onAction="#attckTailD1" onMouseEntered="#hoverTailD1" onMouseExited="#removeHighlight" opacity="0.0" prefHeight="64.0" prefWidth="110.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="396.0" layoutY="240.0" prefHeight="64.0" prefWidth="96.0">
@@ -119,7 +119,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="FaceD2" fx:id="FaceD2" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD2" opacity="0.0" prefHeight="55.0" prefWidth="92.0" text="Button" />
+            <Button id="FaceD2" fx:id="FaceD2" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD2" onMouseEntered="#hoverFaceD2" onMouseExited="#removeHighlight" opacity="0.0" prefHeight="55.0" prefWidth="92.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="392.0" layoutY="308.0" prefHeight="71.0" prefWidth="125.0">
@@ -145,7 +145,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="WingD2" fx:id="WingD2" focusTraversable="false" mnemonicParsing="false" onAction="#attckWingD2" opacity="0.0" prefHeight="42.0" prefWidth="112.0" text="Button" />
+            <Button id="WingD2" fx:id="WingD2" focusTraversable="false" mnemonicParsing="false" onAction="#attckWingD2" onMouseEntered="#hoverWingD2" onMouseExited="#removeHighlight" opacity="0.0" prefHeight="42.0" prefWidth="112.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="382.0" layoutY="394.0" prefHeight="64.0" prefWidth="145.0">
@@ -171,7 +171,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="HeartD2" fx:id="HeartD2" focusTraversable="false" mnemonicParsing="false" onAction="#attckHeartD2" opacity="0.0" prefHeight="42.0" prefWidth="98.0" text="Button" />
+            <Button id="HeartD2" fx:id="HeartD2" focusTraversable="false" mnemonicParsing="false" onAction="#attckHeartD2" onMouseEntered="#hoverHeartD2" onMouseExited="#removeHighlight" opacity="0.0" prefHeight="42.0" prefWidth="98.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="719.0" layoutY="240.0" prefHeight="50.0" prefWidth="85.0">
@@ -197,7 +197,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="FaceD3" fx:id="FaceD3" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD3" opacity="0.0" prefHeight="42.0" prefWidth="78.0" text="Button" />
+            <Button id="FaceD3" fx:id="FaceD3" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD3" onMouseEntered="#hoverFaceD3" opacity="0.0" prefHeight="42.0" prefWidth="78.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="982.0" layoutY="240.0" prefHeight="50.0" prefWidth="102.0">
@@ -223,7 +223,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="WingD4" fx:id="WingD4" focusTraversable="false" mnemonicParsing="false" onAction="#attckWingD4" opacity="0.0" prefHeight="42.0" prefWidth="96.0" text="Button" />
+            <Button id="WingD4" fx:id="WingD4" focusTraversable="false" mnemonicParsing="false" onAction="#attckWingD4" onMouseEntered="#hoverWingD4" onMouseExited="#removeHighlight" opacity="0.0" prefHeight="42.0" prefWidth="96.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="983.0" layoutY="319.0" prefHeight="50.0" prefWidth="85.0">
@@ -249,7 +249,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="TailD4" fx:id="TailD4" focusTraversable="false" mnemonicParsing="false" onAction="#attckTailD4" opacity="0.0" prefHeight="42.0" prefWidth="78.0" text="Button" />
+            <Button id="TailD4" fx:id="TailD4" focusTraversable="false" mnemonicParsing="false" onAction="#attckTailD4" onMouseEntered="#hoverTailD4" onMouseExited="#removeHighlight" opacity="0.0" prefHeight="42.0" prefWidth="78.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="713.0" layoutY="319.0" prefHeight="50.0" prefWidth="85.0">
@@ -275,7 +275,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="TailD3" fx:id="TailD3" focusTraversable="false" mnemonicParsing="false" onAction="#attckTailD3" opacity="0.0" prefHeight="42.0" prefWidth="78.0" text="Button" />
+            <Button id="TailD3" fx:id="TailD3" focusTraversable="false" mnemonicParsing="false" onAction="#attckTailD3" onMouseEntered="#hoverTailD3" onMouseExited="#removeHighlight" opacity="0.0" prefHeight="42.0" prefWidth="78.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="713.0" layoutY="401.0" prefHeight="50.0" prefWidth="125.0">
@@ -301,7 +301,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="HeartD3" fx:id="HeartD3" focusTraversable="false" mnemonicParsing="false" onAction="#attckHeartD3" opacity="0.0" prefHeight="42.0" prefWidth="98.0" text="Button" />
+            <Button id="HeartD3" fx:id="HeartD3" focusTraversable="false" mnemonicParsing="false" onAction="#attckHeartD3" onMouseEntered="#hoverHeartD3" onMouseExited="#removeHighlight" opacity="0.0" prefHeight="42.0" prefWidth="98.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="982.0" layoutY="401.0" prefHeight="50.0" prefWidth="125.0">
@@ -327,10 +327,10 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="HeartD4" fx:id="HeartD4" focusTraversable="false" mnemonicParsing="false" onAction="#attckHeartD4" opacity="0.0" prefHeight="44.0" prefWidth="104.0" text="Button" />
+            <Button id="HeartD4" fx:id="HeartD4" focusTraversable="false" mnemonicParsing="false" onAction="#attckHeartD4" onMouseEntered="#hoverHeartD4" onMouseExited="#removeHighlight" opacity="0.0" prefHeight="44.0" prefWidth="104.0" text="Button" />
          </children>
       </StackPane>
-      <Label layoutX="72.0" layoutY="181.0" text="Dragon1">
+      <Label layoutX="84.0" layoutY="182.0" text="Dragon 1">
          <font>
             <Font size="32.0" />
          </font>
@@ -351,7 +351,7 @@
             </RadialGradient>
          </textFill>
       </Label>
-      <Label layoutX="393.0" layoutY="169.0" prefHeight="71.0" prefWidth="163.0" text="Dragon2">
+      <Label layoutX="382.0" layoutY="169.0" prefHeight="71.0" prefWidth="163.0" text="Dragon 2">
          <font>
             <Font size="32.0" />
          </font>
@@ -372,7 +372,7 @@
             </RadialGradient>
          </textFill>
       </Label>
-      <Label layoutX="694.0" layoutY="181.0" text="Dragon3">
+      <Label layoutX="694.0" layoutY="181.0" text="Dragon 3">
          <font>
             <Font size="32.0" />
          </font>
@@ -393,7 +393,7 @@
             </RadialGradient>
          </textFill>
       </Label>
-      <Label layoutX="966.0" layoutY="173.0" prefHeight="64.0" prefWidth="205.0" text="Dragon4">
+      <Label layoutX="966.0" layoutY="173.0" prefHeight="64.0" prefWidth="205.0" text="Dragon 4">
          <font>
             <Font size="32.0" />
          </font>

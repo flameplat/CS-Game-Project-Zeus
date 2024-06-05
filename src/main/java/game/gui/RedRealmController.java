@@ -1,7 +1,9 @@
 package game.gui;
+import game.creatures.Dragon;
 import game.dice.RedDice;
 import game.engine.Move;
 import game.engine.Player;
+import game.utilities.GameColor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -95,6 +97,67 @@ public class RedRealmController implements Initializable ,RealmController{
     public void attckHeartD4() {
         attack(6, 4);
     }
+
+    public void hoverFaceD1() {
+        hover(3, 1);
+    }
+
+    public void hoverWingD1() {
+        hover(2, 1);
+    }
+
+    public void hoverTailD1() {
+        hover(1, 1);
+    }
+
+    public void hoverFaceD2() {
+        hover(6, 2);
+    }
+
+    public void hoverWingD2() {
+        hover(1, 2);
+    }
+
+    public void hoverHeartD2() {
+        hover(3, 2);
+    }
+
+    public void hoverFaceD3() {
+        hover(5, 3);
+    }
+
+    public void hoverTailD3() {
+        hover(2, 3);
+    }
+
+    public void hoverHeartD3() {
+        hover(4, 3);
+    }
+
+    public void hoverWingD4() {
+        hover(5, 4);
+    }
+
+    public void hoverTailD4() {
+        hover(4, 4);
+    }
+
+    public void hoverHeartD4() {
+        hover(6, 4);
+    }
+    public void hover(int attackValue,int dragonNumber){
+        RedDice redDice=new RedDice(attackValue);
+        redDice.selectsDragon(dragonNumber);
+        Move move=new Move(redDice,new Dragon(dragonNumber));
+        if(possibleMoves.contains(move)){
+            currentPlayer.getScoreSheetController().highlightPossibleMoves(new Move[]{move});
+        }
+
+    }
+    public void removeHighlight(){
+        currentPlayer.getScoreSheetController().removeHighlight();
+    }
+
 
     private SceneManager sceneManager;
     public void setSceneManager(SceneManager sceneManager){

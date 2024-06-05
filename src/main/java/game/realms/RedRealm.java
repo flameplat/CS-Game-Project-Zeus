@@ -281,12 +281,27 @@ public class RedRealm extends Realm {
                 dragons[1].getHealth()[3], dragons[2].getHealth()[3], dragons[3].getHealth()[3], collectibles[3],
                 (dragonsScore[0] < 10) ? dragonsScore[0] + " " : dragonsScore[0], (dragonsScore[1] < 10) ? dragonsScore[1] + " " : dragonsScore[1], (dragonsScore[2] < 10) ? dragonsScore[2] + " " : dragonsScore[2], (dragonsScore[3] < 10) ? dragonsScore[3] + " " : dragonsScore[3], collectibles[4]);
     }
+    public Dragon[] getDragons(){
+        return dragons;
+    }
+    public Object[] getCollectibles(){
+        return collectibles;
+    }
+    public int[] getDragonsScore(){
+        return dragonsScore;
+    }
 
     @Override
     public Move[] getRealmMoves() {
         if (isRealmAvailable())
             return redMoves.toArray(Move[]::new);
         return new Move[0];
+    }
+    public LinkedList<Move> getRealmMovesList(){
+        if(isRealmAvailable()){
+            return redMoves;
+        }
+        return null;
     }
 
     @Override

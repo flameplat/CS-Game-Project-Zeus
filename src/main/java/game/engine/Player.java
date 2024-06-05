@@ -9,6 +9,7 @@ import game.exceptions.InvalidPlayerNameException;
 import game.gui.CompositeScoreSheetController;
 import game.realms.*;
 import game.utilities.GameColor;
+import javafx.scene.image.Image;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,6 +30,7 @@ public class Player {
     private CompositeScoreSheetController scoreSheetController;
     private int timeWarpsUsed;
     private int arcaneBoostsUsed;
+    private Image wizardImage;
 
     //----------------------Constructor--------------------------//
     public Player(String name) throws InvalidPlayerNameException {
@@ -82,7 +84,12 @@ public class Player {
         String regex = "^[a-zA-Z0-9]+$";
         return !name.matches(regex);
     }
-
+    public Image getWizardImage(){
+        return wizardImage;
+    }
+    public void setWizardImage(Image wizardImage){
+        this.wizardImage=wizardImage;
+    }
 
     /**
      * Initialize all realms at the start of initialization of the player

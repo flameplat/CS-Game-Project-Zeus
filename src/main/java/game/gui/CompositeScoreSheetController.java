@@ -24,10 +24,13 @@ public class CompositeScoreSheetController implements Initializable {
     private MagentaRealmScoreSheet magentaRealmScoreSheet;
     private BlueRealmScoreSheet blueRealmScoreSheet;
     private GreenRealmScoreSheet greenRealmScoreSheet;
+    private RedRealmScoreSheet redRealmScoreSheet;
     @FXML
     private AnchorPane yellowRealm;
     @FXML
     private AnchorPane magentaRealm;
+    @FXML
+    private AnchorPane redRealm;
     @FXML
     private AnchorPane blueRealm;
     @FXML
@@ -75,6 +78,14 @@ public class CompositeScoreSheetController implements Initializable {
             AnchorPane greenRealmScene = greenRealmLoader.load();
             greenRealm.getChildren().add(greenRealmScene);
             greenRealmScoreSheet = greenRealmLoader.getController();
+
+            FXMLLoader redRealmLoader = new FXMLLoader(getClass().getResource("RedRealmScoreSheet.fxml"));
+            AnchorPane redRealmScene = redRealmLoader.load();
+            redRealm.getChildren().add(redRealmScene);
+            redRealmScoreSheet = redRealmLoader.getController();
+
+
+
         }
         catch (IOException e){
             e.printStackTrace();
@@ -92,6 +103,7 @@ public class CompositeScoreSheetController implements Initializable {
         timeWarpLabelUsed.setText(player.getTimeWarpsUsed() +"/7");
         arcaneBoostLabelUsed.setText(player.getArcaneBoostsUsed() +"/7");
         greenRealmScoreSheet.updateScoreSheet();
+        redRealmScoreSheet.updateScoreSheet();
     }
     public void setPlayer(Player player){
         this.player=player;
@@ -101,6 +113,7 @@ public class CompositeScoreSheetController implements Initializable {
         magentaRealmScoreSheet.setRealm((MagentaRealm) realms[3]);
         blueRealmScoreSheet.setRealm((BlueRealm) realms[2]);
         greenRealmScoreSheet.setRealm((GreenRealm) realms[1]);
+        redRealmScoreSheet.setRealm((RedRealm) realms[0]);
         updateScoreSheet();
     }
     public void highlightPossibleMoves(Move[] moves){
@@ -108,6 +121,7 @@ public class CompositeScoreSheetController implements Initializable {
         magentaRealmScoreSheet.highlightMoves(moves);
         blueRealmScoreSheet.highlightMoves(moves);
         greenRealmScoreSheet.highlightMoves(moves);
+        redRealmScoreSheet.highlightMoves(moves);
 
     }
     public void removeHighlight(){
@@ -115,5 +129,6 @@ public class CompositeScoreSheetController implements Initializable {
         magentaRealmScoreSheet.removeHighlight();
         blueRealmScoreSheet.removeHighlight();
         greenRealmScoreSheet.removeHighlight();
+        redRealmScoreSheet.removeHighlight();
     }
 }

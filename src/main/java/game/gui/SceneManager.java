@@ -1,4 +1,5 @@
 package game.gui;
+import game.engine.Player;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -124,7 +125,13 @@ public class SceneManager {
     public void showBlueRealmStage(){
         showRealmStage("BlueBonus.fxml");
     }
+
     public void showRealmPickerStage(){
         showRealmStage("RealmPicker.fxml");
     }
+    public void switchWizardsScene(){
+        switchScene("Wizards.fxml",false);
+    }
+
+
 }

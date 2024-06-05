@@ -29,7 +29,7 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#17004d" height="115.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="500.0" />
          </children>
       </StackPane>
-      <StackPane layoutX="260.0" prefHeight="75.0" prefWidth="300.0">
+      <StackPane layoutX="152.0" layoutY="7.0" prefHeight="75.0" prefWidth="300.0">
          <children>
             <ImageView fx:id="playerNameImageView" fitHeight="80.0" fitWidth="419.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -43,7 +43,7 @@
             </Label>
          </children>
       </StackPane>
-      <Pane layoutX="386.0" layoutY="87.0" prefHeight="61.0" prefWidth="200.0">
+      <Pane layoutX="206.0" layoutY="183.0" prefHeight="61.0" prefWidth="200.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dbff1f" height="55.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
             <Label fx:id="totalScoreLabel" alignment="CENTER" layoutY="21.0" prefHeight="32.0" prefWidth="200.0" text="140">
@@ -57,7 +57,7 @@
                </font>
             </Label>
          </children></Pane>
-      <Pane layoutX="14.0" prefHeight="147.0" prefWidth="280.0">
+      <Pane layoutX="9.0" layoutY="87.0" prefHeight="147.0" prefWidth="280.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0dff00" height="34.0" layoutY="57.0" stroke="BLACK" strokeType="INSIDE" width="233.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="34.0" layoutY="91.0" stroke="BLACK" strokeType="INSIDE" width="190.0" />
@@ -116,5 +116,6 @@
       <AnchorPane fx:id="greenRealm" layoutX="305.0" layoutY="334.0" prefHeight="215.0" prefWidth="290.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#630404" height="215.0" layoutX="305.0" layoutY="334.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="290.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#630404" height="215.0" layoutX="9.0" layoutY="334.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="290.0" />
+      <AnchorPane fx:id="redRealm" layoutX="9.0" layoutY="334.0" prefHeight="215.0" prefWidth="290.0" />
    </children>
 </AnchorPane>

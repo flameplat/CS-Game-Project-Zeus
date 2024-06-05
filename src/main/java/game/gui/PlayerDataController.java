@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
 import java.util.Objects;
@@ -31,6 +32,8 @@ public class PlayerDataController implements Initializable,GameController {
     private static Player player1;
     private static Player player2;
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Image mainBG=new Image(Objects.requireNonNull(getClass().getResource("/images/Wizards.jpeg")).toExternalForm());
@@ -38,6 +41,7 @@ public class PlayerDataController implements Initializable,GameController {
         bg.setImage(mainBG);
         button1.setImage(button);
         mainLabel.setText("Enter Player 1 Name");
+
     }
 
     public void setSceneManager(SceneManager sceneManager){
@@ -64,7 +68,7 @@ public class PlayerDataController implements Initializable,GameController {
                 player2=player;
                 errorLabel.setText("");
                 playersSubmitted++;
-                sceneManager.switchGamePlayScene();
+                sceneManager.switchWizardsScene();
             }
         } catch (InvalidPlayerNameException e) {
             errorLabel.setText(e.getMessage());
@@ -77,4 +81,5 @@ public class PlayerDataController implements Initializable,GameController {
     public static Player getPlayer2(){
         return player2;
     }
+
 }
