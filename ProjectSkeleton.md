@@ -2821,6 +2821,87 @@ For each package, add the skeleton details for the class and duplicate as much a
     - `private void highlightCell(int row, int column, String color)`
         - **Description**: Highlights a specific cell in the grid with the given color. If the color is "null", it removes the highlight.
 
+### `GUIGameController` Class
+
+- **Package**: `game.gui`
+- **Type**: Class
+- **Description**: This class serves as the controller for the GUI of the game, handling user interactions and updating the game state accordingly. It extends `CLIGameController` and implements `Initializable` and `GameController`.
+
+#### Methods:
+
+1. **`void initialize(URL location, ResourceBundle resources)`**
+    - **Description**: Initializes the controller class. This method is automatically called after the FXML file has been loaded.
+    - **Return Type**: `void`
+
+2. **`void rollDice(MouseEvent event)`**
+    - **Description**: Handles the event of rolling dice in the game. Updates the game state and GUI elements accordingly.
+    - **Return Type**: `void`
+
+3. **`void handleMouseClick(MouseEvent event)`**
+    - **Description**: Handles mouse click events on the game board. Determines the actions based on the clicked position and updates the game state.
+    - **Return Type**: `void`
+
+4. **`void updateGameText(String message)`**
+    - **Description**: Updates the game text displayed on the GUI.
+    - **Return Type**: `void`
+
+5. **`void updateDiceDisplay()`**
+    - **Description**: Updates the display of dice on the GUI based on the current game state.
+    - **Return Type**: `void`
+
+6. **`void updateRewardsDisplay()`**
+    - **Description**: Updates the display of rewards on the GUI.
+    - **Return Type**: `void`
+
+7. **`void highlightPossibleMoves()`**
+    - **Description**: Highlights the possible moves for the current player on the game board.
+    - **Return Type**: `void`
+
+8. **`void clearHighlights()`**
+    - **Description**: Clears any highlights from the game board.
+    - **Return Type**: `void`
+
+9. **`Image createTransparentImage()`**
+    - **Description**: Creates and returns a transparent image used in the GUI.
+    - **Return Type**: `Image`
+
+10. **`void updateDiceCounts()`**
+    - **Description**: Updates the count of each type of dice displayed on the GUI.
+    - **Return Type**: `void`
+
+#### FXML Elements:
+
+- **`@FXML private ImageView border`**
+- **`@FXML private ImageView border2`**
+- **`@FXML private Label gameText`**
+- **`@FXML private ImageView gameTextBox`**
+- **`@FXML private ImageView rollButtonImage`**
+- **`@FXML private ImageView round1Reward`**
+- **`@FXML private ImageView round2Reward`**
+- **`@FXML private ImageView round3Reward`**
+- **`@FXML private ImageView round4Reward`**
+- **`@FXML private ImageView round5Reward`**
+- **`@FXML private ImageView round6Reward`**
+- **`@FXML private Label redDiceNumber`**
+- **`@FXML private Label greenDiceNumber`**
+- **`@FXML private Label blueDiceNumber`**
+- **`@FXML private Label magentaDiceNumber`**
+- **`@FXML private Label yellowDiceNumber`**
+- **`@FXML private Label whiteDiceNumber`**
+- **`@FXML private Label redDiceNumber1`**
+- **`@FXML private Label greenDiceNumber1`**
+- **`@FXML private Label blueDiceNumber1`**
+- **`@FXML private Label magentaDiceNumber1`**
+- **`@FXML private Label yellowDiceNumber1`**
+- **`@FXML private GridPane diceGridArcanePrism1`**
+- **`@FXML private Label redDiceNumber2`**
+- **`@FXML private Label greenDiceNumber2`**
+- **`@FXML private Label blueDiceNumber2`**
+- **`@FXML private Label magentaDiceNumber2`**
+- **`@FXML private Label yellowDiceNumber2`**
+- **`@FXML private GridPane diceGridArcanePrism2`**
+- **`@FXML private GridPane diceGrid`**
+
 ### `Guider` class
 
 - **Package**: `game.gui`
