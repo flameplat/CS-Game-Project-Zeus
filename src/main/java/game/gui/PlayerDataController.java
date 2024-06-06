@@ -1,16 +1,16 @@
 package game.gui;
 
 import game.engine.Player;
-import game.engine.PlayerStatus;
 import game.exceptions.InvalidPlayerNameException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.Objects;
@@ -31,8 +31,13 @@ public class PlayerDataController implements Initializable,GameController {
     private SceneManager sceneManager;
     private static Player player1;
     private static Player player2;
+    @FXML
+    private Label submitLabel;
 
 
+
+    @FXML
+    private ImageView imageView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -41,7 +46,18 @@ public class PlayerDataController implements Initializable,GameController {
         bg.setImage(mainBG);
         button1.setImage(button);
         mainLabel.setText("Enter Player 1 Name");
+        imageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/3.png")).toExternalForm()));
+        addHoverEffect(button1);
+        submitLabel.setMouseTransparent(true);
 
+    }
+    private void addHoverEffect(ImageView imageView) {
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.CYAN);
+        shadow.setRadius(10);
+
+        imageView.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> imageView.setEffect(shadow));
+        imageView.addEventHandler(MouseEvent.MOUSE_EXITED, e -> imageView.setEffect(null));
     }
 
     public void setSceneManager(SceneManager sceneManager){
@@ -50,8 +66,7 @@ public class PlayerDataController implements Initializable,GameController {
     public void setPlayerName() {
         try {
             if (playersSubmitted < 1) {
-                Player player = new Player(textField.getText());
-                player1=player;
+                player1= new Player(textField.getText());
                 errorLabel.setText("");
                 mainLabel.setText("Enter Player 2 Name");
                 textField.setText("");
@@ -64,8 +79,7 @@ public class PlayerDataController implements Initializable,GameController {
                 if(textField.getText().length()>maxLen){
                     throw new InvalidPlayerNameException("Name is too long. Max: "+maxLen+" characters");
                 }
-                Player player = new Player(textField.getText());
-                player2=player;
+                player2= new Player(textField.getText());
                 errorLabel.setText("");
                 playersSubmitted++;
                 sceneManager.switchWizardsScene();

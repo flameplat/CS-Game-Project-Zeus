@@ -3,6 +3,7 @@ import game.dice.GreenDice;
 import game.engine.Move;
 import game.engine.Player;
 import game.utilities.GameColor;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,6 +43,7 @@ public class GreenBonusController implements  Initializable,RealmController  {
     @FXML private ImageView ImageButton10;
     @FXML private ImageView ImageButton11;
     @FXML private ImageView GaiaCreature;
+    @FXML private Label playerLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -199,7 +201,8 @@ public class GreenBonusController implements  Initializable,RealmController  {
     // Common method to perform the attack
     private void performAttack(Move move, String gaiaNumber) {
         if (possibleMoves.contains(move)) {
-            sceneManager.closeRealmStage();
+
+                sceneManager.closeRealmStage();
             guiGameController.makeMove(currentPlayer, move);
         } else {
             label.setText(gaiaNumber + " is Dead");
@@ -220,5 +223,8 @@ public class GreenBonusController implements  Initializable,RealmController  {
     private static Player currentPlayer;
     public static void setCurrentPlayer(Player currentPlayer){
         GreenBonusController.currentPlayer=currentPlayer;
+    }
+    public void setLabel(){
+        playerLabel.setText(currentPlayer.getName() + ", choose a Gaia to attack!");
     }
 }

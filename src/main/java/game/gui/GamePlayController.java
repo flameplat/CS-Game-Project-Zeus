@@ -1,6 +1,7 @@
 package game.gui;
 
 import game.engine.GameMode;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -58,7 +59,8 @@ public class GamePlayController implements Initializable,GameController {
             player2ScoreSheetContainer.getChildren().add(player2ScoreSheet);
             guiGameController.setPlayer2ScoreSheet(player2Controller);
             SceneManager.setGuiGameController(guiGameController);
-            guiGameController.startGame();
+            Platform.runLater(guiGameController::startGame);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

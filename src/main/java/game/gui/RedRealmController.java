@@ -4,6 +4,7 @@ import game.dice.RedDice;
 import game.engine.Move;
 import game.engine.Player;
 import game.utilities.GameColor;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,6 +27,7 @@ public class RedRealmController implements Initializable ,RealmController{
     @FXML private ImageView dragon3;
     @FXML private ImageView dragon4;
     @FXML private Label possibleAttackLabel;
+    @FXML private Label playerLabel;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Image mainBG=new Image(Objects.requireNonNull(getClass().getResource("/images/redRealmBackground.jpg")).toExternalForm());
@@ -42,7 +44,9 @@ public class RedRealmController implements Initializable ,RealmController{
         Move move = new Move(die, currentPlayer.getRealm(die).getCreature(die));
 
         if (possibleMoves.contains(move)) {
-            sceneManager.closeRealmStage();
+
+                sceneManager.closeRealmStage();
+
             guiGameController.makeMove(currentPlayer, move);
         } else {
             label.setText("You can't attack this part");
@@ -175,5 +179,7 @@ public class RedRealmController implements Initializable ,RealmController{
     public static void setCurrentPlayer(Player currentPlayer){
         RedRealmController.currentPlayer=currentPlayer;
     }
-
+    public void setLabel(){
+        playerLabel.setText(currentPlayer.getName() + ", choose a region to attack!");
+    }
 }

@@ -19,10 +19,14 @@ public class Wizards implements Initializable, GameController{
     private Label mainLabel;
     @FXML
     private Rectangle redWizardRectangle;
-    @FXML private Rectangle greenWizardRectangle;
-    @FXML private Rectangle blueWizardRectangle;
-    @FXML private Rectangle magentaWizardRectangle;
-    @FXML private Rectangle yellowWizardRectangle;
+    @FXML
+    private Rectangle greenWizardRectangle;
+    @FXML
+    private Rectangle blueWizardRectangle;
+    @FXML
+    private Rectangle magentaWizardRectangle;
+    @FXML
+    private Rectangle yellowWizardRectangle;
 
     @FXML private ImageView mainImageView;
     @FXML private ImageView buttonImageView;
@@ -77,7 +81,6 @@ public class Wizards implements Initializable, GameController{
     }
     private void addHoverEffect(Rectangle rectangle) {
         rectangle.setOnMouseEntered(event -> rectangle.setOpacity(0.3));
-
         rectangle.setOnMouseExited(event -> rectangle.setOpacity(0));
     }
 

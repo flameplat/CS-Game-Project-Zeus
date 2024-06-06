@@ -132,16 +132,16 @@ public class RedRealmScoreSheet implements Initializable {
             for (int j = 0; j < health.length; j++) {
                 if (health[j].equals(die.getValue())) {
                     switch (dragon.getDragonNumber()) {
-                        case 0: // Dragon 1
+                        case 1: // Dragon 1
                             highlightLabel(j, style, dragon1Face, dragon1Wing, dragon1Tail, dragon1Heart);
                             break;
-                        case 1: // Dragon 2
+                        case 2: // Dragon 2
                             highlightLabel(j, style, dragon2Face, dragon2Wing, dragon2Tail, dragon2Heart);
                             break;
-                        case 2: // Dragon 3
+                        case 3: // Dragon 3
                             highlightLabel(j, style, dragon3Face, dragon3Wing, dragon3Tail, dragon3Heart);
                             break;
-                        case 3: // Dragon 4
+                        case 4: // Dragon 4
                             highlightLabel(j, style, dragon4Face, dragon4Wing, dragon4Tail, dragon4Heart);
                             break;
                         default:

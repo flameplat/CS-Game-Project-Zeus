@@ -3,6 +3,7 @@ package game.gui;
 import game.engine.Player;
 import game.realms.Realm;
 import game.utilities.GameColor;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -88,7 +89,10 @@ public class RealmPickerController implements Initializable,RealmController {
     private void chooseRealm(GameColor realmColor) {
         if(possibleRealms.contains(realmColor)){
             sceneManager.closeRealmStage();
-            guiGameController.playColorBonus(currentPlayer, realmColor);
+            Platform.runLater(()->{
+                guiGameController.playColorBonus(currentPlayer, realmColor);
+            });
+
         }
         else {
             label.setText("Not Available");

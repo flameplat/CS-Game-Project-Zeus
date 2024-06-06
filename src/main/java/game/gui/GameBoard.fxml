@@ -11,6 +11,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -140,7 +143,7 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Button fx:id="rollButton" mnemonicParsing="false" onAction="#rollButtonClick" opacity="0.0" prefHeight="57.0" prefWidth="296.0" scaleX="1.2" scaleY="1.2" text="Button" />
+            <Button fx:id="rollButtonClicker" mnemonicParsing="false" onAction="#rollButtonClick" opacity="0.0" prefHeight="57.0" prefWidth="296.0" scaleX="1.2" scaleY="1.2" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="149.0" layoutY="268.0" prefHeight="212.0" prefWidth="431.0" translateX="-1.0">
@@ -239,8 +242,6 @@
                </font></Label>
          </children>
       </StackPane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="952.0" layoutX="11.0" layoutY="58.0" stroke="BLACK" strokeType="INSIDE" translateX="-1.0" width="7.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="952.0" layoutX="708.0" layoutY="62.0" stroke="BLACK" strokeType="INSIDE" translateX="-1.0" width="7.0" />
       <Pane layoutX="157.0" layoutY="675.0" prefHeight="371.0" prefWidth="413.0">
          <children>
             <ImageView fx:id="forgottenRealmImageView" fitHeight="371.0" fitWidth="461.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
@@ -344,7 +345,7 @@
                   <Image url="@../../../resources/images/rewards/TimeWarp.png" />
                </image>
             </ImageView>
-            <Button fx:id="timeWarpButton" mnemonicParsing="false" onAction="#timeWarpButtonClick" opacity="0.0" prefHeight="55.0" prefWidth="54.0" text="Button" />
+            <Button fx:id="timeWarpButtonClicker" mnemonicParsing="false" onAction="#timeWarpButtonClick" opacity="0.0" prefHeight="55.0" prefWidth="54.0" text="Button" />
          </children>
       </StackPane>
       <StackPane fx:id="arcaneBoostStackPane" layoutX="533.0" layoutY="497.0" prefHeight="75.0" prefWidth="75.0">
@@ -354,7 +355,7 @@
                   <Image url="@../../../resources/images/rewards/ArcaneBoost.png" />
                </image>
             </ImageView>
-            <Button fx:id="arcaneBoostButton" mnemonicParsing="false" onAction="#arcaneBoostButtonClick" opacity="0.0" prefHeight="55.0" prefWidth="54.0" text="Button" />
+            <Button fx:id="arcaneBoostButtonClicker" mnemonicParsing="false" onAction="#arcaneBoostButtonClick" opacity="0.0" prefHeight="55.0" prefWidth="54.0" text="Button" />
          </children>
       </StackPane>
       <StackPane fx:id="skipButtonStackPane" layoutX="227.0" layoutY="496.0" prefHeight="35.0" prefWidth="161.0">
@@ -369,7 +370,7 @@
                   <Font size="21.0" />
                </font>
             </Label>
-            <Button fx:id="skipButton" mnemonicParsing="false" onAction="#skipButtonClick" opacity="0.0" prefHeight="55.0" prefWidth="238.0" text="Button" />
+            <Button fx:id="skipButtonClicker" mnemonicParsing="false" onAction="#skipButtonClick" opacity="0.0" prefHeight="55.0" prefWidth="238.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="1.0" layoutY="97.0" prefHeight="49.0" prefWidth="232.0">
@@ -488,7 +489,23 @@
       </StackPane>
       <StackPane layoutX="20.0" layoutY="689.0" prefHeight="25.0" prefWidth="200.0">
          <children>
-            <Rectangle arcHeight="20.0" arcWidth="20.0" height="38.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+            <Rectangle arcHeight="20.0" arcWidth="20.0" height="38.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.30000001192092896" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill></Rectangle>
             <Label alignment="CENTER" prefHeight="25.0" prefWidth="192.0" text="Forgotten Realm" textFill="WHITE">
                <font>
                   <Font size="21.0" />
@@ -496,5 +513,21 @@
             </Label>
          </children>
       </StackPane>
+      <ImageView fx:id="currentPlayerImageViewMain" fitHeight="185.0" fitWidth="134.0" layoutX="14.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/wizards/magentaWizard.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="border" fitHeight="1069.0" fitWidth="13.0" layoutX="701.0" layoutY="37.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../resources/images/buttons/4.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="border2" fitHeight="1069.0" fitWidth="13.0" layoutX="8.0" layoutY="35.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../resources/images/buttons/4.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="guiderAnchorPane" layoutX="84.0" layoutY="220.0" prefHeight="600.0" prefWidth="550.0" />
    </children>
 </AnchorPane>

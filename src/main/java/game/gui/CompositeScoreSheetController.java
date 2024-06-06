@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,6 +44,7 @@ public class CompositeScoreSheetController implements Initializable {
     @FXML private ImageView timeWarpImageView;
     @FXML private ImageView arcaneBoostImageView;
     @FXML private ImageView elementalCrestImageView;
+    @FXML private ImageView playerImageView;
 
     @FXML private Label timeWarpLabel;
     @FXML private Label arcaneBoostLabel;
@@ -51,6 +53,12 @@ public class CompositeScoreSheetController implements Initializable {
     @FXML private Label arcaneBoostLabelUsed;
     @FXML private Label totalScoreLabel;
     private Player player;
+    @FXML private Label rewardsLabel;
+    @FXML private ImageView redRealmIcon;
+    @FXML private ImageView greenRealmIcon;
+    @FXML private ImageView blueRealmIcon;
+    @FXML private ImageView magentaRealmIcon;
+    @FXML private ImageView yellowRealmIcon;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
@@ -58,7 +66,12 @@ public class CompositeScoreSheetController implements Initializable {
             timeWarpImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/TimeWarp.png")).toExternalForm()));
             arcaneBoostImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/ArcaneBoost.png")).toExternalForm()));
             elementalCrestImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/rewards/ElementalCrest.png")).toExternalForm()));
-
+            Rectangle clip = new Rectangle(
+                    playerImageView.getFitWidth(), playerImageView.getFitHeight()
+            );
+            clip.setArcWidth(40);
+            clip.setArcHeight(40);
+            playerImageView.setClip(clip);
             FXMLLoader yellowRealmLoader = new FXMLLoader(getClass().getResource("YellowRealmScoreSheet.fxml"));
             AnchorPane yellowRealmScene = yellowRealmLoader.load();
             yellowRealm.getChildren().add(yellowRealmScene);
@@ -84,7 +97,11 @@ public class CompositeScoreSheetController implements Initializable {
             redRealm.getChildren().add(redRealmScene);
             redRealmScoreSheet = redRealmLoader.getController();
 
-
+            redRealmIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/realms/RedRealm.jpeg")).toExternalForm()));
+            greenRealmIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/realms/GreenRealm.png")).toExternalForm()));
+            blueRealmIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/realms/BlueRealm.png")).toExternalForm()));
+            magentaRealmIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/realms/MagentaRealm.png")).toExternalForm()));
+            yellowRealmIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/realms/YellowRealm.png")).toExternalForm()));
 
         }
         catch (IOException e){
@@ -114,6 +131,7 @@ public class CompositeScoreSheetController implements Initializable {
         blueRealmScoreSheet.setRealm((BlueRealm) realms[2]);
         greenRealmScoreSheet.setRealm((GreenRealm) realms[1]);
         redRealmScoreSheet.setRealm((RedRealm) realms[0]);
+        playerImageView.setImage(player.getWizardImage());
         updateScoreSheet();
     }
     public void highlightPossibleMoves(Move[] moves){
@@ -130,5 +148,8 @@ public class CompositeScoreSheetController implements Initializable {
         blueRealmScoreSheet.removeHighlight();
         greenRealmScoreSheet.removeHighlight();
         redRealmScoreSheet.removeHighlight();
+    }
+    public void setRewardsLabel(String text){
+        rewardsLabel.setText(text);
     }
 }

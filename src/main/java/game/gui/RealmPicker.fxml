@@ -17,6 +17,15 @@
             <Image url="@../../../resources/images/RealmsCreatures.png" />
          </image>
       </ImageView>
+      <HBox prefHeight="600.0" prefWidth="1052.0">
+         <children>
+            <Rectangle fx:id="redRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseRedRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="210.0" />
+            <Rectangle fx:id="greenRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseGreenRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="212.0" />
+            <Rectangle fx:id="blueRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseBlueRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="210.0" />
+            <Rectangle fx:id="magentaRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseMagentaRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="213.0" />
+            <Rectangle fx:id="yellowRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseYellowRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="206.0" />
+         </children>
+      </HBox>
       <StackPane layoutY="531.0" prefHeight="48.0" prefWidth="200.0">
          <children>
             <ImageView fx:id="redImageView" fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
@@ -106,14 +115,5 @@
             </Label>
          </children>
       </StackPane>
-      <HBox prefHeight="600.0" prefWidth="1052.0">
-         <children>
-            <Rectangle fx:id="redRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseRedRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="210.0" />
-            <Rectangle fx:id="greenRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseGreenRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="212.0" />
-            <Rectangle fx:id="blueRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseBlueRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="210.0" />
-            <Rectangle fx:id="magentaRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseMagentaRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="213.0" />
-            <Rectangle fx:id="yellowRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseYellowRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="206.0" />
-         </children>
-      </HBox>
    </children>
 </AnchorPane>

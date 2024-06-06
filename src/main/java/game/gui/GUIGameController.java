@@ -15,17 +15,24 @@ import game.realms.RedRealm;
 import game.utilities.CollectiblesComparator;
 import game.utilities.GameColor;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,7 +43,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private final Image transparentImage;
     private final double lowOpacity = 0.5;
     private final double highOpacity = 1;
-    Map<Player, CompositeScoreSheetController> playerScoreSheet;
+    @FXML
+    private ImageView border;
+    @FXML
+    private ImageView border2;
+
     private StackPane[] diceGUI;
     @FXML
     private Label gameText;
@@ -142,35 +153,51 @@ public class GUIGameController extends CLIGameController implements Initializabl
     @FXML
     private StackPane rollButtonStackPane;
     private Dice[] refDiceArray;
+    @FXML
+    private Button arcaneBoostButtonClicker;
+    @FXML
+    private Button timeWarpButtonClicker;
+    @FXML
+    private Button skipButtonClicker;
 
     //This player points to the current player whether passive or active or arcaneBoost enabled
-    private Player currentPlayer;
+    private static Player currentPlayer;
+    private static Player player1;
+    private static Player player2;
     //------------------------------------------------------BUTTONS FUNCTIONS-------------------------------------------------------//
     private int realRounds = 1;
     private boolean arcanePrismEnabled;
     private GridPane whiteDieParent;
     private GridPane whiteDieDestination;
-
+    @FXML
+    private ImageView currentPlayerImageViewMain;
+    @FXML
+    private Button rollButtonClicker;
     public GUIGameController() {
         super();
         WritableImage transparentImage = new WritableImage(1, 1);
         PixelWriter pixelWriter = transparentImage.getPixelWriter();
         pixelWriter.setColor(0, 0, Color.rgb(0, 0, 0, 0));
         this.transparentImage = transparentImage;
-        playerScoreSheet = new HashMap<>();
         gameStatus.setGameStatus(CurrentStatus.ACTIVE_TURN);
 
     }
+    private ImageView[] roundRewardImageViews;
 
     //------------------------------------------------------ONE TIME METHODS-------------------------------------------------------//
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        round1Reward.setImage(getRewardIcon(0, roundRewards));
-        round2Reward.setImage(getRewardIcon(1, roundRewards));
-        round3Reward.setImage(getRewardIcon(2, roundRewards));
-        round4Reward.setImage(getRewardIcon(3, roundRewards));
-        round5Reward.setImage(getRewardIcon(4, roundRewards));
-        round6Reward.setImage(getRewardIcon(5, roundRewards));
+        roundRewardImageViews = new ImageView[]{
+                round1Reward, round2Reward, round3Reward,
+                round4Reward, round5Reward, round6Reward
+        };
+        for (int i = 0; i < CLIGameController.MAX_NUMBER_OF_ROUNDS; i++) {
+            if (i < roundRewards.length) {
+                roundRewardImageViews[i].setImage(getRewardIcon(i, roundRewards));
+            } else {
+                roundRewardImageViews[i].setImage(null); // or a default image
+            }
+        }
         diceGUI = new StackPane[6];
         diceGUI[0] = redDice;
         diceGUI[1] = greenDice;
@@ -192,7 +219,27 @@ public class GUIGameController extends CLIGameController implements Initializabl
         disableGrid(diceGridArcanePrism1);
         disableGrid(diceGridArcanePrism2);
 
+        Rectangle clip = new Rectangle(
+                currentPlayerImageViewMain.getFitWidth(), currentPlayerImageViewMain.getFitHeight()
+        );
+        clip.setArcWidth(40);
+        clip.setArcHeight(40);
+        currentPlayerImageViewMain.setClip(clip);
+        border.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/4.png")).toExternalForm()));
+        border2.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/4.png")).toExternalForm()));
+        addHoverEffect(rollButtonImage,rollButtonClicker);
+        addHoverEffect(arcaneBoostImageView,arcaneBoostButtonClicker);
+        addHoverEffect(timeWarpImageView,timeWarpButtonClicker);
+        addHoverEffect(skipButtonImageView,skipButtonClicker);
 
+    }
+    private void addHoverEffect(ImageView imageView, Button button) {
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.CYAN);
+        shadow.setRadius(20);
+
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> imageView.setEffect(shadow));
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, e -> imageView.setEffect(null));
     }
 
     public void setSceneManager(SceneManager sceneManager) {
@@ -205,13 +252,17 @@ public class GUIGameController extends CLIGameController implements Initializabl
         player.setPlayerStatus(PlayerStatus.ACTIVE);
         currentPlayer = activePlayer;
         updateSceneStatus();
-
+        GUIGameController.player1=player;
+    }
+    public static boolean isPlayer1Playing(){
+        return currentPlayer==player1;
     }
 
     public void setPlayer2(Player player) {
         gameBoard.setPlayer2(player);
         passivePlayer = player;
         player.setPlayerStatus(PlayerStatus.PASSIVE);
+        GUIGameController.player2=player;
     }
 
     //------------------------------------------------------DICE RELATED METHODS & UPDATERS-------------------------------------------------------//
@@ -409,7 +460,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         rollButtonStackPane.setOpacity(lowOpacity);
     }
 
-    private void enableRollButton() {
+    protected void enableRollButton() {
         rollButtonStackPane.setDisable(false);
         rollButtonStackPane.setOpacity(highOpacity);
     }
@@ -468,7 +519,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     //------------------------------------------------------UPDATERS-------------------------------------------------------//
-    private void highlightCurrentRound() {
+    protected void highlightCurrentRound() {
         removeRoundTableHighlight();
         int round = gameStatus.getRound();
         highlightCell(round, "LawnGreen");
@@ -513,6 +564,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private void updateSceneStatus() {
         currentPlayerLabel.setText(currentPlayer.getName());
         currentGameStatusLabel.setText(gameStatus.getGameStatus().toString());
+        currentPlayerImageViewMain.setImage(currentPlayer.getWizardImage());
         if (gameStatus.getGameStatus() == CurrentStatus.ACTIVE_TURN) {
             turnLabel.setText("Turn " + gameStatus.getTurn());
         } else {
@@ -568,7 +620,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
         gameText.setText("");
         if (gameStatus.getGameStatus() == CurrentStatus.ACTIVE_TURN) {
             handleActiveTurn();
-
             return;
         }
         if (gameStatus.getGameStatus() == CurrentStatus.PASSIVE_TURN) {
@@ -580,9 +631,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     private void handleActiveTurn() {
-        if (gameStatus.getTurn() < 3 && containsAvailableDie()) {
+        if (gameStatus.getTurn() < CLIGameController.MAX_NUMBER_OF_TURNS && containsAvailableDie()) {
             advanceActiveTurn();
-        } else if (gameStatus.getTurn() == 3 || !containsAvailableDie()) {
+        } else if (gameStatus.getTurn() == CLIGameController.MAX_NUMBER_OF_TURNS || !containsAvailableDie()) {
             endActiveTurn();
         }
     }
@@ -653,8 +704,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
         if (realRounds % 2 == 0) {
             gameStatus.incrementRound();
         }
-        if (gameStatus.getRound() == 7) {
+        if (gameStatus.getRound() == MAX_NUMBER_OF_ROUNDS+1) {
             endGame();
+            return;
         }
         realRounds++;
         highlightCurrentRound();
@@ -703,6 +755,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
             //This will be done by RedRealm Stage
             //makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[0])[0]);
             sceneManager.showRedRealmStage();
+            disableMainBoardDiceButtons();
+            disableForgottenRealmButtons();
             manageTurnCycle();
         } catch (InvalidMoveException e) {
             gameText.setText("There are no possible moves for " + refDiceArray[0].getName());
@@ -718,6 +772,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             selectDice(diceArray[1], currentPlayer);
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[1])[0]);
+            disableMainBoardDiceButtons();
+            disableForgottenRealmButtons();
             manageTurnCycle();
         } catch (InvalidMoveException e) {
             gameText.setText("There are no possible moves for " + refDiceArray[1].getName());
@@ -732,7 +788,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             selectDice(diceArray[2], currentPlayer);
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[2])[0]);
-
+            disableMainBoardDiceButtons();
+            disableForgottenRealmButtons();
             manageTurnCycle();
         } catch (InvalidMoveException e) {
             gameText.setText("There are no possible moves for " + refDiceArray[2].getName());
@@ -747,6 +804,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             selectDice(diceArray[3], currentPlayer);
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[3])[0]);
+            disableMainBoardDiceButtons();
+            disableForgottenRealmButtons();
             manageTurnCycle();
 
         } catch (InvalidMoveException e) {
@@ -762,7 +821,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             selectDice(diceArray[4], currentPlayer);
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[4])[0]);
-
+            disableMainBoardDiceButtons();
+            disableForgottenRealmButtons();
             manageTurnCycle();
         } catch (InvalidMoveException e) {
             gameText.setText("There are no possible moves for " + refDiceArray[4].getName());
@@ -828,17 +888,31 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     //------------------------------------------------------GAME LOGIC METHODS-------------------------------------------------------//
+   @FXML
+   private AnchorPane guiderAnchorPane;
+
     @Override
     public void startGame() {
-        performReward(activePlayer, roundRewards[0]);
-        enableRollButton();
         disableMainBoardDiceButtons();
         updateScoreSheets();
         updateSceneStatus();
-        highlightCurrentRound();
         currentPlayer = activePlayer;
         gameStatus.setGameStatus(CurrentStatus.ACTIVE_TURN);
         refDiceArray = diceArray;
+//        FXMLLoader blueRealmLoader = new FXMLLoader(getClass().getResource("BlueRealmScoreSheet.fxml"));
+//        AnchorPane blueRealmScene = blueRealmLoader.load();
+//        blueRealm.getChildren().add(blueRealmScene);
+//        blueRealmScoreSheet =blueRealmLoader.getController();
+        try{
+            FXMLLoader guiderLoader = new FXMLLoader(getClass().getResource("Guider.fxml"));
+            AnchorPane guiderAnchorPane=guiderLoader.load();
+            Guider guiderController=guiderLoader.getController();
+            guiderController.setGuiGameController(this);
+            this.guiderAnchorPane.getChildren().add(guiderAnchorPane);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
 //        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
 //        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
 //        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
@@ -853,6 +927,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     @Override
     public boolean makeMove(Player player, Move move) {
+        player.getScoreSheetController().setRewardsLabel("");
         try {
             if (move.getDice().getRealm() == GameColor.WHITE) {
                 return false;
@@ -892,7 +967,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         if (reward == null) {
             return;
         }
-        gameText.setText(player.getName() + ", you received " + reward.getName() + "!");
+        player.getScoreSheetController().setRewardsLabel((player.getName() + ", you received " + reward.getName() + "!"));
         updateScoreSheets();
 
 
@@ -1079,37 +1154,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
     protected void endGame() {
         gameGuide.closeScanner();
         sc.close();
-        System.out.println(activePlayer.getName());
-        activePlayer.getScoreSheet().displayScoreSheet();
-        System.out.println("*".repeat(100));
-        System.out.println(passivePlayer.getName());
-        passivePlayer.getScoreSheet().displayScoreSheet();
-        System.out.println("*".repeat(100));
-        System.out.println(activePlayer.getGameScore());
-        System.out.println(passivePlayer.getGameScore());
-        int diff = activePlayer.getGameScore().getTotalScore() - passivePlayer.getGameScore().getTotalScore();
-        if (diff == 0) {
-            System.out.println("Draw!");
-        } else {
-            if (diff > 0) {
-                //Active player is the winner
-                System.out.println(activePlayer + " is the winner!");
-                gameStatus.setGameStatus(CurrentStatus.PLAYER_1_WINS);
-
-            } else {
-                System.out.println(passivePlayer + " is the winner!");
-                gameStatus.setGameStatus(CurrentStatus.PLAYER_2_WINS);
-
-            }
-        }
-
-        //Compares GameScore of each player and declares winner
-        System.out.println("Game developed by Team: ");
-        System.out.println("  ZZZZ  EEEEE  U   U  SSSS");
-        System.out.println("     Z  E      U   U  S    ");
-        System.out.println("    Z   EEEE   U   U   SSS ");
-        System.out.println("   Z    E      U   U      S");
-        System.out.println("  ZZZZ  EEEEE   UUU   SSSS");
-        systemManager.exit();
+        sceneManager.showEndGame();
     }
 }

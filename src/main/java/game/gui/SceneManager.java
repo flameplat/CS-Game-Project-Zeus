@@ -1,12 +1,15 @@
 package game.gui;
 import game.engine.Player;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -34,9 +37,12 @@ public class SceneManager {
             scene = new Scene(root);
             stage.setScene(scene);
             stage.setResizable(isResizable);
-            if (isResizable) {
-                Screen screen = Screen.getPrimary();
-                CalculatePositionToCenterStage(screen);
+            if (isResizable || resourceFileName=="Wizards.fxml") {
+                Platform.runLater(() -> {
+                    Screen screen = Screen.getPrimary();
+                    CalculatePositionToCenterStage(screen);
+                });
+
             }
             stage.show();
         } catch (IOException e){
@@ -66,9 +72,7 @@ public class SceneManager {
 
     private Stage realmStage;
 
-
-    public void showRealmStage(String resourceFileName) {
-
+    public void showRealmStage(String resourceFileName,boolean enableWindowTab) {
 
         try {
             // Load the FXML file
@@ -79,18 +83,49 @@ public class SceneManager {
             RealmController realmController = loader.getController();
             realmController.setSceneManager(this);
             realmController.setGuiGameController(guiGameController);
+            if(realmController instanceof EndGame){
+                ((EndGame) realmController).setPlayers(PlayerDataController.getPlayer1(),PlayerDataController.getPlayer2());
+            }
 
+            root.setStyle("-fx-background-color: transparent;");
             // Create the scene and stage
             Scene realmScene = new Scene(root);
+            scene.setFill(null);
             realmStage = new Stage();
             realmStage.setScene(realmScene);
             realmStage.initModality(Modality.APPLICATION_MODAL);
             realmStage.initOwner(stage);
             realmStage.setResizable(false);
-
-            // Handle stage close request
-            realmStage.setOnCloseRequest(Event::consume);
-
+            if(!enableWindowTab){
+                realmStage.initStyle(StageStyle.UNDECORATED);
+            }
+            realmStage.setOnShown(event -> {
+                Platform.runLater(() -> {
+                    double shiftForPlayer1 = 600;
+                    double shiftForPlayer2 = 0;
+                    if(realmController instanceof Guider){
+                        Platform.runLater(() -> {
+                            Screen screen = Screen.getPrimary();
+                            CalculatePositionToCenterStage(screen);
+                        });
+                    }
+                    else{
+                        if (GUIGameController.isPlayer1Playing()) {
+                            realmStage.setX(shiftForPlayer1);
+                        } else {
+                            realmStage.setX(shiftForPlayer2);
+                        }
+                        // Center vertically
+                        Screen screen = Screen.getPrimary();
+                        Rectangle2D bounds = screen.getVisualBounds();
+                        double centerY = (bounds.getHeight() - realmStage.getHeight()) / 2;
+                        realmStage.setY(centerY);
+                    }
+                });
+            });
+            if(!(realmController instanceof EndGame)){
+                realmStage.setOnCloseRequest(Event::consume);
+            }
             realmStage.showAndWait();
 
         } catch (IOException e) {
@@ -107,30 +142,38 @@ public class SceneManager {
     }
 
     public void showRedRealmStage(){
-        showRealmStage("RedRealm.fxml");
+        showRealmStage("RedRealm.fxml",true);
     }
 
     public void showGreenRealmStage(){
-        showRealmStage("GreenBonus.fxml");
+        showRealmStage("GreenBonus.fxml",true);
     }
 
     public void showYellowRealmStage(){
-        showRealmStage("YellowBonus.fxml");
+        showRealmStage("YellowBonus.fxml",true);
     }
 
     public void showMagentaRealmStage(){
-        showRealmStage("MagentaBonus.fxml");
+        showRealmStage("MagentaBonus.fxml",true);
     }
 
     public void showBlueRealmStage(){
-        showRealmStage("BlueBonus.fxml");
+        showRealmStage("BlueBonus.fxml",true);
     }
 
     public void showRealmPickerStage(){
-        showRealmStage("RealmPicker.fxml");
+        showRealmStage("RealmPicker.fxml",true);
     }
+
     public void switchWizardsScene(){
         switchScene("Wizards.fxml",false);
+    }
+
+    public void showEndGame(){
+        showRealmStage("EndGame.fxml",true);
+    }
+    public void showGuider(){
+        showRealmStage("Guider.fxml",false);
     }
 
 

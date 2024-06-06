@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="896.0" prefWidth="1204.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.RedRealmController">
    <children>
-      <ImageView id="RedRealmBackground" fx:id="BG" fitHeight="905.0" fitWidth="1209.0" layoutX="-1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="RedRealmBackground" fx:id="BG" fitHeight="905.0" fitWidth="1209.0" layoutX="-1.0" layoutY="-1.0" onMouseEntered="#setLabel" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../resources/images/redRealmBackground.jpg" />
          </image>
@@ -197,7 +197,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Button id="FaceD3" fx:id="FaceD3" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD3" onMouseEntered="#hoverFaceD3" opacity="0.0" prefHeight="42.0" prefWidth="78.0" text="Button" />
+            <Button id="FaceD3" fx:id="FaceD3" focusTraversable="false" mnemonicParsing="false" onAction="#attckFaceD3" onMouseEntered="#hoverFaceD3" onMouseExited="#removeHighlight" opacity="0.0" prefHeight="42.0" prefWidth="78.0" text="Button" />
          </children>
       </StackPane>
       <StackPane layoutX="982.0" layoutY="240.0" prefHeight="50.0" prefWidth="102.0">
@@ -414,22 +414,22 @@
             </RadialGradient>
          </textFill>
       </Label>
-      <ImageView fx:id="dragon2" fitHeight="252.0" fitWidth="295.0" layoutX="329.0" layoutY="507.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="dragon2" fitHeight="252.0" fitWidth="295.0" layoutX="329.0" layoutY="507.0" onMouseEntered="#setLabel" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../resources/images/RedDragon.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="dragon3" fitHeight="252.0" fitWidth="295.0" layoutX="630.0" layoutY="507.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="dragon3" fitHeight="252.0" fitWidth="295.0" layoutX="630.0" layoutY="507.0" onMouseEntered="#setLabel" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../resources/images/RedDragon.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="dragon4" fitHeight="252.0" fitWidth="295.0" layoutX="922.0" layoutY="507.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="dragon4" fitHeight="252.0" fitWidth="295.0" layoutX="922.0" layoutY="507.0" onMouseEntered="#setLabel" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../resources/images/RedDragon.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="dragon1" fitHeight="252.0" fitWidth="295.0" layoutX="38.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="dragon1" fitHeight="252.0" fitWidth="295.0" layoutX="38.0" layoutY="496.0" onMouseEntered="#setLabel" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../resources/images/RedDragon.png" />
          </image>
@@ -442,6 +442,11 @@
       <Label fx:id="possibleAttackLabel" alignment="CENTER" layoutX="-3.0" layoutY="798.0" prefHeight="42.0" prefWidth="1204.0" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerLabel" alignment="CENTER" layoutX="256.0" layoutY="14.0" prefHeight="42.0" prefWidth="693.0" textFill="WHITE">
+         <font>
+            <Font size="28.0" />
          </font>
       </Label>
    </children>

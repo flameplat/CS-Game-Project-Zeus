@@ -1,10 +1,12 @@
 package game.gui;
 import game.engine.Move;
 import game.engine.Player;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.net.URL;
@@ -19,6 +21,8 @@ public class BlueBonusController implements Initializable,RealmController {
     private ImageView serpantImageView;
     @FXML
     private ImageView BG;
+    @FXML
+    private Label label;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Image mainBG = new Image(Objects.requireNonNull(getClass().getResource("/images/BlueBG.jpg")).toExternalForm());
@@ -45,5 +49,8 @@ public class BlueBonusController implements Initializable,RealmController {
     private static Player currentPlayer;
     public static void setCurrentPlayer(Player currentPlayer){
         BlueBonusController.currentPlayer=currentPlayer;
+    }
+    public void setLabel(){
+        label.setText(currentPlayer.getName() + ", click on Serpent to attack it!:");
     }
 }

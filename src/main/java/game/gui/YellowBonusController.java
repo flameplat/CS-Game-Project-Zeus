@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.net.URL;
@@ -16,6 +17,8 @@ public class YellowBonusController implements Initializable ,RealmController {
     @FXML private Button LionButton;
     @FXML private ImageView LionImageView;
     @FXML private ImageView BG;
+    @FXML
+    private Label label;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Image mainBG=new Image(Objects.requireNonNull(getClass().getResource("/images/YellowRealmBG.jpg")).toExternalForm());
@@ -43,5 +46,9 @@ public class YellowBonusController implements Initializable ,RealmController {
     private static Move possibleMove;
     public static void setPossibleMove(Move move){
         YellowBonusController.possibleMove=move;
+    }
+    @FXML
+    public void setLabel(){
+        label.setText(currentPlayer.getName() + ", click on lion to attack it!");
     }
 }
