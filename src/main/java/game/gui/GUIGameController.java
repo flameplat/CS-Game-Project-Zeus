@@ -253,6 +253,13 @@ public class GUIGameController extends CLIGameController implements Initializabl
         currentPlayer = activePlayer;
         updateSceneStatus();
         GUIGameController.player1=player;
+        if(player.isAI()){
+            System.out.println(player.getName()+" is AI");
+        }
+        else{
+            System.out.println(player.getName()+" is not AI");
+        }
+
     }
     public static boolean isPlayer1Playing(){
         return currentPlayer==player1;
@@ -263,6 +270,15 @@ public class GUIGameController extends CLIGameController implements Initializabl
         passivePlayer = player;
         player.setPlayerStatus(PlayerStatus.PASSIVE);
         GUIGameController.player2=player;
+        if(player.isAI()){
+            ((AIPlayer)player).setGuiGameController(this);
+        }
+        if(player.isAI()){
+            System.out.println(player.getName()+" is AI");
+        }
+        else{
+            System.out.println(player.getName()+" is not AI");
+        }
     }
 
     //------------------------------------------------------DICE RELATED METHODS & UPDATERS-------------------------------------------------------//
@@ -550,6 +566,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private void updateScoreSheets() {
         activePlayer.getScoreSheetController().updateScoreSheet();
         passivePlayer.getScoreSheetController().updateScoreSheet();
+
     }
 
     private void updateDiceValues() {
@@ -579,19 +596,47 @@ public class GUIGameController extends CLIGameController implements Initializabl
         gameText.setText("");
         disableRollButton();
         disableForgottenRealmButtons();
-        enableMainBoardDiceButtons();
+        if(activePlayer instanceof AIPlayer){
+            disableMainBoardDiceButtons();
+        }
+        else{
+            enableMainBoardDiceButtons();
+        }
+
         if (getPossibleMovesForDice(activePlayer, getAvailableDice()).length == 0) {
             if (activePlayer.isTimeWarpAvailable()) {
-                enableTimeWarpButton();
                 gameText.setText("No available moves for current dice. Use time warp?");
-                enableSkipButton();
+                if(activePlayer instanceof AIPlayer){
+                    boolean useTimeWarp=((AIPlayer) activePlayer).useTimeWarp(getAvailableDice());
+                    if(useTimeWarp){
+                        timeWarpButtonClick();
+                    }
+                    else {
+                        skipButtonClick();
+                    }
+                }
+                else{
+                    enableTimeWarpButton();
+                    enableSkipButton();
+                }
             } else {
-                gameText.setText("No available moves for current dice. Turn Lost");
+                activePlayer.getScoreSheetController().setRewardsLabel("No available moves for current dice. Turn Lost");
                 manageTurnCycle();
             }
         }
         if (activePlayer.isTimeWarpAvailable()) {
-            enableTimeWarpButton();
+            if(activePlayer instanceof AIPlayer){
+                boolean useTimeWarp=((AIPlayer) activePlayer).useTimeWarp(getAvailableDice());
+                if(useTimeWarp){
+                    timeWarpButtonClick();
+                }
+            }
+            else{
+                enableTimeWarpButton();
+            }
+        }
+        if(activePlayer instanceof AIPlayer){
+            ((AIPlayer) activePlayer).selectDice(getAvailableDice());
         }
     }
     @FXML
@@ -641,24 +686,39 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private void advanceActiveTurn() {
         gameStatus.incrementTurn();
         currentPlayer = activePlayer;
-        enableRollButton();
+        if(activePlayer instanceof AIPlayer){
+            rollButtonClick();
+        }
+        else{
+            enableRollButton();
+        }
         disableMainBoardDiceButtons();
         disableTimeWarpButton();
         updateSceneStatus();
+
     }
 
     private void endActiveTurn() {
         gameStatus.resetTurn();
         disableTimeWarpButton();
         moveDiceToForgottenRealm();
-        enableForgottenRealmButtons();
+
         currentPlayer = passivePlayer;
         turnLabel.setText("");
         //Move to next phase
         gameStatus.setGameStatus(CurrentStatus.PASSIVE_TURN);
         if (getPossibleMovesForDice(passivePlayer, getForgottenRealmDice()).length == 0) {
-            gameText.setText("No possible moves, passive turn lost");
+            passivePlayer.getScoreSheetController().setRewardsLabel("No possible moves, passive turn lost");
             endPassiveTurn();
+        }
+        else{
+            if(passivePlayer.isAI()){
+                ((AIPlayer) passivePlayer).selectDice(getForgottenRealmDice());
+                disableForgottenRealmButtons();
+            }
+            else{
+                enableForgottenRealmButtons();
+            }
         }
         updateSceneStatus();
     }
@@ -676,9 +736,14 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private void handleArcaneBoost() {
         if (activePlayer.isArcaneBoostAvailable() && !activePlayer.isArcaneBoostSkipped()) {
             currentPlayer = activePlayer;
-            enableArcaneBoostButton();
-            enableSkipButton();
             gameText.setText(activePlayer.getName() + ", do you want to use Arcane Boost?");
+            if(activePlayer.isAI()){
+                ((AIPlayer) activePlayer).useArcaneBoost(getAvailableDice());
+            }
+            else{
+                enableArcaneBoostButton();
+                enableSkipButton();
+            }
             updateSceneStatus();
             return;
         }
@@ -688,8 +753,13 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 activePlayer.resetArcaneBoostUsage();
             }
             currentPlayer = passivePlayer;
-            enableArcaneBoostButton();
-            enableSkipButton();
+            if(passivePlayer.isAI()){
+                ((AIPlayer) passivePlayer).useArcaneBoost(getAvailableDice());
+            }
+            else{
+                enableArcaneBoostButton();
+                enableSkipButton();
+            }
             gameText.setText(passivePlayer.getName() + ", do you want to use Arcane Boost?");
             updateSceneStatus();
             return;
@@ -712,11 +782,23 @@ public class GUIGameController extends CLIGameController implements Initializabl
         highlightCurrentRound();
         resetDice();
         currentPlayer = activePlayer;
+        if(currentPlayer.isAI()){
+            System.out.println(currentPlayer.getName()+" is AI");
+        }
+        else{
+            System.out.println(currentPlayer.getName()+" is not AI");
+        }
         performReward(activePlayer, roundRewards[gameStatus.getRound() - 1]);
         updateSceneStatus();
         updateScoreSheets();
-        enableRollButton();
         disableMainBoardDiceButtons();
+        if(activePlayer.isAI()){
+            ((AIPlayer)activePlayer).selectDice(getAvailableDice());
+            enableForgottenRealmButtons();
+        }
+        else{
+            enableRollButton();
+        }
     }
 
     @FXML
@@ -748,16 +830,23 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[0]).length == 0) {
                 throw new InvalidMoveException();
             }
-
-            selectDice(diceArray[0], currentPlayer);
+            disableMainBoardDiceButtons();
+            disableForgottenRealmButtons();
+            if(diceArray==refDiceArray){
+                selectDice(diceArray[0], currentPlayer);
+            }
+            if(currentPlayer.isAI()){
+                makeMove(currentPlayer,((AIPlayer) currentPlayer).getSelectedMove());
+                manageTurnCycle();
+                return;
+            }
             RedRealmController.setCurrentPlayer(currentPlayer);
             RedRealmController.setPossibleMoves(getPossibleMovesForADie(currentPlayer, refDiceArray[0]));
             //This will be done by RedRealm Stage
             //makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[0])[0]);
             sceneManager.showRedRealmStage();
-            disableMainBoardDiceButtons();
-            disableForgottenRealmButtons();
             manageTurnCycle();
+
         } catch (InvalidMoveException e) {
             gameText.setText("There are no possible moves for " + refDiceArray[0].getName());
         }
@@ -770,7 +859,10 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[1]).length == 0) {
                 throw new InvalidMoveException();
             }
-            selectDice(diceArray[1], currentPlayer);
+            if(diceArray==refDiceArray){
+                selectDice(diceArray[1], currentPlayer);
+            }
+
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[1])[0]);
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
@@ -786,11 +878,19 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[2]).length == 0) {
                 throw new InvalidMoveException();
             }
-            selectDice(diceArray[2], currentPlayer);
+            if(diceArray==refDiceArray){
+                selectDice(diceArray[2], currentPlayer);
+            }
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[2])[0]);
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
             manageTurnCycle();
+            if(currentPlayer.isAI()){
+                System.out.println(currentPlayer.getName()+" is AI");
+            }
+            else{
+                System.out.println(currentPlayer.getName()+" is not AI");
+            }
         } catch (InvalidMoveException e) {
             gameText.setText("There are no possible moves for " + refDiceArray[2].getName());
         }
@@ -802,7 +902,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[3]).length == 0) {
                 throw new InvalidMoveException();
             }
-            selectDice(diceArray[3], currentPlayer);
+            if(diceArray==refDiceArray){
+                selectDice(diceArray[3], currentPlayer);
+            }
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[3])[0]);
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
@@ -819,7 +921,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[4]).length == 0) {
                 throw new InvalidMoveException();
             }
-            selectDice(diceArray[4], currentPlayer);
+            if(diceArray==refDiceArray){
+                selectDice(diceArray[4], currentPlayer);
+            }
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[4])[0]);
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
@@ -865,6 +969,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 blueDiceNumber2.setText(String.valueOf(selectedDie.getValue()));
                 magentaDiceNumber2.setText(String.valueOf(selectedDie.getValue()));
                 yellowDiceNumber2.setText(String.valueOf(selectedDie.getValue()));
+            }
+            if(currentPlayer.isAI()){
+                ((AIPlayer) currentPlayer).selectDice(refDiceArray);
             }
         } catch (NoAvailableMovesException e) {
             gameText.setText("There are no possible moves for " + diceArray[5].getName());
@@ -917,11 +1024,20 @@ public class GUIGameController extends CLIGameController implements Initializabl
 //        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
 //        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
 //        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
-//        playColorBonus(activePlayer,GameColor.YELLOW);
+//        //playColorBonus(activePlayer,GameColor.YELLOW);
 //        playColorBonus(activePlayer,GameColor.RED);
 //        playColorBonus(activePlayer,GameColor.BLUE);
+//        playColorBonus(activePlayer,GameColor.MAGENTA);
+//        playColorBonus(activePlayer,GameColor.BLUE);
+//        playColorBonus(activePlayer,GameColor.MAGENTA);
+//        playColorBonus(activePlayer,GameColor.BLUE);
+//        playColorBonus(activePlayer,GameColor.MAGENTA);
 //        playColorBonus(activePlayer,GameColor.GREEN);
 //        playColorBonus(activePlayer,GameColor.MAGENTA);
+//        playColorBonus(activePlayer,GameColor.BLUE);
+//
+//        playColorBonus(activePlayer,GameColor.MAGENTA);
+//
 //        playEssenceBonus(activePlayer);
     }
 
@@ -973,7 +1089,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
         if (reward instanceof EssenceBonus) {
             playEssenceBonus(player);
-        } else {
+        }
+        else {
             if (reward instanceof ColorBonus) {
                 playColorBonus(player, ((ColorBonus) reward).getColor());
             } else {
@@ -992,26 +1109,58 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
             switch (gameColor) {
                 case RED:
-                    RedRealmController.setPossibleMoves(possibleMoves);
-                    RedRealmController.setCurrentPlayer(player);
-                    sceneManager.showRedRealmStage();
+                    if(player.isAI()){
+                        ((AIPlayer)(player)).playColorBonus(GameColor.RED);
+                    }
+                    else{
+                        RedRealmController.setPossibleMoves(possibleMoves);
+                        RedRealmController.setCurrentPlayer(player);
+                        sceneManager.showRedRealmStage();
+                    }
+
                     break;
                 case GREEN:
-                    GreenBonusController.setPossibleMoves(possibleMoves);
-                    GreenBonusController.setCurrentPlayer(player);
-                    sceneManager.showGreenRealmStage();
+                    if(player.isAI()){
+                        ((AIPlayer)(player)).playColorBonus(GameColor.RED);
+                    }
+                    else{
+                        GreenBonusController.setPossibleMoves(possibleMoves);
+                        GreenBonusController.setCurrentPlayer(player);
+                        sceneManager.showGreenRealmStage();
+                    }
+
                     break;
                 case BLUE:
-                    BlueBonusController.setPossibleMove(possibleMoves[possibleMoves.length - 1]);
-                    BlueBonusController.setCurrentPlayer(player);
-                    sceneManager.showBlueRealmStage();
+                    if(player.isAI()){
+                        BlueDice blueDice=new BlueDice(6);
+                        makeMove(player,new Move(blueDice,player.getRealm(blueDice).getCreature(blueDice)));
+                    }
+                    else{
+                        BlueBonusController.setPossibleMove(possibleMoves[possibleMoves.length - 1]);
+                        BlueBonusController.setCurrentPlayer(player);
+                        sceneManager.showBlueRealmStage();
+                    }
+
                     break;
                 case MAGENTA:
-                    MagentaBonusController.setCurrentPlayer(player);
-                    MagentaBonusController.setPossibleMove(new Move(new MagentaDice(6), player.getRealm(gameColor).getCreature(new MagentaDice(6))));
-                    sceneManager.showMagentaRealmStage();
+                    if(player.isAI()){
+                        makeMove(player,new Move(new MagentaDice(6), player.getRealm(gameColor).getCreature(new MagentaDice(6))));
+                    }
+                    else{
+                        MagentaBonusController.setCurrentPlayer(player);
+                        MagentaBonusController.setPossibleMove(new Move(new MagentaDice(6), player.getRealm(gameColor).getCreature(new MagentaDice(6))));
+                        sceneManager.showMagentaRealmStage();
+                    }
                     break;
                 case YELLOW:
+                    if(player.isAI()){
+                        makeMove(player,new Move(new YellowDice(6), player.getRealm(gameColor).getCreature(new YellowDice(6))));
+                    }
+                    else{
+                        YellowBonusController.setCurrentPlayer(player);
+                        YellowBonusController.setPossibleMove(new Move(new YellowDice(6), player.getRealm(gameColor).getCreature(new YellowDice(6))));
+                        sceneManager.showYellowRealmStage();
+                    }
                     YellowBonusController.setCurrentPlayer(player);
                     YellowBonusController.setPossibleMove(new Move(new YellowDice(6), player.getRealm(gameColor).getCreature(new YellowDice(6))));
                     sceneManager.showYellowRealmStage();
@@ -1029,10 +1178,17 @@ public class GUIGameController extends CLIGameController implements Initializabl
         LinkedList<GameColor> availableRealms = Stream.of(realms)
                 .filter(Realm::isRealmAvailable).map(Realm::getColor)
                 .collect(Collectors.toCollection(LinkedList::new));
+
         if(!availableRealms.isEmpty()){
-            RealmPickerController.setPossibleRealms(availableRealms);
-            RealmPickerController.setCurrentPlayer(player);
-            sceneManager.showRealmPickerStage();
+            if(player.isAI()){
+                playColorBonus(player,((AIPlayer)player).selectRealm(availableRealms));
+            }
+            else{
+                RealmPickerController.setPossibleRealms(availableRealms);
+                RealmPickerController.setCurrentPlayer(player);
+                sceneManager.showRealmPickerStage();
+            }
+
         }
 
     }

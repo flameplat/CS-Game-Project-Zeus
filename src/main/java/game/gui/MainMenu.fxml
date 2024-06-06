@@ -33,11 +33,6 @@
             <Font name="MinionPro-Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="hint" alignment="CENTER" layoutX="165.0" layoutY="461.0" prefHeight="18.0" prefWidth="600.0" scaleX="1.66" scaleY="1.66" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
       <ImageView fx:id="logo" fitHeight="246.0" fitWidth="262.0" layoutX="385.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true" scaleX="1.66" scaleY="1.66">
          <image>
             <Image url="@../../../resources/images/Logo.png" />

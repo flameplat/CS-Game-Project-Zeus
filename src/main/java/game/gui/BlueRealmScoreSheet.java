@@ -115,6 +115,7 @@ public class BlueRealmScoreSheet implements Initializable {
             }
         }
     }
+
     private void highlightCell(int row, int column,String color) {
         for (Node node : gridPane.getChildren()) {
             if (node instanceof Label) {

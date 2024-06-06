@@ -1,5 +1,7 @@
 package game.gui;
 
+import game.engine.AIPlayer;
+import game.engine.GameMode;
 import game.engine.Player;
 import game.exceptions.InvalidPlayerNameException;
 import javafx.fxml.FXML;
@@ -68,10 +70,16 @@ public class PlayerDataController implements Initializable,GameController {
             if (playersSubmitted < 1) {
                 player1= new Player(textField.getText());
                 errorLabel.setText("");
+                if(MainMenuController.getGameMode()== GameMode.SINGLEPLAYER){
+                    player2=new AIPlayer("Zeus");
+                    sceneManager.switchWizardsScene();
+                    return;
+                }
                 mainLabel.setText("Enter Player 2 Name");
                 textField.setText("");
                 playersSubmitted++;
             } else {
+
                 if (player1 != null && textField.getText().equals(player1.getName())) {
                     throw new InvalidPlayerNameException("Name already in use!");
                 }

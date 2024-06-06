@@ -25,9 +25,9 @@
             <Font size="21.0" />
          </font>
       </Label>
-      <Label fx:id="errorLabel" alignment="CENTER" layoutY="413.0" prefHeight="18.0" prefWidth="600.0" textFill="WHITE">
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="197.0" layoutY="507.0" prefHeight="51.0" prefWidth="600.0" textFill="WHITE">
          <font>
-            <Font size="18.0" />
+            <Font size="24.0" />
          </font>
       </Label>
       <ImageView fx:id="imageView" fitHeight="136.0" fitWidth="450.0" layoutX="276.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">

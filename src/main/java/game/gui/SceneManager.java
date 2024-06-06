@@ -1,5 +1,5 @@
 package game.gui;
-import game.engine.Player;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -10,8 +10,10 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -71,6 +73,7 @@ public class SceneManager {
     }
 
     private Stage realmStage;
+    private static Scene redRealmScene;
 
     public void showRealmStage(String resourceFileName,boolean enableWindowTab) {
 
@@ -78,15 +81,10 @@ public class SceneManager {
             // Load the FXML file
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(resourceFileName)));
             Parent root = loader.load();
-
             // Initialize the controller
             RealmController realmController = loader.getController();
             realmController.setSceneManager(this);
             realmController.setGuiGameController(guiGameController);
-            if(realmController instanceof EndGame){
-                ((EndGame) realmController).setPlayers(PlayerDataController.getPlayer1(),PlayerDataController.getPlayer2());
-            }
-
             root.setStyle("-fx-background-color: transparent;");
             // Create the scene and stage
             Scene realmScene = new Scene(root);
@@ -100,39 +98,31 @@ public class SceneManager {
                 realmStage.initStyle(StageStyle.UNDECORATED);
             }
             realmStage.setOnShown(event -> {
-                Platform.runLater(() -> {
-                    double shiftForPlayer1 = 600;
-                    double shiftForPlayer2 = 0;
-                    if(realmController instanceof Guider){
-                        Platform.runLater(() -> {
-                            Screen screen = Screen.getPrimary();
-                            CalculatePositionToCenterStage(screen);
-                        });
+                double shiftForPlayer1 = 600;
+                double shiftForPlayer2 = 0;
+                if(realmController instanceof Guider){
+                    Screen screen = Screen.getPrimary();
+                    CalculatePositionToCenterStage(screen);
+                }
+                else{
+                    if (GUIGameController.isPlayer1Playing()) {
+                        realmStage.setX(shiftForPlayer1);
+                    } else {
+                        realmStage.setX(shiftForPlayer2);
                     }
-                    else{
-                        if (GUIGameController.isPlayer1Playing()) {
-                            realmStage.setX(shiftForPlayer1);
-                        } else {
-                            realmStage.setX(shiftForPlayer2);
-                        }
-                        // Center vertically
-                        Screen screen = Screen.getPrimary();
-                        Rectangle2D bounds = screen.getVisualBounds();
-                        double centerY = (bounds.getHeight() - realmStage.getHeight()) / 2;
-                        realmStage.setY(centerY);
-                    }
-                });
+                    // Center vertically
+                    Screen screen = Screen.getPrimary();
+                    Rectangle2D bounds = screen.getVisualBounds();
+                    double centerY = (bounds.getHeight() - realmStage.getHeight()) / 2;
+                    realmStage.setY(centerY);
+                }
             });
-            if(!(realmController instanceof EndGame)){
-                realmStage.setOnCloseRequest(Event::consume);
-            }
+            realmStage.setOnCloseRequest(Event::consume);
             realmStage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void closeRealmStage() {
@@ -171,9 +161,6 @@ public class SceneManager {
 
     public void showEndGame(){
         showRealmStage("EndGame.fxml",true);
-    }
-    public void showGuider(){
-        showRealmStage("Guider.fxml",false);
     }
 
 

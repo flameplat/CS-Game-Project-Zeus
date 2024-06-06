@@ -1,5 +1,6 @@
 package game.gui;
 
+import game.engine.AIPlayer;
 import game.engine.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -88,6 +89,16 @@ public class Wizards implements Initializable, GameController{
     public void chooseWizard(Player player,Image wizard){
         player.setWizardImage(wizard);
         if(player==player2){
+            sceneManager.switchGamePlayScene();
+            return;
+        }
+        if(player2 instanceof AIPlayer){
+            for(int i=0;i<wizardImages.length;i++){
+                if(player1.getWizardImage()!=wizardImages[i]){
+                    player2.setWizardImage(wizardImages[i]);
+                    break;
+                }
+            }
             sceneManager.switchGamePlayScene();
             return;
         }

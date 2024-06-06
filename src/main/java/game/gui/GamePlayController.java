@@ -45,12 +45,10 @@ public class GamePlayController implements Initializable,GameController {
             AnchorPane gameBoard = gameBoardLoader.load();
             GUIGameController guiGameController = gameBoardLoader.getController();
             guiGameController.setSceneManager(DiceRealms.getSceneManager());
-            if (MainMenuController.getGameMode() == GameMode.MULTIPLAYER) {
-                guiGameController.setPlayer1(PlayerDataController.getPlayer1());
-                guiGameController.setPlayer2(PlayerDataController.getPlayer2());
-                guiGameController.setPlayer1ScoreSheet(player1Controller);
-                guiGameController.setGameMode(GameMode.MULTIPLAYER);
-            }
+            guiGameController.setPlayer1(PlayerDataController.getPlayer1());
+            guiGameController.setPlayer2(PlayerDataController.getPlayer2());
+            guiGameController.setPlayer1ScoreSheet(player1Controller);
+            guiGameController.setGameMode(MainMenuController.getGameMode());
             gameBoardContainer.getChildren().add(gameBoard);
             // Load and configure Player 2 Composite ScoreSheet
             FXMLLoader player2Loader = new FXMLLoader(getClass().getResource("CompositeScoreSheet.fxml"));

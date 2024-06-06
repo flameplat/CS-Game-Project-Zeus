@@ -22,7 +22,7 @@
                   <Image url="@../../../resources/images/BlueSerpant.png" />
                </image>
             </ImageView>
-            <Button fx:id="serpantButton" mnemonicParsing="false" onAction="#AttcakSerpant" opacity="0.0" prefHeight="428.0" prefWidth="426.0" text="Button" />
+            <Button fx:id="serpantButton" mnemonicParsing="false" onAction="#attackSerpent" opacity="0.0" prefHeight="428.0" prefWidth="426.0" text="Button" />
          </children>
       </StackPane>
       <Label fx:id="label" alignment="CENTER" layoutX="365.0" layoutY="752.0" prefHeight="17.0" prefWidth="489.0" text="Mostafa, Click on the Serpent to attack it" textFill="#9f90ff">

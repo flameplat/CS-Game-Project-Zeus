@@ -1,8 +1,6 @@
 package game.gui;
 import game.engine.Move;
 import game.engine.Player;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -10,8 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 public class BlueBonusController implements Initializable,RealmController {
@@ -30,7 +26,7 @@ public class BlueBonusController implements Initializable,RealmController {
         BG.setImage(mainBG);
         serpantImageView.setImage(creature);
     }
-    public void AttcakSerpant () {
+    public void attackSerpent() {
         sceneManager.closeRealmStage();
         guiGameController.makeMove(currentPlayer,possibleMove);
     }

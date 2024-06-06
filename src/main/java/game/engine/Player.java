@@ -21,7 +21,7 @@ public class Player {
     private static int id = 1;
     private final ScoreSheet scoreSheet;
     private final GameScore gameScore;
-    private final String name;
+    private String name;
     //----------------------Attributes--------------------------//
     private Realm[] realms;
     private PlayerStatus playerStatus;
@@ -31,6 +31,7 @@ public class Player {
     private int timeWarpsUsed;
     private int arcaneBoostsUsed;
     private Image wizardImage;
+    protected boolean isAI;
 
     //----------------------Constructor--------------------------//
     public Player(String name) throws InvalidPlayerNameException {
@@ -47,6 +48,7 @@ public class Player {
         timeWarps = new LinkedList<>();
         arcaneBoosts = new LinkedList<>();
         isArcaneBoostSkipped=false;
+        isAI=false;
         isArcaneBoostUsed=false;
     }
 
@@ -68,6 +70,7 @@ public class Player {
         arcaneBoosts = new LinkedList<>();
         isArcaneBoostSkipped=false;
         isArcaneBoostUsed=false;
+        isAI=false;
     }
 
     public Map<String, Integer> getCollectiblesCounters() {
@@ -168,7 +171,12 @@ public class Player {
             arcaneBoostsUsed++;
         }
     }
-
+    public void setName(String name){
+        this.name=name;
+    }
+    public boolean isAI(){
+        return isAI;
+    }
     public String getName() {
         return name;
     }
@@ -245,5 +253,4 @@ public class Player {
     public void resetArcaneBoostUsage(){
         isArcaneBoostUsed=false;
     }
-
 }
