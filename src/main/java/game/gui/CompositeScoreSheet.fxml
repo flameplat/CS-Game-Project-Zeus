@@ -228,7 +228,7 @@
       <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#e5ff00" height="34.0" layoutX="27.0" layoutY="906.0" stroke="BLACK" strokeType="INSIDE" width="33.0" />
       <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#df00ff" height="34.0" layoutX="27.0" layoutY="780.0" stroke="BLACK" strokeType="INSIDE" width="33.0" />
       <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#3f00ff" height="34.0" layoutX="26.0" layoutY="645.0" stroke="BLACK" strokeType="INSIDE" width="33.0" />
-      <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#00ff18" height="34.0" layoutX="373.0" layoutY="283.0" stroke="BLACK" strokeType="INSIDE" width="33.0" />
+      <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#527b2d" height="34.0" layoutX="373.0" layoutY="283.0" stroke="BLACK" strokeType="INSIDE" width="33.0" />
       <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="34.0" layoutX="426.0" layoutY="283.0" stroke="BLACK" strokeType="INSIDE" width="33.0" />
       <Rectangle arcHeight="20.0" arcWidth="20.0" fill="RED" height="34.0" layoutX="77.0" layoutY="283.0" stroke="BLACK" strokeType="INSIDE" width="33.0" />
    </children>

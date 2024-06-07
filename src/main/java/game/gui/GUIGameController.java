@@ -538,7 +538,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
     protected void highlightCurrentRound() {
         removeRoundTableHighlight();
         int round = gameStatus.getRound();
-        highlightCell(round, "LawnGreen");
+        highlightCell(round, "white");
     }
 
     private void removeRoundTableHighlight() {
@@ -592,6 +592,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     @FXML
     public void rollButtonClick() {
+        updateSceneStatus();
         rollDice();
         gameText.setText("");
         disableRollButton();
@@ -610,9 +611,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
                     boolean useTimeWarp=((AIPlayer) activePlayer).useTimeWarp(getAvailableDice());
                     if(useTimeWarp){
                         timeWarpButtonClick();
+                        return;
                     }
-                    else {
+                    else{
                         skipButtonClick();
+                        return;
                     }
                 }
                 else{
@@ -709,12 +712,13 @@ public class GUIGameController extends CLIGameController implements Initializabl
         gameStatus.setGameStatus(CurrentStatus.PASSIVE_TURN);
         if (getPossibleMovesForDice(passivePlayer, getForgottenRealmDice()).length == 0) {
             passivePlayer.getScoreSheetController().setRewardsLabel("No possible moves, passive turn lost");
+            updateSceneStatus();
             endPassiveTurn();
         }
         else{
             if(passivePlayer.isAI()){
-                ((AIPlayer) passivePlayer).selectDice(getForgottenRealmDice());
                 disableForgottenRealmButtons();
+                ((AIPlayer) passivePlayer).selectDice(getForgottenRealmDice());
             }
             else{
                 enableForgottenRealmButtons();
@@ -739,6 +743,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             gameText.setText(activePlayer.getName() + ", do you want to use Arcane Boost?");
             if(activePlayer.isAI()){
                 ((AIPlayer) activePlayer).useArcaneBoost(getAvailableDice());
+                return;
             }
             else{
                 enableArcaneBoostButton();
@@ -755,6 +760,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             currentPlayer = passivePlayer;
             if(passivePlayer.isAI()){
                 ((AIPlayer) passivePlayer).useArcaneBoost(getAvailableDice());
+                return;
             }
             else{
                 enableArcaneBoostButton();
@@ -793,8 +799,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         updateScoreSheets();
         disableMainBoardDiceButtons();
         if(activePlayer.isAI()){
-            ((AIPlayer)activePlayer).selectDice(getAvailableDice());
-            enableForgottenRealmButtons();
+            rollButtonClick();
         }
         else{
             enableRollButton();
@@ -809,7 +814,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
             disableTimeWarpButton();
         }
         rollButtonClick();
-        updateScoreSheets();
     }
 
     @FXML
@@ -1006,10 +1010,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
         currentPlayer = activePlayer;
         gameStatus.setGameStatus(CurrentStatus.ACTIVE_TURN);
         refDiceArray = diceArray;
-//        FXMLLoader blueRealmLoader = new FXMLLoader(getClass().getResource("BlueRealmScoreSheet.fxml"));
-//        AnchorPane blueRealmScene = blueRealmLoader.load();
-//        blueRealm.getChildren().add(blueRealmScene);
-//        blueRealmScoreSheet =blueRealmLoader.getController();
         try{
             FXMLLoader guiderLoader = new FXMLLoader(getClass().getResource("Guider.fxml"));
             AnchorPane guiderAnchorPane=guiderLoader.load();
@@ -1020,25 +1020,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         catch (IOException e){
             e.printStackTrace();
         }
-//        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
-//        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
-//        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
-//        activePlayer.getRealm(GameColor.YELLOW).attack(new Move(new YellowDice(1),new Lion()));
-//        //playColorBonus(activePlayer,GameColor.YELLOW);
-//        playColorBonus(activePlayer,GameColor.RED);
-//        playColorBonus(activePlayer,GameColor.BLUE);
-//        playColorBonus(activePlayer,GameColor.MAGENTA);
-//        playColorBonus(activePlayer,GameColor.BLUE);
-//        playColorBonus(activePlayer,GameColor.MAGENTA);
-//        playColorBonus(activePlayer,GameColor.BLUE);
-//        playColorBonus(activePlayer,GameColor.MAGENTA);
-//        playColorBonus(activePlayer,GameColor.GREEN);
-//        playColorBonus(activePlayer,GameColor.MAGENTA);
-//        playColorBonus(activePlayer,GameColor.BLUE);
-//
-//        playColorBonus(activePlayer,GameColor.MAGENTA);
-//
-//        playEssenceBonus(activePlayer);
+
     }
 
     @Override
@@ -1110,6 +1092,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             switch (gameColor) {
                 case RED:
                     if(player.isAI()){
+                        System.out.println(player+" is AI");
                         ((AIPlayer)(player)).playColorBonus(GameColor.RED);
                     }
                     else{
@@ -1117,11 +1100,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
                         RedRealmController.setCurrentPlayer(player);
                         sceneManager.showRedRealmStage();
                     }
-
                     break;
                 case GREEN:
                     if(player.isAI()){
-                        ((AIPlayer)(player)).playColorBonus(GameColor.RED);
+                        System.out.println(player+" is AI");
+                        ((AIPlayer)(player)).playColorBonus(GameColor.GREEN);
                     }
                     else{
                         GreenBonusController.setPossibleMoves(possibleMoves);
@@ -1132,6 +1115,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
                     break;
                 case BLUE:
                     if(player.isAI()){
+                        System.out.println(player+" is AI");
                         BlueDice blueDice=new BlueDice(6);
                         makeMove(player,new Move(blueDice,player.getRealm(blueDice).getCreature(blueDice)));
                     }
@@ -1140,10 +1124,10 @@ public class GUIGameController extends CLIGameController implements Initializabl
                         BlueBonusController.setCurrentPlayer(player);
                         sceneManager.showBlueRealmStage();
                     }
-
                     break;
                 case MAGENTA:
                     if(player.isAI()){
+                        System.out.println(player+" is AI");
                         makeMove(player,new Move(new MagentaDice(6), player.getRealm(gameColor).getCreature(new MagentaDice(6))));
                     }
                     else{
@@ -1154,6 +1138,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
                     break;
                 case YELLOW:
                     if(player.isAI()){
+                        System.out.println(player+" is AI");
                         makeMove(player,new Move(new YellowDice(6), player.getRealm(gameColor).getCreature(new YellowDice(6))));
                     }
                     else{
@@ -1161,9 +1146,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
                         YellowBonusController.setPossibleMove(new Move(new YellowDice(6), player.getRealm(gameColor).getCreature(new YellowDice(6))));
                         sceneManager.showYellowRealmStage();
                     }
-                    YellowBonusController.setCurrentPlayer(player);
-                    YellowBonusController.setPossibleMove(new Move(new YellowDice(6), player.getRealm(gameColor).getCreature(new YellowDice(6))));
-                    sceneManager.showYellowRealmStage();
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid color bonus: " + gameColor);

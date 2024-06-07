@@ -75,7 +75,7 @@ public class SceneManager {
     private Stage realmStage;
     private static Scene redRealmScene;
 
-    public void showRealmStage(String resourceFileName,boolean enableWindowTab) {
+    public void showRealmStage(String resourceFileName,boolean enableWindowTab,boolean disableExitButton) {
 
         try {
             // Load the FXML file
@@ -85,6 +85,9 @@ public class SceneManager {
             RealmController realmController = loader.getController();
             realmController.setSceneManager(this);
             realmController.setGuiGameController(guiGameController);
+            if(realmController instanceof EndGame){
+                ((EndGame)realmController).setPlayers(guiGameController.getActivePlayer(),guiGameController.getPassivePlayer());
+            }
             root.setStyle("-fx-background-color: transparent;");
             // Create the scene and stage
             Scene realmScene = new Scene(root);
@@ -117,7 +120,9 @@ public class SceneManager {
                     realmStage.setY(centerY);
                 }
             });
-            realmStage.setOnCloseRequest(Event::consume);
+            if(disableExitButton){
+                realmStage.setOnCloseRequest(Event::consume);
+            }
             realmStage.showAndWait();
 
         } catch (IOException e) {
@@ -132,27 +137,27 @@ public class SceneManager {
     }
 
     public void showRedRealmStage(){
-        showRealmStage("RedRealm.fxml",true);
+        showRealmStage("RedRealm.fxml",true,true);
     }
 
     public void showGreenRealmStage(){
-        showRealmStage("GreenBonus.fxml",true);
+        showRealmStage("GreenBonus.fxml",true,true);
     }
 
     public void showYellowRealmStage(){
-        showRealmStage("YellowBonus.fxml",true);
+        showRealmStage("YellowBonus.fxml",true,true);
     }
 
     public void showMagentaRealmStage(){
-        showRealmStage("MagentaBonus.fxml",true);
+        showRealmStage("MagentaBonus.fxml",true,true);
     }
 
     public void showBlueRealmStage(){
-        showRealmStage("BlueBonus.fxml",true);
+        showRealmStage("BlueBonus.fxml",true,true);
     }
 
     public void showRealmPickerStage(){
-        showRealmStage("RealmPicker.fxml",true);
+        showRealmStage("RealmPicker.fxml",true,true);
     }
 
     public void switchWizardsScene(){
@@ -160,7 +165,7 @@ public class SceneManager {
     }
 
     public void showEndGame(){
-        showRealmStage("EndGame.fxml",true);
+        showRealmStage("EndGame.fxml",true,false);
     }
 
 

@@ -19,6 +19,102 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.GUIGameController">
    <children>
+      <Pane layoutX="157.0" layoutY="675.0" prefHeight="371.0" prefWidth="413.0">
+         <children>
+            <ImageView fx:id="forgottenRealmImageView" fitHeight="425.0" fitWidth="486.0" layoutX="-32.0" layoutY="-48.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../resources/images/ForgottenRealm.png" />
+               </image>
+            </ImageView>
+            <StackPane layoutX="61.0" layoutY="14.0" prefHeight="263.0" prefWidth="291.0">
+               <children>
+                  <GridPane fx:id="forgottenRealmGrid" prefHeight="186.0" prefWidth="342.0" translateX="-1.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+            </StackPane>
+            <StackPane layoutX="61.0" layoutY="24.0" prefHeight="263.0" prefWidth="291.0">
+               <children>
+                  <GridPane fx:id="diceGridArcanePrism2" prefHeight="186.0" prefWidth="342.0" translateX="-1.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <StackPane fx:id="redDice11" prefHeight="60.0" prefWidth="53.0">
+                           <children>
+                              <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ca1011" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                              <Label fx:id="redDiceNumber2" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
+                                 <font>
+                                    <Font size="29.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="redDiceButton11" mnemonicParsing="false" onAction="#redDiceButtonClick" onMouseEntered="#redDiceButtonHoverOn" onMouseExited="#diceButtonHoverOff" opacity="0.0" prefHeight="50.0" prefWidth="51.0" scaleX="1.3" scaleY="1.3" text="Button" translateX="-1.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="greenDice11" prefHeight="60.0" prefWidth="53.0" GridPane.columnIndex="1">
+                           <children>
+                              <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#527b2d" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                              <Label fx:id="greenDiceNumber2" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
+                                 <font>
+                                    <Font size="29.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="greenDiceButton11" mnemonicParsing="false" onAction="#greenDiceButtonClick" onMouseEntered="#greenDiceButtonHoverOn" onMouseExited="#diceButtonHoverOff" opacity="0.0" prefHeight="50.0" prefWidth="51.0" scaleX="1.3" scaleY="1.3" text="Button" translateX="-1.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="blueDice11" prefHeight="60.0" prefWidth="53.0" GridPane.columnIndex="2">
+                           <children>
+                              <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#187bce" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                              <Label fx:id="blueDiceNumber2" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
+                                 <font>
+                                    <Font size="29.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="blueDiceButton11" mnemonicParsing="false" onAction="#blueDiceButtonClick" onMouseEntered="#blueDiceButtonHoverOn" onMouseExited="#diceButtonHoverOff" opacity="0.0" prefHeight="50.0" prefWidth="51.0" scaleX="1.3" scaleY="1.3" text="Button" translateX="-1.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="magentaDice11" prefHeight="60.0" prefWidth="53.0" GridPane.rowIndex="1">
+                           <children>
+                              <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#9556c8" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                              <Label fx:id="magentaDiceNumber2" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
+                                 <font>
+                                    <Font size="29.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="magentaDiceButton11" mnemonicParsing="false" onAction="#magentaDiceButtonClick" onMouseEntered="#magentaDiceButtonHoverOn" onMouseExited="#diceButtonHoverOff" opacity="0.0" prefHeight="50.0" prefWidth="51.0" scaleX="1.3" scaleY="1.3" text="Button" translateX="-1.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="yellowDice11" prefHeight="60.0" prefWidth="53.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#f7e112" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                              <Label fx:id="yellowDiceNumber2" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
+                                 <font>
+                                    <Font size="29.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="yellowDiceButton11" mnemonicParsing="false" onAction="#yellowDiceButtonClick" onMouseEntered="#yellowDiceButtonHoverOn" onMouseExited="#diceButtonHoverOff" opacity="0.0" prefHeight="50.0" prefWidth="51.0" scaleX="1.3" scaleY="1.3" text="Button" translateX="-1.0" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </GridPane>
+               </children>
+            </StackPane>
+         </children>
+      </Pane>
       <StackPane layoutX="28.0" layoutY="20.0" prefHeight="77.0" prefWidth="674.0" translateX="-1.0">
          <children>
             <GridPane fx:id="roundsTable" gridLinesVisible="true" prefHeight="70.0" prefWidth="674.0" style="-fx-border-gameColor: white;" translateX="-1.0">
@@ -36,8 +132,8 @@
                 <RowConstraints maxHeight="37.20000305175781" minHeight="10.0" prefHeight="36.4" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00f2ff" height="35.0" stroke="BLACK" strokeType="INSIDE" translateX="-1.0" width="674.0" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00f2ff" height="38.0" stroke="BLACK" strokeType="INSIDE" translateX="-1.0" width="96.0" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f0ba36" height="35.0" stroke="BLACK" strokeType="INSIDE" translateX="-1.0" width="674.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f0ba36" height="38.0" stroke="BLACK" strokeType="INSIDE" translateX="-1.0" width="96.0" GridPane.rowIndex="1" />
                   <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
                         <ImageView fx:id="round1Reward" fitHeight="35.0" fitWidth="47.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
@@ -161,7 +257,7 @@
                <children>
                   <StackPane fx:id="redDice" prefHeight="60.0" prefWidth="53.0" translateX="-1.0">
                      <children>
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="RED" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ca1011" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
                         <Label fx:id="redDiceNumber" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
                            <font>
                               <Font size="29.0" />
@@ -172,7 +268,7 @@
                   </StackPane>
                   <StackPane fx:id="greenDice" prefHeight="60.0" prefWidth="53.0" translateX="-1.0" GridPane.columnIndex="1">
                      <children>
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#04ff00" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#527b2d" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
                         <Label fx:id="greenDiceNumber" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
                            <font>
                               <Font size="29.0" />
@@ -183,7 +279,7 @@
                   </StackPane>
                   <StackPane fx:id="blueDice" prefHeight="60.0" prefWidth="53.0" translateX="-1.0" GridPane.columnIndex="2">
                      <children>
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#3900ff" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#187bce" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
                         <Label fx:id="blueDiceNumber" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
                            <font>
                               <Font size="29.0" />
@@ -194,7 +290,7 @@
                   </StackPane>
                   <StackPane fx:id="magentaDice" prefHeight="60.0" prefWidth="53.0" translateX="-1.0" GridPane.rowIndex="1">
                      <children>
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#c400ff" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#9556c8" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
                         <Label fx:id="magentaDiceNumber" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
                            <font>
                               <Font size="29.0" />
@@ -205,7 +301,7 @@
                   </StackPane>
                   <StackPane fx:id="yellowDice" prefHeight="60.0" prefWidth="53.0" translateX="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#caff00" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#f7e112" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
                         <Label fx:id="yellowDiceNumber" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
                            <font>
                               <Font size="29.0" />
@@ -229,115 +325,19 @@
             </GridPane>
          </children>
       </StackPane>
-      <StackPane layoutX="233.0" layoutY="579.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="347.0" scaleX="1.2" scaleY="1.2" translateX="-1.0" AnchorPane.leftAnchor="153.0" AnchorPane.rightAnchor="153.0">
+      <StackPane layoutX="233.0" layoutY="572.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="106.0" prefWidth="414.0" scaleX="1.2" scaleY="1.2" translateX="-1.0" AnchorPane.leftAnchor="153.0" AnchorPane.rightAnchor="153.0">
          <children>
-            <ImageView fx:id="gameTextBox" fitHeight="111.0" fitWidth="482.0" pickOnBounds="true" translateX="-1.0">
+            <ImageView fx:id="gameTextBox" fitHeight="134.0" fitWidth="482.0" pickOnBounds="true" translateX="-1.0">
                <image>
                   <Image url="@../../../resources/images/textBox.png" />
                </image>
             </ImageView>
-            <Label fx:id="gameText" alignment="TOP_CENTER" prefHeight="64.0" prefWidth="366.0" text="t" textAlignment="CENTER" textOverrun="CLIP" translateX="-1.0" wrapText="true">
+            <Label fx:id="gameText" alignment="TOP_CENTER" prefHeight="61.0" prefWidth="414.0" textAlignment="CENTER" textFill="#c9c5c5" textOverrun="CLIP" translateX="-1.0" wrapText="true">
                <font>
                   <Font size="22.0" />
                </font></Label>
          </children>
       </StackPane>
-      <Pane layoutX="157.0" layoutY="675.0" prefHeight="371.0" prefWidth="413.0">
-         <children>
-            <ImageView fx:id="forgottenRealmImageView" fitHeight="371.0" fitWidth="461.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../resources/images/ForgottenRealm.png" />
-               </image>
-            </ImageView>
-            <StackPane layoutX="61.0" layoutY="14.0" prefHeight="263.0" prefWidth="291.0">
-               <children>
-                  <GridPane fx:id="forgottenRealmGrid" prefHeight="186.0" prefWidth="342.0" translateX="-1.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                  </GridPane>
-               </children>
-            </StackPane>
-            <StackPane layoutX="61.0" layoutY="24.0" prefHeight="263.0" prefWidth="291.0">
-               <children>
-                  <GridPane fx:id="diceGridArcanePrism2" prefHeight="186.0" prefWidth="342.0" translateX="-1.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <StackPane fx:id="redDice11" prefHeight="60.0" prefWidth="53.0">
-                           <children>
-                              <Rectangle arcHeight="30.0" arcWidth="30.0" fill="RED" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
-                              <Label fx:id="redDiceNumber2" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
-                                 <font>
-                                    <Font size="29.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="redDiceButton11" mnemonicParsing="false" onAction="#redDiceButtonClick" onMouseEntered="#redDiceButtonHoverOn" onMouseExited="#diceButtonHoverOff" opacity="0.0" prefHeight="50.0" prefWidth="51.0" scaleX="1.3" scaleY="1.3" text="Button" translateX="-1.0" />
-                           </children>
-                        </StackPane>
-                        <StackPane fx:id="greenDice11" prefHeight="60.0" prefWidth="53.0" GridPane.columnIndex="1">
-                           <children>
-                              <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#04ff00" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
-                              <Label fx:id="greenDiceNumber2" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
-                                 <font>
-                                    <Font size="29.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="greenDiceButton11" mnemonicParsing="false" onAction="#greenDiceButtonClick" onMouseEntered="#greenDiceButtonHoverOn" onMouseExited="#diceButtonHoverOff" opacity="0.0" prefHeight="50.0" prefWidth="51.0" scaleX="1.3" scaleY="1.3" text="Button" translateX="-1.0" />
-                           </children>
-                        </StackPane>
-                        <StackPane fx:id="blueDice11" prefHeight="60.0" prefWidth="53.0" GridPane.columnIndex="2">
-                           <children>
-                              <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#3900ff" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
-                              <Label fx:id="blueDiceNumber2" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
-                                 <font>
-                                    <Font size="29.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="blueDiceButton11" mnemonicParsing="false" onAction="#blueDiceButtonClick" onMouseEntered="#blueDiceButtonHoverOn" onMouseExited="#diceButtonHoverOff" opacity="0.0" prefHeight="50.0" prefWidth="51.0" scaleX="1.3" scaleY="1.3" text="Button" translateX="-1.0" />
-                           </children>
-                        </StackPane>
-                        <StackPane fx:id="magentaDice11" prefHeight="60.0" prefWidth="53.0" GridPane.rowIndex="1">
-                           <children>
-                              <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#c400ff" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
-                              <Label fx:id="magentaDiceNumber2" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
-                                 <font>
-                                    <Font size="29.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="magentaDiceButton11" mnemonicParsing="false" onAction="#magentaDiceButtonClick" onMouseEntered="#magentaDiceButtonHoverOn" onMouseExited="#diceButtonHoverOff" opacity="0.0" prefHeight="50.0" prefWidth="51.0" scaleX="1.3" scaleY="1.3" text="Button" translateX="-1.0" />
-                           </children>
-                        </StackPane>
-                        <StackPane fx:id="yellowDice11" prefHeight="60.0" prefWidth="53.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <children>
-                              <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#caff00" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
-                              <Label fx:id="yellowDiceNumber2" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
-                                 <font>
-                                    <Font size="29.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="yellowDiceButton11" mnemonicParsing="false" onAction="#yellowDiceButtonClick" onMouseEntered="#yellowDiceButtonHoverOn" onMouseExited="#diceButtonHoverOff" opacity="0.0" prefHeight="50.0" prefWidth="51.0" scaleX="1.3" scaleY="1.3" text="Button" translateX="-1.0" />
-                           </children>
-                        </StackPane>
-                     </children>
-                  </GridPane>
-               </children>
-            </StackPane>
-         </children>
-      </Pane>
       <StackPane fx:id="timeWarpStackPane" layoutX="120.0" layoutY="497.0" prefHeight="75.0" prefWidth="75.0">
          <children>
             <ImageView fx:id="timeWarpImageView" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
@@ -430,7 +430,7 @@
                <children>
                   <StackPane prefHeight="60.0" prefWidth="53.0" translateX="-1.0">
                      <children>
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="RED" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#ca1011" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
                         <Label fx:id="redDiceNumber1" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
                            <font>
                               <Font size="29.0" />
@@ -441,7 +441,7 @@
                   </StackPane>
                   <StackPane prefHeight="60.0" prefWidth="53.0" translateX="-1.0" GridPane.columnIndex="1">
                      <children>
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#04ff00" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#527b2d" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
                         <Label fx:id="greenDiceNumber1" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
                            <font>
                               <Font size="29.0" />
@@ -452,7 +452,7 @@
                   </StackPane>
                   <StackPane prefHeight="60.0" prefWidth="53.0" translateX="-1.0" GridPane.columnIndex="2">
                      <children>
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#3900ff" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#187bce" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
                         <Label fx:id="blueDiceNumber1" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
                            <font>
                               <Font size="29.0" />
@@ -463,7 +463,7 @@
                   </StackPane>
                   <StackPane prefHeight="60.0" prefWidth="53.0" translateX="-1.0" GridPane.rowIndex="1">
                      <children>
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#c400ff" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#9556c8" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
                         <Label fx:id="magentaDiceNumber1" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
                            <font>
                               <Font size="29.0" />
@@ -474,7 +474,7 @@
                   </StackPane>
                   <StackPane prefHeight="60.0" prefWidth="53.0" translateX="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#caff00" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#f7e112" height="66.0" scaleX="1.3" scaleY="1.3" stroke="BLACK" strokeLineJoin="BEVEL" strokeType="INSIDE" translateX="-1.0" width="66.0" />
                         <Label fx:id="yellowDiceNumber1" alignment="CENTER" prefHeight="90.0" prefWidth="84.0" scaleX="1.3" scaleY="1.3" translateX="-1.0">
                            <font>
                               <Font size="29.0" />
@@ -489,13 +489,13 @@
       </StackPane>
       <StackPane layoutX="20.0" layoutY="689.0" prefHeight="25.0" prefWidth="200.0">
          <children>
-            <Rectangle arcHeight="20.0" arcWidth="20.0" height="38.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
+            <Rectangle arcHeight="20.0" arcWidth="20.0" height="38.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0">
                <fill>
                   <LinearGradient endX="1.0" endY="1.0">
                      <stops>
                         <Stop>
                            <color>
-                              <Color red="0.30000001192092896" blue="1.0" />
+                              <Color green="0.5899999737739563" blue="0.011238095350563526" />
                            </color>
                         </Stop>
                         <Stop offset="1.0">

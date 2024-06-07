@@ -31,10 +31,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1ff00" height="30.0" stroke="BLACK" strokeType="INSIDE" width="499.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ecff1f" height="89.0" stroke="BLACK" strokeType="INSIDE" width="43.0" GridPane.rowIndex="1" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff99" height="30.0" stroke="BLACK" strokeType="INSIDE" width="458.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1ff00" height="30.0" stroke="BLACK" strokeType="INSIDE" width="458.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7e112" height="30.0" stroke="BLACK" strokeType="INSIDE" width="499.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7e112" height="89.0" stroke="BLACK" strokeType="INSIDE" width="43.0" GridPane.rowIndex="1" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffffbb" height="30.0" stroke="BLACK" strokeType="INSIDE" width="458.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7e112" height="30.0" stroke="BLACK" strokeType="INSIDE" width="458.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="R" GridPane.rowIndex="2" />
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="M" GridPane.rowIndex="1" />
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="1" GridPane.columnIndex="1" />
@@ -74,7 +74,7 @@
       </GridPane>
       <StackPane layoutX="2.0" prefHeight="24.0" prefWidth="273.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7ff1f" height="24.0" stroke="BLACK" strokeType="INSIDE" width="281.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7e112" height="24.0" stroke="BLACK" strokeType="INSIDE" width="281.0" />
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="334.0" text="Radiant Savanna: Solar Lion (YELLOW REALM)" />
          </children>
       </StackPane>

@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-
 <AnchorPane prefHeight="148.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.BlueRealmScoreSheet">
    <children>
       <GridPane fx:id="gridPane" layoutY="25.0" prefHeight="121.0" prefWidth="499.0">
@@ -33,10 +32,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2200ff" height="30.0" stroke="BLACK" strokeType="INSIDE" width="499.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2200ff" height="91.0" stroke="BLACK" strokeType="INSIDE" width="43.0" GridPane.rowIndex="2" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#187bce" height="30.0" stroke="BLACK" strokeType="INSIDE" width="499.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#187bce" height="91.0" stroke="BLACK" strokeType="INSIDE" width="43.0" GridPane.rowIndex="2" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff99" height="30.0" stroke="BLACK" strokeType="INSIDE" width="458.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2200ff" height="30.0" stroke="BLACK" strokeType="INSIDE" width="458.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#187bce" height="30.0" stroke="BLACK" strokeType="INSIDE" width="458.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="R" textFill="WHITE" GridPane.rowIndex="2" />
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="C/H" textFill="WHITE" GridPane.rowIndex="1" />
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="H11" textFill="WHITE" GridPane.columnIndex="1" />
@@ -72,7 +71,7 @@
             <Label fx:id="hit9RewardLabel" alignment="CENTER" prefHeight="29.0" prefWidth="41.0" textFill="WHITE" GridPane.columnIndex="9" GridPane.rowIndex="2" />
             <Label fx:id="hit10RewardLabel" alignment="CENTER" prefHeight="29.0" prefWidth="41.0" textFill="WHITE" GridPane.columnIndex="10" GridPane.rowIndex="2" />
             <Label fx:id="hit11RewardLabel" alignment="CENTER" prefHeight="29.0" prefWidth="41.0" textFill="WHITE" GridPane.columnIndex="11" GridPane.rowIndex="2" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2200ff" height="31.0" stroke="BLACK" strokeType="INSIDE" width="458.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#187bce" height="31.0" stroke="BLACK" strokeType="INSIDE" width="458.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="S" textFill="WHITE" GridPane.rowIndex="3" />
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="#" textFill="WHITE" />
             <Label fx:id="score1Label" alignment="CENTER" prefHeight="33.0" prefWidth="41.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -90,7 +89,7 @@
       </GridPane>
       <StackPane layoutX="2.0" prefHeight="24.0" prefWidth="273.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2200ff" height="24.0" stroke="BLACK" strokeType="INSIDE" width="281.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#187bce" height="24.0" stroke="BLACK" strokeType="INSIDE" width="281.0" />
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="334.0" text="Tide Abyss: Hydra Serpents (BLUE REALM)" textFill="WHITE" />
          </children>
       </StackPane>

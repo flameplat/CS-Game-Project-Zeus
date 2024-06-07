@@ -6,7 +6,7 @@ public class Phoenix extends Creature {
 
     public Phoenix() {
         this.status = true;
-        int totalHits = 0;
+        totalHits = 0;
     }
 
     @Override

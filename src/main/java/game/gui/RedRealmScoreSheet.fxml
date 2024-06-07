@@ -29,10 +29,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="178.0" stroke="BLACK" strokeType="INSIDE" width="50.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="178.0" stroke="BLACK" strokeType="INSIDE" width="48.0" GridPane.columnSpan="4" GridPane.rowIndex="3" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="37.0" stroke="BLACK" strokeType="INSIDE" width="291.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="RED" height="37.0" stroke="BLACK" strokeType="INSIDE" width="291.0" GridPane.rowIndex="5" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ca1011" height="178.0" stroke="BLACK" strokeType="INSIDE" width="50.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ca1011" height="178.0" stroke="BLACK" strokeType="INSIDE" width="48.0" GridPane.columnSpan="4" GridPane.rowIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ca1011" height="37.0" stroke="BLACK" strokeType="INSIDE" width="291.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ca1011" height="37.0" stroke="BLACK" strokeType="INSIDE" width="291.0" GridPane.rowIndex="5" />
             <Label fx:id="dragon1Face" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="1" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="16.0" />
