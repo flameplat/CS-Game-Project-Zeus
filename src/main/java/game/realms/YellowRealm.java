@@ -194,6 +194,7 @@ public class YellowRealm extends Realm {
 
     @Override
     public double getWeight(Move move) {
+       //Score
         return 0;
     }
 
