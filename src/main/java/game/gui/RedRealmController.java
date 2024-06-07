@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -42,7 +43,8 @@ public class RedRealmController implements Initializable ,RealmController{
 
         if (possibleMoves.contains(move)) {
 
-                sceneManager.closeRealmStage();
+            Stage stage = (Stage) dragon1.getScene().getWindow();
+            stage.close();
             guiGameController.makeMove(currentPlayer, move);
         } else {
             label.setText("You can't attack this part");

@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.LinkedList;
@@ -87,8 +88,9 @@ public class RealmPickerController implements Initializable,RealmController {
 
     private void chooseRealm(GameColor realmColor) {
         if(possibleRealms.contains(realmColor)){
-            sceneManager.closeRealmStage();
-            Platform.runLater(()-> guiGameController.playColorBonus(currentPlayer, realmColor));
+            Stage stage = (Stage) label.getScene().getWindow();
+            stage.close();
+            guiGameController.playColorBonus(currentPlayer, realmColor);
         }
         else {
             label.setText("Not Available");

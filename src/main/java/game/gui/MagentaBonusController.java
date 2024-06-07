@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -27,7 +29,8 @@ public class MagentaBonusController implements Initializable,RealmController {
     }
     public void AttackPhoenix() {
 
-            sceneManager.closeRealmStage();
+        Stage stage = (Stage) PhoenixImageView.getScene().getWindow();
+        stage.close();
         guiGameController.makeMove(currentPlayer,possibleMove);
     }
     private SceneManager sceneManager;

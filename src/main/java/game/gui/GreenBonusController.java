@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -200,7 +201,9 @@ public class GreenBonusController implements  Initializable,RealmController  {
     // Common method to perform the attack
     private void performAttack(Move move, String gaiaNumber) {
         if (possibleMoves.contains(move)) {
-            sceneManager.closeRealmStage();
+            Stage stage = (Stage) ImageButton1.getScene().getWindow();
+            // Close the stage
+            stage.close();
             guiGameController.makeMove(currentPlayer, move);
         } else {
             label.setText(gaiaNumber + " is Dead");

@@ -72,8 +72,6 @@ public class SceneManager {
         switchScene("GamePlay.fxml", true);
     }
 
-    private Stage realmStage;
-    private static Scene redRealmScene;
 
     public void showRealmStage(String resourceFileName,boolean enableWindowTab,boolean disableExitButton) {
 
@@ -92,15 +90,15 @@ public class SceneManager {
             // Create the scene and stage
             Scene realmScene = new Scene(root);
             scene.setFill(null);
-            realmStage = new Stage();
-            realmStage.setScene(realmScene);
-            realmStage.initModality(Modality.APPLICATION_MODAL);
-            realmStage.initOwner(stage);
-            realmStage.setResizable(false);
+            Stage newStage = new Stage();
+            newStage.setScene(realmScene);
+            newStage.initModality(Modality.APPLICATION_MODAL);
+            newStage.initOwner(stage);
+            newStage.setResizable(false);
             if(!enableWindowTab){
-                realmStage.initStyle(StageStyle.UNDECORATED);
+                newStage.initStyle(StageStyle.UNDECORATED);
             }
-            realmStage.setOnShown(event -> {
+            newStage.setOnShown(event -> {
                 double shiftForPlayer1 = 600;
                 double shiftForPlayer2 = 0;
                 if(realmController instanceof Guider){
@@ -109,32 +107,27 @@ public class SceneManager {
                 }
                 else{
                     if (GUIGameController.isPlayer1Playing()) {
-                        realmStage.setX(shiftForPlayer1);
+                        newStage.setX(shiftForPlayer1);
                     } else {
-                        realmStage.setX(shiftForPlayer2);
+                        newStage.setX(shiftForPlayer2);
                     }
                     // Center vertically
                     Screen screen = Screen.getPrimary();
                     Rectangle2D bounds = screen.getVisualBounds();
-                    double centerY = (bounds.getHeight() - realmStage.getHeight()) / 2;
-                    realmStage.setY(centerY);
+                    double centerY = (bounds.getHeight() - newStage.getHeight()) / 2;
+                    newStage.setY(centerY);
                 }
             });
             if(disableExitButton){
-                realmStage.setOnCloseRequest(Event::consume);
+                newStage.setOnCloseRequest(Event::consume);
             }
-            realmStage.showAndWait();
+            newStage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void closeRealmStage() {
-        if (realmStage != null) {
-            realmStage.close();
-        }
-    }
 
     public void showRedRealmStage(){
         showRealmStage("RedRealm.fxml",true,true);

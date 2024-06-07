@@ -24,6 +24,13 @@ public class AIPlayer extends Player{
         System.out.printf("During round %d in %s :%n",guiGameController.gameStatus.getRound(),guiGameController.gameStatus.getGameStatus());
         System.out.println(Arrays.toString(diceArray));
         if(diceArray.length==0){
+            System.out.println("AI was sent an empty array to choose from");
+            System.out.println("Active Player: "+guiGameController.activePlayer);
+            System.out.println("Passive Player: "+guiGameController.passivePlayer);
+            if(this!=guiGameController.passivePlayer && guiGameController.getGameStatus().getGameStatus()==CurrentStatus.PASSIVE_TURN){
+                System.out.println("WTF, AI is not passive player and wanted to play a passive turn");
+            }
+            System.out.println("");
             return;
         }
         Move[] possibleMoves;
@@ -68,7 +75,9 @@ public class AIPlayer extends Player{
         List<Move> colorMoves = Arrays.stream(moves)
                 .filter(move -> move.getDice().getRealm() == color)
                 .collect(Collectors.toList());
+
         selectedMove = colorMoves.get(r.nextInt(colorMoves.size()));
+        System.out.println("Color bonus: "+color+", selected move: "+selectedMove);
         guiGameController.makeMove(this,selectedMove);
     }
     public void setGuiGameController(GUIGameController guiGameController){
@@ -83,6 +92,8 @@ public class AIPlayer extends Player{
         return true;
     }
     public GameColor selectRealm(LinkedList<GameColor> availableRealms){
-        return availableRealms.get(r.nextInt(availableRealms.size()));
+        GameColor selectedRealm=availableRealms.get(r.nextInt(availableRealms.size()));
+        System.out.println("Realm Selected: "+selectedRealm);
+        return selectedRealm;
     }
 }

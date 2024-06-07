@@ -689,7 +689,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private void advanceActiveTurn() {
         gameStatus.incrementTurn();
         currentPlayer = activePlayer;
-        if(activePlayer instanceof AIPlayer){
+        if(activePlayer.isAI()){
             rollButtonClick();
         }
         else{
@@ -717,6 +717,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         else{
             if(passivePlayer.isAI()){
                 disableForgottenRealmButtons();
+                System.out.println("Forgotten Realm Dice: "+ Arrays.toString(getForgottenRealmDice()));
                 ((AIPlayer) passivePlayer).selectDice(getForgottenRealmDice());
             }
             else{

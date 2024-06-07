@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Objects;
@@ -27,7 +28,8 @@ public class YellowBonusController implements Initializable ,RealmController {
         LionImageView.setImage(creature);
     }
     public void AttackLion() {
-        sceneManager.closeRealmStage();
+        Stage stage = (Stage) LionImageView.getScene().getWindow();
+        stage.close();
         guiGameController.makeMove(currentPlayer,possibleMove);
 
     }
