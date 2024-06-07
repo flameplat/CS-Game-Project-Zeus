@@ -22,21 +22,8 @@ public class AIPlayer extends Player{
     // The AI player should call the methods of the GUI to select the die.
     public void selectDice(Dice[] diceArray){
         System.out.printf("During round %d in %s :%n",guiGameController.gameStatus.getRound(),guiGameController.gameStatus.getGameStatus());
-        System.out.println(Arrays.toString(diceArray));
-        Move[] possibleMoves;
-        Dice selectedDie;
-        int i=0;
-        //Filter Available Dice
-        do{
-            selectedDie=diceArray[r.nextInt(diceArray.length)];
-            possibleMoves=guiGameController.getPossibleMovesForADie(this,selectedDie);
-            i++;
-            if(i>500){
-                System.out.println("AI stuck in loop");
-            }
-        }
-        while (possibleMoves.length==0);
-
+        Dice selectedDie=diceArray[r.nextInt(diceArray.length)];
+        Move[] possibleMoves=guiGameController.getPossibleMovesForADie(this,selectedDie);
         selectedMove=possibleMoves[r.nextInt(possibleMoves.length)];
         System.out.println("AI has chosen:  "+selectedDie);
         System.out.println("-".repeat(50));
@@ -59,14 +46,8 @@ public class AIPlayer extends Player{
     public Move getSelectedMove() {
         return selectedMove;
     }
-    public void playColorBonus(GameColor color){
-        //You will only need to make a decision for red and green realm only
-        Move[] moves=guiGameController.getAllPossibleMoves(this);
-        List<Move> colorMoves = Arrays.stream(moves)
-                .filter(move -> move.getDice().getRealm() == color)
-                .collect(Collectors.toList());
-
-        selectedMove = colorMoves.get(r.nextInt(colorMoves.size()));
+    public void playColorBonus(GameColor color,Move[] possibleMoves){
+        selectedMove = possibleMoves[r.nextInt(possibleMoves.length)];
         System.out.println("Color bonus: "+color+", selected move: "+selectedMove);
         guiGameController.makeMove(this,selectedMove);
     }

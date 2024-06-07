@@ -640,7 +640,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             return;
         }
         if(activePlayer.isAI()){
-            ((AIPlayer) activePlayer).selectDice(getAvailableDice());
+            ((AIPlayer) activePlayer).selectDice(filterDiceWithPossibleMoves(activePlayer,getAvailableDice()).toArray(Dice[]::new));
         }
     }
     @FXML
@@ -719,7 +719,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if(passivePlayer.isAI()){
                 disableForgottenRealmButtons();
                 System.out.println("Forgotten Realm Dice: "+ Arrays.toString(getForgottenRealmDice()));
-                ((AIPlayer) passivePlayer).selectDice(getForgottenRealmDice());
+                ((AIPlayer) passivePlayer).selectDice(filterDiceWithPossibleMoves(passivePlayer,getForgottenRealmDice()).toArray(Dice[]::new));
             }
             else{
                 enableForgottenRealmButtons();
@@ -765,7 +765,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             currentPlayer = passivePlayer;
             if(passivePlayer.isAI()){
-                if(((AIPlayer) passivePlayer).useArcaneBoost(getAvailableDice())){
+                if(((AIPlayer) passivePlayer).useArcaneBoost(filterDiceWithPossibleMoves(activePlayer,getAvailableDice()).toArray(Dice[]::new))){
                     arcaneBoostButtonClick();
                     disableMainBoardDiceButtons();
                 }
@@ -837,7 +837,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             disableArcaneBoostButton();
         }
         if(currentPlayer.isAI()){
-            ((AIPlayer)currentPlayer).selectDice(getAvailableDice());
+            ((AIPlayer)currentPlayer).selectDice(filterDiceWithPossibleMoves(activePlayer,getAvailableDice()).toArray(Dice[]::new));
         }
         updateScoreSheets();
     }
@@ -989,7 +989,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 yellowDiceNumber2.setText(String.valueOf(selectedDie.getValue()));
             }
             if(currentPlayer.isAI()){
-                ((AIPlayer) currentPlayer).selectDice(refDiceArray);
+                ((AIPlayer) currentPlayer).selectDice(filterDiceWithPossibleMoves(currentPlayer,refDiceArray).toArray(Dice[]::new));
             }
         } catch (NoAvailableMovesException e) {
             gameText.setText("There are no possible moves for " + diceArray[5].getName());
@@ -1119,7 +1119,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 case RED:
                     if(player.isAI()){
                         System.out.println(player+" is AI");
-                        ((AIPlayer)(player)).playColorBonus(GameColor.RED);
+                        ((AIPlayer)(player)).playColorBonus(GameColor.RED,player.getRealm(GameColor.RED).getRealmMoves());
                     }
                     else{
                         RedRealmController.setPossibleMoves(possibleMoves);
@@ -1130,7 +1130,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 case GREEN:
                     if(player.isAI()){
                         System.out.println(player+" is AI");
-                        ((AIPlayer)(player)).playColorBonus(GameColor.GREEN);
+                        ((AIPlayer)(player)).playColorBonus(GameColor.GREEN,player.getRealm(GameColor.GREEN).getRealmMoves());
                     }
                     else{
                         GreenBonusController.setPossibleMoves(possibleMoves);
