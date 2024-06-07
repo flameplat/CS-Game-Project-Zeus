@@ -1,17 +1,14 @@
 package game.gui;
-import game.creatures.Lion;
-import game.dice.YellowDice;
+
 import game.engine.Move;
 import game.engine.Player;
-import javafx.animation.PauseTransition;
-import javafx.event.ActionEvent;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.Objects;
@@ -32,6 +29,7 @@ public class YellowBonusController implements Initializable ,RealmController {
     public void AttackLion() {
         sceneManager.closeRealmStage();
         guiGameController.makeMove(currentPlayer,possibleMove);
+
     }
     private SceneManager sceneManager;
 

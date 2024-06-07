@@ -74,7 +74,7 @@
       </GridPane>
       <StackPane layoutX="2.0" prefHeight="24.0" prefWidth="273.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7e112" height="24.0" stroke="BLACK" strokeType="INSIDE" width="281.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faee4a" height="24.0" stroke="BLACK" strokeType="INSIDE" width="281.0" />
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="334.0" text="Radiant Savanna: Solar Lion (YELLOW REALM)" />
          </children>
       </StackPane>

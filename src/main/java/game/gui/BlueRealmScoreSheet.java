@@ -2,7 +2,6 @@ package game.gui;
 
 import game.engine.Move;
 import game.realms.BlueRealm;
-import game.realms.YellowRealm;
 import game.utilities.GameColor;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -89,7 +88,7 @@ public class BlueRealmScoreSheet implements Initializable {
             fixedScoreLabels[i].setText(String.valueOf(scoreSheetValues[i]));
         }
     }
-    private int[] score=new int[]{1,2,3,4,5,1,2,3,4,5,6};
+    private final int[] score=new int[]{1,2,3,4,5,1,2,3,4,5,6};
     public void setRealm(BlueRealm blueRealm){
         this.blueRealm=blueRealm;
     }

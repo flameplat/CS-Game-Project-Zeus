@@ -4,7 +4,6 @@ import game.engine.Move;
 import game.engine.Player;
 import game.utilities.GameColor;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -201,8 +200,7 @@ public class GreenBonusController implements  Initializable,RealmController  {
     // Common method to perform the attack
     private void performAttack(Move move, String gaiaNumber) {
         if (possibleMoves.contains(move)) {
-
-                sceneManager.closeRealmStage();
+            sceneManager.closeRealmStage();
             guiGameController.makeMove(currentPlayer, move);
         } else {
             label.setText(gaiaNumber + " is Dead");

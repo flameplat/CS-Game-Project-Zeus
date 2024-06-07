@@ -18,8 +18,6 @@ public class EndGame implements Initializable,RealmController {
     @FXML
     private ImageView background;
 
-    @FXML
-    private ImageView gameScoreImage;
 
     @FXML
     private ImageView player1Wizard;

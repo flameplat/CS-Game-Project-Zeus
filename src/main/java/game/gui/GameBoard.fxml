@@ -332,7 +332,7 @@
                   <Image url="@../../../resources/images/textBox.png" />
                </image>
             </ImageView>
-            <Label fx:id="gameText" alignment="TOP_CENTER" prefHeight="61.0" prefWidth="414.0" textAlignment="CENTER" textFill="#c9c5c5" textOverrun="CLIP" translateX="-1.0" wrapText="true">
+            <Label fx:id="gameText" alignment="TOP_CENTER" prefHeight="64.0" prefWidth="414.0" textAlignment="CENTER" textFill="#c9c5c5" textOverrun="CLIP" translateX="-1.0" wrapText="true">
                <font>
                   <Font size="22.0" />
                </font></Label>

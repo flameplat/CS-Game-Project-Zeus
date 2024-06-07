@@ -2,10 +2,7 @@ package game.engine;
 
 import game.dice.*;
 import game.gui.GUIGameController;
-import game.gui.GreenBonusController;
-import game.gui.RedRealmController;
 import game.utilities.GameColor;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,32 +11,40 @@ import java.util.stream.Collectors;
 
 public class AIPlayer extends Player{
     private Move selectedMove;
-    private CLIGameController cliGameController;
     private GUIGameController guiGameController;
-    private Random r;
+    private final Random r;
     public AIPlayer(String name){
         super();
         setName(name);
-        cliGameController=new CLIGameController();
         r=new Random();
         isAI=true;
     }
     // The AI player should call the methods of the GUI to select the die.
-    // This will be much better for the other player to see what the AI is doing.
     public void selectDice(Dice[] diceArray){
-        //Filter Available Dice
-        List<Dice> availableDice = Arrays.stream(diceArray)
-                .filter((dice -> cliGameController.getPossibleMovesForADie(this,dice).length!=0))
-                .collect(Collectors.toList());
-        if(availableDice.isEmpty()){
+        System.out.printf("During round %d in %s :%n",guiGameController.gameStatus.getRound(),guiGameController.gameStatus.getGameStatus());
+        System.out.println(Arrays.toString(diceArray));
+        if(diceArray.length==0){
             return;
         }
-        Dice selectedDie=availableDice.get(r.nextInt(availableDice.size()));
-        Move[] possibleMoves=cliGameController.getPossibleMovesForADie(this,selectedDie);
+        Move[] possibleMoves;
+        Dice selectedDie;
+        int i=0;
+        //Filter Available Dice
+        do{
+            selectedDie=diceArray[r.nextInt(diceArray.length)];
+            possibleMoves=guiGameController.getPossibleMovesForADie(this,selectedDie);
+            i++;
+            if(i>500){
+                System.out.println("AI stuck in loop");
+            }
+        }
+        while (possibleMoves.length==0);
+
         selectedMove=possibleMoves[r.nextInt(possibleMoves.length)];
+        System.out.println("AI has chosen:  "+selectedDie);
+        System.out.println("-".repeat(50));
         if (selectedDie instanceof RedDice) {
             guiGameController.redDiceButtonClick();
-            //will call getSelected move after calling redDiceButtonClick()
         } else if (selectedDie instanceof WhiteDice) {
             guiGameController.whiteDiceButtonClick();
         } else if (selectedDie instanceof YellowDice) {
@@ -59,7 +64,7 @@ public class AIPlayer extends Player{
     }
     public void playColorBonus(GameColor color){
         //You will only need to make a decision for red and green realm only
-        Move[] moves=cliGameController.getAllPossibleMoves(this);
+        Move[] moves=guiGameController.getAllPossibleMoves(this);
         List<Move> colorMoves = Arrays.stream(moves)
                 .filter(move -> move.getDice().getRealm() == color)
                 .collect(Collectors.toList());

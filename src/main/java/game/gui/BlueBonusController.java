@@ -1,6 +1,7 @@
 package game.gui;
 import game.engine.Move;
 import game.engine.Player;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

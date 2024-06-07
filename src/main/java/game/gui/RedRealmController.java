@@ -3,12 +3,9 @@ import game.creatures.Dragon;
 import game.dice.RedDice;
 import game.engine.Move;
 import game.engine.Player;
-import game.utilities.GameColor;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,7 +43,6 @@ public class RedRealmController implements Initializable ,RealmController{
         if (possibleMoves.contains(move)) {
 
                 sceneManager.closeRealmStage();
-
             guiGameController.makeMove(currentPlayer, move);
         } else {
             label.setText("You can't attack this part");
@@ -54,47 +50,47 @@ public class RedRealmController implements Initializable ,RealmController{
         }
     }
 
-    public void attckFaceD1() {
+    public void attackFaceD1() {
         attack(3, 1);
     }
 
-    public void attckWingD1() {
+    public void attackWingD1() {
         attack(2, 1);
     }
 
-    public void attckTailD1() {
+    public void attackTailD1() {
         attack(1, 1);
     }
 
-    public void attckFaceD2() {
+    public void attackFaceD2() {
         attack(6, 2);
     }
 
-    public void attckWingD2() {
+    public void attackWingD2() {
         attack(1, 2);
     }
 
-    public void attckHeartD2() {
+    public void attackHeartD2() {
         attack(3, 2);
     }
 
-    public void attckFaceD3() {
+    public void attackFaceD3() {
         attack(5, 3);
     }
 
-    public void attckTailD3() {
+    public void attackTailD3() {
         attack(2, 3);
     }
 
-    public void attckHeartD3() {
+    public void attackHeartD3() {
         attack(4, 3);
     }
 
-    public void attckWingD4() {
+    public void attackWingD4() {
         attack(5, 4);
     }
 
-    public void attckTailD4() {
+    public void attackTailD4() {
         attack(4, 4);
     }
 

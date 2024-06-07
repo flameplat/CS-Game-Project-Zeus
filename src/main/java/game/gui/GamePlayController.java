@@ -1,6 +1,5 @@
 package game.gui;
 
-import game.engine.GameMode;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

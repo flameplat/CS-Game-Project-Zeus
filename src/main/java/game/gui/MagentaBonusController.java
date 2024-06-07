@@ -28,7 +28,6 @@ public class MagentaBonusController implements Initializable,RealmController {
     public void AttackPhoenix() {
 
             sceneManager.closeRealmStage();
-
         guiGameController.makeMove(currentPlayer,possibleMove);
     }
     private SceneManager sceneManager;

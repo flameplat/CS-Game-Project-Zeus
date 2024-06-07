@@ -4,7 +4,6 @@ import game.collectibles.Collectibles;
 import game.collectibles.ColorBonus;
 import game.collectibles.EssenceBonus;
 import game.creatures.Dragon;
-import game.creatures.Lion;
 import game.dice.*;
 import game.engine.*;
 import game.exceptions.InvalidMoveException;
@@ -596,6 +595,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         rollDice();
         gameText.setText("");
         disableRollButton();
+        currentPlayer=activePlayer;
         disableForgottenRealmButtons();
         if(activePlayer instanceof AIPlayer){
             disableMainBoardDiceButtons();
@@ -605,18 +605,18 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
 
         if (getPossibleMovesForDice(activePlayer, getAvailableDice()).length == 0) {
+            System.out.println(activePlayer+", NO Possible Moves: availableDice: "+ Arrays.toString(getAvailableDice())+"\n"+ Arrays.toString(getPossibleMovesForDice(activePlayer, getAvailableDice())));
             if (activePlayer.isTimeWarpAvailable()) {
                 gameText.setText("No available moves for current dice. Use time warp?");
-                if(activePlayer instanceof AIPlayer){
+                if(activePlayer.isAI()){
                     boolean useTimeWarp=((AIPlayer) activePlayer).useTimeWarp(getAvailableDice());
                     if(useTimeWarp){
                         timeWarpButtonClick();
-                        return;
                     }
                     else{
                         skipButtonClick();
-                        return;
                     }
+                    return;
                 }
                 else{
                     enableTimeWarpButton();
@@ -628,7 +628,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
         }
         if (activePlayer.isTimeWarpAvailable()) {
-            if(activePlayer instanceof AIPlayer){
+            if(activePlayer.isAI()){
                 boolean useTimeWarp=((AIPlayer) activePlayer).useTimeWarp(getAvailableDice());
                 if(useTimeWarp){
                     timeWarpButtonClick();
@@ -638,7 +638,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 enableTimeWarpButton();
             }
         }
-        if(activePlayer instanceof AIPlayer){
+        if(activePlayer.isAI()){
             ((AIPlayer) activePlayer).selectDice(getAvailableDice());
         }
     }
@@ -705,7 +705,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
         gameStatus.resetTurn();
         disableTimeWarpButton();
         moveDiceToForgottenRealm();
-
         currentPlayer = passivePlayer;
         turnLabel.setText("");
         //Move to next phase
@@ -735,6 +734,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         gameStatus.setGameStatus(CurrentStatus.ARCANE_BOOST);
         updateSceneStatus();
         resetDice();
+        disableArcaneBoostButton();
     }
 
     private void handleArcaneBoost() {
@@ -742,8 +742,12 @@ public class GUIGameController extends CLIGameController implements Initializabl
             currentPlayer = activePlayer;
             gameText.setText(activePlayer.getName() + ", do you want to use Arcane Boost?");
             if(activePlayer.isAI()){
-                ((AIPlayer) activePlayer).useArcaneBoost(getAvailableDice());
-                return;
+                if(((AIPlayer) activePlayer).useArcaneBoost(getAvailableDice())){
+                    arcaneBoostButtonClick();
+                }
+                else{
+                    skipButtonClick();
+                }
             }
             else{
                 enableArcaneBoostButton();
@@ -759,8 +763,13 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             currentPlayer = passivePlayer;
             if(passivePlayer.isAI()){
-                ((AIPlayer) passivePlayer).useArcaneBoost(getAvailableDice());
-                return;
+                if(((AIPlayer) passivePlayer).useArcaneBoost(getAvailableDice())){
+                    arcaneBoostButtonClick();
+                    disableMainBoardDiceButtons();
+                }
+                else{
+                    skipButtonClick();
+                }
             }
             else{
                 enableArcaneBoostButton();
@@ -824,6 +833,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
         currentPlayer.useArcaneBoostPower();
         if (!currentPlayer.isArcaneBoostAvailable()) {
             disableArcaneBoostButton();
+        }
+        if(currentPlayer.isAI()){
+            ((AIPlayer)currentPlayer).selectDice(getAvailableDice());
         }
         updateScoreSheets();
     }
@@ -1151,7 +1163,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
                     throw new IllegalArgumentException("Invalid color bonus: " + gameColor);
             }
         } catch (NoAvailableMovesException e) {
-            gameText.setText("Ohh bad luck...no possible moves, bonus lost!");
+            player.getScoreSheetController().setRewardsLabel("Ohh bad luck...no possible moves, bonus lost!");
         }
     }
 

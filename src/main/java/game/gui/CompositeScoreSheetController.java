@@ -19,8 +19,6 @@ import java.util.ResourceBundle;
 
 
 public class CompositeScoreSheetController implements Initializable {
-    @FXML
-    private ImageView bg;
     private YellowRealmScoreSheet yellowRealmScoreSheet;
     private MagentaRealmScoreSheet magentaRealmScoreSheet;
     private BlueRealmScoreSheet blueRealmScoreSheet;
