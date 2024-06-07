@@ -204,7 +204,9 @@ public class GreenBonusController implements  Initializable,RealmController  {
             Stage stage = (Stage) ImageButton1.getScene().getWindow();
             // Close the stage
             stage.close();
-            guiGameController.makeMove(currentPlayer, move);
+            Platform.runLater(() -> {
+                guiGameController.makeMove(currentPlayer,move);
+            });
         } else {
             label.setText(gaiaNumber + " is Dead");
         }

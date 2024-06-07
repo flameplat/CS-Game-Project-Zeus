@@ -31,7 +31,9 @@ public class MagentaBonusController implements Initializable,RealmController {
 
         Stage stage = (Stage) PhoenixImageView.getScene().getWindow();
         stage.close();
-        guiGameController.makeMove(currentPlayer,possibleMove);
+        Platform.runLater(() -> {
+            guiGameController.makeMove(currentPlayer,possibleMove);
+        });
     }
     private SceneManager sceneManager;
     private GUIGameController guiGameController;

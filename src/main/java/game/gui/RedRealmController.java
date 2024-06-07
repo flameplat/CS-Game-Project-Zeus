@@ -45,7 +45,9 @@ public class RedRealmController implements Initializable ,RealmController{
 
             Stage stage = (Stage) dragon1.getScene().getWindow();
             stage.close();
-            guiGameController.makeMove(currentPlayer, move);
+            Platform.runLater(() -> {
+                guiGameController.makeMove(currentPlayer,move);
+            });
         } else {
             label.setText("You can't attack this part");
             possibleAttackLabel.setText("Chosen Die: " + possibleMoves.get(0).getDice().getName());

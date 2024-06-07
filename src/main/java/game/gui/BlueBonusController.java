@@ -32,7 +32,9 @@ public class BlueBonusController implements Initializable,RealmController {
     public void attackSerpent() {
         Stage stage = (Stage) label.getScene().getWindow();
         stage.close();
-        guiGameController.makeMove(currentPlayer,possibleMove);
+        Platform.runLater(() -> {
+            guiGameController.makeMove(currentPlayer,possibleMove);
+        });
     }
     private SceneManager sceneManager;
     public void setSceneManager(SceneManager sceneManager){

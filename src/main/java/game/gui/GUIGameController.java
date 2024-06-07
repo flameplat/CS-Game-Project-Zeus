@@ -1033,6 +1033,17 @@ public class GUIGameController extends CLIGameController implements Initializabl
         catch (IOException e){
             e.printStackTrace();
         }
+        GameColor[] colors = GameColor.values();
+        for(int i=0;i<3;i++){
+            for (GameColor color : colors) {
+                if(color!=GameColor.WHITE){
+                    playColorBonus(activePlayer, color);
+                }
+
+            }
+            playEssenceBonus(activePlayer);
+        }
+
 
     }
 

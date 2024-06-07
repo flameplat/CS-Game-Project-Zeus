@@ -30,9 +30,12 @@ public class YellowBonusController implements Initializable ,RealmController {
     public void AttackLion() {
         Stage stage = (Stage) LionImageView.getScene().getWindow();
         stage.close();
-        guiGameController.makeMove(currentPlayer,possibleMove);
+        Platform.runLater(() -> {
+            guiGameController.makeMove(currentPlayer,possibleMove);
+        });
 
     }
+
     private SceneManager sceneManager;
 
     public void setSceneManager(SceneManager sceneManager){
