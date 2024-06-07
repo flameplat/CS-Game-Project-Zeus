@@ -1,6 +1,6 @@
 package game.collectibles;
 
-import game.utilities.Color;
+import game.utilities.GameColor;
 import game.utilities.ColorComparator;
 
 public class ColorBonus extends Collectibles implements Comparable<ColorBonus> {
@@ -10,11 +10,11 @@ public class ColorBonus extends Collectibles implements Comparable<ColorBonus> {
                     "attack in other realms, enabling precise " +
                     "strikes against specific enemies. Use it now!";
     // -----------------------Attributes-----------------------//
-    private final Color colorBonus;
+    private final GameColor gameColorBonus;
 
     // -----------------------constructor-----------------------//
-    public ColorBonus(Color color) {
-        this.colorBonus = color;
+    public ColorBonus(GameColor gameColor) {
+        this.gameColorBonus = gameColor;
     }
     //-----------------------Methods-----------------------//
 
@@ -24,19 +24,19 @@ public class ColorBonus extends Collectibles implements Comparable<ColorBonus> {
 
     @Override
     public String toString() {
-        return colorBonus.toString().charAt(0) + "B";
+        return gameColorBonus.toString().charAt(0) + "B";
     }
 
-    public Color getColor() {
-        return colorBonus;
+    public GameColor getColor() {
+        return gameColorBonus;
     }
 
     @Override
     public int compareTo(ColorBonus o) {
-        return new ColorComparator().compare(colorBonus, o.getColor());
+        return new ColorComparator().compare(gameColorBonus, o.getColor());
     }
 
     public String getName() {
-        return colorBonus + " BONUS";
+        return gameColorBonus + " BONUS";
     }
 }

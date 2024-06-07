@@ -1,5 +1,5 @@
 package game.utilities;
 
-public enum Color {
+public enum GameColor {
     RED, GREEN, BLUE, MAGENTA, YELLOW, WHITE
 }

@@ -1,11 +1,11 @@
 package game.dice;
 
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 public class MagentaDice extends Dice {
     private static final String RESET = "\u001B[0m";
     private static final String MAGENTA = "\u001B[35m";
-    private static final Color color = Color.MAGENTA;
+    private static final GameColor GAME_COLOR = GameColor.MAGENTA;
     private DiceStatus status;
     private int value; // value of the dices
 
@@ -25,7 +25,10 @@ public class MagentaDice extends Dice {
     // getter for the dice color
     @Override
     public String toString() {
-        return String.format(MAGENTA + "%s(%d)" + RESET, color, value);
+        return String.format(MAGENTA + "%s(%d)" + RESET, GAME_COLOR, value);
+    }
+    public String getName(){
+        return String.format("%s(%d)", GAME_COLOR, value);
     }
 
     // getter for the dice value
@@ -37,8 +40,8 @@ public class MagentaDice extends Dice {
         this.value = value;
     }
 
-    public Color getRealm() {
-        return color;
+    public GameColor getRealm() {
+        return GAME_COLOR;
     }
 
     @Override
@@ -59,6 +62,6 @@ public class MagentaDice extends Dice {
             return false;
         }
         MagentaDice other = (MagentaDice) o;
-        return (color == other.getRealm()) && (value == other.getValue());
+        return (GAME_COLOR == other.getRealm()) && (value == other.getValue());
     }
 }

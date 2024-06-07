@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1027.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.EndGame">
+   <children>
+      <ImageView fx:id="background" fitHeight="700.0" fitWidth="1041.0" layoutX="-2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/endGameWizards.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="button1" fitHeight="97.0" fitWidth="396.0" layoutX="340.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/buttons/3.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player1Wizard" fitHeight="156.0" fitWidth="112.0" layoutX="168.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/wizards/redWizard.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player2Wizard" fitHeight="156.0" fitWidth="112.0" layoutX="795.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/wizards/redWizard.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="textBoard1" fitHeight="522.0" fitWidth="401.0" layoutY="176.0" opacity="0.8" pickOnBounds="true">
+         <image>
+            <Image url="@../../../resources/images/textBoard.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="player1Label" alignment="CENTER" layoutX="139.0" layoutY="196.0" prefHeight="17.0" prefWidth="124.0" text="Player 1" textFill="WHITE">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="player1RedRealm" fitHeight="81.0" fitWidth="73.0" layoutX="50.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/realms/RedRealm.jpeg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player1GreenRealm" fitHeight="81.0" fitWidth="73.0" layoutX="50.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/realms/GreenRealm.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player1BlueRealm" fitHeight="81.0" fitWidth="73.0" layoutX="50.0" layoutY="377.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/realms/BlueRealm.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player1MagentaRealm" fitHeight="81.0" fitWidth="73.0" layoutX="50.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/realms/MagentaRealm.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player1YellowRealm" fitHeight="81.0" fitWidth="73.0" layoutX="50.0" layoutY="509.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/realms/YellowRealm.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player1ElementalCrest" fitHeight="59.0" fitWidth="60.0" layoutX="282.0" layoutY="206.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/rewards/ElementalCrest.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="player1RedCrestLabel" alignment="CENTER" layoutX="282.0" layoutY="264.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1GreenCrestLabel" alignment="CENTER" layoutX="282.0" layoutY="330.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1BlueCrestLabel" alignment="CENTER" layoutX="282.0" layoutY="396.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1MagentaCrestLabel" alignment="CENTER" layoutX="282.0" layoutY="462.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1YellowCrestLabel" alignment="CENTER" layoutX="282.0" layoutY="528.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="359.0" layoutY="47.0" prefHeight="17.0" prefWidth="323.0" text="Game Score" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="177.0" layoutY="230.0" text="Score" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1RedScore" alignment="CENTER" layoutX="172.0" layoutY="264.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1GreenScore" alignment="CENTER" layoutX="172.0" layoutY="330.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1BlueScore" alignment="CENTER" layoutX="172.0" layoutY="396.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1MagentaScore" alignment="CENTER" layoutX="172.0" layoutY="462.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1YellowScore" alignment="CENTER" layoutX="172.0" layoutY="528.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="63.0" layoutY="602.0" text="Total" textFill="WHITE">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="40.0" arcWidth="40.0" fill="WHITE" height="11.0" layoutX="62.0" layoutY="585.0" stroke="#ffffff00" strokeType="INSIDE" width="281.0" />
+      <Label fx:id="player1TotalScoreLabel" alignment="CENTER" layoutX="162.0" layoutY="600.0" prefHeight="35.0" prefWidth="82.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1TotalEC" alignment="CENTER" layoutX="282.0" layoutY="600.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="textBoard2" fitHeight="522.0" fitWidth="401.0" layoutX="632.0" layoutY="173.0" opacity="0.8" pickOnBounds="true">
+         <image>
+            <Image url="@../../../resources/images/textBoard.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="player2Label" alignment="CENTER" layoutX="771.0" layoutY="193.0" prefHeight="17.0" prefWidth="124.0" text="Player 2" textFill="WHITE">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="player2RedRealm" fitHeight="81.0" fitWidth="73.0" layoutX="682.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/realms/RedRealm.jpeg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player2GreenRealm" fitHeight="81.0" fitWidth="73.0" layoutX="682.0" layoutY="308.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/realms/GreenRealm.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player2BlueRealm" fitHeight="81.0" fitWidth="73.0" layoutX="682.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/realms/BlueRealm.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player2MagentaRealm" fitHeight="81.0" fitWidth="73.0" layoutX="682.0" layoutY="440.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/realms/MagentaRealm.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player2YellowRealm" fitHeight="81.0" fitWidth="73.0" layoutX="682.0" layoutY="506.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/realms/YellowRealm.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="player2ElementalCrest" fitHeight="59.0" fitWidth="60.0" layoutX="914.0" layoutY="203.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/rewards/ElementalCrest.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="player2RedCrestLabel" alignment="CENTER" layoutX="914.0" layoutY="261.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2GreenCrestLabel" alignment="CENTER" layoutX="914.0" layoutY="327.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2BlueCrestLabel" alignment="CENTER" layoutX="914.0" layoutY="393.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2MagentaCrestLabel" alignment="CENTER" layoutX="914.0" layoutY="459.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2YellowCrestLabel" alignment="CENTER" layoutX="914.0" layoutY="525.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="809.0" layoutY="227.0" text="Score" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2RedScore" alignment="CENTER" layoutX="804.0" layoutY="261.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2GreenScore" alignment="CENTER" layoutX="804.0" layoutY="327.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2BlueScore" alignment="CENTER" layoutX="804.0" layoutY="393.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2MagentaScore" alignment="CENTER" layoutX="804.0" layoutY="459.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2YellowScore" alignment="CENTER" layoutX="804.0" layoutY="525.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="695.0" layoutY="599.0" text="Total" textFill="WHITE">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="40.0" arcWidth="40.0" fill="WHITE" height="11.0" layoutX="694.0" layoutY="582.0" stroke="#ffffff00" strokeType="INSIDE" width="281.0" />
+      <Label fx:id="player2TotalScoreLabel" alignment="CENTER" layoutX="803.0" layoutY="597.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2TotalEC" alignment="CENTER" layoutX="914.0" layoutY="597.0" prefHeight="35.0" prefWidth="60.0" text="5" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="winnerImageView" fitHeight="326.0" fitWidth="264.0" layoutX="406.0" layoutY="233.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/wizards/redWizard.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="button3" fitHeight="112.0" fitWidth="272.0" layoutX="381.0" layoutY="572.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/buttons/1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="button2" fitHeight="112.0" fitWidth="272.0" layoutX="381.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/buttons/1.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="gamePhaseLabel" alignment="CENTER" layoutX="395.0" layoutY="157.0" prefHeight="17.0" prefWidth="241.0" text="Winner!!" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="winnerLabel" alignment="CENTER" layoutX="397.0" layoutY="592.0" prefHeight="17.0" prefWidth="241.0" text="Winner!!" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.GreenRealmScoreSheet">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff99" height="107.0" layoutX="48.0" layoutY="37.0" stroke="BLACK" strokeType="INSIDE" width="193.0" />
+      <GridPane fx:id="grid" prefHeight="215.0" prefWidth="290.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#527b2d" height="178.0" stroke="BLACK" strokeType="INSIDE" width="50.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#527b2d" height="178.0" stroke="BLACK" strokeType="INSIDE" width="48.0" GridPane.columnSpan="4" GridPane.rowIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#527b2d" height="37.0" stroke="BLACK" strokeType="INSIDE" width="291.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#527b2d" height="37.0" stroke="BLACK" strokeType="INSIDE" width="291.0" GridPane.rowIndex="5" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#527b2d" height="37.0" stroke="BLACK" strokeType="INSIDE" width="291.0" GridPane.rowIndex="4" />
+            <Label fx:id="G1" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="X" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="G2" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="2" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="G3" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="3" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="G4" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="4" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="G5" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="5" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="G6" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="6" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="G7" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="7" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="G8" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="8" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="G9" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="9" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="G10" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="10" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="G11" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="11" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="G12" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="12" GridPane.columnIndex="4" GridPane.rowIndex="3">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="R" textFill="WHITE" GridPane.columnIndex="5">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="R" textFill="WHITE" GridPane.rowIndex="4">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="1" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="2" textFill="WHITE" GridPane.rowIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="3" textFill="WHITE" GridPane.rowIndex="3">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="rowReward1" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="R" textFill="WHITE" GridPane.columnIndex="5" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="rowReward2" alignment="CENTER" prefHeight="54.0" prefWidth="52.0" text="R" textFill="WHITE" GridPane.columnIndex="5" GridPane.rowIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="rowReward3" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="R" textFill="WHITE" GridPane.columnIndex="5" GridPane.rowIndex="3">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="X" textFill="WHITE" GridPane.columnIndex="5" GridPane.rowIndex="4">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="1" textFill="WHITE" GridPane.columnIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="2" textFill="WHITE" GridPane.columnIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="3" textFill="WHITE" GridPane.columnIndex="3">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="4" textFill="WHITE" GridPane.columnIndex="4">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="#" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="colReward1" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="R" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="colReward2" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="R" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="colReward3" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="R" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="colReward4" alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="R" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="4">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="48.0" text="S" textFill="WHITE" GridPane.rowIndex="5">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="scoreLabel" alignment="CENTER" prefHeight="17.0" prefWidth="251.0" text="1, 2, 4, 7, 11, 16, 22, 29, 37, 46, 56" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="5">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

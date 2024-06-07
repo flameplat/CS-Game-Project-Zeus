@@ -4,7 +4,7 @@ package game.engine;
 import game.creatures.Creature;
 import game.dice.Dice;
 import game.realms.Realm;
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 public class ScoreSheet {
     private static final String RED_COLOR = "\u001B[31m";
@@ -69,7 +69,7 @@ public class ScoreSheet {
     }
 
     public Creature getCreatureByRealm(Dice dice) {
-        if (dice.getRealm() == Color.WHITE) {
+        if (dice.getRealm() == GameColor.WHITE) {
             System.err.println("There is no white realm");
             return null;
         }

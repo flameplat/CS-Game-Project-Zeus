@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="115.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.MagentaRealmScoreSheet">
+   <children>
+      <GridPane fx:id="gridPane" layoutY="25.0" prefHeight="86.0" prefWidth="500.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9556c8" height="30.0" stroke="BLACK" strokeType="INSIDE" width="499.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9556c8" height="89.0" stroke="BLACK" strokeType="INSIDE" width="43.0" GridPane.rowIndex="1" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff99" height="30.0" stroke="BLACK" strokeType="INSIDE" width="458.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9556c8" height="30.0" stroke="BLACK" strokeType="INSIDE" width="458.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="R" GridPane.rowIndex="2" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="M" GridPane.rowIndex="1" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="1" GridPane.columnIndex="1" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="2" GridPane.columnIndex="2" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="4" GridPane.columnIndex="4" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="3" GridPane.columnIndex="3" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="5" GridPane.columnIndex="5" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="6" GridPane.columnIndex="6" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="7" GridPane.columnIndex="7" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="8" GridPane.columnIndex="8" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="9" GridPane.columnIndex="9" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="10" GridPane.columnIndex="10" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="11" GridPane.columnIndex="11" />
+            <Label fx:id="hit1ScoreLabel" alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="&lt;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="hit2ScoreLabel" alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="&lt;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label fx:id="hit3ScoreLabel" alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="&lt;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label fx:id="hit4ScoreLabel" alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="&lt;" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Label fx:id="hit5ScoreLabel" alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="&lt;" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Label fx:id="hit6ScoreLabel" alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="&lt;" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <Label fx:id="hit7ScoreLabel" alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="&lt;" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+            <Label fx:id="hit8ScoreLabel" alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="&lt;" GridPane.columnIndex="8" GridPane.rowIndex="1" />
+            <Label fx:id="hit9ScoreLabel" alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="&lt;" GridPane.columnIndex="9" GridPane.rowIndex="1" />
+            <Label fx:id="hit10ScoreLabel" alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="&lt;" GridPane.columnIndex="10" GridPane.rowIndex="1" />
+            <Label fx:id="hit11ScoreLabel" alignment="CENTER" prefHeight="30.0" prefWidth="41.0" text="&lt;" GridPane.columnIndex="11" GridPane.rowIndex="1" />
+            <Label fx:id="hit1RewardLabel" alignment="CENTER" prefHeight="29.0" prefWidth="41.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="hit2RewardLabel" alignment="CENTER" prefHeight="30.0" prefWidth="41.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="hit3RewardLabel" alignment="CENTER" prefHeight="29.0" prefWidth="41.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label fx:id="hit4RewardLabel" alignment="CENTER" prefHeight="29.0" prefWidth="41.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <Label fx:id="hit5RewardLabel" alignment="CENTER" prefHeight="29.0" prefWidth="41.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <Label fx:id="hit6RewardLabel" alignment="CENTER" prefHeight="29.0" prefWidth="41.0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+            <Label fx:id="hit7RewardLabel" alignment="CENTER" prefHeight="29.0" prefWidth="41.0" GridPane.columnIndex="7" GridPane.rowIndex="2" />
+            <Label fx:id="hit8RewardLabel" alignment="CENTER" prefHeight="29.0" prefWidth="41.0" GridPane.columnIndex="8" GridPane.rowIndex="2" />
+            <Label fx:id="hit9RewardLabel" alignment="CENTER" prefHeight="29.0" prefWidth="41.0" GridPane.columnIndex="9" GridPane.rowIndex="2" />
+            <Label fx:id="hit10RewardLabel" alignment="CENTER" prefHeight="29.0" prefWidth="41.0" GridPane.columnIndex="10" GridPane.rowIndex="2" />
+            <Label fx:id="hit11RewardLabel" alignment="CENTER" prefHeight="29.0" prefWidth="41.0" GridPane.columnIndex="11" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <StackPane prefHeight="24.0" prefWidth="273.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9556c8" height="24.0" stroke="BLACK" strokeType="INSIDE" width="281.0" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="334.0" text="Mystical Sky: Majestic Phoenix (MAGENTA REALM)" />
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>

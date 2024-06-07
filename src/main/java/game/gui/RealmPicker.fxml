@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="955.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.RealmPickerController">
+   <children>
+      <ImageView fx:id="backGroundImageView" fitHeight="600.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+         <image>
+            <Image url="@../../../resources/images/RealmsCreatures.png" />
+         </image>
+      </ImageView>
+      <HBox prefHeight="600.0" prefWidth="1052.0">
+         <children>
+            <Rectangle fx:id="redRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseRedRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="210.0" />
+            <Rectangle fx:id="greenRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseGreenRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="212.0" />
+            <Rectangle fx:id="blueRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseBlueRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="210.0" />
+            <Rectangle fx:id="magentaRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseMagentaRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="213.0" />
+            <Rectangle fx:id="yellowRealmRectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="600.0" onMouseClicked="#chooseYellowRealm" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="206.0" />
+         </children>
+      </HBox>
+      <StackPane layoutY="531.0" prefHeight="48.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="redImageView" fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../resources/images/buttons/3.png" />
+               </image>
+            </ImageView>
+            <Label text="Red Realm" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button mnemonicParsing="false" opacity="0.0" prefHeight="38.0" prefWidth="176.0" text="Button" />
+         </children>
+      </StackPane>
+      <StackPane layoutX="214.0" layoutY="531.0" prefHeight="48.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="greenImageView" fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../resources/images/buttons/3.png" />
+               </image>
+            </ImageView>
+            <Label text="Green Realm" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button mnemonicParsing="false" opacity="0.0" prefHeight="38.0" prefWidth="176.0" text="Green" />
+         </children>
+      </StackPane>
+      <StackPane layoutX="426.0" layoutY="531.0" prefHeight="48.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="blueImageView" fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../resources/images/buttons/3.png" />
+               </image>
+            </ImageView>
+            <Label text="Blue Realm" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button mnemonicParsing="false" opacity="0.0" prefHeight="38.0" prefWidth="176.0" text="Button" />
+         </children>
+      </StackPane>
+      <StackPane layoutX="638.0" layoutY="531.0" prefHeight="48.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="magentaImageView" fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../resources/images/buttons/3.png" />
+               </image>
+            </ImageView>
+            <Label text="Magenta Realm" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button mnemonicParsing="false" opacity="0.0" prefHeight="38.0" prefWidth="176.0" text="Button" />
+         </children>
+      </StackPane>
+      <StackPane layoutX="852.0" layoutY="531.0" prefHeight="48.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="yellowImageView" fitHeight="55.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../resources/images/buttons/3.png" />
+               </image>
+            </ImageView>
+            <Label text="Yellow Realm" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button mnemonicParsing="false" opacity="0.0" prefHeight="38.0" prefWidth="176.0" text="Button" />
+         </children>
+      </StackPane>
+      <StackPane layoutX="392.0" layoutY="-23.0" prefHeight="48.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="mainImageView" fitHeight="74.0" fitWidth="299.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../resources/images/buttons/3.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="label" alignment="CENTER" prefHeight="25.0" prefWidth="263.0" text="Choose a realm" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>

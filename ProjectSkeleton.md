@@ -4,134 +4,176 @@
 
 ```
 dice-realms-game-zeus
-├─ src
-│  ├─ .DS_Store
-│  ├─ main
-│  │  ├─ .DS_Store
-│  │  ├─ java
-│  │  │  ├─ .DS_Store
-│  │  │  ├─ game
-│  │  │  │  ├─ .DS_Store
-│  │  │  │  ├─ .gitkeep
-│  │  │  │  ├─ collectibles
-│  │  │  │  │  ├─ ArcaneBoost.java
-│  │  │  │  │  ├─ Collectibles.java
-│  │  │  │  │  ├─ ColorBonus.java
-│  │  │  │  │  ├─ ElementalCrest.java
-│  │  │  │  │  ├─ EssenceBonus.java
-│  │  │  │  │  └─ TimeWarp.java
-│  │  │  │  ├─ creatures
-│  │  │  │  │  ├─ Creature.java
-│  │  │  │  │  ├─ Dragon.java
-│  │  │  │  │  ├─ Guardian.java
-│  │  │  │  │  ├─ HitRegionsOfDragons.java
-│  │  │  │  │  ├─ Lion.java
-│  │  │  │  │  ├─ Phoenix.java
-│  │  │  │  │  └─ Serpent.java
-│  │  │  │  ├─ dice
-│  │  │  │  │  ├─ BlueDice.java
-│  │  │  │  │  ├─ Dice.java
-│  │  │  │  │  ├─ DiceStatus.java
-│  │  │  │  │  ├─ GreenDice.java
-│  │  │  │  │  ├─ MagentaDice.java
-│  │  │  │  │  ├─ RedDice.java
-│  │  │  │  │  ├─ WhiteDice.java
-│  │  │  │  │  └─ YellowDice.java
-│  │  │  │  ├─ engine
-│  │  │  │  │  ├─ AntiCheatService.java
-│  │  │  │  │  ├─ CLIGameController.java
-│  │  │  │  │  ├─ CurrentStatus.java
-│  │  │  │  │  ├─ GameBoard.java
-│  │  │  │  │  ├─ GameController.java
-│  │  │  │  │  ├─ GameGuide.java
-│  │  │  │  │  ├─ GameScore.java
-│  │  │  │  │  ├─ GameStatus.java
-│  │  │  │  │  ├─ Instruction.java
-│  │  │  │  │  ├─ Move.java
-│  │  │  │  │  ├─ Player.java
-│  │  │  │  │  ├─ PlayerStatus.java
-│  │  │  │  │  ├─ ScoreSheet.java
-│  │  │  │  │  └─ StandardAntiCheatService.java
-│  │  │  │  ├─ exceptions
-│  │  │  │  │  ├─ .gitkeep
-│  │  │  │  │  ├─ CheatDetectedException.java
-│  │  │  │  │  ├─ DiceCheatException.java
-│  │  │  │  │  ├─ HighScoreException.java
-│  │  │  │  │  ├─ InvalidFinalScoreCheat.java
-│  │  │  │  │  ├─ InvalidMoveException.java
-│  │  │  │  │  ├─ InvalidPlayerNameException.java
-│  │  │  │  │  ├─ MissingGameFilesException.java
-│  │  │  │  │  ├─ NegativeScoreException.java
-│  │  │  │  │  ├─ NoAvailableMovesException.java
-│  │  │  │  │  └─ RewardCheatException.java
-│  │  │  │  ├─ gui
-│  │  │  │  │  ├─ .gitkeep
-│  │  │  │  │  └─ DiceRealms.java
-│  │  │  │  ├─ Main.java
-│  │  │  │  ├─ realms
-│  │  │  │  │  ├─ .DS_Store
-│  │  │  │  │  ├─ BlueRealm.java
-│  │  │  │  │  ├─ GreenRealm.java
-│  │  │  │  │  ├─ MagentaRealm.java
-│  │  │  │  │  ├─ Realm.java
-│  │  │  │  │  ├─ RedRealm.java
-│  │  │  │  │  └─ YellowRealm.java
-│  │  │  │  ├─ system
-│  │  │  │  │  └─ SystemManager.java
-│  │  │  │  └─ utilities
-│  │  │  │     ├─ CollectiblesComparator.java
-│  │  │  │     ├─ Color.java
-│  │  │  │     └─ ColorComparator.java
-│  │  │  └─ module-info.java
-│  │  └─ resources
-│  │     ├─ .gitkeep
-│  │     ├─ config
-│  │     │  ├─ .gitkeep
-│  │     │  ├─ EmberfallDominionRewards.properties
-│  │     │  ├─ Game.properties
-│  │     │  ├─ MysticalSkyRewards.properties
-│  │     │  ├─ RadiantSvannaRewards.properties
-│  │     │  ├─ RoundsRewards.properties
-│  │     │  ├─ TerrasHeartlandRewards.properties
-│  │     │  └─ TideAbyssRewards.properties
-│  │     ├─ EmptyScoreSheet.txt
-│  │     └─ images
-│  │        ├─ .gitkeep
-│  │        └─ Project-UML-Diagram.png
-│  └─ test
-│     ├─ .DS_Store
-│     ├─ .gitkeep
-│     └─ java
-│        ├─ .DS_Store
-│        ├─ .gitkeep
-│        └─ game
-│           ├─ .DS_Store
-│           ├─ .gitkeep
-│           ├─ collectibles
-│           │  └─ .gitkeep
-│           ├─ creatures
-│           │  └─ .gitkeep
-│           ├─ dice
-│           │  └─ .gitkeep
-│           ├─ engine
-│           │  ├─ .gitkeep
-│           │  └─ CLIGameControllerTest.java
-│           ├─ exceptions
-│           │  └─ .gitkeep
-│           └─ gui
-│              └─ .gitkeep
+├── src
+│   ├── .DS_Store
+│   ├── main
+│   │   ├── .DS_Store
+│   │   ├── java
+│   │   │   ├── .DS_Store
+│   │   │   ├── game
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── .gitkeep
+│   │   │   │   ├── collectibles
+│   │   │   │   │   ├── ArcaneBoost.java
+│   │   │   │   │   ├── Collectibles.java
+│   │   │   │   │   ├── ColorBonus.java
+│   │   │   │   │   ├── ElementalCrest.java
+│   │   │   │   │   ├── EssenceBonus.java
+│   │   │   │   │   └── TimeWarp.java
+│   │   │   │   ├── creatures
+│   │   │   │   │   ├── Creature.java
+│   │   │   │   │   ├── Dragon.java
+│   │   │   │   │   ├── Guardian.java
+│   │   │   │   │   ├── HitRegionsOfDragons.java
+│   │   │   │   │   ├── Lion.java
+│   │   │   │   │   ├── Phoenix.java
+│   │   │   │   │   └── Serpent.java
+│   │   │   │   ├── dice
+│   │   │   │   │   ├── BlueDice.java
+│   │   │   │   │   ├── Dice.java
+│   │   │   │   │   ├── DiceStatus.java
+│   │   │   │   │   ├── GreenDice.java
+│   │   │   │   │   ├── MagentaDice.java
+│   │   │   │   │   ├── RedDice.java
+│   │   │   │   │   ├── WhiteDice.java
+│   │   │   │   │   └── YellowDice.java
+│   │   │   │   ├── engine
+│   │   │   │   │   ├── AntiCheatService.java
+│   │   │   │   │   ├── CLIGameController.java
+│   │   │   │   │   ├── CurrentStatus.java
+│   │   │   │   │   ├── GameBoard.java
+│   │   │   │   │   ├── GameController.java
+│   │   │   │   │   ├── GameGuide.java
+│   │   │   │   │   ├── GameScore.java
+│   │   │   │   │   ├── GameStatus.java
+│   │   │   │   │   ├── Instruction.java
+│   │   │   │   │   ├── Move.java
+│   │   │   │   │   ├── Player.java
+│   │   │   │   │   ├── PlayerStatus.java
+│   │   │   │   │   ├── ScoreSheet.java
+│   │   │   │   │   └── StandardAntiCheatService.java
+│   │   │   │   ├── exceptions
+│   │   │   │   │   ├── .gitkeep
+│   │   │   │   │   ├── CheatDetectedException.java
+│   │   │   │   │   ├── DiceCheatException.java
+│   │   │   │   │   ├── HighScoreException.java
+│   │   │   │   │   ├── InvalidFinalScoreCheat.java
+│   │   │   │   │   ├── InvalidMoveException.java
+│   │   │   │   │   ├── InvalidPlayerNameException.java
+│   │   │   │   │   ├── MissingGameFilesException.java
+│   │   │   │   │   ├── NegativeScoreException.java
+│   │   │   │   │   ├── NoAvailableMovesException.java
+│   │   │   │   │   └── RewardCheatException.java
+│   │   │   │   ├── gui
+│   │   │   │   │   ├── .gitkeep
+│   │   │   │   │   ├── BlueBonus.fxml
+│   │   │   │   │   ├── BlueBonusController.java
+│   │   │   │   │   ├── BlueRealmScoreSheet.fxml
+│   │   │   │   │   ├── BlueRealmScoreSheet.java
+│   │   │   │   │   ├── CompositeScoreSheet.fxml
+│   │   │   │   │   ├── CompositeScoreSheetController.java
+│   │   │   │   │   ├── DiceRealms.java
+│   │   │   │   │   ├── EndGame.fxml
+│   │   │   │   │   ├── EndGame.java
+│   │   │   │   │   ├── GameBoard.fxml
+│   │   │   │   │   ├── GameController.java
+│   │   │   │   │   ├── GamePlay.fxml
+│   │   │   │   │   ├── GamePlayController.java
+│   │   │   │   │   ├── GreenBonus.fxml
+│   │   │   │   │   ├── GreenBonusController.java
+│   │   │   │   │   ├── GreenRealmScoreSheet.fxml
+│   │   │   │   │   ├── GreenRealmScoreSheet.java
+│   │   │   │   │   ├── Guider.fxml
+│   │   │   │   │   ├── Guider.java
+│   │   │   │   │   ├── GUIGameController.java
+│   │   │   │   │   ├── MagentaBonus.fxml
+│   │   │   │   │   ├── MagentaBonusController.java
+│   │   │   │   │   ├── MagentaRealmScoreSheet.fxml
+│   │   │   │   │   ├── MagentaRealmScoreSheet.java
+│   │   │   │   │   ├── MainMenu.fxml
+│   │   │   │   │   ├── MainMenuController.java
+│   │   │   │   │   ├── PlayerData.fxml
+│   │   │   │   │   ├── PlayerDataController.java
+│   │   │   │   │   ├── RealmController.java
+│   │   │   │   │   ├── RealmPicker.fxml
+│   │   │   │   │   ├── RealmPickerController.java
+│   │   │   │   │   ├── RedRealm.fxml
+│   │   │   │   │   ├── RedRealmController.java
+│   │   │   │   │   ├── RedRealmScoreSheet.fxml
+│   │   │   │   │   ├── RedRealmScoreSheet.java
+│   │   │   │   │   ├── SceneManager.java
+│   │   │   │   │   ├── Wizards.fxml
+│   │   │   │   │   ├── Wizards.java
+│   │   │   │   │   ├── YellowBonus.fxml
+│   │   │   │   │   ├── YellowBonusController.java
+│   │   │   │   │   ├── YellowRealmScoreSheet.fxml
+│   │   │   │   │   ├── YellowRealmScoreSheet.java
+│   │   │   │   ├── Main.java
+│   │   │   │   ├── realms
+│   │   │   │   │   ├── .DS_Store
+│   │   │   │   │   ├── BlueRealm.java
+│   │   │   │   │   ├── GreenRealm.java
+│   │   │   │   │   ├── MagentaRealm.java
+│   │   │   │   │   ├── Realm.java
+│   │   │   │   │   ├── RedRealm.java
+│   │   │   │   │   ├── YellowRealm.java
+│   │   │   │   ├── system
+│   │   │   │   │   └── SystemManager.java
+│   │   │   │   ├── utilities
+│   │   │   │   │   ├── CollectiblesComparator.java
+│   │   │   │   │   ├── Color.java
+│   │   │   │   │   └── ColorComparator.java
+│   │   │   └── module-info.java
+│   │   └── resources
+│   │       ├── .gitkeep
+│   │       ├── config
+│   │       │   ├── .gitkeep
+│   │       │   ├── EmberfallDominionRewards.properties
+│   │       │   ├── Game.properties
+│   │       │   ├── MysticalSkyRewards.properties
+│   │       │   ├── RadiantSvannaRewards.properties
+│   │       │   ├── RoundsRewards.properties
+│   │       │   ├── TerrasHeartlandRewards.properties
+│   │       │   └── TideAbyssRewards.properties
+│   │       ├── EmptyScoreSheet.txt
+│   │       ├── images
+│   │       │   ├── .gitkeep
+│   │       │   └── Project-UML-Diagram.png
+│   └── test
+│       ├── .DS_Store
+│       ├── .gitkeep
+│       └── java
+│           ├── .DS_Store
+│           ├── .gitkeep
+│           └── game
+│               ├── .DS_Store
+│               ├── .gitkeep
+│               ├── collectibles
+│               │   └── .gitkeep
+│               ├── creatures
+│               │   └── .gitkeep
+│               ├── dice
+│               │   └── .gitkeep
+│               ├── engine
+│               │   ├── .gitkeep
+│               │   └── CLIGameControllerTest.java
+│               ├── exceptions
+│               │   └── .gitkeep
+│               └── gui
+│                   └── .gitkeep
 ├── Grades.md
 ├── ProjectSkeleton.md
 ├── README.md
 ├── TemplateSkeleton.md
 └── pom.xml
+
 ```
 
 ## Packages
 
 ### game.collectibles
 
-The `game.collectibles` package contains classes for the various collectible items within the game; such as power-ups, elemental crest, color bonus, or the essence bonus.
+The `game.collectibles` package contains classes for the various collectible items within the game; such as power-ups, elemental crest, gameColor bonus, or the essence bonus.
 
 ### game.creatures
 
@@ -337,19 +379,19 @@ For each package, add the skeleton details for the class and duplicate as much a
 
 - **Package**: `game.collectibles`
 - **Type**: SubClass
-- **Description**: This class represents the color bonus.
+- **Description**: This class represents the gameColor bonus.
 
 #### Methods:
 
 1. `String toString()`
     - **Description**: Method that is used for printing a string of the properties of the collectible.
     - **Return Type**: `String`
-        - a string representation of the color bonus.
+        - a string representation of the gameColor bonus.
 
 2. `Color getColor()`
-    - **Description**: Retrieves the color of the collectible.
+    - **Description**: Retrieves the gameColor of the collectible.
     - **Return Type**: `Color`
-        - the color of the collectible.
+        - the gameColor of the collectible.
 
 3. `static String getInstruction()`
     - **Description**: Retrieves the instruction for the collectible.
@@ -357,9 +399,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the instruction for the collectible.
 
 4. `int compareTo(ColorBonus o)`
-    - **Description**: Compares this color bonus with another color bonus for order.
+    - **Description**: Compares this gameColor bonus with another gameColor bonus for order.
     - **Parameters**:
-        - `o`: the color bonus to be compared.
+        - `o`: the gameColor bonus to be compared.
     - **Return Type**: `int`
         - a negative integer, zero, or a positive integer as this collectible is less than, equal to, or greater than the specified collectible.
 
@@ -662,9 +704,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 3. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 4. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -689,7 +731,7 @@ For each package, add the skeleton details for the class and duplicate as much a
 1. `String toString()`
     - **Description**: Returns a string representation of the BlueDice object.
     - **Return Type**: `String`
-        - a string formatted as "color(value)" with the color in blue.
+        - a string formatted as "gameColor(value)" with the gameColor in blue.
 
 2. `void setValue(int value)`
     - **Description**: Sets the value of the dice.
@@ -703,9 +745,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 4. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 5. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -737,7 +779,7 @@ For each package, add the skeleton details for the class and duplicate as much a
 1. `String toString()`
     - **Description**: Returns a string representation of the GreenDice object.
     - **Return Type**: `String`
-        - a string formatted as "color(value)" with the color in green.
+        - a string formatted as "gameColor(value)" with the gameColor in green.
 
 2. `void setValue(int value)`
     - **Description**: Sets the value of the dice.
@@ -751,9 +793,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 4. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 5. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -785,7 +827,7 @@ For each package, add the skeleton details for the class and duplicate as much a
 1. `String toString()`
     - **Description**: Returns a string representation of the MagentaDice object.
     - **Return Type**: `String`
-        - a string formatted as "color(value)" with the color in magenta.
+        - a string formatted as "gameColor(value)" with the gameColor in magenta.
 
 2. `void setValue(int value)`
     - **Description**: Sets the value of the dice.
@@ -799,9 +841,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 4. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 5. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -833,7 +875,7 @@ For each package, add the skeleton details for the class and duplicate as much a
 1. `String toString()`
     - **Description**: Returns a string representation of the RedDice object.
     - **Return Type**: `String`
-        - a string formatted as "color(value)" with the color in red.
+        - a string formatted as "gameColor(value)" with the gameColor in red.
 
 2. `void setValue(int value)`
     - **Description**: Sets the value of the dice.
@@ -847,9 +889,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 4. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 5. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -893,7 +935,7 @@ For each package, add the skeleton details for the class and duplicate as much a
 1. `String toString()`
     - **Description**: Returns a string representation of the WhiteDice object.
     - **Return Type**: `String`
-        - a string formatted as "color(value)".
+        - a string formatted as "gameColor(value)".
 
 2. `void setValue(int value)`
     - **Description**: Sets the value of the dice.
@@ -907,9 +949,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 4. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 5. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -941,7 +983,7 @@ For each package, add the skeleton details for the class and duplicate as much a
 1. `String toString()`
     - **Description**: Returns a string representation of the YellowDice object.
     - **Return Type**: `String`
-        - a string formatted as "color(value)" with the color in yellow.
+        - a string formatted as "gameColor(value)" with the gameColor in yellow.
 
 2. `void setValue(int value)`
     - **Description**: Sets the value of the dice.
@@ -955,9 +997,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the value of the dice.
 
 4. `Color getRealm()`
-    - **Description**: Retrieves the realm color of the dice.
+    - **Description**: Retrieves the realm gameColor of the dice.
     - **Return Type**: `Color`
-        - the realm color of the dice.
+        - the realm gameColor of the dice.
 
 5. `DiceStatus getDiceStatus()`
     - **Description**: Retrieves the status of the dice.
@@ -1069,11 +1111,11 @@ For each package, add the skeleton details for the class and duplicate as much a
         - `player`: The player who receives the essence bonus.
     - **Return Type**: `void`
 
-7. `void playColorBonus(Player player, Color color)`
-    - **Description**: Executes the color bonus action for the player based on the specified color.
+7. `void playColorBonus(Player player, Color gameColor)`
+    - **Description**: Executes the gameColor bonus action for the player based on the specified gameColor.
     - **Parameters**:
-        - `player`: The player who receives the color bonus.
-        - `color`: The color for which the bonus action is executed.
+        - `player`: The player who receives the gameColor bonus.
+        - `gameColor`: The gameColor for which the bonus action is executed.
     - **Return Type**: `void`
 
 8. `void processRewardQueue(Player player, Collectibles[] rewards)`
@@ -1589,13 +1631,13 @@ For each package, add the skeleton details for the class and duplicate as much a
     - **Return Type**: `TimeWarp[]`
         - an array of Time Warp powers collected by the player.
 
-16. `public Realm getRealm(Color color)`
-    - **Description**: Retrieves the realm of the specified color.
+16. `public Realm getRealm(Color gameColor)`
+    - **Description**: Retrieves the realm of the specified gameColor.
     - **Parameters**:
-        - `color`: The color of the realm to retrieve.
+        - `gameColor`: The gameColor of the realm to retrieve.
             - Type: `Color`
     - **Return Type**: `Realm`
-        - the realm of the specified color.
+        - the realm of the specified gameColor.
 
 17. `public Realm[] getRealms()`
     - **Description**: Retrieves an array of all realms.
@@ -1708,9 +1750,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the name of the realm.
 
 2. `abstract Color getColor()`
-    - **Description**: Retrieves the color of the realm.
+    - **Description**: Retrieves the gameColor of the realm.
     - **Return Type**: `Color`
-        - the color of the realm.
+        - the gameColor of the realm.
 
 3. `abstract int getStatus()`
     - **Description**: Retrieves the status of the realm.
@@ -1791,9 +1833,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the name of the realm.
 
 4. `Color getColor()`
-    - **Description**: Retrieves the color of the realm.
+    - **Description**: Retrieves the gameColor of the realm.
     - **Return Type**: `Color`
-        - the color of the realm.
+        - the gameColor of the realm.
 
 5. `int getStatus()`
     - **Description**: Retrieves the status of the realm.
@@ -1871,9 +1913,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the name of the realm.
 
 3. `Color getColor()`
-    - **Description**: Retrieves the color of the realm.
+    - **Description**: Retrieves the gameColor of the realm.
     - **Return Type**: `Color`
-        - the color of the realm.
+        - the gameColor of the realm.
 
 4. `int getStatus()`
     - **Description**: Retrieves the status of the realm.
@@ -1958,9 +2000,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the name of the realm.
 
 6. `Color getColor()`
-    - **Description**: Retrieves the color of the realm.
+    - **Description**: Retrieves the gameColor of the realm.
     - **Return Type**: `Color`
-        - the color of the realm.
+        - the gameColor of the realm.
 
 7. `boolean isRealmAvailable()`
     - **Description**: Checks if the realm is available.
@@ -2028,9 +2070,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the name of the realm.
 
 3. `Color getColor()`
-    - **Description**: Retrieves the color of the realm.
+    - **Description**: Retrieves the gameColor of the realm.
     - **Return Type**: `Color`
-        - the color of the realm.
+        - the gameColor of the realm.
 
 4. `int getStatus()`
     - **Description**: Retrieves the status of the realm.
@@ -2112,9 +2154,9 @@ For each package, add the skeleton details for the class and duplicate as much a
         - the name of the realm.
 
 4. `Color getColor()`
-    - **Description**: Retrieves the color of the realm.
+    - **Description**: Retrieves the gameColor of the realm.
     - **Return Type**: `Color`
-        - the color of the realm.
+        - the gameColor of the realm.
 
 5. `int getStatus()`
     - **Description**: Retrieves the status of the realm.
@@ -2222,24 +2264,24 @@ For each package, add the skeleton details for the class and duplicate as much a
 
 - **Package**: `game.utilities`
 - **Type**: class
-- **Description**: This class can compare between color.
+- **Description**: This class can compare between gameColor.
 
 #### Methods:
 
 `int compare(Color o1, Color o2)`
 - **Description**: Compares two colors based on their priority.
 - **Parameters**:
-    - `o1`: The first color object to compare.
-    - `o2`: The second color object to compare.
+    - `o1`: The first gameColor object to compare.
+    - `o2`: The second gameColor object to compare.
 - **Return Type**: `int`
-    - A negative integer, zero, or a positive integer as the first color has a lower priority, equal priority, or higher priority than the second color.
+    - A negative integer, zero, or a positive integer as the first gameColor has a lower priority, equal priority, or higher priority than the second gameColor.
 
-`int getColorPriority(Color color)`
-- **Description**: Retrieves the priority of a color.
+`int getColorPriority(Color gameColor)`
+- **Description**: Retrieves the priority of a gameColor.
 - **Parameters**:
-    - `color`: The color to get the priority for.
+    - `gameColor`: The gameColor to get the priority for.
 - **Return Type**: `int`
-    - The priority value of the color.
+    - The priority value of the gameColor.
 
 ### `Color` class
 
@@ -2252,6 +2294,1528 @@ For each package, add the skeleton details for the class and duplicate as much a
 - **Package**: `game`
 - **Type**: class
 - **Description**: This class includes the main method of that starts the game.
+
+### `BlueBonusController` class
+
+- **Package**: `game.gui`
+- **Type**: Controller Class
+- **Description**: This class manages the interactions and logic associated with the `BlueBonus.fxml` file in the Dice Realms game. It handles user interface elements and user interactions specific to the Blue Bonus feature of the game.
+
+#### Methods:
+
+1. `void initialize()`
+    - **Description**: Initializes the controller class. This method is automatically called after the `fxml` file has been loaded.
+    - **Return Type**: `void`
+        - No return value.
+
+2. `void handleSomeAction(ActionEvent event)`
+    - **Description**: Handles specific user actions in the Blue Bonus screen.
+    - **Parameters**:
+        - `event`: the action event triggered by user interaction.
+    - **Return Type**: `void`
+        - No return value.
+
+3. `void updateUI()`
+    - **Description**: Updates the user interface elements based on the current state of the game.
+    - **Return Type**: `void`
+        - No return value.
+
+4. `void setMainApp(MainApp mainApp)`
+    - **Description**: Sets the reference to the main application class.
+    - **Parameters**:
+        - `mainApp`: the main application instance.
+    - **Return Type**: `void`
+        - No return value.
+
+
+### `BlueRealmScoreSheet` class
+
+- **Package**: `game.gui`
+- **Type**: Controller Class
+- **Description**: This class manages the interactions and logic associated with the `BlueRealm.fxml` file in the Dice Realms game. It handles user interface elements and user interactions specific to the Blue Realm feature of the game.
+
+#### Methods:
+
+1. `void initialize(URL url, ResourceBundle resourceBundle)`
+    - **Description**: Initializes the controller class. This method is automatically called after the `fxml` file has been loaded.
+    - **Parameters**:
+        - `url`: the location used to resolve relative paths for the root object, or `null` if the location is not known.
+        - `resourceBundle`: the resources used to localize the root object, or `null` if the root object was not localized.
+    - **Return Type**: `void`
+        - No return value.
+
+2. `void updateScoreSheet()`
+    - **Description**: Updates the score sheet labels based on the current state of the Blue Realm.
+    - **Return Type**: `void`
+        - No return value.
+
+3. `void setRealm(BlueRealm blueRealm)`
+    - **Description**: Sets the reference to the Blue Realm instance.
+    - **Parameters**:
+        - `blueRealm`: the Blue Realm instance.
+    - **Return Type**: `void`
+        - No return value.
+
+4. `void highlightMoves(Move[] moves)`
+    - **Description**: Highlights the possible moves on the score sheet.
+    - **Parameters**:
+        - `moves`: an array of moves to be highlighted.
+    - **Return Type**: `void`
+        - No return value.
+
+5. `void removeHighlight()`
+    - **Description**: Removes the highlight from all cells in the score sheet.
+    - **Return Type**: `void`
+        - No return value.
+
+6. `void highlightCell(int row, int column, String color)`
+    - **Description**: Highlights a specific cell in the score sheet grid.
+    - **Parameters**:
+        - `row`: the row index of the cell to highlight.
+        - `column`: the column index of the cell to highlight.
+        - `color`: the color to apply for the highlight.
+    - **Return Type**: `void`
+        - No return value.
+
+#### Fields:
+
+- `@FXML private GridPane gridPane`
+    - **Description**: The grid pane that holds the score sheet labels.
+
+- `@FXML private Label hit1ScoreLabel`
+    - **Description**: The label for the first hit score.
+
+- `@FXML private Label hit2ScoreLabel`
+    - **Description**: The label for the second hit score.
+
+- `@FXML private Label hit3ScoreLabel`
+    - **Description**: The label for the third hit score.
+
+- `@FXML private Label hit4ScoreLabel`
+    - **Description**: The label for the fourth hit score.
+
+- `@FXML private Label hit5ScoreLabel`
+    - **Description**: The label for the fifth hit score.
+
+- `@FXML private Label hit6ScoreLabel`
+    - **Description**: The label for the sixth hit score.
+
+- `@FXML private Label hit7ScoreLabel`
+    - **Description**: The label for the seventh hit score.
+
+- `@FXML private Label hit8ScoreLabel`
+    - **Description**: The label for the eighth hit score.
+
+- `@FXML private Label hit9ScoreLabel`
+    - **Description**: The label for the ninth hit score.
+
+- `@FXML private Label hit10ScoreLabel`
+    - **Description**: The label for the tenth hit score.
+
+- `@FXML private Label hit11ScoreLabel`
+    - **Description**: The label for the eleventh hit score.
+
+- `@FXML private Label hit1RewardLabel`
+    - **Description**: The label for the first hit reward.
+
+- `@FXML private Label hit2RewardLabel`
+    - **Description**: The label for the second hit reward.
+
+- `@FXML private Label hit3RewardLabel`
+    - **Description**: The label for the third hit reward.
+
+- `@FXML private Label hit4RewardLabel`
+    - **Description**: The label for the fourth hit reward.
+
+- `@FXML private Label hit5RewardLabel`
+    - **Description**: The label for the fifth hit reward.
+
+- `@FXML private Label hit6RewardLabel`
+    - **Description**: The label for the sixth hit reward.
+
+- `@FXML private Label hit7RewardLabel`
+    - **Description**: The label for the seventh hit reward.
+
+- `@FXML private Label hit8RewardLabel`
+    - **Description**: The label for the eighth hit reward.
+
+- `@FXML private Label hit9RewardLabel`
+    - **Description**: The label for the
+
+    ### `CompositeScoreSheetController` class
+
+- **Package**: `game.gui`
+- **Type**: Controller Class
+- **Description**: This class manages the interactions and logic for the composite score sheet view in the Dice Realms game, integrating multiple realm score sheets and player-related information.
+
+#### Methods:
+
+1. `void initialize(URL url, ResourceBundle resourceBundle)`
+    - **Description**: Initializes the controller class. This method is automatically called after the `fxml` file has been loaded.
+    - **Parameters**:
+        - `url`: the location used to resolve relative paths for the root object, or `null` if the location is not known.
+        - `resourceBundle`: the resources used to localize the root object, or `null` if the root object was not localized.
+    - **Return Type**: `void`
+        - No return value.
+
+2. `void updateScoreSheet()`
+    - **Description**: Updates the score sheet labels based on the current state of all realms and the player.
+    - **Return Type**: `void`
+        - No return value.
+
+3. `void setPlayer(Player player)`
+    - **Description**: Sets the player instance and updates the UI components with the player's information.
+    - **Parameters**:
+        - `player`: the player instance.
+    - **Return Type**: `void`
+        - No return value.
+
+4. `void highlightPossibleMoves(Move[] moves)`
+    - **Description**: Highlights the possible moves across all realm score sheets.
+    - **Parameters**:
+        - `moves`: an array of moves to be highlighted.
+    - **Return Type**: `void`
+        - No return value.
+
+5. `void removeHighlight()`
+    - **Description**: Removes the highlight from all cells in all realm score sheets.
+    - **Return Type**: `void`
+        - No return value.
+
+6. `void setRewardsLabel(String text)`
+    - **Description**: Sets the text of the rewards label.
+    - **Parameters**:
+        - `text`: the text to set.
+    - **Return Type**: `void`
+        - No return value.
+
+#### Fields:
+
+- `@FXML private ImageView bg`
+    - **Description**: The background image view.
+
+- `private YellowRealmScoreSheet yellowRealmScoreSheet`
+    - **Description**: The controller for the Yellow Realm score sheet.
+
+- `private MagentaRealmScoreSheet magentaRealmScoreSheet`
+    - **Description**: The controller for the Magenta Realm score sheet.
+
+- `private BlueRealmScoreSheet blueRealmScoreSheet`
+    - **Description**: The controller for the Blue Realm score sheet.
+
+- `private GreenRealmScoreSheet greenRealmScoreSheet`
+    - **Description**: The controller for the Green Realm score sheet.
+
+- `private RedRealmScoreSheet redRealmScoreSheet`
+    - **Description**: The controller for the Red Realm score sheet.
+
+- `@FXML private AnchorPane yellowRealm`
+    - **Description**: The anchor pane for the Yellow Realm score sheet.
+
+- `@FXML private AnchorPane magentaRealm`
+    - **Description**: The anchor pane for the Magenta Realm score sheet.
+
+- `@FXML private AnchorPane redRealm`
+    - **Description**: The anchor pane for the Red Realm score sheet.
+
+- `@FXML private AnchorPane blueRealm`
+    - **Description**: The anchor pane for the Blue Realm score sheet.
+
+- `@FXML private AnchorPane greenRealm`
+    - **Description**: The anchor pane for the Green Realm score sheet.
+
+- `private Realm[] realms`
+    - **Description**: An array of realms associated with the player.
+
+- `@FXML private Label playerName`
+    - **Description**: The label for displaying the player's name.
+
+- `@FXML private ImageView playerNameImageView`
+    - **Description**: The image view for the player's name icon.
+
+- `@FXML private ImageView timeWarpImageView`
+    - **Description**: The image view for the time warp icon.
+
+- `@FXML private ImageView arcaneBoostImageView`
+    - **Description**: The image view for the arcane boost icon.
+
+- `@FXML private ImageView elementalCrestImageView`
+    - **Description**: The image view for the elemental crest icon.
+
+- `@FXML private ImageView playerImageView`
+    - **Description**: The image view for the player's image.
+
+- `@FXML private Label timeWarpLabel`
+    - **Description**: The label for the time warp count.
+
+- `@FXML private Label arcaneBoostLabel`
+    - **Description**: The label for the arcane boost count.
+
+- `@FXML private Label elementalCrestLabel`
+    - **Description**: The label for the elemental crest count.
+
+- `@FXML private Label timeWarpLabelUsed`
+    - **Description**: The label for the
+
+    ### `DiceRealms` class
+
+- **Package**: `game.gui`
+- **Type**: Main Application Class
+- **Description**: This class serves as the entry point for the Dice Realms game, initializing the primary stage and managing the scene transitions.
+
+#### Methods:
+
+1. `public static void main(String[] args)`
+    - **Description**: The main method that serves as the entry point of the JavaFX application.
+    - **Parameters**:
+        - `args`: command-line arguments passed to the application.
+    - **Return Type**: `void`
+        - No return value.
+
+2. `public void start(Stage primaryStage) throws Exception`
+    - **Description**: The main entry point for the JavaFX application, setting up the primary stage and initializing the scene manager.
+    - **Parameters**:
+        - `primaryStage`: the primary stage for this application.
+    - **Return Type**: `void`
+        - No return value.
+    - **Throws**:
+        - `Exception`: if there is any error during the application start.
+
+3. `public static SceneManager getSceneManager()`
+    - **Description**: Gets the instance of `SceneManager`.
+    - **Return Type**: `SceneManager`
+        - Returns the instance of `SceneManager`.
+
+#### Fields:
+
+- `private static SceneManager sceneManager`
+    - **Description**: The static instance of `SceneManager` used for managing scene transitions in the application.
+
+### `EndGame` class
+
+- **Package**: `game.gui`
+- **Type**: Controller Class
+- **Description**: This class manages the end-game screen in the Dice Realms game. It displays the final scores, player details, and the winner.
+
+#### Methods:
+
+1. `public void setGuiGameController(GUIGameController guiGameController)`
+    - **Description**: Sets the GUI game controller. Currently, this method is empty.
+    - **Parameters**:
+        - `guiGameController`: the GUI game controller to set.
+    - **Return Type**: `void`
+        - No return value.
+
+2. `public void setSceneManager(SceneManager sceneManager)`
+    - **Description**: Sets the scene manager for managing scene transitions.
+    - **Parameters**:
+        - `sceneManager`: the scene manager to set.
+    - **Return Type**: `void`
+        - No return value.
+
+3. `public void initialize(URL url, ResourceBundle resourceBundle)`
+    - **Description**: Initializes the end-game screen with images and sets up the layout.
+    - **Parameters**:
+        - `url`: the location used to resolve relative paths for the root object, or `null` if the location is not known.
+        - `resourceBundle`: the resources used to localize the root object, or `null` if the root object was not localized.
+    - **Return Type**: `void`
+        - No return value.
+
+4. `public void setPlayers(Player player1, Player player2)`
+    - **Description**: Sets the players' details and scores on the end-game screen.
+    - **Parameters**:
+        - `player1`: the first player.
+        - `player2`: the second player.
+    - **Return Type**: `void`
+        - No return value.
+
+#### Fields:
+
+- **Instance Variables**:
+    - `private SceneManager sceneManager`
+        - **Description**: The scene manager for managing scene transitions.
+    - `@FXML private ImageView background`
+        - **Description**: The background image view for the end-game screen.
+    - `@FXML private ImageView gameScoreImage`
+        - **Description**: The image view for displaying the game score.
+    - `@FXML private ImageView player1Wizard`
+        - **Description**: The image view for player 1's wizard.
+    - `@FXML private ImageView player2Wizard`
+        - **Description**: The image view for player 2's wizard.
+    - `@FXML private ImageView textBoard1`
+        - **Description**: The image view for player 1's score text board.
+    - `@FXML private Label player1Label`
+        - **Description**: The label for player 1's name.
+    - `@FXML private ImageView player1RedRealm`
+        - **Description**: The image view for player 1's red realm.
+    - `@FXML private ImageView player1GreenRealm`
+        - **Description**: The image view for player 1's green realm.
+    - `@FXML private ImageView player1BlueRealm`
+        - **Description**: The image view for player 1's blue realm.
+    - `@FXML private ImageView player1MagentaRealm`
+        - **Description**: The image view for player 1's magenta realm.
+    - `@FXML private ImageView player1YellowRealm`
+        - **Description**: The image view for player 1's yellow realm.
+    - `@FXML private ImageView player1ElementalCrest`
+        - **Description**: The image view for player 1's elemental crest.
+    - `@FXML private Label player1RedScore`
+        - **Description**: The label for player 1's red realm score.
+    - `@FXML private Label player1GreenScore`
+        - **Description**: The label for player 1's green realm score.
+    - `@FXML private Label player1BlueScore`
+        - **Description**: The label for player 1's blue realm score.
+    - `@FXML private Label player1MagentaScore`
+        - **Description**: The label for player 1's magenta realm score.
+    - `@FXML private Label player1YellowScore`
+        - **Description**: The label for player 1's yellow realm score.
+    - `@FXML private Label player1TotalScoreLabel`
+        - **Description**: The label for player 1's total score.
+    - `@FXML private ImageView textBoard2`
+        - **Description**: The image view for player 2's score text board.
+    - `@FXML private Label player2Label`
+        - **Description**: The label for player 2's name.
+    - `@FXML private ImageView player2RedRealm`
+        - **Description**: The image view for player 2's
+
+### `GameController` interface
+
+- **Package**: `game.gui`
+- **Type**: Interface
+- **Description**: This interface defines the contract for a game controller in the Dice Realms game. It includes methods for setting the scene manager, which manages scene transitions.
+
+#### Methods:
+
+1. `void setSceneManager(SceneManager sceneManager)`
+    - **Description**: Sets the scene manager for managing scene transitions within the game.
+    - **Parameters**:
+        - `sceneManager`: the scene manager to set.
+    - **Return Type**: `void`
+        - No return value.
+
+ ### `GreenBonusController` class
+
+- **Package**: `game.gui`
+- **Imports**: 
+  - `game.dice.GreenDice`
+  - `game.engine.Move`
+  - `game.engine.Player`
+  - `game.utilities.GameColor`
+  - `javafx.application.Platform`
+  - `javafx.event.ActionEvent`
+  - `javafx.fxml.FXML`
+  - `javafx.fxml.Initializable`
+  - `javafx.scene.control.Button`
+  - `javafx.scene.control.Label`
+  - `javafx.scene.image.Image`
+  - `javafx.scene.image.ImageView`
+  - `java.net.URL`
+  - `java.util.Arrays`
+  - `java.util.LinkedList`
+  - `java.util.Objects`
+  - `java.util.ResourceBundle`
+- **Implements**: `Initializable`, `RealmController`
+- **Description**: This class controls the interactions and behaviors for the Green Bonus realm in the Dice Realms game. It manages the UI components, user interactions, and game logic specific to the Green Bonus realm.
+
+#### Fields:
+
+1. **FXML Components**:
+    - `Button Gaia1`, `Gaia2`, `Gaia3`, `Gaia4`, `Gaia5`, `Gaia6`, `Gaia7`, `Gaia8`, `Gaia9`, `Gaia10`, `Gaia11`
+    - `Label label`, `playerLabel`
+    - `ImageView BG`, `ImageButton1`, `ImageButton2`, `ImageButton3`, `ImageButton4`, `ImageButton5`, `ImageButton6`, `ImageButton7`, `ImageButton8`, `ImageButton9`, `ImageButton10`, `ImageButton11`, `GaiaCreature`
+
+2. **Other Fields**:
+    - `SceneManager sceneManager`
+    - `GUIGameController guiGameController`
+    - `static LinkedList<Move> possibleMoves`
+    - `static Player currentPlayer`
+
+#### Methods:
+
+1. **Initialization**:
+    - `void initialize(URL url, ResourceBundle resourceBundle)`
+        - **Description**: Initializes the controller, sets up the background images and button actions.
+
+2. **Attack Methods**:
+    - `void AttackGaia1()`, `AttackGaia2()`, `AttackGaia3()`, `AttackGaia4()`, `AttackGaia5()`, `AttackGaia6()`, `AttackGaia7()`, `AttackGaia8()`, `AttackGaia9()`, `AttackGaia10()`, `AttackGaia11()`
+        - **Description**: Methods to handle attacks on different Gaia creatures based on the dice value.
+
+3. **Hover Methods**:
+    - `void hoverGaia1()`, `hoverGaia2()`, `hoverGaia3()`, `hoverGaia4()`, `hoverGaia5()`, `hoverGaia6()`, `hoverGaia7()`, `hoverGaia8()`, `hoverGaia9()`, `hoverGaia10()`, `hoverGaia11()`
+        - **Description**: Methods to handle hover actions over different Gaia creatures, highlighting possible moves.
+
+4. **Remove Hover Highlight**:
+    - `void removeHoverHighlight()`
+        - **Description**: Removes the highlight from possible moves when the mouse exits a button.
+
+5. **Attack Helper Method**:
+    - `void performAttack(Move move, String gaiaNumber)`
+        - **Description**: Common method to execute the attack logic and update the UI accordingly.
+
+6. **Setters**:
+    - `void setSceneManager(SceneManager sceneManager)`
+        - **Description**: Sets the `SceneManager` for managing scene transitions.
+    - `void setGuiGameController(GUIGameController guiGameController)`
+        - **Description**: Sets the `GUIGameController` for handling game actions.
+    - `static void setPossibleMoves(Move[] moves)`
+        - **Description**: Sets the possible moves for the current player.
+    - `static void setCurrentPlayer(Player currentPlayer)`
+        - **Description**: Sets the current player.
+    - `void setLabel()`
+        - **Description**: Updates the player label with the current player's name and action prompt.
+
+### `GreenRealmScoreSheet` class
+
+- **Package**: `game.gui`
+- **Imports**: 
+  - `game.creatures.Guardian`
+  - `game.engine.Move`
+  - `game.realms.GreenRealm`
+  - `game.realms.YellowRealm`
+  - `game.utilities.GameColor`
+  - `javafx.fxml.FXML`
+  - `javafx.fxml.Initializable`
+  - `javafx.scene.Node`
+  - `javafx.scene.control.Label`
+  - `javafx.scene.layout.GridPane`
+  - `javafx.scene.layout.Pane`
+  - `java.net.URL`
+  - `java.util.ResourceBundle`
+- **Implements**: `Initializable`
+- **Description**: This class handles the score sheet for the Green Realm in the Dice Realms game. It updates the score sheet UI based on the state of the Green Realm and highlights possible moves.
+
+#### Fields:
+
+1. **FXML Components**:
+    - `GridPane grid`
+    - Guardian Labels: `Label G1`, `G2`, `G3`, `G4`, `G5`, `G6`, `G7`, `G8`, `G9`, `G10`, `G11`, `G12`
+    - Column Rewards: `Label colReward1`, `colReward2`, `colReward3`, `colReward4`
+    - Row Rewards: `Label rowReward1`, `rowReward2`, `rowReward3`
+    - `Label scoreLabel`
+
+2. **Other Fields**:
+    - `GreenRealm greenRealm`
+
+#### Methods:
+
+1. **Initialization**:
+    - `void initialize(URL url, ResourceBundle resourceBundle)`
+        - **Description**: Initializes the controller. Currently, the method is empty but is required by the `Initializable` interface.
+
+2. **Update Score Sheet**:
+    - `void updateScoreSheet()`
+        - **Description**: Updates the score sheet UI with the current state of the `GreenRealm`.
+
+3. **Set Realm**:
+    - `void setRealm(GreenRealm greenRealm)`
+        - **Description**: Sets the `GreenRealm` instance that this score sheet will represent.
+
+4. **Highlight Moves**:
+    - `void highlightMoves(Move[] moves)`
+        - **Description**: Highlights the possible moves on the score sheet based on the provided moves.
+
+5. **Remove Highlight**:
+    - `void removeHighlight()`
+        - **Description**: Removes any highlighting from the score sheet.
+
+6. **Highlight Cell**:
+    - `private void highlightCell(int row, int column, String color)`
+        - **Description**: Highlights a specific cell in the grid with the given color. If the color is "null", it removes the highlight.
+
+### `GUIGameController` Class
+
+- **Package**: `game.gui`
+- **Type**: Class
+- **Description**: This class serves as the controller for the GUI of the game, handling user interactions and updating the game state accordingly. It extends `CLIGameController` and implements `Initializable` and `GameController`.
+
+#### Methods:
+
+1. **`void initialize(URL location, ResourceBundle resources)`**
+    - **Description**: Initializes the controller class. This method is automatically called after the FXML file has been loaded.
+    - **Return Type**: `void`
+
+2. **`void rollDice(MouseEvent event)`**
+    - **Description**: Handles the event of rolling dice in the game. Updates the game state and GUI elements accordingly.
+    - **Return Type**: `void`
+
+3. **`void handleMouseClick(MouseEvent event)`**
+    - **Description**: Handles mouse click events on the game board. Determines the actions based on the clicked position and updates the game state.
+    - **Return Type**: `void`
+
+4. **`void updateGameText(String message)`**
+    - **Description**: Updates the game text displayed on the GUI.
+    - **Return Type**: `void`
+
+5. **`void updateDiceDisplay()`**
+    - **Description**: Updates the display of dice on the GUI based on the current game state.
+    - **Return Type**: `void`
+
+6. **`void updateRewardsDisplay()`**
+    - **Description**: Updates the display of rewards on the GUI.
+    - **Return Type**: `void`
+
+7. **`void highlightPossibleMoves()`**
+    - **Description**: Highlights the possible moves for the current player on the game board.
+    - **Return Type**: `void`
+
+8. **`void clearHighlights()`**
+    - **Description**: Clears any highlights from the game board.
+    - **Return Type**: `void`
+
+9. **`Image createTransparentImage()`**
+    - **Description**: Creates and returns a transparent image used in the GUI.
+    - **Return Type**: `Image`
+
+10. **`void updateDiceCounts()`**
+    - **Description**: Updates the count of each type of dice displayed on the GUI.
+    - **Return Type**: `void`
+
+#### FXML Elements:
+
+- **`@FXML private ImageView border`**
+- **`@FXML private ImageView border2`**
+- **`@FXML private Label gameText`**
+- **`@FXML private ImageView gameTextBox`**
+- **`@FXML private ImageView rollButtonImage`**
+- **`@FXML private ImageView round1Reward`**
+- **`@FXML private ImageView round2Reward`**
+- **`@FXML private ImageView round3Reward`**
+- **`@FXML private ImageView round4Reward`**
+- **`@FXML private ImageView round5Reward`**
+- **`@FXML private ImageView round6Reward`**
+- **`@FXML private Label redDiceNumber`**
+- **`@FXML private Label greenDiceNumber`**
+- **`@FXML private Label blueDiceNumber`**
+- **`@FXML private Label magentaDiceNumber`**
+- **`@FXML private Label yellowDiceNumber`**
+- **`@FXML private Label whiteDiceNumber`**
+- **`@FXML private Label redDiceNumber1`**
+- **`@FXML private Label greenDiceNumber1`**
+- **`@FXML private Label blueDiceNumber1`**
+- **`@FXML private Label magentaDiceNumber1`**
+- **`@FXML private Label yellowDiceNumber1`**
+- **`@FXML private GridPane diceGridArcanePrism1`**
+- **`@FXML private Label redDiceNumber2`**
+- **`@FXML private Label greenDiceNumber2`**
+- **`@FXML private Label blueDiceNumber2`**
+- **`@FXML private Label magentaDiceNumber2`**
+- **`@FXML private Label yellowDiceNumber2`**
+- **`@FXML private GridPane diceGridArcanePrism2`**
+- **`@FXML private GridPane diceGrid`**
+
+### `Guider` class
+
+- **Package**: `game.gui`
+- **Imports**: 
+  - `javafx.fxml.FXML`
+  - `javafx.fxml.Initializable`
+  - `javafx.scene.control.Label`
+  - `javafx.scene.effect.DropShadow`
+  - `javafx.scene.image.Image`
+  - `javafx.scene.image.ImageView`
+  - `javafx.scene.input.MouseEvent`
+  - `javafx.scene.layout.AnchorPane`
+  - `javafx.scene.paint.Color`
+  - `javafx.stage.Stage`
+  - `java.net.URL`
+  - `java.util.Objects`
+  - `java.util.ResourceBundle`
+
+#### Implements:
+
+- `Initializable`
+- `RealmController`
+
+#### Description: 
+This class serves as a guide interface for the Dice Realms game. It provides information about the game and its components, as well as guides players through the gameplay flow.
+
+#### Fields:
+
+1. **FXML Components**:
+    - `Label messageLabel`
+    - `AnchorPane anchorPane`
+    - `Label title`
+    - `ImageView bg`
+    - `ImageView button`
+    - `Label buttonLabel`
+
+#### Other Fields:
+
+- `String[] messages`: Array containing different messages to be displayed.
+- `String[] titles`: Array containing titles corresponding to the messages.
+- `int currentMessageIndex`: Index to keep track of the current message being displayed.
+- `int currentTitleIndex`: Index to keep track of the current title being displayed.
+- `SceneManager sceneManager`: Manages scene transitions.
+- `GUIGameController guiGameController`: Controls the GUI components and game flow.
+
+#### Methods:
+
+1. **Initialization**:
+    - **Description**: Initializes the guide interface, sets up images, and loads initial message and title.
+    - `initialize(URL url, ResourceBundle resourceBundle)`
+
+2. **Navigation Handling**:
+    - **Description**: Handles navigation to the next message. If all messages are displayed, it removes the guide interface from the parent container and performs necessary game actions.
+    - `handleNext()`
+
+3. **Hover Effect**:
+    - **Description**: Adds a hover effect to the specified ImageView.
+    - `addHoverEffect(ImageView imageView)`
+
+4. **Setter Methods**:
+    - **Description**: Sets the GUI game controller.
+    - `setGuiGameController(GUIGameController guiGameController)`
+    - **Description**: Sets the scene manager.
+    - `setSceneManager(SceneManager sceneManager)`
+
+### `MagentaBonusController` class
+
+- **Package**: `game.gui`
+- **Imports**: 
+  - `game.engine.Move`
+  - `game.engine.Player`
+  - `javafx.application.Platform`
+  - `javafx.event.ActionEvent`
+  - `javafx.fxml.FXML`
+  - `javafx.fxml.Initializable`
+  - `javafx.scene.control.Button`
+  - `javafx.scene.control.Label`
+  - `javafx.scene.image.Image`
+  - `javafx.scene.image.ImageView`
+  - `java.net.URL`
+  - `java.util.Objects`
+  - `java.util.ResourceBundle`
+
+#### Implements:
+
+- `Initializable`
+- `RealmController`
+
+#### Description: 
+This class controls the Magenta Realm bonus stage in the Dice Realms game. It allows players to attack the Phoenix creature encountered during gameplay.
+
+#### Fields:
+
+- `Button PhoenixButton`
+- `ImageView PhoenixImageView`
+- `ImageView BG`
+- `Label label`
+
+#### Methods:
+
+1. **Initialization**:
+    - **Description**: Initializes the bonus stage, sets background and creature images.
+    - `initialize(URL url, ResourceBundle resourceBundle)`
+
+2. **Attack Phoenix**:
+    - **Description**: Handles the action of attacking the Phoenix creature. Closes the realm stage and makes a move in the game.
+    - `AttackPhoenix()`
+
+3. **Setter Methods**:
+    - **Description**: Sets the GUI game controller.
+    - `setGuiGameController(GUIGameController guiGameController)`
+    - **Description**: Sets the scene manager.
+    - `setSceneManager(SceneManager sceneManager)`
+    - **Description**: Sets the current player.
+    - `setCurrentPlayer(Player currentPlayer)`
+    - **Description**: Sets the possible move.
+    - `setPossibleMove(Move move)`
+    - **Description**: Sets the label text.
+    - `setLabel()`
+
+### `MagentaRealmScoreSheet` class
+
+- **Package**: `game.gui`
+- **Imports**: 
+  - `game.engine.Move`
+  - `game.realms.MagentaRealm`
+  - `game.utilities.GameColor`
+  - `javafx.fxml.FXML`
+  - `javafx.fxml.Initializable`
+  - `javafx.scene.Node`
+  - `javafx.scene.control.Label`
+  - `javafx.scene.layout.GridPane`
+
+#### Implements:
+
+- `Initializable`
+
+#### Description: 
+This class manages the score sheet for the Magenta Realm in the Dice Realms game. It updates the score sheet UI based on the state of the Magenta Realm and highlights possible moves.
+
+#### Fields:
+
+1. **FXML Components**:
+    - `GridPane gridPane`
+    - `Label hit1ScoreLabel`
+    - `Label hit2ScoreLabel`
+    - `Label hit3ScoreLabel`
+    - `Label hit4ScoreLabel`
+    - `Label hit5ScoreLabel`
+    - `Label hit6ScoreLabel`
+    - `Label hit7ScoreLabel`
+    - `Label hit8ScoreLabel`
+    - `Label hit9ScoreLabel`
+    - `Label hit10ScoreLabel`
+    - `Label hit11ScoreLabel`
+    - `Label hit1RewardLabel`
+    - `Label hit2RewardLabel`
+    - `Label hit3RewardLabel`
+    - `Label hit4RewardLabel`
+    - `Label hit5RewardLabel`
+    - `Label hit6RewardLabel`
+    - `Label hit7RewardLabel`
+    - `Label hit8RewardLabel`
+    - `Label hit9RewardLabel`
+    - `Label hit10RewardLabel`
+    - `Label hit11RewardLabel`
+
+#### Other Fields:
+
+- `MagentaRealm magentaRealm`
+- `Label[] scoreLabels`
+- `Label[] rewardLabels`
+
+#### Methods:
+
+1. **Initialization**:
+    - **Description**: Initializes the score sheet with score and reward labels.
+    - `initialize(URL url, ResourceBundle resourceBundle)`
+
+2. **Update Score Sheet**:
+    - **Description**: Updates the score sheet UI with the current state of the Magenta Realm.
+    - `updateScoreSheet()`
+
+3. **Set Realm**:
+    - **Description**: Sets the Magenta Realm instance that this score sheet will represent.
+    - `setRealm(MagentaRealm magentaRealm)`
+
+4. **Highlight Moves**:
+    - **Description**: Highlights the possible moves on the score sheet based on the provided moves.
+    - `highlightMoves(Move[] moves)`
+
+5. **Remove Highlight**:
+    - **Description**: Removes any highlighting from the score sheet.
+    - `removeHighlight()`
+
+6. **Highlight Cell**:
+    - **Description**: Highlights a specific cell in the grid with the given color. If the color is "null", it removes the highlight.
+    - `private void highlightCell(int row, int column,String color)`
+
+### `MainMenuController` class
+
+- **Package**: `game.gui`
+- **Imports**: 
+  - `game.engine.GameMode`
+  - `javafx.event.ActionEvent`
+  - `javafx.fxml.FXML`
+  - `javafx.fxml.Initializable`
+  - `javafx.scene.control.Label`
+  - `javafx.scene.effect.DropShadow`
+  - `javafx.scene.image.Image`
+  - `javafx.scene.image.ImageView`
+  - `javafx.scene.input.MouseEvent`
+  - `javafx.scene.paint.Color`
+
+#### Implements:
+
+- `Initializable`
+- `GameController`
+
+#### Description: 
+This class controls the main menu interface of the Dice Realms game. It allows players to choose between single-player and multiplayer modes.
+
+#### Fields:
+
+- `Label hint`
+- `SceneManager sceneManager`
+- `ImageView bg`
+- `ImageView button1`
+- `ImageView button2`
+- `ImageView logo`
+- `Label multiplayerLabel`
+- `Label singlePlayerLabel`
+
+#### Methods:
+
+1. **Setter Methods**:
+    - **Description**: Sets the scene manager.
+    - `setSceneManager(SceneManager sceneManager)`
+
+2. **Set Game Mode Single Player**:
+    - **Description**: Sets the game mode to single-player.
+    - `setGameModeSinglePlayer()`
+
+3. **Set Game Mode Multiplayer**:
+    - **Description**: Sets the game mode to multiplayer and switches to the player data scene.
+    - `setGameModeMultiplayer()`
+
+4. **Hover Effect**:
+    - **Description**: Adds a hover effect to the specified ImageView.
+    - `addHoverEffect(ImageView imageView)`
+
+5. **Initialization**:
+    - **Description**: Initializes the main menu interface, sets up background, buttons, and logo images, and adds hover effects to buttons.
+    - `initialize(URL url, ResourceBundle resourceBundle)`
+
+6. **Get Game Mode**:
+    - **Description**: Retrieves the current game mode.
+    - `getGameMode()`
+
+
+### `PlayerDataController` class
+
+- **Package**: `game.gui`
+- **Imports**: 
+  - `game.engine.Player`
+  - `game.exceptions.InvalidPlayerNameException`
+  - `javafx.fxml.FXML`
+  - `javafx.fxml.Initializable`
+  - `javafx.scene.control.Label`
+  - `javafx.scene.control.TextField`
+  - `javafx.scene.effect.DropShadow`
+  - `javafx.scene.image.Image`
+  - `javafx.scene.image.ImageView`
+  - `javafx.scene.input.MouseEvent`
+  - `javafx.scene.paint.Color`
+
+#### Implements:
+
+- `Initializable`
+- `GameController`
+
+#### Description: 
+This class manages player data input and validation for the Dice Realms game. It allows players to enter their names and ensures the names are valid before proceeding.
+
+#### Fields:
+
+- `ImageView bg`
+- `ImageView button1`
+- `Label mainLabel`
+- `Label errorLabel`
+- `TextField textField`
+- `int playersSubmitted`
+- `SceneManager sceneManager`
+- `Player player1`
+- `Player player2`
+- `Label submitLabel`
+- `ImageView imageView`
+
+#### Methods:
+
+1. **Initialization**:
+    - **Description**: Initializes the player data input interface, sets up background, buttons, and labels.
+    - `initialize(URL url, ResourceBundle resourceBundle)`
+
+2. **Add Hover Effect**:
+    - **Description**: Adds a hover effect to the specified ImageView.
+    - `addHoverEffect(ImageView imageView)`
+
+3. **Set Scene Manager**:
+    - **Description**: Sets the scene manager.
+    - `setSceneManager(SceneManager sceneManager)`
+
+4. **Set Player Name**:
+    - **Description**: Sets the player names based on the input from the text field. Validates the names and handles errors.
+    - `setPlayerName()`
+
+5. **Get Player 1**:
+    - **Description**: Retrieves the Player 1 object.
+    - `getPlayer1()`
+
+6. **Get Player 2**:
+    - **Description**: Retrieves the Player 2 object.
+    - `getPlayer2()`
+
+### `RealmController` interface
+
+- **Package**: `game.gui`
+
+#### Methods:
+
+1. **Set GUI Game Controller**:
+    - **Description**: Sets the GUI game controller.
+    - `void setGuiGameController(GUIGameController guiGameController)`
+
+2. **Set Scene Manager**:
+    - **Description**: Sets the scene manager.
+    - `void setSceneManager(SceneManager sceneManager)`
+
+### `RealmPickerController` class
+
+- **Package**: `game.gui`
+
+#### Implements:
+
+- `Initializable`
+- `RealmController`
+
+#### Description: 
+This class manages the realm selection interface for players in the Dice Realms game. It allows players to choose from available realms and triggers corresponding actions upon selection.
+
+#### Fields:
+
+- `ImageView backGroundImageView`
+- `Label label`
+- `Rectangle redRealmRectangle`
+- `Rectangle greenRealmRectangle`
+- `Rectangle blueRealmRectangle`
+- `Rectangle magentaRealmRectangle`
+- `Rectangle yellowRealmRectangle`
+- `ImageView mainImageView`
+- `ImageView redImageView`
+- `ImageView greenImageView`
+- `ImageView blueImageView`
+- `ImageView magentaImageView`
+- `ImageView yellowImageView`
+
+#### Methods:
+
+1. **Initialization**:
+    - **Description**: Initializes the realm selection interface, sets up background, buttons, and hover effects.
+    - `initialize(URL url, ResourceBundle resourceBundle)`
+
+2. **Add Hover Effect**:
+    - **Description**: Adds a hover effect to the specified rectangle.
+    - `addHoverEffect(Rectangle rectangle)`
+
+3. **Choose Red Realm**:
+    - **Description**: Handles the selection of the red realm.
+    - `chooseRedRealm()`
+
+4. **Choose Green Realm**:
+    - **Description**: Handles the selection of the green realm.
+    - `chooseGreenRealm()`
+
+5. **Choose Blue Realm**:
+    - **Description**: Handles the selection of the blue realm.
+    - `chooseBlueRealm()`
+
+6. **Choose Magenta Realm**:
+    - **Description**: Handles the selection of the magenta realm.
+    - `chooseMagentaRealm()`
+
+7. **Choose Yellow Realm**:
+    - **Description**: Handles the selection of the yellow realm.
+    - `chooseYellowRealm()`
+
+8. **Choose Realm**:
+    - **Description**: Chooses the specified realm and triggers corresponding actions.
+    - `chooseRealm(GameColor realmColor)`
+
+9. **Set Scene Manager**:
+    - **Description**: Sets the scene manager.
+    - `setSceneManager(SceneManager sceneManager)`
+
+10. **Set Current Player**:
+    - **Description**: Sets the current player.
+    - `setCurrentPlayer(Player currentPlayer)`
+
+11. **Set GUI Game Controller**:
+    - **Description**: Sets the GUI game controller.
+    - `setGuiGameController(GUIGameController guiGameController)`
+
+12. **Set Possible Realms**:
+    - **Description**: Sets the possible realms for selection.
+    - `setPossibleRealms(LinkedList<GameColor> possibleRealms)`
+
+### `RedRealmController` class
+
+- **Package**: `game.gui`
+
+#### Implements:
+
+- `Initializable`
+- `RealmController`
+
+#### Description: 
+This class manages the Red Realm interface for players in the Dice Realms game. It allows players to attack different parts of dragons in the Red Realm and triggers corresponding actions upon selection.
+
+#### Fields:
+
+- `Label label`
+- `ImageView BG`
+- `ImageView dragon1`
+- `ImageView dragon2`
+- `ImageView dragon3`
+- `ImageView dragon4`
+- `Label possibleAttackLabel`
+- `Label playerLabel`
+
+#### Methods:
+
+1. **Initialization**:
+    - **Description**: Initializes the Red Realm interface, sets up background and dragons.
+    - `initialize(URL url, ResourceBundle resourceBundle)`
+
+2. **Attack**:
+    - **Description**: Handles the attack action on a specific dragon part with the given die value.
+    - `attack(int dieValue, int dragonNumber)`
+
+3. **Attack Face Dragon 1**:
+    - **Description**: Initiates an attack on the face of Dragon 1.
+    - `attckFaceD1()`
+
+4. **Attack Wing Dragon 1**:
+    - **Description**: Initiates an attack on the wing of Dragon 1.
+    - `attckWingD1()`
+
+5. **Attack Tail Dragon 1**:
+    - **Description**: Initiates an attack on the tail of Dragon 1.
+    - `attckTailD1()`
+
+6. **Attack Face Dragon 2**:
+    - **Description**: Initiates an attack on the face of Dragon 2.
+    - `attckFaceD2()`
+
+7. **Attack Wing Dragon 2**:
+    - **Description**: Initiates an attack on the wing of Dragon 2.
+    - `attckWingD2()`
+
+8. **Attack Heart Dragon 2**:
+    - **Description**: Initiates an attack on the heart of Dragon 2.
+    - `attckHeartD2()`
+
+9. **Attack Face Dragon 3**:
+    - **Description**: Initiates an attack on the face of Dragon 3.
+    - `attckFaceD3()`
+
+10. **Attack Tail Dragon 3**:
+    - **Description**: Initiates an attack on the tail of Dragon 3.
+    - `attckTailD3()`
+
+11. **Attack Heart Dragon 3**:
+    - **Description**: Initiates an attack on the heart of Dragon 3.
+    - `attckHeartD3()`
+
+12. **Attack Wing Dragon 4**:
+    - **Description**: Initiates an attack on the wing of Dragon 4.
+    - `attckWingD4()`
+
+13. **Attack Tail Dragon 4**:
+    - **Description**: Initiates an attack on the tail of Dragon 4.
+    - `attckTailD4()`
+
+14. **Attack Heart Dragon 4**:
+    - **Description**: Initiates an attack on the heart of Dragon 4.
+    - `attckHeartD4()`
+
+15. **Hover Face Dragon 1**:
+    - **Description**: Highlights the possible attack on the face of Dragon 1.
+    - `hoverFaceD1()`
+
+16. **Hover Wing Dragon 1**:
+    - **Description**: Highlights the possible attack on the wing of Dragon 1.
+    - `hoverWingD1()`
+
+17. **Hover Tail Dragon 1**:
+    - **Description**: Highlights the possible attack on the tail of Dragon 1.
+    - `hoverTailD1()`
+
+18. **Hover Face Dragon 2**:
+    - **Description**: Highlights the possible attack on the face of Dragon 2.
+    - `hoverFaceD2()`
+
+19. **Hover Wing Dragon 2**:
+    - **Description**: Highlights the possible attack on the wing of Dragon 2.
+    - `hoverWingD2()`
+
+20. **Hover Heart Dragon 2**:
+    - **Description**: Highlights the possible attack on the heart of Dragon 2.
+    - `hoverHeartD2()`
+
+21. **Hover Face Dragon 3**:
+    - **Description**: Highlights the possible attack on the face of Dragon 3.
+    - `hoverFaceD3()`
+
+22. **Hover Tail Dragon 3**:
+    - **Description**: Highlights the possible attack on the tail of Dragon 3.
+    - `hoverTailD3()`
+
+23. **Hover Heart Dragon 3**:
+    - **Description**: Highlights the possible attack on the heart of Dragon 3.
+    - `hoverHeartD3()`
+
+24. **Hover Wing Dragon 4**:
+    - **Description**: Highlights the possible attack on the wing of Dragon 4.
+    - `hoverWingD4()`
+
+25. **Hover Tail Dragon 4**:
+    - **Description**: Highlights the possible attack on the tail of Dragon 4.
+    - `hoverTailD4()`
+
+26. **Hover Heart Dragon 4**:
+    - **Description**: Highlights the possible attack on the heart of Dragon 4.
+    - `hoverHeartD4()`
+
+27. **Hover**:
+    - **Description**: Highlights the possible attack on the specified dragon part.
+    - `hover(int attackValue,int dragonNumber)`
+
+28. **Remove Highlight**:
+    - **Description**: Removes the highlighting from the score sheet.
+    - `removeHighlight()`
+
+29. **Set Scene Manager**:
+    - **Description**: Sets the scene manager.
+    - `setSceneManager(SceneManager sceneManager)`
+
+30. **Set GUI Game Controller**:
+    - **Description**: Sets the GUI game controller.
+    - `setGuiGameController(GUIGameController guiGameController)`
+
+31. **Set Current Player**:
+    - **Description**: Sets the current player.
+    - `setCurrentPlayer(Player currentPlayer)`
+
+32. **Set Possible Moves**:
+    - **Description**: Sets the possible moves for the current player.
+    - `setPossibleMoves(Move[] moves)`
+
+33. **Set Label**:
+    - **Description**: Sets the label indicating the current player's action.
+    - `setLabel()`
+
+### `RedRealmScoreSheet` class
+
+- **Package**: `game.gui`
+
+#### Implements:
+
+- `Initializable`
+
+#### Description: 
+This class manages the score sheet for the Red Realm in the Dice Realms game. It displays the health of dragons and rewards, and highlights possible moves for players.
+
+#### Fields:
+
+- `RedRealm redRealm`
+- `Label dragon1Face`
+- `Label dragon1Wing`
+- `Label dragon1Tail`
+- `Label dragon1Heart`
+- `Label dragon1Score`
+- `Label dragon2Face`
+- `Label dragon2Wing`
+- `Label dragon2Tail`
+- `Label dragon2Heart`
+- `Label dragon2Score`
+- `Label dragon3Face`
+- `Label dragon3Wing`
+- `Label dragon3Tail`
+- `Label dragon3Heart`
+- `Label dragon3Score`
+- `Label dragon4Face`
+- `Label dragon4Wing`
+- `Label dragon4Tail`
+- `Label dragon4Heart`
+- `Label dragon4Score`
+- `Label reward1`
+- `Label reward2`
+- `Label reward3`
+- `Label reward4`
+- `Label reward5`
+- `GridPane grid`
+
+#### Methods:
+
+1. **Initialization**:
+    - **Description**: Initializes the Red Realm score sheet.
+    - `initialize(URL url, ResourceBundle resourceBundle)`
+
+2. **Update Labels**:
+    - **Description**: Updates the labels displaying dragon health, rewards, and scores.
+    - `updateLabels()`
+
+3. **Update Dragon Labels**:
+    - **Description**: Updates the labels for a specific dragon's health.
+    - `updateDragonLabels(Dragon dragon, Label faceLabel, Label wingLabel, Label tailLabel, Label heartLabel)`
+
+4. **Update Score Sheet**:
+    - **Description**: Updates the entire score sheet.
+    - `updateScoreSheet()`
+
+5. **Set Realm**:
+    - **Description**: Sets the Red Realm.
+    - `setRealm(RedRealm redRealm)`
+
+6. **Highlight Moves**:
+    - **Description**: Highlights the cells corresponding to possible moves.
+    - `highlightMoves(Move[] moves)`
+
+7. **Highlight Move**:
+    - **Description**: Highlights a specific move.
+    - `highlightMove(Dice die)`
+
+8. **Highlight Label**:
+    - **Description**: Highlights a label corresponding to a dragon's health.
+    - `highlightLabel(int healthIndex, String style, Label face, Label wing, Label tail, Label heart)`
+
+9. **Remove Highlight**:
+    - **Description**: Removes highlighting from the score sheet.
+    - `removeHighlight()`
+
+10. **Highlight Cell**:
+    - **Description**: Highlights a specific cell in the score sheet.
+    - `highlightCell(int row, int column, String color)`
+
+### `SceneManager` class
+
+- **Package**: `game.gui`
+
+#### Description: 
+This class manages scene transitions and stage operations for the Dice Realms game.
+
+#### Fields:
+
+- `Stage stage`: The primary stage for the application.
+- `Scene scene`: The current scene.
+- `Parent root`: The root node of the current scene.
+- `static GUIGameController guiGameController`: The GUI game controller.
+
+#### Methods:
+
+1. **Constructor**:
+    - **Description**: Initializes the SceneManager with the primary stage.
+    - `SceneManager(Stage stage)`
+
+2. **Set GUI Game Controller**:
+    - **Description**: Sets the GUI game controller.
+    - `static void setGuiGameController(GUIGameController guiGameController)`
+
+3. **Switch Scene**:
+    - **Description**: Switches to the scene specified by the resource file name.
+    - `void switchScene(String resourceFileName, boolean isResizable)`
+
+4. **Calculate Position To Center Stage**:
+    - **Description**: Calculates the position to center the stage on the screen.
+    - `private void CalculatePositionToCenterStage(Screen screen)`
+
+5. **Switch Main Menu Scene**:
+    - **Description**: Switches to the main menu scene.
+    - `void switchMainMenuScene()`
+
+6. **Switch Player Data Scene**:
+    - **Description**: Switches to the player data scene.
+    - `void switchPlayerDataScene()`
+
+7. **Switch Game Play Scene**:
+    - **Description**: Switches to the game play scene.
+    - `void switchGamePlayScene()`
+
+8. **Show Realm Stage**:
+    - **Description**: Shows a realm stage with the specified resource file name.
+    - `public void showRealmStage(String resourceFileName, boolean enableWindowTab)`
+
+9. **Close Realm Stage**:
+    - **Description**: Closes the currently open realm stage.
+    - `void closeRealmStage()`
+
+10. **Show Red Realm Stage**:
+    - **Description**: Shows the red realm stage.
+    - `void showRedRealmStage()`
+
+11. **Show Green Realm Stage**:
+    - **Description**: Shows the green realm stage.
+    - `void showGreenRealmStage()`
+
+12. **Show Yellow Realm Stage**:
+    - **Description**: Shows the yellow realm stage.
+    - `void showYellowRealmStage()`
+
+13. **Show Magenta Realm Stage**:
+    - **Description**: Shows the magenta realm stage.
+    - `void showMagentaRealmStage()`
+
+14. **Show Blue Realm Stage**:
+    - **Description**: Shows the blue realm stage.
+    - `void showBlueRealmStage()`
+
+15. **Show Realm Picker Stage**:
+    - **Description**: Shows the realm picker stage.
+    - `void showRealmPickerStage()`
+
+16. **Switch Wizards Scene**:
+    - **Description**: Switches to the wizards scene.
+    - `void switchWizardsScene()`
+
+17. **Show End Game**:
+    - **Description**: Shows the end game stage.
+    - `void showEndGame()`
+
+18. **Show Guider**:
+    - **Description**: Shows the guider stage.
+    - `void showGuider()`
+
+### `Wizards` class
+
+- **Package**: `game.gui`
+
+#### Implements:
+
+- `Initializable`
+- `GameController`
+
+#### Description: 
+This class manages the wizard selection interface for players in the Dice Realms game. It allows players to choose their wizard avatar.
+
+#### Fields:
+
+- `static Player player1`: The first player.
+- `static Player player2`: The second player.
+- `Label mainLabel`: The main label for displaying instructions.
+- `Rectangle redWizardRectangle`: Rectangle representing the red wizard.
+- `Rectangle greenWizardRectangle`: Rectangle representing the green wizard.
+- `Rectangle blueWizardRectangle`: Rectangle representing the blue wizard.
+- `Rectangle magentaWizardRectangle`: Rectangle representing the magenta wizard.
+- `Rectangle yellowWizardRectangle`: Rectangle representing the yellow wizard.
+- `ImageView mainImageView`: ImageView for displaying the main image.
+- `ImageView buttonImageView`: ImageView for displaying button images.
+- `Image[] wizardImages`: Array of wizard images.
+- `Player currentPlayer`: The current player.
+- `SceneManager sceneManager`: The scene manager.
+
+#### Methods:
+
+1. **Initialization**:
+    - **Description**: Initializes the wizard selection interface.
+    - `initialize(URL url, ResourceBundle resourceBundle)`
+
+2. **Set Scene Manager**:
+    - **Description**: Sets the scene manager.
+    - `public void setSceneManager(SceneManager sceneManager)`
+
+3. **Choose Red Wizard**:
+    - **Description**: Handles the selection of the red wizard.
+    - `public void chooseRedWizard()`
+
+4. **Choose Green Wizard**:
+    - **Description**: Handles the selection of the green wizard.
+    - `public void chooseGreenWizard()`
+
+5. **Choose Blue Wizard**:
+    - **Description**: Handles the selection of the blue wizard.
+    - `public void chooseBlueWizard()`
+
+6. **Choose Magenta Wizard**:
+    - **Description**: Handles the selection of the magenta wizard.
+    - `public void chooseMagentaWizard()`
+
+7. **Choose Yellow Wizard**:
+    - **Description**: Handles the selection of the yellow wizard.
+    - `public void chooseYellowWizard()`
+
+8. **Add Hover Effect**:
+    - **Description**: Adds a hover effect to the specified rectangle.
+    - `private void addHoverEffect(Rectangle rectangle)`
+
+9. **Choose Wizard**:
+    - **Description**: Handles the selection of a wizard by a player.
+    - `public void chooseWizard(Player player, Image wizard)`
+
+### `YellowBonusController` class
+
+- **Package**: `game.gui`
+
+#### Implements:
+
+- `Initializable`
+- `RealmController`
+
+#### Description: 
+This class manages the bonus interface for the yellow realm in the Dice Realms game. It allows players to perform bonus actions, such as attacking a lion.
+
+#### Fields:
+
+- `Button LionButton`: Button for attacking the lion.
+- `ImageView LionImageView`: ImageView for displaying the lion image.
+- `ImageView BG`: ImageView for displaying the background image.
+- `Label label`: Label for displaying instructions.
+
+#### Methods:
+
+1. **Initialization**:
+    - **Description**: Initializes the yellow realm bonus interface.
+    - `initialize(URL url, ResourceBundle resourceBundle)`
+
+2. **Attack Lion**:
+    - **Description**: Handles the action of attacking the lion.
+    - `AttackLion()`
+
+3. **Set Scene Manager**:
+    - **Description**: Sets the scene manager.
+    - `setSceneManager(SceneManager sceneManager)`
+
+4. **Set GUI Game Controller**:
+    - **Description**: Sets the GUI game controller.
+    - `setGuiGameController(GUIGameController guiGameController)`
+
+5. **Set Current Player**:
+    - **Description**: Sets the current player.
+    - `setCurrentPlayer(Player currentPlayer)`
+
+6. **Set Possible Move**:
+    - **Description**: Sets the possible move for the current action.
+    - `setPossibleMove(Move move)`
+
+7. **Set Label**:
+    - **Description**: Sets the label text.
+    - `setLabel()`
+
+### `YellowRealmScoreSheet` class
+
+- **Package**: `game.gui`
+
+#### Implements:
+
+- `Initializable`
+
+#### Description: 
+This class manages the score sheet interface for the yellow realm in the Dice Realms game. It displays the scores and rewards for the hits made by players in the yellow realm.
+
+#### Fields:
+
+- `GridPane gridPane`: GridPane for organizing the score sheet.
+- `Label hit1ScoreLabel` to `hit11ScoreLabel`: Labels for displaying hit scores.
+- `Label hit1RewardLabel` to `hit11RewardLabel`: Labels for displaying hit rewards.
+- `YellowRealm yellowRealm`: Instance of the yellow realm.
+- `Label[] scoreLabels`: Array of labels for hit scores.
+- `Label[] rewardLabels`: Array of labels for hit rewards.
+
+#### Methods:
+
+1. **Initialization**:
+    - **Description**: Initializes the yellow realm score sheet.
+    - `initialize(URL url, ResourceBundle resourceBundle)`
+
+2. **Update Score Sheet**:
+    - **Description**: Updates the score sheet with the latest scores and rewards.
+    - `updateScoreSheet()`
+
+3. **Set Realm**:
+    - **Description**: Sets the yellow realm for the score sheet.
+    - `setRealm(YellowRealm yellowRealm)`
+
+4. **Highlight Moves**:
+    - **Description**: Highlights the cells in the score sheet based on available moves.
+    - `highlightMoves(Move[] moves)`
+
+5. **Remove Highlight**:
+    - **Description**: Removes any highlighting from the score sheet.
+    - `removeHighlight()`
+
+6. **Highlight Cell**:
+    - **Description**: Highlights a specific cell in the grid.
+    - `highlightCell(int row, int column, String color)`
+
+
+
+
+
+
+
+
+
+
 
 
 

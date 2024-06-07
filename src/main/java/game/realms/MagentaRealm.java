@@ -7,7 +7,7 @@ import game.creatures.Phoenix;
 import game.dice.Dice;
 import game.dice.MagentaDice;
 import game.engine.Move;
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.util.Properties;
 
 public class MagentaRealm extends Realm {
     // -----------------------Attributes-----------------------//
-    private static final Color realmColor = Color.MAGENTA;
+    private static final GameColor REALM_GAME_COLOR = GameColor.MAGENTA;
     private static final String name = "\u001B[35m" + "Magenta Realm" + "\u001B[0m";
     private final Collectibles[] collectibles;
     private final Move[] realmMoves;
@@ -42,7 +42,8 @@ public class MagentaRealm extends Realm {
         totalRealmScore = 0;
         this.score = new int[11];
         this.noElementalCrests = 0;
-        this.realmMoves = new Move[]{new Move(new MagentaDice(1), phoenix),
+        this.realmMoves = new Move[]{
+                new Move(new MagentaDice(1), phoenix),
                 new Move(new MagentaDice(2), phoenix),
                 new Move(new MagentaDice(3), phoenix),
                 new Move(new MagentaDice(4), phoenix),
@@ -61,6 +62,9 @@ public class MagentaRealm extends Realm {
             }
         }
         this.realmPossibleMoves = list.toArray(Move[]::new);
+    }
+    public int getCounterHits(){
+        return counterHits;
     }
 
     private Collectibles[] getRewardsProperties() {
@@ -94,8 +98,8 @@ public class MagentaRealm extends Realm {
     }
 
     @Override
-    public Color getColor() {
-        return realmColor;
+    public GameColor getColor() {
+        return REALM_GAME_COLOR;
     }
 
     @Override
@@ -194,10 +198,16 @@ public class MagentaRealm extends Realm {
 
     @Override
     public Creature getCreature(Dice dice) {
-        if (dice.getRealm() == Color.MAGENTA && (dice.getValue() <= 6 && dice.getValue() >= 1)) {
+        if (dice.getRealm() == GameColor.MAGENTA && (dice.getValue() <= 6 && dice.getValue() >= 1)) {
             return phoenix;
         }
         return null;
+    }
+    public int[] getScoreValues(){
+        return score;
+    }
+    public String[] getRewardValues(){
+        return rewardValues;
     }
 
 

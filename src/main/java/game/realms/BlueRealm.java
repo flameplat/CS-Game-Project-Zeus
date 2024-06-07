@@ -10,7 +10,7 @@ import java.util.Properties;
  */
 
 
-import game.utilities.Color;
+import game.utilities.GameColor;
 import game.collectibles.ArcaneBoost;
 import game.collectibles.Collectibles;
 import game.collectibles.ColorBonus;
@@ -21,6 +21,7 @@ import game.creatures.Creature;
 import game.creatures.Serpent;
 import game.engine.Move;
 import game.dice.*;
+
 import java.util.LinkedList;
 
 public class BlueRealm extends Realm{
@@ -36,9 +37,12 @@ public class BlueRealm extends Realm{
     private static final String name="Tide Abyss";
     private int[] scoreProperties;
     private final int[] scoreSheetValues;
-    private static final Color realmColor=Color.BLUE;
+    private static final GameColor REALM_GAME_COLOR = GameColor.BLUE;
     private final String[] attackValues;
     private final String[] rewardValues;
+    private static final String RESET = "\u001B[0m";
+    private static final String BLUE = "\u001B[34m";
+
 
     //-----------------------Constructor-----------------------//
     public BlueRealm() {
@@ -69,12 +73,12 @@ public class BlueRealm extends Realm{
     // -----------------------Methods-----------------------//
     @Override
     public String getName() {
-        return name;
+        return  (BLUE + "Blue Realm" + RESET);
     }
 
     @Override
-    public Color getColor() {
-        return realmColor;
+    public GameColor getColor() {
+        return REALM_GAME_COLOR;
     }
 
     @Override
@@ -131,6 +135,22 @@ public class BlueRealm extends Realm{
                 scoreSheetValues[0],scoreSheetValues[1],scoreSheetValues[2],scoreSheetValues[3],scoreSheetValues[4],scoreSheetValues[5],
                 scoreSheetValues[6],scoreSheetValues[7],scoreSheetValues[8],scoreSheetValues[9],scoreSheetValues[10]);
     }
+
+    public int[] getScoreSheetValues() {
+        return scoreSheetValues;
+    }
+
+    public String[] getAttackValues() {
+        return attackValues;
+    }
+
+    public String[] getRewardValues() {
+        return rewardValues;
+    }
+    public int getHitcount(){
+        return hitcount;
+    }
+
     @Override //just returns an array of 1 element as the game controller gets an array from each realm
     public Collectibles[] getReward() {
         Collectibles[] temp=new Collectibles[1];
@@ -224,10 +244,10 @@ public class BlueRealm extends Realm{
             rewardProperties[3]=null;
             rewardProperties[4]=new ArcaneBoost();
             rewardProperties[5]=null;
-            rewardProperties[6]=new ColorBonus(Color.GREEN);
+            rewardProperties[6]=new ColorBonus(GameColor.GREEN);
             rewardProperties[7]=new ElementalCrest();
             rewardProperties[8]=null;
-            rewardProperties[9]=new ColorBonus(Color.MAGENTA);
+            rewardProperties[9]=new ColorBonus(GameColor.MAGENTA);
             rewardProperties[10]=new TimeWarp();
 
         }
@@ -251,27 +271,27 @@ public class BlueRealm extends Realm{
                         break;
                     }
                     case "RedBonus":{
-                        rewardProperties[i]=new ColorBonus(Color.RED);
+                        rewardProperties[i]=new ColorBonus(GameColor.RED);
                         rewardValues[i]="RB";
                         break;
                     }
                     case "BlueBonus":{
-                        rewardProperties[i]=new ColorBonus(Color.BLUE);
+                        rewardProperties[i]=new ColorBonus(GameColor.BLUE);
                         rewardValues[i]="BB";
                         break;
                     }
                     case "GreenBonus":{
-                        rewardProperties[i]=new ColorBonus(Color.GREEN);
+                        rewardProperties[i]=new ColorBonus(GameColor.GREEN);
                         rewardValues[i]="GB";
                         break;
                     }
                     case "MagentaBonus":{
-                        rewardProperties[i]=new ColorBonus(Color.MAGENTA);
+                        rewardProperties[i]=new ColorBonus(GameColor.MAGENTA);
                         rewardValues[i]="MB";
                         break;
                     }
                     case "YellowBonus":{
-                        rewardProperties[i]=new ColorBonus(Color.YELLOW);
+                        rewardProperties[i]=new ColorBonus(GameColor.YELLOW);
                         rewardValues[i]="YB";
                         break;
                     }
@@ -320,4 +340,5 @@ public class BlueRealm extends Realm{
     public boolean isSerpent1Alive(){
         return serpent1[S1HeadNumber-1].isAlive();
     }
+
 }

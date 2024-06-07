@@ -1,9 +1,9 @@
 package game.dice;
 
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 public class BlueDice extends Dice {
-    private static final Color color = Color.BLUE;
+    private static final GameColor GAME_COLOR = GameColor.BLUE;
     private static final String RESET = "\u001B[0m";
     private static final String BLUE = "\u001B[34m";
     private DiceStatus status;
@@ -26,7 +26,7 @@ public class BlueDice extends Dice {
     // getter for the dice color
     @Override
     public String toString() {
-        return String.format(BLUE + "%s(%d)" + RESET, color, value);
+        return String.format(BLUE + "%s(%d)" + RESET, GAME_COLOR, value);
     }
 
     // getter for the dice value
@@ -38,8 +38,8 @@ public class BlueDice extends Dice {
         this.value = value;
     }
 
-    public Color getRealm() {
-        return color;
+    public GameColor getRealm() {
+        return GAME_COLOR;
     }
 
     @Override
@@ -61,6 +61,9 @@ public class BlueDice extends Dice {
             return false;
         }
         BlueDice other = (BlueDice) o;
-        return (color == other.getRealm()) && (value == other.getValue());
+        return (GAME_COLOR == other.getRealm()) && (value == other.getValue());
+    }
+    public String getName(){
+        return String.format("%s(%d)", GAME_COLOR, value);
     }
 }

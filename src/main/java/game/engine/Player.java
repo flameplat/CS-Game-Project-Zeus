@@ -6,9 +6,10 @@ import game.collectibles.ElementalCrest;
 import game.collectibles.TimeWarp;
 import game.dice.Dice;
 import game.exceptions.InvalidPlayerNameException;
-import game.exceptions.MissingGameFilesException;
+import game.gui.CompositeScoreSheetController;
 import game.realms.*;
-import game.utilities.Color;
+import game.utilities.GameColor;
+import javafx.scene.image.Image;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,12 +21,17 @@ public class Player {
     private static int id = 1;
     private final ScoreSheet scoreSheet;
     private final GameScore gameScore;
-    private final String name;
+    private String name;
     //----------------------Attributes--------------------------//
     private Realm[] realms;
     private PlayerStatus playerStatus;
     private LinkedList<ArcaneBoost> arcaneBoosts;
     private LinkedList<TimeWarp> timeWarps;
+    private CompositeScoreSheetController scoreSheetController;
+    private int timeWarpsUsed;
+    private int arcaneBoostsUsed;
+    private Image wizardImage;
+    protected boolean isAI;
 
     //----------------------Constructor--------------------------//
     public Player(String name) throws InvalidPlayerNameException {
@@ -41,8 +47,18 @@ public class Player {
         gameScore = new GameScore(realms, name);
         timeWarps = new LinkedList<>();
         arcaneBoosts = new LinkedList<>();
+        isArcaneBoostSkipped=false;
+        isAI=false;
+        isArcaneBoostUsed=false;
     }
 
+    public int getArcaneBoostsUsed() {
+        return arcaneBoostsUsed;
+    }
+
+    public int getTimeWarpsUsed() {
+        return timeWarpsUsed;
+    }
 
     public Player() {
         this.name = String.format("Player %d", id);
@@ -52,6 +68,9 @@ public class Player {
         id++;
         timeWarps = new LinkedList<>();
         arcaneBoosts = new LinkedList<>();
+        isArcaneBoostSkipped=false;
+        isArcaneBoostUsed=false;
+        isAI=false;
     }
 
     public Map<String, Integer> getCollectiblesCounters() {
@@ -68,7 +87,12 @@ public class Player {
         String regex = "^[a-zA-Z0-9]+$";
         return !name.matches(regex);
     }
-
+    public Image getWizardImage(){
+        return wizardImage;
+    }
+    public void setWizardImage(Image wizardImage){
+        this.wizardImage=wizardImage;
+    }
 
     /**
      * Initialize all realms at the start of initialization of the player
@@ -133,6 +157,7 @@ public class Player {
     public void useTimeWarpPower() {
         if (!timeWarps.isEmpty()) {
             timeWarps.remove();
+            timeWarpsUsed++;
         }
     }
 
@@ -142,9 +167,16 @@ public class Player {
     public void useArcaneBoostPower() {
         if (!arcaneBoosts.isEmpty()) {
             arcaneBoosts.remove();
+            isArcaneBoostUsed=true;
+            arcaneBoostsUsed++;
         }
     }
-
+    public void setName(String name){
+        this.name=name;
+    }
+    public boolean isAI(){
+        return isAI;
+    }
     public String getName() {
         return name;
     }
@@ -167,8 +199,8 @@ public class Player {
         return timeWarps.toArray(TimeWarp[]::new);
     }
 
-    public Realm getRealm(Color color) {
-        return realms[color.ordinal()];
+    public Realm getRealm(GameColor gameColor) {
+        return realms[gameColor.ordinal()];
     }
 
     public Realm[] getRealms() {
@@ -176,7 +208,7 @@ public class Player {
     }
 
     public Realm getRealm(Dice dice) {
-        if (dice.getRealm() == Color.WHITE) {
+        if (dice.getRealm() == GameColor.WHITE) {
             System.err.println("There is no white realm");
             return null;
         }
@@ -200,5 +232,25 @@ public class Player {
     public void setPlayerStatus(PlayerStatus status) {
         this.playerStatus = status;
     }
-
+    public void setGUIScoreSheet(CompositeScoreSheetController scoreSheet){
+        this.scoreSheetController=scoreSheet;
+        this.scoreSheetController.setPlayer(this);
+    }
+    public CompositeScoreSheetController getScoreSheetController(){
+        return scoreSheetController;
+    }
+    private boolean isArcaneBoostSkipped;
+    private boolean isArcaneBoostUsed;
+    public boolean isArcaneBoostSkipped(){
+        return isArcaneBoostSkipped;
+    }
+    public void setArcaneBoostSkipped(boolean state){
+        isArcaneBoostSkipped=state;
+    }
+    public boolean isArcaneBoostUsed(){
+        return isArcaneBoostUsed;
+    }
+    public void resetArcaneBoostUsage(){
+        isArcaneBoostUsed=false;
+    }
 }

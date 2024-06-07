@@ -6,7 +6,7 @@ import game.exceptions.*;
 import game.realms.GreenRealm;
 import game.realms.Realm;
 import game.realms.RedRealm;
-import game.utilities.Color;
+import game.utilities.GameColor;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -106,8 +106,8 @@ public class StandardAntiCheatService implements AntiCheatService {
             }
             if ((currentScore - previousScores.get(player)) > scoreLimit) {
                 System.err.println("Current score: "+currentScore);
-                System.out.println("Previous score: "+previousScores.get(player));
-                System.out.println("Score limit: "+scoreLimit);
+                System.err.println("Previous score: "+previousScores.get(player));
+                System.err.println("Score limit: "+scoreLimit);
                 throw new HighScoreException();
             }
         }
@@ -123,7 +123,7 @@ public class StandardAntiCheatService implements AntiCheatService {
     public void checkDice(Dice[] dice) throws DiceCheatException {
         int c = 0;
         for (Dice die : dice) {
-            if ((die.getRealm() != Color.values()[c++]) || !(die.getValue() > 0 && die.getValue() < 7)) {
+            if ((die.getRealm() != GameColor.values()[c++]) || !(die.getValue() > 0 && die.getValue() < 7)) {
                 System.out.println(Arrays.toString(dice));
                 throw new DiceCheatException();
             }
