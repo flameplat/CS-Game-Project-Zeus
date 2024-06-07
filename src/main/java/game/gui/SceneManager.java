@@ -97,10 +97,29 @@ public class SceneManager {
             RealmController realmController = loader.getController();
             realmController.setSceneManager(this);
             realmController.resetLabels();
-            realmController.setGuiGameController(guiGameController);
-            if(realmController instanceof EndGame){
-                ((EndGame)realmController).setPlayers(guiGameController.getActivePlayer(),guiGameController.getPassivePlayer());
+            double shiftForPlayer1 = 600;
+            double shiftForPlayer2 = 0;
+            if(realmController instanceof Guider){
+                Screen screen = Screen.getPrimary();
+                CalculatePositionToCenterStage(screen,stage);
             }
+            else {
+                if (GUIGameController.isPlayer1Playing()) {
+                    stage.setX(shiftForPlayer1);
+                } else {
+                    stage.setX(shiftForPlayer2);
+                }
+                realmController.setGuiGameController(guiGameController);
+                if (realmController instanceof EndGame) {
+                    ((EndGame) realmController).setPlayers(guiGameController.getActivePlayer(), guiGameController.getPassivePlayer());
+                }
+                // Center vertically
+                Screen screen = Screen.getPrimary();
+                Rectangle2D bounds = screen.getVisualBounds();
+                double centerY = (bounds.getHeight() - stage.getHeight()) / 2;
+                stage.setY(centerY);
+            }
+
         }
         else {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(resourceFileName)));
@@ -113,6 +132,7 @@ public class SceneManager {
             if(realmController instanceof EndGame){
                 ((EndGame)realmController).setPlayers(guiGameController.getActivePlayer(),guiGameController.getPassivePlayer());
             }
+
             stage = new Stage();
             stage.setScene(scene);
             stage.setResizable(false);
@@ -120,6 +140,28 @@ public class SceneManager {
                 stage.initStyle(StageStyle.UNDECORATED);
             }
             stage.initModality(Modality.APPLICATION_MODAL);
+            double shiftForPlayer1 = 600;
+            double shiftForPlayer2 = 0;
+            if(realmController instanceof Guider){
+                Screen screen = Screen.getPrimary();
+                CalculatePositionToCenterStage(screen,stage);
+            }
+            else {
+                if (GUIGameController.isPlayer1Playing()) {
+                    stage.setX(shiftForPlayer1);
+                } else {
+                    stage.setX(shiftForPlayer2);
+                }
+                realmController.setGuiGameController(guiGameController);
+                if (realmController instanceof EndGame) {
+                    ((EndGame) realmController).setPlayers(guiGameController.getActivePlayer(), guiGameController.getPassivePlayer());
+                }
+                // Center vertically
+                Screen screen = Screen.getPrimary();
+                Rectangle2D bounds = screen.getVisualBounds();
+                double centerY = (bounds.getHeight() - stage.getHeight()) / 2;
+                stage.setY(centerY);
+            }
             stageMap.put(resourceFileName, stage);
             sceneMap.put(resourceFileName, scene);
         }
