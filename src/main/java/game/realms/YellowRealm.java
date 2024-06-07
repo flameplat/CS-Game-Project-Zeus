@@ -121,6 +121,9 @@ public class YellowRealm extends Realm {
         return false;
 
     }
+    public Collectibles[] getCollectibles(){
+        return collectibles;
+    }
 
     @Override
     public boolean attack(Move move) {
@@ -146,6 +149,7 @@ public class YellowRealm extends Realm {
         }
 
     }
+
 
     @Override
     public int getTotalScore() {
@@ -186,6 +190,15 @@ public class YellowRealm extends Realm {
             return lion;
         }
         return null;
+    }
+
+    @Override
+    public double getWeight(Move move) {
+        return 0;
+    }
+
+    public int[] getScoreMultiplier(){
+        return scoreMultiplier;
     }
 
 

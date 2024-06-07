@@ -203,6 +203,12 @@ public class MagentaRealm extends Realm {
         }
         return null;
     }
+
+    @Override
+    public double getWeight(Move move) {
+        return 0;
+    }
+
     public int[] getScoreValues(){
         return score;
     }

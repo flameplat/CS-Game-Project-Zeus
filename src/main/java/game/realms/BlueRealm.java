@@ -111,6 +111,12 @@ public class BlueRealm extends Realm{
     public Creature getCreature(Dice dice) {
         return serpent1[4];
     }
+
+    @Override
+    public double getWeight(Move move) {
+        return 0;
+    }
+
     @Override
     public int getNoElementalCrests() {
         return noElementalCrests;
@@ -170,8 +176,10 @@ public class BlueRealm extends Realm{
         }
     }
 
+
     @Override
-    public boolean attack(Move move) {//Can change this to use next possibilemove method//
+    public boolean attack(Move move) {
+        //Can change this to use next possibilemove method//
         if(isSerpent1Alive()){
             for(int i=0;i<S1HeadNumber;i++){
                 if ((move.getDice().getValue()>=serpent1[i].getHeadNumber())&&(serpent1[i].isAlive())){

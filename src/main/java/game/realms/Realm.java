@@ -36,6 +36,6 @@ public abstract class Realm {
     public abstract Move[] getRealmMoves();
 
     public abstract Creature getCreature(Dice dice);
-
+    public abstract double getWeight(Move move);
 
 }

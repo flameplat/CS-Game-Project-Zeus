@@ -316,6 +316,12 @@ public class RedRealm extends Realm {
         return null;
     }
 
+    @Override
+    public double getWeight(Move move) {
+        return 0;
+    }
+
+
     // get the realm status
     public int getStatus() {
         return 0;

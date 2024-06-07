@@ -212,6 +212,10 @@ public class GreenRealm extends Realm {
         return null;
     }
 
+    @Override
+    public double getWeight(Move move) {
+        return 0;
+    }
 
     public LinkedList<Guardian> getAliveCreatures() {
         LinkedList<Guardian> aliveGardians = new LinkedList<>();
