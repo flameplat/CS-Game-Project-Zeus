@@ -34,9 +34,14 @@ public class BlueBonusController implements Initializable,RealmController {
         stage.close();
         Platform.runLater(() -> {
             guiGameController.makeMove(currentPlayer,possibleMove);
+            resetLabels();
         });
     }
     private SceneManager sceneManager;
+    @Override
+    public void resetLabels(){
+        label.setText("");
+    }
     public void setSceneManager(SceneManager sceneManager){
         this.sceneManager=sceneManager;
     }

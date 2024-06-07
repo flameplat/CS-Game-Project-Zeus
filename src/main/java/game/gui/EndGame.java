@@ -170,6 +170,11 @@ public class EndGame implements Initializable,RealmController {
     }
 
     @Override
+    public void resetLabels() {
+
+    }
+
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         background.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/endGameWizards.png")).toExternalForm()));
         textBoard1.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/textBoard.png")).toExternalForm()));

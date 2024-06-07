@@ -26,6 +26,7 @@ public class YellowBonusController implements Initializable ,RealmController {
         Image creature =new Image(Objects.requireNonNull(getClass().getResource("/images/YellowLion.png")).toExternalForm());
         BG.setImage(mainBG);
         LionImageView.setImage(creature);
+        resetLabels();
     }
     public void AttackLion() {
         Stage stage = (Stage) LionImageView.getScene().getWindow();
@@ -37,6 +38,10 @@ public class YellowBonusController implements Initializable ,RealmController {
     }
 
     private SceneManager sceneManager;
+    @Override
+    public void resetLabels(){
+        label.setText("");
+    }
 
     public void setSceneManager(SceneManager sceneManager){
         this.sceneManager=sceneManager;

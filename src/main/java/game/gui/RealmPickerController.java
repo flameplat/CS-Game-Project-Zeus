@@ -90,7 +90,11 @@ public class RealmPickerController implements Initializable,RealmController {
         if(possibleRealms.contains(realmColor)){
             Stage stage = (Stage) label.getScene().getWindow();
             stage.close();
-            guiGameController.playColorBonus(currentPlayer, realmColor);
+            Platform.runLater(()->{
+                guiGameController.playColorBonus(currentPlayer, realmColor);
+                resetLabels();
+            });
+
         }
         else {
             label.setText("Not Available");
@@ -101,6 +105,12 @@ public class RealmPickerController implements Initializable,RealmController {
     public  void setSceneManager(SceneManager sceneManager){
         this.sceneManager=sceneManager;
     }
+
+    @Override
+    public void resetLabels() {
+        label.setText("Choose a realm");
+    }
+
     private static Player currentPlayer;
     public static void setCurrentPlayer(Player currentPlayer){
         RealmPickerController.currentPlayer=currentPlayer;

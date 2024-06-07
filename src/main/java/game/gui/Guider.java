@@ -110,6 +110,11 @@ public class Guider implements Initializable,RealmController {
     public void setSceneManager(SceneManager sceneManager){
         this.sceneManager=sceneManager;
     }
+
+    @Override
+    public void resetLabels() {
+
+    }
 //    public void setMessageLabel(String message,String title){
 //        messageLabel.setText(message);
 //        this.title.setText(title);

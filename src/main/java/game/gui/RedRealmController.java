@@ -47,7 +47,9 @@ public class RedRealmController implements Initializable ,RealmController{
             stage.close();
             Platform.runLater(() -> {
                 guiGameController.makeMove(currentPlayer,move);
+                resetLabels();
             });
+
         } else {
             label.setText("You can't attack this part");
             possibleAttackLabel.setText("Chosen Die: " + possibleMoves.get(0).getDice().getName());
@@ -181,5 +183,11 @@ public class RedRealmController implements Initializable ,RealmController{
     }
     public void setLabel(){
         playerLabel.setText(currentPlayer.getName() + ", choose a region to attack!");
+    }
+    @Override
+    public void resetLabels(){
+        playerLabel.setText("");
+        label.setText("");
+        possibleAttackLabel.setText("");
     }
 }

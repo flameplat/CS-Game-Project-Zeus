@@ -33,6 +33,7 @@ public class MagentaBonusController implements Initializable,RealmController {
         stage.close();
         Platform.runLater(() -> {
             guiGameController.makeMove(currentPlayer,possibleMove);
+            resetLabels();
         });
     }
     private SceneManager sceneManager;
@@ -53,6 +54,10 @@ public class MagentaBonusController implements Initializable,RealmController {
     }
     public void setLabel(){
         label.setText(currentPlayer.getName() + ", you have encountered the Phoenix! Click on it to attack it");
+    }
+    @Override
+    public void resetLabels(){
+        label.setText("");
     }
 
 }

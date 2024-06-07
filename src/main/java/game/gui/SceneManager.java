@@ -90,7 +90,19 @@ public class SceneManager {
 
     private Stage getOrCreateStage(String resourceFileName, boolean enableWindowTab) throws IOException {
         Stage stage = stageMap.get(resourceFileName);
-        if (stage == null) {
+        if (stage != null) {
+            // Retrieve the controller
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(resourceFileName)));
+            Parent root = loader.load();
+            RealmController realmController = loader.getController();
+            realmController.setSceneManager(this);
+            realmController.resetLabels();
+            realmController.setGuiGameController(guiGameController);
+            if(realmController instanceof EndGame){
+                ((EndGame)realmController).setPlayers(guiGameController.getActivePlayer(),guiGameController.getPassivePlayer());
+            }
+        }
+        else {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(resourceFileName)));
             Parent root = loader.load();
             Scene scene = new Scene(root);

@@ -206,6 +206,7 @@ public class GreenBonusController implements  Initializable,RealmController  {
             stage.close();
             Platform.runLater(() -> {
                 guiGameController.makeMove(currentPlayer,move);
+                resetLabels();
             });
         } else {
             label.setText(gaiaNumber + " is Dead");
@@ -222,6 +223,11 @@ public class GreenBonusController implements  Initializable,RealmController  {
     private static LinkedList<Move> possibleMoves;
     public static void setPossibleMoves(Move[] moves){
         GreenBonusController.possibleMoves = new LinkedList<>(Arrays.asList(moves));
+    }
+    @Override
+    public void resetLabels(){
+        playerLabel.setText("");
+        label.setText("");
     }
     private static Player currentPlayer;
     public static void setCurrentPlayer(Player currentPlayer){
