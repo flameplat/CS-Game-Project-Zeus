@@ -597,13 +597,12 @@ public class GUIGameController extends CLIGameController implements Initializabl
         disableRollButton();
         currentPlayer=activePlayer;
         disableForgottenRealmButtons();
-        if(activePlayer instanceof AIPlayer){
+        if(activePlayer.isAI()){
             disableMainBoardDiceButtons();
         }
         else{
             enableMainBoardDiceButtons();
         }
-
         if (getPossibleMovesForDice(activePlayer, getAvailableDice()).length == 0) {
             System.out.println(activePlayer+", NO Possible Moves: availableDice: "+ Arrays.toString(getAvailableDice())+"\n"+ Arrays.toString(getPossibleMovesForDice(activePlayer, getAvailableDice())));
             if (activePlayer.isTimeWarpAvailable()) {
@@ -626,6 +625,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 activePlayer.getScoreSheetController().setRewardsLabel("No available moves for current dice. Turn Lost");
                 manageTurnCycle();
             }
+            return;
         }
         if (activePlayer.isTimeWarpAvailable()) {
             if(activePlayer.isAI()){
@@ -637,6 +637,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             else{
                 enableTimeWarpButton();
             }
+            return;
         }
         if(activePlayer.isAI()){
             ((AIPlayer) activePlayer).selectDice(getAvailableDice());

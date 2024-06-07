@@ -23,16 +23,6 @@ public class AIPlayer extends Player{
     public void selectDice(Dice[] diceArray){
         System.out.printf("During round %d in %s :%n",guiGameController.gameStatus.getRound(),guiGameController.gameStatus.getGameStatus());
         System.out.println(Arrays.toString(diceArray));
-        if(diceArray.length==0){
-            System.out.println("AI was sent an empty array to choose from");
-            System.out.println("Active Player: "+guiGameController.activePlayer);
-            System.out.println("Passive Player: "+guiGameController.passivePlayer);
-            if(this!=guiGameController.passivePlayer && guiGameController.getGameStatus().getGameStatus()==CurrentStatus.PASSIVE_TURN){
-                System.out.println("WTF, AI is not passive player and wanted to play a passive turn");
-            }
-            System.out.println("");
-            return;
-        }
         Move[] possibleMoves;
         Dice selectedDie;
         int i=0;
