@@ -14,6 +14,10 @@ public class GreenDice extends Dice {
         this.value = value;
         this.status = DiceStatus.AVAILABLE;
     }
+    public GreenDice(GreenDice greenDice){
+        this.value = greenDice.value;
+        this.status = DiceStatus.AVAILABLE;
+    }
 
     public GreenDice() {
         this(1);

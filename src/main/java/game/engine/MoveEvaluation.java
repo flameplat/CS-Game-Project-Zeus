@@ -4,11 +4,9 @@ import game.collectibles.*;
 import game.creatures.*;
 import game.dice.*;
 import game.gui.GUIGameController;
-import game.gui.Guider;
 import game.realms.*;
 import game.utilities.GameColor;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 
 public class MoveEvaluation {
@@ -20,12 +18,15 @@ public class MoveEvaluation {
     private final Move[][] greenRealmMoveGrid;
     private final LinkedList<Move> pastMoves;
     private final MagentaRealm magentaRealm;
+    public static int noWorlds;
+    public static final int limit=30;
     private Realm[] realms;
     private AIPlayer player;
     private final BlueRealm blueRealm;
     private final GUIGameController guiGameController;
 
     public MoveEvaluation(AIPlayer player, LinkedList<Move> pastMoves, GUIGameController guiGameController) {
+        this.player=player;
         Realm[] realms = player.getRealms();
         applyPastMoves(pastMoves,realms);
         this.guiGameController=guiGameController;
@@ -68,206 +69,170 @@ public class MoveEvaluation {
         for (Move m : pastMoves) {
             Realm realm = realms[m.getDice().getRealm().ordinal()];
             Move[] realmMoves = realm.getRealmMoves();
-            for (Move realmMove : realmMoves) {
-                if (realmMove.equals(m)) {
-                    realm.attack(realmMove);
-                    realm.checkReward();
-                    realm.getReward();
-                }
-            }
+            realm.attack(new Move(m));
+            realm.checkReward();
+            realm.getReward();
+        }
+    }
 
-        }
-    }
-    public double evaluateYellowBonusHelper(int i,Collectibles[] rewards){
-        if(i==11){
-            return 0;
-        }
-        pastMoves.add(new Move(new YellowDice(6),new Lion()));
-        AIPlayer helperPlayer=new AIPlayer("Helper Player");
-        MoveEvaluation moveEvaluation=new MoveEvaluation(helperPlayer,pastMoves,guiGameController);
-        return ((double) 1 /i)*moveEvaluation.getRewardEvaluation(rewards[i])+evaluateYellowBonusHelper(++i,rewards);
-    }
 
     public Move[][] getRedRealmMoveGrid() {
         return redRealmMoveGrid;
     }
     public double evaluateRedMove(Move move) {
-        int row = 0;
-        for (int i = 0; i < 4; i++) {
-            Object temp = ((Dragon) move.getCreature()).getHealth()[i];
-            if (temp instanceof Integer) {
-                if (move.getDice().getValue() == (Integer) temp) {
-                    row = i;
-                    break;
+        if(redRealm.isRealmAvailable()){
+            int row = 0;
+            for (int i = 0; i < 4; i++) {
+                Object temp = ((Dragon) move.getCreature()).getHealth()[i];
+                if (temp instanceof Integer) {
+                    if (move.getDice().getValue() == (Integer) temp) {
+                        row = i;
+                        break;
+                    }
                 }
             }
-        }
-        int col = ((Dragon) move.getCreature()).getDragonNumber() - 1;
-        Object[] redRealmRewards = redRealm.getCollectibles();
-        int noRemainingMovesRow = 0;
-        for (int i = 0; i < 4; i++) {
-            if (redRealmMoveGrid[row][i] != null && !redRealmMoveGrid[row][i].isExecuted()) {
-                noRemainingMovesRow++;
+            int col = ((Dragon) move.getCreature()).getDragonNumber() - 1;
+            Object[] redRealmRewards = redRealm.getCollectibles();
+            int noRemainingMovesRow = 0;
+            for (int i = 0; i < 4; i++) {
+                if (redRealmMoveGrid[row][i] != null && !redRealmMoveGrid[row][i].isExecuted()) {
+                    noRemainingMovesRow++;
+                }
             }
-        }
-        int noRemainingMovesCol = 0;
-        for (int i = 0; i < 4; i++) {
-            if (redRealmMoveGrid[i][col] != null && !redRealmMoveGrid[i][col].isExecuted()) {
-                noRemainingMovesCol++;
+            int noRemainingMovesCol = 0;
+            for (int i = 0; i < 4; i++) {
+                if (redRealmMoveGrid[i][col] != null && !redRealmMoveGrid[i][col].isExecuted()) {
+                    noRemainingMovesCol++;
+                }
             }
-        }
-        int noRemainingMovesDiagonal = 0;
-        Collectibles diagonalReward = null;
-        if (row == col) {
-            //Diagonal Reward exists
-            if (redRealmRewards[4] != null) {
-                diagonalReward = (Collectibles) redRealmRewards[4];
-                for (int i = 0; i < 4; i++) {
-                    for (int j = 0; j < 4; j++) {
-                        if (i == j) {
-                            if (redRealmMoveGrid[i][j] != null && !redRealmMoveGrid[i][j].isExecuted()) {
-                                noRemainingMovesDiagonal++;
+            int noRemainingMovesDiagonal = 0;
+            Collectibles diagonalReward = null;
+            if (row == col) {
+                //Diagonal Reward exists
+                if (redRealmRewards[4] != null) {
+                    diagonalReward = (Collectibles) redRealmRewards[4];
+                    for (int i = 0; i < 4; i++) {
+                        for (int j = 0; j < 4; j++) {
+                            if (i == j) {
+                                if (redRealmMoveGrid[i][j] != null && !redRealmMoveGrid[i][j].isExecuted()) {
+                                    noRemainingMovesDiagonal++;
 
+                                }
                             }
                         }
                     }
                 }
             }
+            LinkedList<Move> newPastMoves = new LinkedList<>(pastMoves);
+            newPastMoves.add(move);
+            Collectibles rowReward = null;
+            if (redRealmRewards[row] != null && redRealmRewards[row] instanceof Collectibles) {
+                rowReward = (Collectibles) redRealmRewards[row];
+            }
+            int[] dragonsScore = redRealm.getDragonsScore();
+            int score = dragonsScore[col];
+            double rewardWeight = 0;
+            if (rowReward != null) {
+                rewardWeight = getRewardEvaluation(rowReward,newPastMoves);
+            }
+            double scoreWeight = ((double) 1 / noRemainingMovesCol) * score;
+            double moveWeight = scoreWeight + rewardWeight * ((double) 1 / noRemainingMovesRow);
+            if (diagonalReward != null) {
+                double diagonalRewardWeight = getRewardEvaluation(diagonalReward,newPastMoves);
+                moveWeight += diagonalRewardWeight * ((double) 1 / noRemainingMovesDiagonal);
+            }
+            //diagonalRewardWeight*((double) 1 /noRemainingMovesDiagonal)
+            return moveWeight;
         }
-        LinkedList<Move> newPastMoves = new LinkedList<>(pastMoves);
-        AIPlayer newHelperPlayer1=new AIPlayer("HelperPlayer1");
-        newPastMoves.add(move);
-        MoveEvaluation moveEvaluation2=new MoveEvaluation(newHelperPlayer1,newPastMoves,guiGameController);
-        Collectibles rowReward = null;
-        if (redRealmRewards[row] != null && redRealmRewards[row] instanceof Collectibles) {
-            rowReward = (Collectibles) redRealmRewards[row];
-        }
-        int[] dragonsScore = redRealm.getDragonsScore();
-        int score = dragonsScore[col];
-        double rewardWeight = 0;
-        if (rowReward != null) {
-            rewardWeight = getRewardEvaluation(rowReward,newPastMoves);
-        }
-        double scoreWeight = ((double) 1 / noRemainingMovesCol) * score;
-        double moveWeight = scoreWeight + rewardWeight * ((double) 1 / noRemainingMovesRow);
-        if (diagonalReward != null) {
-            double diagonalRewardWeight = getRewardEvaluation(diagonalReward,newPastMoves);
-            moveWeight += diagonalRewardWeight * ((double) 1 / noRemainingMovesDiagonal);
-        }
-        //diagonalRewardWeight*((double) 1 /noRemainingMovesDiagonal)
-        return moveWeight;
+        return 0;
     }
-//    public LinkedList<Move> cloneMoves(LinkedList<Move> pastMoves){
-//        LinkedList<Move> newMoves=new LinkedList<>();
-//        for(int i=0;i<pastMoves.size();i++){
-//            Dice die;
-//            if(pastMoves.get(i).getDice() instanceof RedDice){
-//                die=new RedDice(pastMoves.get(i).getDice().getValue());
-//                Dragon dragon= (Dragon) redRealm.getCreature(die);
-//                newMoves.add(new Move(die,dragon));
-//            }
-//            else{
-//                if(pastMoves.get(i).getDice() instanceof GreenDice){
-//                    die=new GreenDice(pastMoves.get(i).getDice().getValue());
-//                    Guardian gaia= (Guardian) greenRealm.getCreature(die);
-//                    newMoves.add(new Move(die,gaia));
-//                }
-//                else{
-//                    if(pastMoves.get(i).getDice() instanceof BlueDice){
-//                        die=new BlueDice(pastMoves.get(i).getDice().getValue());
-//                        Serpent serpent= (Serpent) blueRealm.getCreature(die);
-//                        newMoves.add(new Move(die,serpent));
-//                    }
-//                    else{
-//                        if(pastMoves.get(i).getDice() instanceof MagentaDice){
-//                            die=new MagentaDice(pastMoves.get(i).getDice().getValue());
-//                            Phoenix phoenix = (Phoenix) magentaRealm.getCreature(die);
-//                            newMoves.add(new Move(die,phoenix));
-//                        }
-//                        else{
-//                            if(pastMoves.get(i).getDice() instanceof YellowDice){
-//                                die=new YellowDice(pastMoves.get(i).getDice().getValue());
-//                                Lion dragon= (Dragon) redRealm.getCreature(die);
-//                                newMoves.add(new Move(die,dragon));
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//    }
+
     public Move[][] getGreenRealmMoveGrid() {
         return greenRealmMoveGrid;
     }
 
     public double evaluateGreenMove(Move move) {
-        int row = (move.getDice().getValue() - 1) / 4;
-        int col = (move.getDice().getValue() - 1) % 4;
-        Object[] rowRewards = greenRealm.getRowRewards();
-        Object[] colRewards = greenRealm.getColRewards();
-        int noRemainingMovesRow = 0;
-        for (int i = 0; i < colRewards.length; i++) {
-            if (greenRealmMoveGrid[row][i] != null && !greenRealmMoveGrid[row][i].isExecuted()) {
-                noRemainingMovesRow++;
+        if(greenRealm.isRealmAvailable()){
+            int row = (move.getDice().getValue() - 1) / 4;
+            int col = (move.getDice().getValue() - 1) % 4;
+            Object[] rowRewards = greenRealm.getRowRewards();
+            Object[] colRewards = greenRealm.getColRewards();
+            int noRemainingMovesRow = 0;
+            for (int i = 0; i < colRewards.length; i++) {
+                if (greenRealmMoveGrid[row][i] != null && !greenRealmMoveGrid[row][i].isExecuted()) {
+                    noRemainingMovesRow++;
+                }
             }
-        }
-        int noRemainingMovesCol = 0;
-        for (int i = 0; i < rowRewards.length; i++) {
-            if (greenRealmMoveGrid[i][col] != null && !greenRealmMoveGrid[i][col].isExecuted()) {
-                noRemainingMovesCol++;
+            int noRemainingMovesCol = 0;
+            for (int i = 0; i < rowRewards.length; i++) {
+                if (greenRealmMoveGrid[i][col] != null && !greenRealmMoveGrid[i][col].isExecuted()) {
+                    noRemainingMovesCol++;
+                }
             }
+            Collectibles rowReward = null;
+            if (rowRewards[row] != null && rowRewards[row] instanceof Collectibles) {
+                rowReward = (Collectibles) rowRewards[row];
+            }
+            Collectibles colReward = null;
+            if (colRewards[col] != null && colRewards[col] instanceof Collectibles) {
+                colReward = (Collectibles) colRewards[col];
+            }
+            LinkedList<Move> newPastMoves=new LinkedList<>(pastMoves);
+            newPastMoves.add(move);
+            double rowRewardWeight = 0;
+            if (rowReward != null) {
+                rowRewardWeight = getRewardEvaluation(rowReward,newPastMoves);
+            }
+            double colRewardWeight = 0;
+            if (colReward != null) {
+                colRewardWeight = getRewardEvaluation(colReward,newPastMoves);
+            }
+            double scoreWeight = greenRealm.getFakeScore(move);
+            double moveWeight = scoreWeight + rowRewardWeight * ((double) 1 / noRemainingMovesRow) + colRewardWeight * ((double) 1 / noRemainingMovesCol);
+            return moveWeight;
         }
-        Collectibles rowReward = null;
-        if (rowRewards[row] != null && rowRewards[row] instanceof Collectibles) {
-            rowReward = (Collectibles) rowRewards[row];
-        }
-        Collectibles colReward = null;
-        if (colRewards[col] != null && colRewards[col] instanceof Collectibles) {
-            colReward = (Collectibles) colRewards[col];
-        }
-        double rowRewardWeight = 0;
-        if (rowReward != null) {
-            rowRewardWeight = getRewardEvaluation(rowReward);
-        }
-        double colRewardWeight = 0;
-        if (colReward != null) {
-            colRewardWeight = getRewardEvaluation(colReward);
-        }
-        double scoreWeight = greenRealm.getFakeScore(move);
-        double moveWeight = scoreWeight + rowRewardWeight * ((double) 1 / noRemainingMovesRow) + colRewardWeight * ((double) 1 / noRemainingMovesCol);
-        return moveWeight;
-
+        return 0;
     }
 
     public double evaluateBlueMove(Move move) {
-        Collectibles[] rewards = blueRealm.getRewardsProperties();
-        int hitCount = blueRealm.getHitcount();
-        double rewardWeight = 0;
-        for (int i = hitCount; i < rewards.length; i++) {
-            if (rewards[i] != null) {
-                Collectibles reward = rewards[i];
-                rewardWeight += ((double) 1 / (i - hitCount + 1)) * getRewardEvaluation(reward);
+        if(blueRealm.isRealmAvailable()){
+            Collectibles[] rewards = blueRealm.getRewardsProperties();
+            int hitCount = blueRealm.getHitcount();
+            double rewardWeight = 0;
+            LinkedList<Move> newPastMoves=new LinkedList<>(pastMoves);
+            for (int i = hitCount; i < rewards.length; i++) {
+                newPastMoves.add(blueRealm.getRealmMoves()[blueRealm.getRealmMoves().length-1]);
+                if (rewards[i] != null) {
+                    Collectibles reward = rewards[i];
+                    rewardWeight += ((double) 1 / (i - hitCount + 1)) * getRewardEvaluation(reward,newPastMoves);
+                }
             }
+            int scoreWeight = blueRealm.getFakeScore(move);
+            double moveWeight = scoreWeight + rewardWeight;
+            return moveWeight;
         }
-        int scoreWeight = blueRealm.getFakeScore(move);
-        double moveWeight = scoreWeight + rewardWeight;
-        return moveWeight;
+        return 0;
     }
 
     public double evaluateMagentaMove(Move move) {
-        Collectibles[] rewards = magentaRealm.getRewardsProperties();
-        int hitCount = magentaRealm.getCounterHits();
-        double rewardWeight = 0;
-        for (int i = hitCount; i < rewards.length; i++) {
-            if (rewards[i] != null) {
-                Collectibles reward = rewards[i];
-                rewardWeight += ((double) 1 / (i - hitCount + 1)) * getRewardEvaluation(reward);
+        if(magentaRealm.isRealmAvailable()){
+            Collectibles[] rewards = magentaRealm.getRewardsProperties();
+            int hitCount = magentaRealm.getCounterHits();
+            double rewardWeight = 0;
+            LinkedList<Move> newPastMoves=new LinkedList<>(pastMoves);
+            for (int i = hitCount; i < rewards.length; i++) {
+                newPastMoves.add(magentaRealm.getRealmMoves()[magentaRealm.getRealmMoves().length-1]);
+                if (rewards[i] != null) {
+                    Collectibles reward = rewards[i];
+                    rewardWeight += ((double) 1 / (i - hitCount + 1)) * getRewardEvaluation(reward,newPastMoves);
+                }
             }
+            int scoreWeight = magentaRealm.getFakeScore(move);
+            double moveWeight = scoreWeight + rewardWeight;
+            return moveWeight;
         }
-        int scoreWeight = magentaRealm.getFakeScore(move);
-        double moveWeight = scoreWeight + rewardWeight;
-        return moveWeight;
+        return 0;
+
     }
 
     public double evaluateYellowMove(Move move) {
@@ -277,7 +242,7 @@ public class MoveEvaluation {
             LinkedList<Move> newPastMoves=new LinkedList<>(pastMoves);
             double rewardWeight = 0;
             for (int i = hitCount; i < rewards.length; i++) {
-                newPastMoves.add(move)
+                newPastMoves.add(move);
                 if (rewards[i] != null) {
                     Collectibles reward = rewards[i];
                     rewardWeight += ((double) 1 / (i - hitCount + 1)) * getRewardEvaluation(reward,newPastMoves);
@@ -287,6 +252,7 @@ public class MoveEvaluation {
             double moveWeight = scoreWeight + rewardWeight;
             return moveWeight;
         }
+        return 0;
 
     }
 
@@ -332,7 +298,7 @@ public class MoveEvaluation {
         double maxWeight=0;
         double tempWeight=0;
         for(int i=0;i<possibleMoves.length;i++){
-            tempWeight=moveEvaluation2.evaluateRedMove(possibleMoves[i]);
+            tempWeight=moveEvaluation2.evaluateRedMove(new Move(possibleMoves[i]));
             if(tempWeight>maxWeight){
                 maxWeight=tempWeight;
             }
@@ -386,7 +352,6 @@ public class MoveEvaluation {
         }
         return maxWeight;
     }
-    public static int noWorlds;
-    public static final int limit=6;
+
 
 }

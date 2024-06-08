@@ -16,17 +16,11 @@ public class Main {
 //        CLIGameController controller = new CLIGameController();
 //        controller.startGame();
         AIPlayer x=new AIPlayer("MOSTAFA");
-//        Move m=x.getRealm(GameColor.RED).getRealmMoves()[1];
-//        System.out.println(m);
-////        x.getRealm(GameColor.RED).attack(m);
-//        print2DArray(x.getMoveEvaluation().getRedRealmMoveGrid());
-//        System.out.println(x.getMoveEvaluation().evaluateRedRealmMove(m));
-//        System.out.println(11%4);
-        Move m=x.getRealm(GameColor.BLUE).getRealmMoves()[0];
-        System.out.println(x.getRealm(GameColor.BLUE));
-        System.out.println(x);
+        Move m=x.getRealm(GameColor.RED).getRealmMoves()[4];
         System.out.println(m);
-        System.out.println(x.getMoveEvaluation().evaluateBlueMove(m));
+        x.getRealm(GameColor.RED).attack(m);
+        System.out.println(x.getMoveEvaluation().evaluateRedMove(m));
+
 
 
     }

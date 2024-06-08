@@ -11,16 +11,15 @@ public class AIPlayer extends Player{
     private Move selectedMove;
     private GUIGameController guiGameController;
     private final Random r;
-    private LinkedList<Move> pastMoves;
-    private MoveEvaluation moveEvaluation;
+    private final LinkedList<Move> pastMoves;
+    private final MoveEvaluation moveEvaluation;
     public AIPlayer(String name){
         super();
         setName(name);
         r=new Random();
         isAI=true;
         pastMoves=new LinkedList<>();
-        moveEvaluation=new MoveEvaluation(this,pastMoves);
-
+        moveEvaluation=new MoveEvaluation(this,pastMoves,guiGameController);
     }
     // The AI player should call the methods of the GUI to select the die.
     public void selectDice(Dice[] diceArray){

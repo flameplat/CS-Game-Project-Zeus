@@ -16,7 +16,10 @@ public class BlueDice extends Dice {
         this.status = DiceStatus.AVAILABLE;
 
     }
-
+    public BlueDice(BlueDice blueDice){
+        this.value = blueDice.value;
+        this.status = DiceStatus.AVAILABLE;
+    }
     public BlueDice() {
         this(1);
     }

@@ -12,7 +12,10 @@ public class Guardian extends Creature {
     public Guardian() {
         this(1);
     }
-
+    public Guardian(Guardian guardian){
+        this.score = guardian.score;
+        this.status = true;
+    }
     @Override
     public boolean attack() {
         if (isAlive()) {
