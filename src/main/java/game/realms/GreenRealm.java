@@ -138,6 +138,7 @@ public class GreenRealm extends Realm {
                         if (guardian.getScore() == move.getDice().getValue()) {
                             guardian.attack();
                             count++;
+                            move.execute();
                             return true;
                         }
                     }

@@ -42,7 +42,7 @@ public class Move implements Comparable<Move> {
         } else if(move.getCreature() instanceof Serpent) {
             this.creature = new Serpent((Serpent) move.getCreature());
         }
-        this.isExecuted=false;
+        this.isExecuted= move.isExecuted;
 
     }
 

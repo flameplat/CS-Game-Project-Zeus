@@ -7,6 +7,7 @@ import game.gui.GUIGameController;
 import game.realms.*;
 import game.utilities.GameColor;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class MoveEvaluation {
@@ -19,15 +20,15 @@ public class MoveEvaluation {
     private final LinkedList<Move> pastMoves;
     private final MagentaRealm magentaRealm;
     public static int noWorlds;
-    public static final int limit=30;
+    public static final int limit=5000;
     private Realm[] realms;
     private AIPlayer player;
     private final BlueRealm blueRealm;
-    private final GUIGameController guiGameController;
+    private  GUIGameController guiGameController;
 
     public MoveEvaluation(AIPlayer player, LinkedList<Move> pastMoves, GUIGameController guiGameController) {
         this.player=player;
-        Realm[] realms = player.getRealms();
+        this.realms = player.getRealms();
         applyPastMoves(pastMoves,realms);
         this.guiGameController=guiGameController;
         this.pastMoves = pastMoves;
@@ -64,7 +65,16 @@ public class MoveEvaluation {
 
         }
     }
+    public void addMove(Move move){
+        pastMoves.add(move);
+    }
+    public void setGuiGameController(GUIGameController guiGameController){
+        this.guiGameController=guiGameController;
+    }
 
+    public static void resetNoWorlds(){
+        MoveEvaluation.noWorlds=0;
+    }
     public void applyPastMoves(LinkedList<Move> pastMoves,Realm[] realms){
         for (Move m : pastMoves) {
             Realm realm = realms[m.getDice().getRealm().ordinal()];
@@ -216,7 +226,7 @@ public class MoveEvaluation {
 
     public double evaluateMagentaMove(Move move) {
         if(magentaRealm.isRealmAvailable()){
-            Collectibles[] rewards = magentaRealm.getRewardsProperties();
+            Collectibles[] rewards = magentaRealm.getCollectibles();
             int hitCount = magentaRealm.getCounterHits();
             double rewardWeight = 0;
             LinkedList<Move> newPastMoves=new LinkedList<>(pastMoves);
@@ -237,7 +247,7 @@ public class MoveEvaluation {
 
     public double evaluateYellowMove(Move move) {
         if(yellowRealm.isRealmAvailable()){
-            Collectibles[] rewards = yellowRealm.getRewardsProperties();
+            Collectibles[] rewards = yellowRealm.getCollectibles();
             int hitCount = yellowRealm.getCountHits();
             LinkedList<Move> newPastMoves=new LinkedList<>(pastMoves);
             double rewardWeight = 0;
@@ -257,17 +267,24 @@ public class MoveEvaluation {
     }
 
     public double getRewardEvaluation(Collectibles collectible,LinkedList<Move> currentMoves) {
-
         if (collectible instanceof ArcaneBoost) {
             // return a value specific to ArcaneBoost
-            return 15;
+            return 10;
         } else if (collectible instanceof TimeWarp) {
             // return a value specific to TimeWarp
             return 0;
         } else if (collectible instanceof ElementalCrest) {
-            // return a value specific to ElementalCrest
-            return 30;
-        } else if (collectible instanceof ColorBonus) {
+            int minScore = realms[0].getTotalScore();
+            for (int i = 0; i < 5; i++) {
+                if (realms[i].getTotalScore() < minScore) {
+                    minScore = realms[i].getTotalScore();
+                }
+            }
+            return (player.gameScore.getTotalElementalCrests() + 1) *minScore
+                    * (7- guiGameController.gameStatus.getRound());
+
+        }
+        else if (collectible instanceof ColorBonus) {
             // return a value specific to colorBonus
             GameColor colorBonusColor = ((ColorBonus) collectible).getColor();
             switch (colorBonusColor) {
@@ -352,6 +369,166 @@ public class MoveEvaluation {
         }
         return maxWeight;
     }
+    public double getWeightOfMove(Move move){
+        double weight = 0;
+        GameColor realm = move.getDice().getRealm();
+        if(realm == GameColor.RED ){
+            weight = evaluateRedMove(move);
+        }
+        if(realm == GameColor.GREEN){
+            weight = evaluateGreenMove(move);
+        }
+        if(realm == GameColor.BLUE){
+            weight = evaluateBlueMove(move);
+        }
+        if(realm == GameColor.MAGENTA){
+            weight = evaluateMagentaMove(move);
+        }
+        if(realm == GameColor.YELLOW){
+            weight = evaluateYellowMove(move);
+        }
+        return weight;
+    }
+    public Move getMoveOfHighestWeight(Dice die){
+        double selectedWeight=0;
+        double tempWeight;
+        Move selectedMove=null;
+        Move[] possibleMoves = guiGameController.getPossibleMovesForADie(player, die);
+        for(int i=0; i<possibleMoves.length;i++){
+            tempWeight = getWeightOfMove(possibleMoves[i]);
+            if(selectedWeight<tempWeight){
+                selectedWeight = tempWeight;
+                selectedMove = possibleMoves[i];
+            }
+        }
+        return selectedMove;
+    }
+    public double getWeightOfDice(Dice die){
+        double selectedWeight=0;
+        double tempWeight;
+        Move[] possibleMoves = guiGameController.getPossibleMovesForADie(player, die);
+        for(int i=0; i<possibleMoves.length;i++){
+            tempWeight = getWeightOfMove(possibleMoves[i]);
+            if(selectedWeight<tempWeight){
+                selectedWeight = tempWeight;
 
+            }
+        }
+        return selectedWeight*getTurnWeight(die);
+    }
+    private double getTurnWeight(Dice selecteddDice) {
+        int[] arrayOfAvailableDice = new int[guiGameController.getAvailableDice().length];
+        for(int i=0; i<guiGameController.getAvailableDice().length;i++){
+            arrayOfAvailableDice[i] = guiGameController.getAvailableDice()[i].getValue();
+        }
+        Arrays.sort(arrayOfAvailableDice);
+        double value = 0;
+        int Turn= guiGameController.gameStatus.getTurn();
+        CurrentStatus status = guiGameController.gameStatus.getGameStatus();
+        if(status == CurrentStatus.ARCANE_BOOST || status == CurrentStatus.PASSIVE_TURN || Turn == 3){
+            value = 1;
+        }
+        else{
+            if(arrayOfAvailableDice.length == 6){
+                value = 1-(0.15*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+            }
+            else if(arrayOfAvailableDice.length == 5){
+                value = 1-(0.2*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+            }
+            else if(arrayOfAvailableDice.length == 4){
+                value = 1-(0.25*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+            }
+            else if(arrayOfAvailableDice.length == 3){
+                value = 1-(0.35*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+            }
+            else if(arrayOfAvailableDice.length == 2){
+                value = 1-(0.5*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+            }
+            else
+                value = 1;
+        }
+        return value;
+    }
 
+    //helper method used in getTurnWeight method
+    private static int findIndex(int[] array, int value) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public double[] getWeightOfAllDice(Dice [] diceArray){
+        double [] weights = new double[diceArray.length];
+        for(int i=0;i<weights.length;i++){
+            weights[i] = getWeightOfDice((Dice)diceArray[i]);
+        }
+        return weights;
+    }
+    public double getWeightOfbestMove(Dice[] diceArray){
+        double[] weights = getWeightOfAllDice(diceArray);
+        int bestWeight =0;
+        int tempWeight;
+        for(int i=0;i<weights.length;i++){
+            tempWeight = (int) weights[i];
+            if(bestWeight<tempWeight){
+                bestWeight = tempWeight;
+            }
+        }
+        return bestWeight;
+
+    }
+    public Move bestMove(Dice [] diceArray){
+        double[] weights = getWeightOfAllDice(diceArray);
+        int bestWeight =0;
+        int tempWeight;
+        Dice bestDice = null;
+        Move bestMove;
+        for(int i=0;i<weights.length;i++){
+            tempWeight = (int) weights[i];
+            if(bestWeight<tempWeight){
+                bestWeight = tempWeight;
+                bestDice = diceArray[i];
+            }
+        }
+        bestMove = getMoveOfHighestWeight(bestDice);
+        return bestMove;
+    }
+    public Dice bestDice(Dice [] diceArray) {
+        double[] weights = getWeightOfAllDice(diceArray);
+        int bestWeight = 0;
+        int tempWeight;
+        Dice bestDice = null;
+
+        for (int i = 0; i < weights.length; i++) {
+            tempWeight = (int) weights[i];
+            if (bestWeight < tempWeight) {
+                bestWeight = tempWeight;
+                bestDice = diceArray[i];
+            }
+        }
+        return bestDice;
+    }
+
+    public double evaluateColorBonusWeight(GameColor realm) {
+        double weight = 0;
+        if(realm == GameColor.RED) {
+            weight = evaluateRedBonusWeight(pastMoves);
+            System.out.println("RedBonus: "+weight);
+        } else if(realm == GameColor.GREEN) {
+            weight = evaluateGreenBonusWeight(pastMoves);
+            System.out.println("GreenBonus: "+weight);
+        } else if(realm == GameColor.BLUE) {
+            weight = evaluateBlueBonusWeight(pastMoves);
+            System.out.println("BlueBonus: "+weight);
+        } else if(realm == GameColor.MAGENTA) {
+            weight = evaluateMagentaBonusWeight(pastMoves);
+            System.out.println("MagentaBonus: "+weight);
+        } else if(realm == GameColor.YELLOW) {
+            weight = evaluateYellowBonusWeight(pastMoves);
+            System.out.println("YellowBonus: "+weight);
+        }
+        return weight;
+    }
 }

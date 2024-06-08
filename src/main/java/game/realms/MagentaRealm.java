@@ -216,6 +216,8 @@ public class MagentaRealm extends Realm {
     public String[] getRewardValues(){
         return rewardValues;
     }
-
+    public Collectibles[] getCollectibles(){
+        return collectibles;
+    }
 
 }

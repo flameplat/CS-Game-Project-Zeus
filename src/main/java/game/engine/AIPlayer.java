@@ -4,6 +4,7 @@ import game.dice.*;
 import game.gui.GUIGameController;
 import game.utilities.GameColor;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class AIPlayer extends Player{
@@ -18,13 +19,15 @@ public class AIPlayer extends Player{
         setName(name);
         isAI=true;
         pastMoves=new LinkedList<>();
-        moveEvaluation =new MoveEvaluation(this,pastMoves);
+        moveEvaluation =new MoveEvaluation(this,pastMoves,guiGameController);
     }
     // The AI player should call the methods of the GUI to select the die.
     public void selectDice(Dice[] diceArray){
         System.out.printf("During round %d in %s :%n",guiGameController.gameStatus.getRound(),guiGameController.gameStatus.getGameStatus());
+        System.out.println(Arrays.toString(diceArray));
         selectedMove=moveEvaluation.bestMove(diceArray);
-        Dice selectedDie = selectedMove.getDice();
+        Dice selectedDie = moveEvaluation.bestDice(diceArray);
+        MoveEvaluation.resetNoWorlds();
         System.out.println("AI has chosen:  "+selectedDie);
         System.out.println("-".repeat(50));
         if (selectedDie instanceof RedDice) {
@@ -61,6 +64,7 @@ public class AIPlayer extends Player{
     }
     public void setGuiGameController(GUIGameController guiGameController){
         this.guiGameController = guiGameController;
+        moveEvaluation.setGuiGameController(guiGameController);
     }
     public boolean useTimeWarp(Dice[] dice){
         if(moveEvaluation.getWeightOfbestMove(dice)< 4)
@@ -75,7 +79,7 @@ public class AIPlayer extends Player{
             return false;
     }
     public GameColor selectRealm(LinkedList<GameColor> availableRealms){
-        GameColor [] remRealms = (GameColor[]) availableRealms.toArray();
+        GameColor [] remRealms = availableRealms.toArray(GameColor[]::new);
         double chosenWeight =0;
         double tempWeight;
         GameColor chosenRealm = null;
@@ -85,7 +89,9 @@ public class AIPlayer extends Player{
                 chosenWeight = tempWeight;
                 chosenRealm = remRealms[i];
             }
+            MoveEvaluation.resetNoWorlds();
         }
+        System.out.println("Chosen Realm: "+chosenRealm);
         return chosenRealm;
     }
 
@@ -93,7 +99,8 @@ public class AIPlayer extends Player{
         return pastMoves;
     }
 
-    public MoveEvaluation getRealmsDecision() {
+    public MoveEvaluation getMoveEvaluation() {
         return moveEvaluation;
     }
+
 }

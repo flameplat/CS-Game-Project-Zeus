@@ -16,6 +16,9 @@ public class ColorBonus extends Collectibles implements Comparable<ColorBonus> {
     public ColorBonus(GameColor gameColor) {
         this.gameColorBonus = gameColor;
     }
+    public ColorBonus(ColorBonus colorBonus){
+        this.gameColorBonus=colorBonus.gameColorBonus;
+    }
     //-----------------------Methods-----------------------//
 
     public static String getInstruction() {

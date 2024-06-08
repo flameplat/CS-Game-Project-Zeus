@@ -125,6 +125,8 @@ public class YellowRealm extends Realm {
         return collectibles;
     }
 
+
+
     @Override
     public boolean attack(Move move) {
         if (isRealmAvailable()) {
