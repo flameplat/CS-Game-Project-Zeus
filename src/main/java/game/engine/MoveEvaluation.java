@@ -2,10 +2,12 @@ package game.engine;
 
 import game.collectibles.*;
 import game.creatures.Dragon;
+import game.dice.Dice;
 import game.dice.YellowDice;
 import game.realms.*;
 import game.utilities.GameColor;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class MoveEvaluation {
@@ -212,6 +214,101 @@ public class MoveEvaluation {
         double moveWeight = scoreWeight + rewardWeight;
         return moveWeight;
     }
+    public double getWeightOfMove(Move move){
+        double weight = 0;
+        GameColor realm = move.getDice().getRealm();
+        if(realm == GameColor.RED ){
+            weight = evaluateRedMove(move);
+        }
+        if(realm == GameColor.GREEN){
+            weight = evaluateGreenMove(move);
+        }
+        if(realm == GameColor.BLUE){
+            weight = evaluateBlueMove(move);
+        }
+        if(realm == GameColor.MAGENTA){
+            weight = evaluateMagentaMove(move);
+        }
+        if(realm == GameColor.YELLOW){
+            weight = evaluateYellowMove(move);
+        }
+        return weight;
+    }
+     public double getWeightOfDice(Dice die){
+        double selectedWeight=0;
+        double tempWeight;
+        Move[] possibleMoves = guiGameController.getPossibleMovesForADie(this, die);
+        for(int i=0; i<possibleMoves.length;i++){
+            tempWeight = getWeightOfMove(possibleMoves[i]);
+            if(selectedWeight<tempWeight){
+                selectedWeight = tempWeight;
+            }
+        }
+        return selectedWeight*getTurnWeight(die);
+    }
+    private double getTurnWeight(Dice selecteddDice) {
+        int[] arrayOfAvailableDice = new int[guiGameController.getAvailableDice().length];
+        for(int i=0; i<guiGameController.getAvailableDice().length;i++){
+            arrayOfAvailableDice[i] = guiGameController.getAvailableDice()[i].getValue();
+        }
+        Arrays.sort(arrayOfAvailableDice);
+        double value;
+        int Turn= guiGameController.gameStatus.getTurn();
+        CurrentStatus status = guiGameController.gameStatus.getGameStatus();
+        if(status == CurrentStatus.ARCANE_BOOST || status == CurrentStatus.PASSIVE_TURN || Turn == 3){
+            value = 1;
+        } 
+        else{// math bitch
+            if(arrayOfAvailableDice.length == 6){
+                value = 1-(0.15*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+              }
+            if(arrayOfAvailableDice.length == 5){
+              value = 1-(0.2*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+            }
+            if(arrayOfAvailableDice.length == 4){
+                value = 1-(0.25*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+              }
+            if(arrayOfAvailableDice.length == 3){
+                value = 1-(0.35*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+              }
+            if(arrayOfAvailableDice.length == 2){
+                value = 1-(0.5*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+              }
+            else
+                value = 1;
+        }
+        return value;
+    }
+
+    //helper method used in getTurnWeight method
+    private static int findIndex(int[] array, int value) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public double[] getWeightOfAllDice(Dice [] diceArray){
+        double [] weights = new double[diceArray.length];
+        for(int i=0;i<weights.length;i++){
+           weights[i] = getWeightOfDice((Dice)diceArray[i]);
+        }
+        return weights;
+    }
+    public Move bestMove(Dice [] diceArray){
+        double[] weights = getWeightOfAllDice(diceArray);
+        int bestWeight =0;
+        int tempWeight;
+        Move bestMove;
+        for(int i=0;i<weights.length;i++){
+            tempWeight = (int) weights[i];
+            if(bestWeight<tempWeight){
+                bestWeight = tempWeight;
+                
+            }
+        }
+    }
 
     public double getRewardEvaluation(Collectibles collectible) {
         if (collectible instanceof ArcaneBoost) {
@@ -221,8 +318,14 @@ public class MoveEvaluation {
             // return a value specific to TimeWarp
             return 0;
         } else if (collectible instanceof ElementalCrest) {
-            // return a value specific to ElementalCrest
-            return 30;
+            int minScore = realms[0].getTotalScore();
+        for (int i = 0; i < 5; i++) {
+            if (realms[i].getTotalScore() < minScore) {
+                minScore = realms[i].getTotalScore();
+            }
+        }
+        return (player.gameScore.getTotalElementalCrests() + 1) *minScore
+         * (7- guiGameController.gameStatus.getRound());
         } else if (collectible instanceof ColorBonus) {
             // return a value specific to colorBonus
             GameColor colorBonusColor = ((ColorBonus) collectible).getColor();

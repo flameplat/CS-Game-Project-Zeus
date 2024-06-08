@@ -20,7 +20,7 @@ public class Player {
     private static final Map<String, Integer> collectibleCounters = new HashMap<>();
     private static int id = 1;
     private final ScoreSheet scoreSheet;
-    private final GameScore gameScore;
+    protected final GameScore gameScore;
     private String name;
     //----------------------Attributes--------------------------//
     private Realm[] realms;
