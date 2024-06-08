@@ -234,6 +234,20 @@ public class MoveEvaluation {
         }
         return weight;
     }
+    public Move getMoveOfHighestWeight(Dice die){
+        double selectedWeight=0;
+        double tempWeight;
+        Move selectedMove;
+        Move[] possibleMoves = guiGameController.getPossibleMovesForADie(this, die);
+        for(int i=0; i<possibleMoves.length;i++){
+            tempWeight = getWeightOfMove(possibleMoves[i]);
+            if(selectedWeight<tempWeight){
+                selectedWeight = tempWeight;
+                selectedMove = possibleMoves[i];
+            }
+        }
+        return selectedMove;
+    }
      public double getWeightOfDice(Dice die){
         double selectedWeight=0;
         double tempWeight;
@@ -242,6 +256,7 @@ public class MoveEvaluation {
             tempWeight = getWeightOfMove(possibleMoves[i]);
             if(selectedWeight<tempWeight){
                 selectedWeight = tempWeight;
+                
             }
         }
         return selectedWeight*getTurnWeight(die);
@@ -296,18 +311,35 @@ public class MoveEvaluation {
         }
         return weights;
     }
+    public double getWeightOfbestMove(Dice[] diceArray){
+        double[] weights = getWeightOfAllDice(diceArray);
+        int bestWeight =0;
+        int tempWeight;
+        for(int i=0;i<weights.length;i++){
+            tempWeight = (int) weights[i];
+            if(bestWeight<tempWeight){
+                bestWeight = tempWeight;
+            }
+        }
+        return bestWeight;
+
+    }
     public Move bestMove(Dice [] diceArray){
         double[] weights = getWeightOfAllDice(diceArray);
         int bestWeight =0;
         int tempWeight;
+        Dice bestDice = null;
         Move bestMove;
         for(int i=0;i<weights.length;i++){
             tempWeight = (int) weights[i];
             if(bestWeight<tempWeight){
                 bestWeight = tempWeight;
-                
+                bestDice = diceArray[i];
             }
         }
+        bestMove = getMoveOfHighestWeight(bestDice);
+        return bestMove;
+
     }
 
     public double getRewardEvaluation(Collectibles collectible) {

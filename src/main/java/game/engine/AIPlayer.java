@@ -5,7 +5,6 @@ import game.gui.GUIGameController;
 import game.utilities.GameColor;
 
 import java.util.LinkedList;
-import java.util.Random;
 
 public class AIPlayer extends Player{
     private Move selectedMove;
@@ -24,17 +23,10 @@ public class AIPlayer extends Player{
     // The AI player should call the methods of the GUI to select the die.
     public void selectDice(Dice[] diceArray){
         System.out.printf("During round %d in %s :%n",guiGameController.gameStatus.getRound(),guiGameController.gameStatus.getGameStatus());
-
-        Dice selectedDie=diceArray[r.nextInt(diceArray.length)];
-        Move[] possibleMoves=guiGameController.getPossibleMovesForADie(this,selectedDie);
-        selectedMove=possibleMoves[r.nextInt(possibleMoves.length)];
-
-
-
-
+        selectedMove=moveEvaluation.bestMove(diceArray);
+        Dice selectedDie = selectedMove.getDice();
         System.out.println("AI has chosen:  "+selectedDie);
         System.out.println("-".repeat(50));
-
         if (selectedDie instanceof RedDice) {
             guiGameController.redDiceButtonClick();
         } else if (selectedDie instanceof WhiteDice) {
@@ -71,13 +63,16 @@ public class AIPlayer extends Player{
         this.guiGameController = guiGameController;
     }
     public boolean useTimeWarp(Dice[] dice){
-        //Do your decision here
-        if(moveEvaluation.getWeightOfAllDice(dice))
+        if(moveEvaluation.getWeightOfbestMove(dice)< 4)
         return true;
+        else
+            return false; 
     }
     public boolean useArcaneBoost(Dice[] dice){
-        //Do your decision here
+        if(moveEvaluation.getWeightOfbestMove(dice)>10 && guiGameController.gameStatus.getRound() !=6)
         return true;
+        else
+            return false;
     }
     public GameColor selectRealm(LinkedList<GameColor> availableRealms){
         GameColor [] remRealms = (GameColor[]) availableRealms.toArray();
@@ -92,10 +87,6 @@ public class AIPlayer extends Player{
             }
         }
         return chosenRealm;
-    }
-    /*Essence Bonus Player */
-    void playEssenceBonus(){
-        
     }
 
     public LinkedList<Move> getPastMoves() {
