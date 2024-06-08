@@ -75,7 +75,8 @@ public class Dragon extends Creature {
 
     @Override
     public String toString() {
-        return "Dragon";
+        //TODO:Remove dragon number for test
+        return "Dragon "+ dragonNumber;
     }
 
     public Object[] getHealth() {

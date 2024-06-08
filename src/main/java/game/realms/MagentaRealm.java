@@ -67,7 +67,7 @@ public class MagentaRealm extends Realm {
         return counterHits;
     }
 
-    private Collectibles[] getRewardsProperties() {
+    public Collectibles[] getRewardsProperties() {
         Properties properties = new Properties();
         Collectibles[] rewardProperties = new Collectibles[11];
         try {
@@ -205,8 +205,9 @@ public class MagentaRealm extends Realm {
     }
 
     @Override
-    public double getWeight(Move move) {
-        return 0;
+    public int getFakeScore(Move move) {
+        int attackScore = move.getDice().getValue();
+        return attackScore;
     }
 
     public int[] getScoreValues(){

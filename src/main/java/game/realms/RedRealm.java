@@ -128,8 +128,8 @@ public class RedRealm extends Realm {
                         dragon = (Dragon) m.getCreature();
                     }
                 }
+                move.execute();
                 redMoves.remove(move);
-
                 for (int i = 0; i < dragon.getHealth().length; i++) {
                     if (!dragon.getHealth()[i].equals("X")
                             && (int) dragon.getHealth()[i] == move.getDice().getValue()) {
@@ -317,7 +317,7 @@ public class RedRealm extends Realm {
     }
 
     @Override
-    public double getWeight(Move move) {
+    public int getFakeScore(Move move) {
         return 0;
     }
 

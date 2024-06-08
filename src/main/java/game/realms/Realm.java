@@ -1,6 +1,6 @@
 package game.realms;
 
-import game.collectibles.Collectibles;
+import game.collectibles.*;
 import game.creatures.Creature;
 import game.dice.Dice;
 import game.engine.Move;
@@ -36,6 +36,6 @@ public abstract class Realm {
     public abstract Move[] getRealmMoves();
 
     public abstract Creature getCreature(Dice dice);
-    public abstract double getWeight(Move move);
+    public abstract int getFakeScore(Move move);
 
 }

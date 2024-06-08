@@ -213,8 +213,9 @@ public class GreenRealm extends Realm {
     }
 
     @Override
-    public double getWeight(Move move) {
-        return 0;
+    public int getFakeScore(Move move) {
+        int prev=(count==0)?0:score[count-1];
+        return score[count]-prev;
     }
 
     public LinkedList<Guardian> getAliveCreatures() {

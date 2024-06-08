@@ -21,11 +21,11 @@ public class Move implements Comparable<Move> {
     public Creature getCreature() {
         return creature;
     }
-
     @Override
     public String toString() {
-        return "[" + dice.toString() + ", " + creature.toString() + "]";
+        return "[" + dice.toString() + ", " + creature.toString() + ", "+isExecuted+"]";
     }
+    // return "[" + dice.toString() + ", " + creature.toString() + "]";
 
     public Dice getDice() {
         return dice;
@@ -51,5 +51,12 @@ public class Move implements Comparable<Move> {
         }
         Move other = (Move) o;
         return dice.equals(other.getDice()) && creature.equals(other.getCreature());
+    }
+    private boolean isExecuted;
+    public boolean isExecuted(){
+        return isExecuted;
+    }
+    public void execute(){
+        isExecuted=true;
     }
 }

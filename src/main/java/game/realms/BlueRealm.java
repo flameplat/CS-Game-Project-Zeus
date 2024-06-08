@@ -113,8 +113,9 @@ public class BlueRealm extends Realm{
     }
 
     @Override
-    public double getWeight(Move move) {
-        return 0;
+    public int getFakeScore(Move move) {
+        int prev=(hitcount==0)?0:scoreSheetValues[hitcount-1];
+        return scoreSheetValues[hitcount]-prev;
     }
 
     @Override
@@ -236,7 +237,7 @@ public class BlueRealm extends Realm{
         return scoreProperties;
     }
 
-    private Collectibles[] getRewardsProperties() {
+    public Collectibles[] getRewardsProperties() {
         Properties properties = new Properties();
         Collectibles []rewardProperties=new Collectibles[11] ;
         try{
