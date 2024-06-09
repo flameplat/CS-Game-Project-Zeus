@@ -206,7 +206,7 @@ public class MoveEvaluation {
 
     public double evaluateBlueMove(Move move) {
         if(blueRealm.isRealmAvailable()){
-            Collectibles[] rewards = blueRealm.getRewardsProperties();
+            Collectibles[] rewards = blueRealm.getCollectibles();
             int hitCount = blueRealm.getHitcount();
             double rewardWeight = 0;
             LinkedList<Move> newPastMoves=new LinkedList<>(pastMoves);
