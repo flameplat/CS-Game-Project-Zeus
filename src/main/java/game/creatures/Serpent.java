@@ -10,6 +10,10 @@ public class Serpent extends Creature{
         this.status=status;
         this.headNumber=headNumber;
     }
+    public Serpent(Serpent serpent){
+        this.status=serpent.status;
+        this.headNumber=serpent.headNumber;
+    }
     public Serpent(){
         this.status=true;
     }

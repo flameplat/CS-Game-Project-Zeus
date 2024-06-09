@@ -8,6 +8,10 @@ public class Phoenix extends Creature {
         this.status = true;
         totalHits = 0;
     }
+    public Phoenix(Phoenix phoenix){
+        this.status = true;
+        totalHits = 0;
+    }
 
     @Override
     public boolean attack() {

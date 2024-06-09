@@ -63,11 +63,11 @@ public class MagentaRealm extends Realm {
         }
         this.realmPossibleMoves = list.toArray(Move[]::new);
     }
-    public int getCounterHits(){
+    public int getCounterHits() {
         return counterHits;
     }
 
-    private Collectibles[] getRewardsProperties() {
+    public Collectibles[] getRewardsProperties() {
         Properties properties = new Properties();
         Collectibles[] rewardProperties = new Collectibles[11];
         try {
@@ -203,12 +203,21 @@ public class MagentaRealm extends Realm {
         }
         return null;
     }
+
+    @Override
+    public int getFakeScore(Move move) {
+        int attackScore = move.getDice().getValue();
+        return attackScore;
+    }
+
     public int[] getScoreValues(){
         return score;
     }
     public String[] getRewardValues(){
         return rewardValues;
     }
-
+    public Collectibles[] getCollectibles(){
+        return collectibles;
+    }
 
 }

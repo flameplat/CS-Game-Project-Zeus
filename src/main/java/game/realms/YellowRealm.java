@@ -46,9 +46,8 @@ public class YellowRealm extends Realm {
         }
     }
 
-
     // -----------------------Methods-----------------------//
-    private Collectibles[] getRewardsProperties() {
+    public Collectibles[] getRewardsProperties() {
         Properties properties = new Properties();
         Collectibles[] rewardProperties = new Collectibles[11];
         try {
@@ -71,6 +70,7 @@ public class YellowRealm extends Realm {
         }
         return rewardProperties;
     }
+    private int imaginaryHitCount;
 
     @Override
     public String getName() {
@@ -121,6 +121,11 @@ public class YellowRealm extends Realm {
         return false;
 
     }
+    public Collectibles[] getCollectibles(){
+        return collectibles;
+    }
+
+
 
     @Override
     public boolean attack(Move move) {
@@ -146,6 +151,7 @@ public class YellowRealm extends Realm {
         }
 
     }
+
 
     @Override
     public int getTotalScore() {
@@ -186,6 +192,17 @@ public class YellowRealm extends Realm {
             return lion;
         }
         return null;
+    }
+
+    @Override
+    public int getFakeScore(Move move) {
+       //Score
+        int attackScore = move.getDice().getValue() * scoreMultiplier[countHits];
+        return attackScore;
+    }
+
+    public int[] getScoreMultiplier(){
+        return scoreMultiplier;
     }
 
 

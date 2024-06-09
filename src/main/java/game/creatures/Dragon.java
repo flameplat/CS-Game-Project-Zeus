@@ -14,7 +14,13 @@ public class Dragon extends Creature {
         isAlive = true;
         this.score = score;
         this.dragonNumber = dragonNumber;
-
+    }
+    public Dragon(Dragon dragon){
+        this.health = new Object[dragon.health.length];
+        System.arraycopy(dragon.health, 0, health, 0, health.length);
+        isAlive = true;
+        this.score = dragon.score;
+        this.dragonNumber = dragon.dragonNumber;
     }
 
     public Dragon(int dragonNumber) {
@@ -75,8 +81,9 @@ public class Dragon extends Creature {
 
     @Override
     public String toString() {
-        return "Dragon";
+        return "Dragon ";
     }
+
 
     public Object[] getHealth() {
         return health;

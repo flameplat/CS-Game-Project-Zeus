@@ -1,14 +1,14 @@
 package game.engine;
 
-import game.creatures.Creature;
-import game.dice.Dice;
+import game.creatures.*;
+import game.dice.*;
 import game.utilities.ColorComparator;
 
 
 public class Move implements Comparable<Move> {
     // -----------------------Attributes-----------------------//
-    private final Creature creature;
-    private final Dice dice;
+    private Creature creature;
+    private Dice dice;
 
 
     // -----------------------Constructor-----------------------//
@@ -16,16 +16,45 @@ public class Move implements Comparable<Move> {
         this.dice = dice;
         this.creature = creature;
     }
+    public Move(Move move){
+
+        if (move.getDice() instanceof RedDice) {
+            this.dice = new RedDice((RedDice) move.getDice());
+        } else if (move.getDice() instanceof GreenDice) {
+            this.dice = new GreenDice((GreenDice) move.getDice());
+        } else if (move.getDice() instanceof BlueDice) {
+            this.dice = new BlueDice((BlueDice)move.getDice());
+        } else if (move.getDice() instanceof MagentaDice) {
+            this.dice = new MagentaDice((MagentaDice) move.getDice());
+        } else if (move.getDice() instanceof YellowDice) {
+            this.dice = new YellowDice((YellowDice) move.getDice());
+        } else if (move.getDice() instanceof WhiteDice) {
+            this.dice = new WhiteDice((WhiteDice) move.getDice());
+        }
+        if(move.getCreature() instanceof Dragon) {
+            this.creature = new Dragon((Dragon) move.getCreature());
+        } else if(move.getCreature() instanceof Guardian) {
+            this.creature = new Guardian((Guardian) move.getCreature());
+        } else if(move.getCreature() instanceof Lion) {
+            this.creature = new Lion((Lion) move.getCreature());
+        } else if(move.getCreature() instanceof Phoenix) {
+            this.creature = new Phoenix((Phoenix) move.getCreature());
+        } else if(move.getCreature() instanceof Serpent) {
+            this.creature = new Serpent((Serpent) move.getCreature());
+        }
+        this.isExecuted= move.isExecuted;
+
+    }
 
     // -----------------------Methods-----------------------//
     public Creature getCreature() {
         return creature;
     }
-
     @Override
     public String toString() {
-        return "[" + dice.toString() + ", " + creature.toString() + "]";
+        return "[" + dice.toString() + ", " + creature.toString() + ", "+isExecuted+"]";
     }
+    // return "[" + dice.toString() + ", " + creature.toString() + "]";
 
     public Dice getDice() {
         return dice;
@@ -51,5 +80,12 @@ public class Move implements Comparable<Move> {
         }
         Move other = (Move) o;
         return dice.equals(other.getDice()) && creature.equals(other.getCreature());
+    }
+    private boolean isExecuted;
+    public boolean isExecuted(){
+        return isExecuted;
+    }
+    public void execute(){
+        isExecuted=true;
     }
 }

@@ -138,6 +138,7 @@ public class GreenRealm extends Realm {
                         if (guardian.getScore() == move.getDice().getValue()) {
                             guardian.attack();
                             count++;
+                            move.execute();
                             return true;
                         }
                     }
@@ -212,6 +213,11 @@ public class GreenRealm extends Realm {
         return null;
     }
 
+    @Override
+    public int getFakeScore(Move move) {
+        int prev=(count==0)?0:score[count-1];
+        return score[count]-prev;
+    }
 
     public LinkedList<Guardian> getAliveCreatures() {
         LinkedList<Guardian> aliveGardians = new LinkedList<>();

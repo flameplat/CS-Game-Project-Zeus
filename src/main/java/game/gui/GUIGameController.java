@@ -633,6 +633,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 if(useTimeWarp){
                     timeWarpButtonClick();
                 }
+                else{
+                    ((AIPlayer) activePlayer).selectDice(filterDiceWithPossibleMoves(activePlayer,getAvailableDice()).toArray(Dice[]::new));
+                }
             }
             else{
                 enableTimeWarpButton();
@@ -737,6 +740,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         updateSceneStatus();
         resetDice();
         disableArcaneBoostButton();
+        manageTurnCycle();
     }
 
     private void handleArcaneBoost() {
@@ -837,7 +841,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             disableArcaneBoostButton();
         }
         if(currentPlayer.isAI()){
-            ((AIPlayer)currentPlayer).selectDice(filterDiceWithPossibleMoves(activePlayer,getAvailableDice()).toArray(Dice[]::new));
+            ((AIPlayer)currentPlayer).selectDice(filterDiceWithPossibleMoves(currentPlayer,getAvailableDice()).toArray(Dice[]::new));
         }
         updateScoreSheets();
     }
@@ -884,6 +888,12 @@ public class GUIGameController extends CLIGameController implements Initializabl
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[1])[0]);
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
+            if(currentPlayer.isAI()){
+                System.out.println(currentPlayer.getName()+" is AI");
+            }
+            else{
+                System.out.println(currentPlayer.getName()+" is not AI");
+            }
             manageTurnCycle();
         } catch (InvalidMoveException e) {
             gameText.setText("There are no possible moves for " + refDiceArray[1].getName());
@@ -927,6 +937,12 @@ public class GUIGameController extends CLIGameController implements Initializabl
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
             manageTurnCycle();
+            if(currentPlayer.isAI()){
+                System.out.println(currentPlayer.getName()+" is AI");
+            }
+            else{
+                System.out.println(currentPlayer.getName()+" is not AI");
+            }
 
         } catch (InvalidMoveException e) {
             gameText.setText("There are no possible moves for " + refDiceArray[3].getName());
@@ -946,6 +962,12 @@ public class GUIGameController extends CLIGameController implements Initializabl
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
             manageTurnCycle();
+            if(currentPlayer.isAI()){
+                System.out.println(currentPlayer.getName()+" is AI");
+            }
+            else{
+                System.out.println(currentPlayer.getName()+" is not AI");
+            }
         } catch (InvalidMoveException e) {
             gameText.setText("There are no possible moves for " + refDiceArray[4].getName());
         }
@@ -964,6 +986,12 @@ public class GUIGameController extends CLIGameController implements Initializabl
             disableGrid(whiteDieParent);
             disableTimeWarpButton();
             Dice selectedDie = diceArray[5];
+            if(currentPlayer.isAI()){
+                System.out.println(currentPlayer.getName()+" is AI");
+            }
+            else{
+                System.out.println(currentPlayer.getName()+" is not AI");
+            }
             arcanePrismEnabled = true;
             refDiceArray = new Dice[]{
                     new RedDice(selectedDie.getValue()),
@@ -989,6 +1017,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 yellowDiceNumber2.setText(String.valueOf(selectedDie.getValue()));
             }
             if(currentPlayer.isAI()){
+                System.out.println("AI pressed White Dice");
                 ((AIPlayer) currentPlayer).selectDice(filterDiceWithPossibleMoves(currentPlayer,refDiceArray).toArray(Dice[]::new));
             }
         } catch (NoAvailableMovesException e) {
@@ -1056,14 +1085,20 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (move.getDice().getRealm() == GameColor.WHITE) {
                 return false;
             }
+
             Realm realm = player.getRealm(move.getDice());
             realm.attack(move);
             performAntiCheatServiceChecks(player);
             if (realm.checkReward()) {
                 processRewardQueue(player, realm.getReward());
             }
+            if(player.isAI()){
+                ((AIPlayer)player).getMoveEvaluation().addMove(move);
+            }
             updateScoreSheets();
+            updateSceneStatus();
             return true;
+
 
         } catch (NullPointerException e) {
             System.err.println(e.getMessage());
@@ -1318,6 +1353,8 @@ public class GUIGameController extends CLIGameController implements Initializabl
     protected void endGame() {
         gameGuide.closeScanner();
         sc.close();
+        activePlayer.getScoreSheet().displayScoreSheet();
+        passivePlayer.getScoreSheet().displayScoreSheet();
         sceneManager.showEndGame();
     }
 }

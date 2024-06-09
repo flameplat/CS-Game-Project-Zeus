@@ -8,6 +8,10 @@ public class Lion extends Creature {
         this.status = true;
         this.totalHits = 0;
     }
+    public Lion(Lion lion){
+        this.status=true;
+        this.totalHits=lion.totalHits;
+    }
 
     @Override
     public boolean attack() {

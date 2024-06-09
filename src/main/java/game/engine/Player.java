@@ -11,6 +11,7 @@ import game.realms.*;
 import game.utilities.GameColor;
 import javafx.scene.image.Image;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class Player {
     private static final Map<String, Integer> collectibleCounters = new HashMap<>();
     private static int id = 1;
     private final ScoreSheet scoreSheet;
-    private final GameScore gameScore;
+    protected final GameScore gameScore;
     private String name;
     //----------------------Attributes--------------------------//
     private Realm[] realms;

@@ -12,6 +12,10 @@ public class WhiteDice extends Dice {
         this.value = value;
         this.status = DiceStatus.AVAILABLE;
     }
+    public WhiteDice(WhiteDice whiteDice){
+        this.value = whiteDice.value;
+        this.status = DiceStatus.AVAILABLE;
+    }
 
     public WhiteDice() {
         this(1);

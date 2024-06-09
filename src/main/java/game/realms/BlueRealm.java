@@ -91,6 +91,9 @@ public class BlueRealm extends Realm{
         return serpent2[serpent2.length - 1].isAlive();
 
     }
+    public Collectibles[] getCollectibles(){
+        return rewardProperties;
+    }
     @Override
     public int getTotalScore(){
         int score=0;
@@ -111,6 +114,13 @@ public class BlueRealm extends Realm{
     public Creature getCreature(Dice dice) {
         return serpent1[4];
     }
+
+    @Override
+    public int getFakeScore(Move move) {
+        int prev=(hitcount==0)?0:scoreSheetValues[hitcount-1];
+        return scoreSheetValues[hitcount]-prev;
+    }
+
     @Override
     public int getNoElementalCrests() {
         return noElementalCrests;
@@ -170,8 +180,10 @@ public class BlueRealm extends Realm{
         }
     }
 
+
     @Override
-    public boolean attack(Move move) {//Can change this to use next possibilemove method//
+    public boolean attack(Move move) {
+        //Can change this to use next possibilemove method//
         if(isSerpent1Alive()){
             for(int i=0;i<S1HeadNumber;i++){
                 if ((move.getDice().getValue()>=serpent1[i].getHeadNumber())&&(serpent1[i].isAlive())){
@@ -228,7 +240,7 @@ public class BlueRealm extends Realm{
         return scoreProperties;
     }
 
-    private Collectibles[] getRewardsProperties() {
+    public Collectibles[] getRewardsProperties() {
         Properties properties = new Properties();
         Collectibles []rewardProperties=new Collectibles[11] ;
         try{
@@ -249,7 +261,6 @@ public class BlueRealm extends Realm{
             rewardProperties[8]=null;
             rewardProperties[9]=new ColorBonus(GameColor.MAGENTA);
             rewardProperties[10]=new TimeWarp();
-
         }
         for (int i = 0; i < 11; i++) {
             String reward = properties.getProperty("hit"+(i+1)+"Reward");

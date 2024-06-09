@@ -15,6 +15,10 @@ public class RedDice extends Dice {
         this.value = value;
         this.status = DiceStatus.AVAILABLE;
     }
+    public RedDice(RedDice redDice){
+        this.value = redDice.value;
+        this.status = DiceStatus.AVAILABLE;
+    }
 
     public RedDice() {
         this(1);
