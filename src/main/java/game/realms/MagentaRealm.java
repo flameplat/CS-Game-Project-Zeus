@@ -63,7 +63,7 @@ public class MagentaRealm extends Realm {
         }
         this.realmPossibleMoves = list.toArray(Move[]::new);
     }
-    public int getCounterHits(){
+    public int getCounterHits() {
         return counterHits;
     }
 
