@@ -41,6 +41,12 @@ public class PlayerDataController implements Initializable,GameController {
     @FXML
     private ImageView imageView;
 
+    /**
+     * Initializes the controller after its root element has been completely processed.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Image mainBG=new Image(Objects.requireNonNull(getClass().getResource("/images/Wizards.jpeg")).toExternalForm());
@@ -53,21 +59,43 @@ public class PlayerDataController implements Initializable,GameController {
         submitLabel.setMouseTransparent(true);
 
     }
+    /**
+     * Adds a hover effect to the given ImageView by setting a DropShadow effect when the mouse enters the image view
+     * and removing the effect when the mouse exits the image view.
+     *
+     * @param imageView The ImageView to apply the hover effect to.
+     */
     private void addHoverEffect(ImageView imageView) {
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.CYAN);
         shadow.setRadius(10);
-
         imageView.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> imageView.setEffect(shadow));
         imageView.addEventHandler(MouseEvent.MOUSE_EXITED, e -> imageView.setEffect(null));
     }
 
+    /**
+     * Sets the SceneManager for the PlayerDataController's scene management.
+     *
+     * @param sceneManager The SceneManager object used for scene management.
+     */
     public void setSceneManager(SceneManager sceneManager){
         this.sceneManager=sceneManager;
     }
+    /**
+     * Sets the name for the player.
+     * If playersSubmitted is less than 1, it sets the name for player1.
+     * If the game mode is SINGLEPLAYER, it creates an AIPlayer for player2 with the name "Zeus".
+     * If playersSubmitted is greater than or equal to 1, it sets the name for player2.
+     *
+     * @throws InvalidPlayerNameException if the name is empty or contains special characters
+     */
     public void setPlayerName() {
         try {
             if (playersSubmitted < 1) {
+                int maxLen=15;
+                if(textField.getText().length()>maxLen){
+                    throw new InvalidPlayerNameException("Name is too long. Max: "+maxLen+" characters");
+                }
                 player1= new Player(textField.getText());
                 errorLabel.setText("");
                 if(MainMenuController.getGameMode()== GameMode.SINGLEPLAYER){
@@ -83,7 +111,7 @@ public class PlayerDataController implements Initializable,GameController {
                 if (player1 != null && textField.getText().equals(player1.getName())) {
                     throw new InvalidPlayerNameException("Name already in use!");
                 }
-                int maxLen=20;
+                int maxLen=10;
                 if(textField.getText().length()>maxLen){
                     throw new InvalidPlayerNameException("Name is too long. Max: "+maxLen+" characters");
                 }
@@ -97,9 +125,19 @@ public class PlayerDataController implements Initializable,GameController {
         }
 
     }
+    /**
+     * Retrieves the instance of the player 1.
+     *
+     * @return the Player instance representing player 1
+     */
     public static Player getPlayer1(){
         return player1;
     }
+    /**
+     * Retrieves the player object for Player 2.
+     *
+     * @return The Player object for Player 2.
+     */
     public static Player getPlayer2(){
         return player2;
     }

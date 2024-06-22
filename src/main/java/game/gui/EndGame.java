@@ -210,8 +210,33 @@ public class EndGame implements Initializable,RealmController {
 
 
     }
+    /**
+     * Updates the end game details based on the current player information.
+     * If both player1 and player are not null, it sets the players and updates the corresponding labels for both players.
+     */
+    public void updateEndGame(){
+        if(player1!=null && player2!=null){
+            setPlayers(player1,player2);
+        }
+    }
+    /**
+     * Represents a player in the game.
+     */
+    private Player player1;
+    /**
+     * Represents a player in the game.
+     */
+    private Player player2;
 
+    /**
+     * Sets the players and updates the GUI with their information.
+     *
+     * @param player1 The first player.
+     * @param player2 The second player.
+     */
     public void setPlayers(Player player1,Player player2){
+        this.player1=player1;
+        this.player2=player2;
         GameScore gameScorePlayer1 = player1.getGameScore();
         player1Wizard.setImage(player1.getWizardImage());
         player1Label.setText(player1.getName());

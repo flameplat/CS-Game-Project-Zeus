@@ -27,6 +27,10 @@ public class RedRealm extends Realm {
     private LinkedList<Collectibles> realmRewards;
     private int[] dragonsScore;
 
+    /**
+     * Represents a Red Realm in the game.
+     * Inherits from the Realm class and contains methods and properties specific to the Red Realm.
+     */
     // -----------------------Constructor-----------------------//
     public RedRealm() {
         this.dragonsScore = new int[4];
@@ -37,6 +41,11 @@ public class RedRealm extends Realm {
         this.redMoves = redMovespopulate();
     }
 
+    /**
+     * Populates the linked list of red moves.
+     *
+     * @return The populated linked list of red moves.
+     */
     // -----------------------Methods-----------------------//
     private LinkedList<Move> redMovespopulate() {
         LinkedList<Move> temp = new LinkedList<>();
@@ -69,6 +78,11 @@ public class RedRealm extends Realm {
         return temp;
     }
 
+    /**
+     * Initializes an array of Dragon objects with specific health attributes and scores.
+     *
+     * @return an array of Dragon objects
+     */
     // ENTER VALUES FOR:FACE,WINGS,TAIL,HEART
     // NA->0
     private Dragon[] initDragons() {
@@ -80,6 +94,11 @@ public class RedRealm extends Realm {
         return dragons;
     }
 
+    /**
+     * Retrieves the rewards properties from the configuration files.
+     *
+     * @return an array containing the reward properties
+     */
     private Object[] getRewardsProperties() {
         Properties properties = new Properties();
         Properties dragonScoreProperties = new Properties();
@@ -118,6 +137,12 @@ public class RedRealm extends Realm {
         return rewardProperties;
     }
 
+    /**
+     * Attacks the opponent's creature with the given move.
+     *
+     * @param move The move containing the creature and dice used for the attack.
+     * @return true if the attack is successful, false otherwise.
+     */
     // Gets from Move: Creature and dice
     public boolean attack(Move move) {
         if (isRealmAvailable()) {
@@ -158,18 +183,32 @@ public class RedRealm extends Realm {
         return false;
     }
 
+    /**
+     * Returns the name of the realm.
+     * @return The name of the realm as a String.
+     */
     // get the name of the realm
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * Returns the color of the realm.
+     *
+     * @return the color of the realm
+     */
     // get the realm color
     @Override
     public GameColor getColor() {
         return REALM_GAME_COLOR;
     }
 
+    /**
+     * Checks if there are any alive dragons in the realm.
+     *
+     * @return true if there is at least one alive dragon, false otherwise.
+     */
     // if possible moves array length ==0 there
     @Override
     public boolean isRealmAvailable() {
@@ -181,6 +220,13 @@ public class RedRealm extends Realm {
         return flage;
     }
 
+    /**
+     * Removes a collectible from the collectibles array at the specified index.
+     * Replaces the collectible at the specified index with "X ".
+     *
+     * @param k the index of the collectible to be removed
+     * @return an array containing the updated collectibles
+     */
     private Object[] removeCollectible(int k) {
         LinkedList<Object> newCollectibles = new LinkedList<>();
         for (int i = 0; i < collectibles.length; i++) {
@@ -192,6 +238,11 @@ public class RedRealm extends Realm {
         return newCollectibles.toArray();
     }
 
+    /**
+     * Checks if there is a reward available in the RedRealm.
+     *
+     * @return true if a reward is available, otherwise false
+     */
     @Override
     public boolean checkReward() {
         this.realmRewards = new LinkedList<>();
@@ -233,6 +284,11 @@ public class RedRealm extends Realm {
         return flage;
     }
 
+    /**
+     * Retrieves the rewards obtained in the realm.
+     *
+     * @return An array of Collectibles representing the rewards obtained in the realm.
+     */
     @Override
     public Collectibles[] getReward() {
 
@@ -240,6 +296,15 @@ public class RedRealm extends Realm {
 
     }
 
+    /**
+     * Calculates the total score of the RedRealm.
+     * This method iterates through each Dragon in the RedRealm's list of dragons and checks if the health of the Dragon
+     * matches a specific pattern stored in the variable get_score. If the health matches, the score of the Dragon is added
+     * to the totalRealmScore1 variable. The totalRealmScore1 is then assigned to the totalRealmScore variable. Finally,
+     * the method returns the totalRealmScore.
+     *
+     * @return the total score of the RedRealm.
+     */
     @Override
     public int getTotalScore() {
         String get_score = "XXXX";
@@ -257,10 +322,24 @@ public class RedRealm extends Realm {
         return totalRealmScore;
     }
 
+    /**
+     *
+     * This method returns the number of elemental crests associated with the realm.
+     *
+     * @return The number of elemental crests.
+     */
     public int getNoElementalCrests() {
         return noElementalCrests;
     }
 
+    /**
+     * Returns a formatted string representation of the RedRealm object.
+     *
+     * The returned string contains the information about the Pyroclast Dragon in the Red Realm,
+     * including the dragon's health, collectibles, and dragons score.
+     *
+     * @return a formatted string representation of the RedRealm object
+     */
     @Override
     public String toString() {
 
@@ -281,22 +360,47 @@ public class RedRealm extends Realm {
                 dragons[1].getHealth()[3], dragons[2].getHealth()[3], dragons[3].getHealth()[3], collectibles[3],
                 (dragonsScore[0] < 10) ? dragonsScore[0] + " " : dragonsScore[0], (dragonsScore[1] < 10) ? dragonsScore[1] + " " : dragonsScore[1], (dragonsScore[2] < 10) ? dragonsScore[2] + " " : dragonsScore[2], (dragonsScore[3] < 10) ? dragonsScore[3] + " " : dragonsScore[3], collectibles[4]);
     }
+    /**
+     * Retrieves an array of Dragon objects representing the dragons in the Red Realm.
+     *
+     * @return An array of Dragon objects.
+     */
     public Dragon[] getDragons(){
         return dragons;
     }
+    /**
+     * Retrieves the collectibles from the RedRealm.
+     *
+     * @return An array containing the collectibles.
+     */
     public Object[] getCollectibles(){
         return collectibles;
     }
+    /**
+     * Returns the score of the dragons in the red realm.
+     *
+     * @return An array containing the scores of the dragons in the red realm.
+     */
     public int[] getDragonsScore(){
         return dragonsScore;
     }
 
+    /**
+     * Retrieves the available moves in the realm.
+     *
+     * @return an array of Move objects representing the available moves in the realm. If no moves are available, an empty array is returned.
+     */
     @Override
     public Move[] getRealmMoves() {
         if (isRealmAvailable())
             return redMoves.toArray(Move[]::new);
         return new Move[0];
     }
+    /**
+     * Returns a LinkedList of Moves representing the possible moves in the realm.
+     *
+     * @return LinkedList<Move> - a LinkedList of Moves, null if the realm is not available.
+     */
     public LinkedList<Move> getRealmMovesList(){
         if(isRealmAvailable()){
             return redMoves;
@@ -304,6 +408,12 @@ public class RedRealm extends Realm {
         return null;
     }
 
+    /**
+     * Retrieves the creature based on the provided dice.
+     *
+     * @param dice The dice used to determine the creature to retrieve. Should be an instance of RedDice and the value of the dice must be between 1 and 6.
+     * @return The creature corresponding to the dice value, or null if the conditions are not met.
+     */
     @Override
     public Creature getCreature(Dice dice) {
         if (dice.getRealm() == GameColor.RED && dice instanceof RedDice && (dice.getValue() <= 6 && dice.getValue() >= 1)) {
@@ -316,12 +426,24 @@ public class RedRealm extends Realm {
         return null;
     }
 
+    /**
+     * Returns the fake score for a given move.
+     *
+     * @param move the move to calculate the fake score for
+     * @return the fake score for the given move
+     */
     @Override
     public int getFakeScore(Move move) {
         return 0;
     }
 
 
+    /**
+     * Retrieves the status of the realm.
+     *
+     * @return the status of the realm
+     * @see Realm
+     */
     // get the realm status
     public int getStatus() {
         return 0;

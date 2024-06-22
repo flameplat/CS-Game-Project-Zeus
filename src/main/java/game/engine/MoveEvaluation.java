@@ -19,13 +19,25 @@ public class MoveEvaluation {
     private final Move[][] greenRealmMoveGrid;
     private final LinkedList<Move> pastMoves;
     private final MagentaRealm magentaRealm;
-    public static int noWorlds;
-    public static final int limit=5000;
-    private Realm[] realms;
-    private AIPlayer player;
+    public static final int limit=1000;
+    public static int MAX_NO_WORLDS_INITIALIZED=0;
+    public static int redWorlds=0;
+    public static int greenWorlds = 0;
+    public static int blueWorlds = 0;
+    public static int yellowWorlds = 0;
+    public static int magentaWorlds=0;
+    private final Realm[] realms;
+    private final AIPlayer player;
     private final BlueRealm blueRealm;
     private  GUIGameController guiGameController;
 
+    /**
+     * Represents the evaluation of possible moves for an AI player.
+     *
+     * @param player            The AI player making the move.
+     * @param pastMoves         The list of past moves made by the player.
+     * @param guiGameController The GUI game controller.
+     */
     public MoveEvaluation(AIPlayer player, LinkedList<Move> pastMoves, GUIGameController guiGameController) {
         this.player=player;
         this.realms = player.getRealms();
@@ -36,7 +48,6 @@ public class MoveEvaluation {
         this.yellowRealm = (YellowRealm) realms[4];
         this.redRealm = (RedRealm) realms[0];
         Move[] redMoves = redRealm.getRealmMoves();
-        Object[] rewards = redRealm.getCollectibles();
         redRealmMoveGrid = new Move[4][4];
         greenRealmMoveGrid = new Move[3][4];
         blueRealm = (BlueRealm) realms[2];
@@ -57,38 +68,61 @@ public class MoveEvaluation {
         }
         greenRealm = (GreenRealm) realms[1];
         Move[] greenMoves = greenRealm.getRealmMoves();
-        for (int i = 0; i < greenMoves.length; i++) {
-            Move move = greenMoves[i];
+        for (Move move : greenMoves) {
             int row = (move.getDice().getValue() - 1) / 4;
             int col = (move.getDice().getValue() - 1) % 4;
             greenRealmMoveGrid[row][col] = move;
 
         }
     }
+    /**
+     * Adds a move to the pastMoves list.
+     *
+     * @param move the move to be added
+     */
     public void addMove(Move move){
         pastMoves.add(move);
     }
+    /**
+     * Sets the GUI game controller for the MoveEvaluation class.
+     *
+     * @param guiGameController The GUI game controller object to be set.
+     */
     public void setGuiGameController(GUIGameController guiGameController){
         this.guiGameController=guiGameController;
     }
 
+    /**
+     * Resets the count of different worlds in MoveEvaluation class to zero.
+     */
     public static void resetNoWorlds(){
-        MoveEvaluation.noWorlds=0;
+        MoveEvaluation.blueWorlds=0;
+        MoveEvaluation.redWorlds = 0;
+        MoveEvaluation.magentaWorlds=0;
+        MoveEvaluation.yellowWorlds = 0;
+        MoveEvaluation.greenWorlds = 0;
     }
+    /**
+     * Applies the past moves to the given realms.
+     *
+     * @param pastMoves the list of past moves to be applied
+     * @param realms    the array of realms to apply the moves to
+     */
     public void applyPastMoves(LinkedList<Move> pastMoves,Realm[] realms){
         for (Move m : pastMoves) {
             Realm realm = realms[m.getDice().getRealm().ordinal()];
-            Move[] realmMoves = realm.getRealmMoves();
             realm.attack(new Move(m));
             realm.checkReward();
             realm.getReward();
         }
     }
 
-
-    public Move[][] getRedRealmMoveGrid() {
-        return redRealmMoveGrid;
-    }
+    /**
+     * Evaluates the move for the red realm.
+     *
+     * @param move The move to be evaluated.
+     * @return The evaluation value.
+     */
     public double evaluateRedMove(Move move) {
         if(redRealm.isRealmAvailable()){
             int row = 0;
@@ -157,10 +191,13 @@ public class MoveEvaluation {
         return 0;
     }
 
-    public Move[][] getGreenRealmMoveGrid() {
-        return greenRealmMoveGrid;
-    }
 
+    /**
+     * Calculates the evaluation score for a green move.
+     *
+     * @param move The move to be evaluated.
+     * @return The evaluation score for the move.
+     */
     public double evaluateGreenMove(Move move) {
         if(greenRealm.isRealmAvailable()){
             int row = (move.getDice().getValue() - 1) / 4;
@@ -198,12 +235,17 @@ public class MoveEvaluation {
                 colRewardWeight = getRewardEvaluation(colReward,newPastMoves);
             }
             double scoreWeight = greenRealm.getFakeScore(move);
-            double moveWeight = scoreWeight + rowRewardWeight * ((double) 1 / noRemainingMovesRow) + colRewardWeight * ((double) 1 / noRemainingMovesCol);
-            return moveWeight;
+            return scoreWeight + rowRewardWeight * ((double) 1 / noRemainingMovesRow) + colRewardWeight * ((double) 1 / noRemainingMovesCol);
         }
         return 0;
     }
 
+    /**
+     * Evaluates the value of a blue move based on the current state of the blue realm.
+     *
+     * @param move The move to be evaluated
+     * @return The evaluation value of the move
+     */
     public double evaluateBlueMove(Move move) {
         if(blueRealm.isRealmAvailable()){
             Collectibles[] rewards = blueRealm.getCollectibles();
@@ -218,12 +260,17 @@ public class MoveEvaluation {
                 }
             }
             int scoreWeight = blueRealm.getFakeScore(move);
-            double moveWeight = scoreWeight + rewardWeight;
-            return moveWeight;
+            return scoreWeight + rewardWeight;
         }
         return 0;
     }
 
+    /**
+     * Evaluates the move for the Magenta realm.
+     *
+     * @param move The move to evaluate.
+     * @return The evaluation score for the move.
+     */
     public double evaluateMagentaMove(Move move) {
         if(magentaRealm.isRealmAvailable()){
             Collectibles[] rewards = magentaRealm.getCollectibles();
@@ -231,20 +278,27 @@ public class MoveEvaluation {
             double rewardWeight = 0;
             LinkedList<Move> newPastMoves=new LinkedList<>(pastMoves);
             for (int i = hitCount; i < rewards.length; i++) {
-                newPastMoves.add(magentaRealm.getRealmMoves()[magentaRealm.getRealmMoves().length-1]);
+                newPastMoves.add(move);
                 if (rewards[i] != null) {
                     Collectibles reward = rewards[i];
                     rewardWeight += ((double) 1 / (i - hitCount + 1)) * getRewardEvaluation(reward,newPastMoves);
                 }
             }
             int scoreWeight = magentaRealm.getFakeScore(move);
-            double moveWeight = scoreWeight + rewardWeight;
-            return moveWeight;
+            return scoreWeight + rewardWeight;
         }
         return 0;
 
     }
 
+    /**
+     * Evaluates the yellow move based on the current state of the yellow realm.
+     * Adds the move to the list of past moves and calculates the reward weight based on collected rewards.
+     * Calculates the score weight based on the fake score of the move.
+     *
+     * @param move The move to be evaluated.
+     * @return The evaluation of the yellow move.
+     */
     public double evaluateYellowMove(Move move) {
         if(yellowRealm.isRealmAvailable()){
             Collectibles[] rewards = yellowRealm.getCollectibles();
@@ -259,13 +313,19 @@ public class MoveEvaluation {
                 }
             }
             int scoreWeight = yellowRealm.getFakeScore(move);
-            double moveWeight = scoreWeight + rewardWeight;
-            return moveWeight;
+            return scoreWeight + rewardWeight;
         }
         return 0;
 
     }
 
+    /**
+     * Evaluates the reward value for a given collectible and current moves.
+     *
+     * @param collectible   the collectible to evaluate the reward value for
+     * @param currentMoves  the list of current moves
+     * @return the reward value for the collectible and current moves
+     */
     public double getRewardEvaluation(Collectibles collectible,LinkedList<Move> currentMoves) {
         if (collectible instanceof ArcaneBoost) {
             // return a value specific to ArcaneBoost
@@ -304,71 +364,133 @@ public class MoveEvaluation {
         }
         return 0;
     }
+    /**
+     * Evaluates the weight of the red bonus for a given list of moves.
+     *
+     * @param currentMoves A linked list of moves.
+     * @return The weight of the red bonus as a double value.
+     */
     public double evaluateRedBonusWeight(LinkedList<Move> currentMoves){
         AIPlayer helperPlayer=new AIPlayer("HelperPlayer");
         MoveEvaluation moveEvaluation2=new MoveEvaluation(helperPlayer,currentMoves,guiGameController);
-        noWorlds++;
-        if(noWorlds>limit){
+        redWorlds++;
+
+        if(redWorlds>limit || !moveEvaluation2.redRealm.isRealmAvailable()){
             return 0;
+        }
+        if(MAX_NO_WORLDS_INITIALIZED<redWorlds){
+            MAX_NO_WORLDS_INITIALIZED=redWorlds;
         }
         Move[] possibleMoves=moveEvaluation2.redRealm.getRealmMoves();
         double maxWeight=0;
-        double tempWeight=0;
-        for(int i=0;i<possibleMoves.length;i++){
-            tempWeight=moveEvaluation2.evaluateRedMove(new Move(possibleMoves[i]));
-            if(tempWeight>maxWeight){
-                maxWeight=tempWeight;
+        double tempWeight;
+        for (Move move : possibleMoves) {
+            tempWeight = moveEvaluation2.evaluateRedMove(new Move(move));
+            if (tempWeight > maxWeight) {
+                maxWeight = tempWeight;
             }
         }
         return maxWeight;
     }
 
-
+    /**
+     * Evaluates the weight of the yellow bonus in the given list of moves.
+     * @param currentMoves The list of moves to evaluate.
+     * @return The weight of the yellow bonus.
+     */
     public double evaluateYellowBonusWeight(LinkedList<Move> currentMoves){
         AIPlayer helperPlayer=new AIPlayer("HelperPlayer");
         MoveEvaluation moveEvaluation2=new MoveEvaluation(helperPlayer,currentMoves,guiGameController);
-        noWorlds++;
-        if(noWorlds>limit){
+        yellowWorlds++;
+        if(yellowWorlds>limit || !moveEvaluation2.yellowRealm.isRealmAvailable()){
             return 0;
+        }
+
+        if(MAX_NO_WORLDS_INITIALIZED<yellowWorlds){
+            MAX_NO_WORLDS_INITIALIZED=yellowWorlds;
         }
         return moveEvaluation2.evaluateYellowMove(new Move(new YellowDice(6),new Lion()));
     }
+    /**
+     *
+     */
     public double evaluateMagentaBonusWeight(LinkedList<Move> currentMoves){
         AIPlayer helperPlayer=new AIPlayer("HelperPlayer");
         MoveEvaluation moveEvaluation2=new MoveEvaluation(helperPlayer,currentMoves,guiGameController);
-        noWorlds++;
-        if(noWorlds>limit){
+        magentaWorlds++;
+
+        if(magentaWorlds>limit || !moveEvaluation2.magentaRealm.isRealmAvailable() ){
             return 0;
+        }
+        if(MAX_NO_WORLDS_INITIALIZED<magentaWorlds){
+            MAX_NO_WORLDS_INITIALIZED=magentaWorlds;
         }
         return moveEvaluation2.evaluateMagentaMove(new Move(new MagentaDice(6),new Phoenix()));
     }
+    /**
+     * Resets the value of MAX_NO_WORLDS to 0, indicating that it has not been initialized.
+     * This method sets the value of the static variable MAX_NO_WORLDS, which is used for move evaluation,
+     * to 0. This indicates that the variable has not been initialized and should be set to a proper value
+     * before it is used.
+     */
+    public static void resetMAX_NO_WORLDS(){
+        MoveEvaluation.MAX_NO_WORLDS_INITIALIZED=0;
+    }
+    /**
+     * Evaluates the blue bonus weight for a given list of moves.
+     *
+     * @param currentMoves the list of moves to evaluate
+     * @return the blue bonus weight
+     */
     public double evaluateBlueBonusWeight(LinkedList<Move> currentMoves){
         AIPlayer helperPlayer=new AIPlayer("HelperPlayer");
         MoveEvaluation moveEvaluation2=new MoveEvaluation(helperPlayer,currentMoves,guiGameController);
-        noWorlds++;
-        if(noWorlds>limit){
+        blueWorlds++;
+
+        if(blueWorlds>limit || !moveEvaluation2.blueRealm.isRealmAvailable()){
             return 0;
+        }
+        if(MAX_NO_WORLDS_INITIALIZED<blueWorlds){
+            MAX_NO_WORLDS_INITIALIZED=blueWorlds;
         }
         return moveEvaluation2.evaluateBlueMove(new Move(new BlueDice(6),blueRealm.getCreature(new BlueDice(6))));
     }
+    /**
+     * Evaluates the weight of the green bonus in the given list of moves.
+     *
+     * @param currentMoves the list of moves to evaluate
+     * @return the weight of the green bonus
+     */
     public double evaluateGreenBonusWeight(LinkedList<Move> currentMoves){
         AIPlayer helperPlayer=new AIPlayer("HelperPlayer");
         MoveEvaluation moveEvaluation2=new MoveEvaluation(helperPlayer,currentMoves,guiGameController);
-        noWorlds++;
-        if(noWorlds>limit){
+        greenWorlds++;
+
+        if(greenWorlds>limit || !greenRealm.isRealmAvailable()){
             return 0;
+        }
+        if(MAX_NO_WORLDS_INITIALIZED<greenWorlds){
+            MAX_NO_WORLDS_INITIALIZED=greenWorlds;
         }
         Move[] possibleMoves=moveEvaluation2.greenRealm.getRealmMoves();
         double maxWeight=0;
-        double tempWeight=0;
-        for(int i=0;i<possibleMoves.length;i++){
-            tempWeight=moveEvaluation2.evaluateGreenMove(possibleMoves[i]);
-            if(tempWeight>maxWeight){
-                maxWeight=tempWeight;
+        double tempWeight;
+        for (Move move : possibleMoves) {
+            tempWeight = moveEvaluation2.evaluateGreenMove(move);
+            if (tempWeight > maxWeight) {
+                maxWeight = tempWeight;
             }
         }
         return maxWeight;
     }
+
+
+    /**
+     * Calculates the weight of a given move.
+     *
+     * @param move The move to calculate the weight for.
+     * @return The weight of the move.
+     */
     public double getWeightOfMove(Move move){
         double weight = 0;
         GameColor realm = move.getDice().getRealm();
@@ -389,40 +511,59 @@ public class MoveEvaluation {
         }
         return weight;
     }
+    /**
+     * Retrieves the move with the highest weight based on a given dice.
+     *
+     * @param die The dice value to be considered when searching for the move.
+     * @return The move with the highest weight according to the given dice. If no moves are
+     *         available, returns null.
+     */
     public Move getMoveOfHighestWeight(Dice die){
         double selectedWeight=0;
         double tempWeight;
         Move selectedMove=null;
         Move[] possibleMoves = guiGameController.getPossibleMovesForADie(player, die);
-        for(int i=0; i<possibleMoves.length;i++){
-            tempWeight = getWeightOfMove(possibleMoves[i]);
-            if(selectedWeight<tempWeight){
+        for (Move move : possibleMoves) {
+            tempWeight = getWeightOfMove(move);
+            if (selectedWeight < tempWeight) {
                 selectedWeight = tempWeight;
-                selectedMove = possibleMoves[i];
+                selectedMove = move;
             }
         }
         return selectedMove;
     }
+    /**
+     * Calculates the weight of a given dice.
+     *
+     * @param die The dice for which the weight needs to be calculated
+     * @return The weight of the dice
+     */
     public double getWeightOfDice(Dice die){
         double selectedWeight=0;
         double tempWeight;
         Move[] possibleMoves = guiGameController.getPossibleMovesForADie(player, die);
-        for(int i=0; i<possibleMoves.length;i++){
-            tempWeight = getWeightOfMove(possibleMoves[i]);
-            if(selectedWeight<tempWeight){
+        for (Move move : possibleMoves) {
+            tempWeight = getWeightOfMove(move);
+            if (selectedWeight < tempWeight) {
                 selectedWeight = tempWeight;
 
             }
         }
         return selectedWeight*getTurnWeight(die);
     }
-    private double getTurnWeight(Dice selecteddDice) {
+    /**
+     * Calculates the turn weight for a given dice.
+     *
+     * @param selectedDice The dice for which to calculate the turn weight.
+     * @return The turn weight for the given dice.
+     */
+    private double getTurnWeight(Dice selectedDice) {
         int[] arrayOfAvailableDice = new int[guiGameController.getAvailableDice().length];
         for(int i=0; i<guiGameController.getAvailableDice().length;i++){
             arrayOfAvailableDice[i] = guiGameController.getAvailableDice()[i].getValue();
         }
         Arrays.sort(arrayOfAvailableDice);
-        double value = 0;
+        double value;
         int Turn= guiGameController.gameStatus.getTurn();
         CurrentStatus status = guiGameController.gameStatus.getGameStatus();
         if(status == CurrentStatus.ARCANE_BOOST || status == CurrentStatus.PASSIVE_TURN || Turn == 3){
@@ -430,19 +571,19 @@ public class MoveEvaluation {
         }
         else{
             if(arrayOfAvailableDice.length == 6){
-                value = 1-(0.15*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+                value = 1-(0.15*(findIndex(arrayOfAvailableDice,selectedDice.getValue())));
             }
             else if(arrayOfAvailableDice.length == 5){
-                value = 1-(0.2*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+                value = 1-(0.2*(findIndex(arrayOfAvailableDice,selectedDice.getValue())));
             }
             else if(arrayOfAvailableDice.length == 4){
-                value = 1-(0.25*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+                value = 1-(0.25*(findIndex(arrayOfAvailableDice,selectedDice.getValue())));
             }
             else if(arrayOfAvailableDice.length == 3){
-                value = 1-(0.35*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+                value = 1-(0.35*(findIndex(arrayOfAvailableDice,selectedDice.getValue())));
             }
             else if(arrayOfAvailableDice.length == 2){
-                value = 1-(0.5*(findIndex(arrayOfAvailableDice,selecteddDice.getValue())));
+                value = 1-(0.5*(findIndex(arrayOfAvailableDice,selectedDice.getValue())));
             }
             else
                 value = 1;
@@ -450,6 +591,13 @@ public class MoveEvaluation {
         return value;
     }
 
+    /**
+     * Finds the index of a specified value in an array.
+     *
+     * @param array The array to search in.
+     * @param value The value to find the index of.
+     * @return The index of the specified value in the array, or -1 if the value is not found.
+     */
     //helper method used in getTurnWeight method
     private static int findIndex(int[] array, int value) {
         for (int i = 0; i < array.length; i++) {
@@ -459,26 +607,42 @@ public class MoveEvaluation {
         }
         return -1;
     }
+    /**
+     * Returns an array of weights corresponding to each dice in the given dice array.
+     *
+     * @param diceArray an array of Dice objects
+     * @return an array of weights, where each weight corresponds to a die in the dice array
+     */
     public double[] getWeightOfAllDice(Dice [] diceArray){
         double [] weights = new double[diceArray.length];
+        //System.out.println("Move Evaluation");
         for(int i=0;i<weights.length;i++){
-            weights[i] = getWeightOfDice((Dice)diceArray[i]);
+            weights[i] = getWeightOfDice(diceArray[i]);
+            //System.out.println(diceArray[i]+": "+weights[i]);
         }
         return weights;
     }
-    public double getWeightOfbestMove(Dice[] diceArray){
+    /**
+     */
+    public double getWeightOfBestMove(Dice[] diceArray){
         double[] weights = getWeightOfAllDice(diceArray);
         int bestWeight =0;
         int tempWeight;
-        for(int i=0;i<weights.length;i++){
-            tempWeight = (int) weights[i];
-            if(bestWeight<tempWeight){
+        for (double weight : weights) {
+            tempWeight = (int) weight;
+            if (bestWeight < tempWeight) {
                 bestWeight = tempWeight;
             }
         }
         return bestWeight;
 
     }
+    /**
+     * Finds the best move based on the weight of the given dice array.
+     *
+     * @param diceArray an array of Dice objects
+     * @return the best Move object with the highest weight
+     */
     public Move bestMove(Dice [] diceArray){
         double[] weights = getWeightOfAllDice(diceArray);
         int bestWeight =0;
@@ -495,6 +659,12 @@ public class MoveEvaluation {
         bestMove = getMoveOfHighestWeight(bestDice);
         return bestMove;
     }
+    /**
+     * Finds the best dice in an array of dice, based on their weights.
+     *
+     * @param diceArray an array of Dice objects
+     * @return the best Dice object with the highest weight
+     */
     public Dice bestDice(Dice [] diceArray) {
         double[] weights = getWeightOfAllDice(diceArray);
         int bestWeight = 0;
@@ -511,6 +681,12 @@ public class MoveEvaluation {
         return bestDice;
     }
 
+    /**
+     * Evaluates the color bonus weight based on the given game realm.
+     *
+     * @param realm the game color realm to evaluate the bonus weight
+     * @return the evaluated color bonus weight
+     */
     public double evaluateColorBonusWeight(GameColor realm) {
         double weight = 0;
         if(realm == GameColor.RED) {

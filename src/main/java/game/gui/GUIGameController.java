@@ -38,15 +38,23 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-public class GUIGameController extends CLIGameController implements Initializable,GameController {
+/**
+ * The GUIGameController class controls the GUI version of the game.
+ */
+public class GUIGameController extends CLIGameController implements Initializable, GameController {
+    //This player points to the current player whether passive or active or arcaneBoost enabled
+    private static Player currentPlayer;
+    private static Player player1;
+    private static Player player2;
     private final Image transparentImage;
     private final double lowOpacity = 0.5;
     private final double highOpacity = 1;
+    private final long largeDelay = 2;
+    private final long smallDelay = 1;
     @FXML
     private ImageView border;
     @FXML
     private ImageView border2;
-
     private StackPane[] diceGUI;
     @FXML
     private Label gameText;
@@ -98,7 +106,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private Label blueDiceNumber2;
     @FXML
     private Label magentaDiceNumber2;
-
     //------------------------------------------------------------------------------------------------//
     @FXML
     private Label yellowDiceNumber2;
@@ -158,11 +165,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private Button timeWarpButtonClicker;
     @FXML
     private Button skipButtonClicker;
-
-    //This player points to the current player whether passive or active or arcaneBoost enabled
-    private static Player currentPlayer;
-    private static Player player1;
-    private static Player player2;
     //------------------------------------------------------BUTTONS FUNCTIONS-------------------------------------------------------//
     private int realRounds = 1;
     private boolean arcanePrismEnabled;
@@ -172,6 +174,15 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private ImageView currentPlayerImageViewMain;
     @FXML
     private Button rollButtonClicker;
+    //------------------------------------------------------GAME LOGIC METHODS-------------------------------------------------------//
+    @FXML
+    private AnchorPane guiderAnchorPane;
+
+    /**
+     * Constructs a new GUIGameController object.
+     * Initializes the transparentImage with a WritableImage of size 1x1 and sets the pixel color to transparent.
+     * Sets the gameStatus to ACTIVE_TURN.
+     */
     public GUIGameController() {
         super();
         WritableImage transparentImage = new WritableImage(1, 1);
@@ -181,12 +192,26 @@ public class GUIGameController extends CLIGameController implements Initializabl
         gameStatus.setGameStatus(CurrentStatus.ACTIVE_TURN);
 
     }
-    private ImageView[] roundRewardImageViews;
 
+    /**
+     * This method checks if player1 is currently playing the game.
+     *
+     * @return true if player1 is playing, false otherwise.
+     */
+    public static boolean isPlayer1Playing() {
+        return currentPlayer == player1;
+    }
+
+    /**
+     * Initializes the GUI components and sets their initial states.
+     *
+     * @param url            The URL of the FXML file to be loaded
+     * @param resourceBundle The ResourceBundle for the FXML file
+     */
     //------------------------------------------------------ONE TIME METHODS-------------------------------------------------------//
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        roundRewardImageViews = new ImageView[]{
+        ImageView[] roundRewardImageViews = new ImageView[]{
                 round1Reward, round2Reward, round3Reward,
                 round4Reward, round5Reward, round6Reward
         };
@@ -226,12 +251,19 @@ public class GUIGameController extends CLIGameController implements Initializabl
         currentPlayerImageViewMain.setClip(clip);
         border.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/4.png")).toExternalForm()));
         border2.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/4.png")).toExternalForm()));
-        addHoverEffect(rollButtonImage,rollButtonClicker);
-        addHoverEffect(arcaneBoostImageView,arcaneBoostButtonClicker);
-        addHoverEffect(timeWarpImageView,timeWarpButtonClicker);
-        addHoverEffect(skipButtonImageView,skipButtonClicker);
+        addHoverEffect(rollButtonImage, rollButtonClicker);
+        addHoverEffect(arcaneBoostImageView, arcaneBoostButtonClicker);
+        addHoverEffect(timeWarpImageView, timeWarpButtonClicker);
+        addHoverEffect(skipButtonImageView, skipButtonClicker);
 
     }
+
+    /**
+     * Adds a hover effect to the provided ImageView when the corresponding button is hovered over.
+     *
+     * @param imageView The ImageView to apply the hover effect to.
+     * @param button    The button that triggers the hover effect.
+     */
     private void addHoverEffect(ImageView imageView, Button button) {
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.CYAN);
@@ -241,55 +273,81 @@ public class GUIGameController extends CLIGameController implements Initializabl
         button.addEventHandler(MouseEvent.MOUSE_EXITED, e -> imageView.setEffect(null));
     }
 
+    //------------------------------------------------------DICE RELATED METHODS & UPDATERS-------------------------------------------------------//
+
+    /**
+     * Sets the SceneManager for the GUIGameController.
+     *
+     * @param sceneManager The SceneManager to set for the GUIGameController.
+     */
     public void setSceneManager(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
     }
 
+    /**
+     * Sets the Player 1 for the game.
+     *
+     * @param player the Player 1 object to set
+     */
     public void setPlayer1(Player player) {
         gameBoard.setPlayer1(player);
         activePlayer = player;
         player.setPlayerStatus(PlayerStatus.ACTIVE);
         currentPlayer = activePlayer;
         updateSceneStatus();
-        GUIGameController.player1=player;
-        if(player.isAI()){
-            System.out.println(player.getName()+" is AI");
-        }
-        else{
-            System.out.println(player.getName()+" is not AI");
+        GUIGameController.player1 = player;
+        if (player.isAI()) {
+            ((AIPlayer) player).setGuiGameController(this);
+            System.out.println(player.getName() + " is AI");
+        } else {
+            System.out.println(player.getName() + " is not AI");
         }
 
     }
-    public static boolean isPlayer1Playing(){
-        return currentPlayer==player1;
-    }
 
+    /**
+     * Sets the player2 of the game.
+     *
+     * @param player the player to set as player2
+     */
     public void setPlayer2(Player player) {
         gameBoard.setPlayer2(player);
         passivePlayer = player;
         player.setPlayerStatus(PlayerStatus.PASSIVE);
-        GUIGameController.player2=player;
-        if(player.isAI()){
-            ((AIPlayer)player).setGuiGameController(this);
-        }
-        if(player.isAI()){
-            System.out.println(player.getName()+" is AI");
-        }
-        else{
-            System.out.println(player.getName()+" is not AI");
+        GUIGameController.player2 = player;
+        if (player.isAI()) {
+            ((AIPlayer) player).setGuiGameController(this);
+            System.out.println(player.getName() + " is AI");
+        } else {
+            System.out.println(player.getName() + " is not AI");
         }
     }
 
-    //------------------------------------------------------DICE RELATED METHODS & UPDATERS-------------------------------------------------------//
-
+    /**
+     * Sets the score sheet for player 1.
+     *
+     * @param scoreSheet The composite score sheet controller for player 1.
+     */
     public void setPlayer1ScoreSheet(CompositeScoreSheetController scoreSheet) {
         activePlayer.setGUIScoreSheet(scoreSheet);
     }
 
+    /**
+     * Sets the score sheet for player 2.
+     *
+     * @param scoreSheet The CompositeScoreSheetController representing the score sheet for player 2.
+     */
     public void setPlayer2ScoreSheet(CompositeScoreSheetController scoreSheet) {
         passivePlayer.setGUIScoreSheet(scoreSheet);
     }
 
+    /**
+     * Retrieves the reward icon image based on the index and the rewards array.
+     *
+     * @param i       the index of the reward in the rewards array
+     * @param rewards the array of collectibles rewards
+     * @return the reward icon image
+     */
     public Image getRewardIcon(int i, Collectibles[] rewards) {
         Image result;
         if (rewards[i] == null) {
@@ -316,10 +374,18 @@ public class GUIGameController extends CLIGameController implements Initializabl
         return result;
     }
 
+    /**
+     * Sets the game mode for the game controller.
+     *
+     * @param gameMode The game mode to be set.
+     */
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
     }
 
+    /**
+     *
+     */
     private void moveDice(StackPane dice, GridPane grid) {
         GridPane parent = (GridPane) dice.getParent();
 
@@ -333,6 +399,13 @@ public class GUIGameController extends CLIGameController implements Initializabl
         grid.add(dice, columnIndex, rowIndex);
     }
 
+    /**
+     * Rolls the dice, setting their values to randomly generated values between 1 and 6.
+     * Only rolls the dice that are in the AVAILABLE status.
+     * Updates the dice values and returns the array of dice.
+     *
+     * @return an array of Dice objects with updated values
+     */
     @FXML
     public Dice[] rollDice() {
         //Rolling only rolls available dice
@@ -341,6 +414,17 @@ public class GUIGameController extends CLIGameController implements Initializabl
         //Dice values are from 1 to 6
         int diceMaxBound = 6;
         int diceMinBound = 1;
+        //Use this if you want to test max scores
+//        for (int i = 0; i < diceArray.length; i++) {
+//            if (diceArray[i].getDiceStatus() == DiceStatus.AVAILABLE) {
+//                if (i < 2) {
+//                    diceArray[i].setValue(random.nextInt(diceMaxBound - diceMinBound + 1) + diceMinBound);
+//                } else {
+//                    diceArray[i].setValue(6);
+//                }
+//            }
+//        }
+//        Original Dice Rolling
         for (Dice dice : diceArray) {
             if (dice != null && dice.getDiceStatus() == DiceStatus.AVAILABLE) {
                 diceValue = random.nextInt(diceMaxBound - diceMinBound + 1) + diceMinBound;
@@ -351,6 +435,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
         return diceArray;
     }
 
+    /**
+     * Resets all dice to the main deck and sets their status to AVAILABLE. Additionally, it disables the buttons of the dice in the main board and the forgotten realm grid.
+     */
     //Returns all dice to main deck and sets them to available and disable their buttons
     private void resetDice() {
         for (int i = 0; i < diceArray.length; i++) {
@@ -361,6 +448,13 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
+    /**
+     * Selects a dice for a player.
+     *
+     * @param dice   The dice to be selected.
+     * @param player The player who is selecting the dice.
+     * @return true if the dice was successfully selected, false otherwise.
+     */
     @Override
     public boolean selectDice(Dice dice, Player player) {
         if (diceArray != refDiceArray) {
@@ -390,6 +484,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
+    /**
+     * Moves the rest of the dice unselected by active player to forgotten realm.
+     */
     private void moveDiceToForgottenRealm() {
         //Moves the rest of the dice unselected by active player to forgotten realm
         for (Dice i : diceArray) {
@@ -401,37 +498,62 @@ public class GUIGameController extends CLIGameController implements Initializabl
         disableForgottenRealmButtons();
     }
 
+    /**
+     * Disables the arcane boost button by setting the stack pane to be disabled and with low opacity.
+     */
     //------------------------------------------------------BUTTONS AVAILABILITY METHODS-------------------------------------------------------//
     private void disableArcaneBoostButton() {
         arcaneBoostStackPane.setDisable(true);
         arcaneBoostStackPane.setOpacity(lowOpacity);
     }
 
+    /**
+     *
+     */
     private void disableTimeWarpButton() {
         timeWarpStackPane.setDisable(true);
         timeWarpStackPane.setOpacity(lowOpacity);
     }
 
+    /**
+     * Disables the skip button by setting its disable property to true
+     * and reducing its opacity to a low value.
+     * <p>
+     * This method is private and cannot be accessed outside of the class that contains it.
+     * It does not return any value.
+     */
     private void disableSkipButton() {
         skipButtonStackPane.setDisable(true);
         skipButtonStackPane.setOpacity(lowOpacity);
     }
 
+    /**
+     *
+     */
     private void enableArcaneBoostButton() {
         arcaneBoostStackPane.setDisable(false);
         arcaneBoostStackPane.setOpacity(highOpacity);
     }
 
+    /**
+     *
+     */
     private void enableTimeWarpButton() {
         timeWarpStackPane.setDisable(false);
         timeWarpStackPane.setOpacity(highOpacity);
     }
 
+    /**
+     *
+     */
     private void enableSkipButton() {
         skipButtonStackPane.setDisable(false);
         skipButtonStackPane.setOpacity(highOpacity);
     }
 
+    /**
+     *
+     */
     private void disableForgottenRealmButtons() {
         for (StackPane die : diceGUI) {
             if (die.getParent() == forgottenRealmGrid) {
@@ -441,6 +563,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
+    /**
+     *
+     */
     private void enableForgottenRealmButtons() {
         for (StackPane die : diceGUI) {
             if (die.getParent() == forgottenRealmGrid) {
@@ -450,6 +575,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
+    /**
+     * This method is used to disable the main board dice buttons.
+     * It iterates through each dice in the diceGUI array and checks if it is a child of the diceGrid.
+     * If it is, it sets the dice to be disabled and reduces its opacity.
+     */
     private void disableMainBoardDiceButtons() {
         for (StackPane die : diceGUI) {
             if (die.getParent() == diceGrid) {
@@ -459,6 +589,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
+    /**
+     *
+     */
     private void enableMainBoardDiceButtons() {
         for (Dice die : diceArray) {
             if (die.getDiceStatus() == DiceStatus.AVAILABLE) {
@@ -470,16 +603,26 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
+    /**
+     *
+     */
     private void disableRollButton() {
         rollButtonStackPane.setDisable(true);
         rollButtonStackPane.setOpacity(lowOpacity);
     }
 
+    /**
+     * Enables the roll button by removing the disable attribute and setting a high opacity.
+     * Once enabled, the roll button can be clicked by the user.
+     */
     protected void enableRollButton() {
         rollButtonStackPane.setDisable(false);
         rollButtonStackPane.setOpacity(highOpacity);
     }
 
+    /**
+     *
+     */
     private void disableAllButtons() {
         disableRollButton();
         disableMainBoardDiceButtons();
@@ -489,50 +632,89 @@ public class GUIGameController extends CLIGameController implements Initializabl
         disableForgottenRealmButtons();
     }
 
+    /**
+     * Highlights the possible moves for a red dice when the mouse hovers over the red dice button.
+     * <p>
+     * This method retrieves the possible moves for a red dice based on the current player and the reference
+     * dice array. It then calls the highlightPossibleMoves method to highlight these possible moves.
+     */
     //------------------------------------------------------HOVER METHODS-------------------------------------------------------//
     @FXML
     public void redDiceButtonHoverOn() {
         highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, refDiceArray[0]));
     }
 
+    /**
+     * Highlights the possible moves for the green dice button when it is being hovered on.
+     * It calls the highlightPossibleMoves method with the possible moves for the current player and the second dice on the reference dice array.
+     */
     @FXML
     public void greenDiceButtonHoverOn() {
         highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, refDiceArray[1]));
     }
 
+    /**
+     * Highlights the possible moves for the current player when the blue dice button is hovered on.
+     */
     @FXML
     public void blueDiceButtonHoverOn() {
         highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, refDiceArray[2]));
     }
 
+    /**
+     * Highlights possible moves for the magenta dice button when hovered on.
+     */
     @FXML
     public void magentaDiceButtonHoverOn() {
         highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, refDiceArray[3]));
     }
 
+    /**
+     * Method to handle the event when the yellow dice button is hovered upon.
+     * It highlights the possible moves for a die of the current player.
+     */
     @FXML
     public void yellowDiceButtonHoverOn() {
         highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, refDiceArray[4]));
     }
 
+    /**
+     * Highlights the possible moves for a white dice when the button is hovered on.
+     */
     @FXML
     public void whiteDiceButtonHoverOn() {
         highlightPossibleMoves(getPossibleMovesForADie(currentPlayer, refDiceArray[5]));
     }
 
+    /**
+     * This method is used to remove the highlight from the score sheet when the dice button is no longer being hovered over.
+     */
     public void diceButtonHoverOff() {
         removeScoreSheetHighlight();
     }
 
+    /**
+     * Highlights the possible moves on the score sheet for the current player.
+     *
+     * @param moves an array of Move objects representing the possible moves
+     */
     public void highlightPossibleMoves(Move[] moves) {
         currentPlayer.getScoreSheetController().highlightPossibleMoves(moves);
     }
 
+    /**
+     * Removes the highlight from the score sheet of the current player.
+     */
     @FXML
     public void removeScoreSheetHighlight() {
         currentPlayer.getScoreSheetController().removeHighlight();
     }
 
+    /**
+     * Highlights the current round in the game.
+     * This method removes any previous highlights from the round table and then highlights the cell
+     * corresponding to the current round with the color white.
+     */
     //------------------------------------------------------UPDATERS-------------------------------------------------------//
     protected void highlightCurrentRound() {
         removeRoundTableHighlight();
@@ -540,12 +722,22 @@ public class GUIGameController extends CLIGameController implements Initializabl
         highlightCell(round, "white");
     }
 
+    /**
+     * Removes the highlighting from the cells in the round table.
+     * This method iterates over each column in the round table and calls the `highlightCell` method with a `null` value as the highlight color
+     */
     private void removeRoundTableHighlight() {
         for (int i = 0; i < roundsTable.getColumnCount(); i++) {
             highlightCell(i, null);
         }
     }
 
+    /**
+     * Highlights the cell in the specified column with the specified color.
+     *
+     * @param column the index of the column to highlight
+     * @param color  the color to apply to the cell (in CSS format, e.g. "#FF0000" for red)
+     */
     private void highlightCell(int column, String color) {
         for (Node node : roundsTable.getChildren()) {
             if (node instanceof Label) {
@@ -562,12 +754,28 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
+    /**
+     * Updates the score sheets for both the active and passive players.
+     * <p>
+     * This method is responsible for updating the score sheets of both the active and passive players.
+     * It calls the updateScoreSheet() method on the score sheet controllers of both players, to ensure
+     * that the score sheets are updated with the latest scores.
+     * <p>
+     * Note: This method does not return any value.
+     */
     private void updateScoreSheets() {
         activePlayer.getScoreSheetController().updateScoreSheet();
         passivePlayer.getScoreSheetController().updateScoreSheet();
 
     }
 
+    /**
+     * Updates the values of the dice in the graphical user interface.
+     * Uses the diceArray to set the text value of the corresponding dice labels.
+     * Each dice value is converted to a string and assigned to the text of the respective label.
+     *
+     * @return void
+     */
     private void updateDiceValues() {
         redDiceNumber.setText(String.valueOf(diceArray[0].getValue()));
         greenDiceNumber.setText(String.valueOf(diceArray[1].getValue()));
@@ -577,6 +785,13 @@ public class GUIGameController extends CLIGameController implements Initializabl
         whiteDiceNumber.setText(String.valueOf(diceArray[5].getValue()));
     }
 
+    /**
+     * Updates the scene status by setting the text and image properties of various labels and image views.
+     * The currentPlayerLabel shows the name of the current player.
+     * The currentGameStatusLabel shows the current game status as a string.
+     * The currentPlayerImageViewMain displays the wizard image of the current player.
+     * The turnLabel displays the turn number if the game status is ACTIVE_TURN, otherwise it is cleared.
+     */
     private void updateSceneStatus() {
         currentPlayerLabel.setText(currentPlayer.getName());
         currentGameStatusLabel.setText(gameStatus.getGameStatus().toString());
@@ -589,35 +804,43 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     }
 
+    /**
+     * Handles the action when the roll button is clicked.
+     * Updates the scene status, rolls the dice, resets the game text, and disables the roll button.
+     * Sets the current player to the active player and disables the forgotten realm buttons.
+     * If the active player is an AI player, disables the main board dice buttons.
+     * Checks if there are no possible moves for the active player with the available dice.
+     * If time warp is available, prompts the player to use time warp or skip and handles the action accordingly.
+     * If time warp is not available, sets the rewards label to indicate that the turn is lost and manages the turn cycle.
+     * Checks if time warp is available and handles the action accordingly if the active player is an AI player.
+     * If time warp is not available, selects the dice for the active player if they are an AI player.
+     */
     @FXML
     public void rollButtonClick() {
         updateSceneStatus();
         rollDice();
         gameText.setText("");
         disableRollButton();
-        currentPlayer=activePlayer;
+        currentPlayer = activePlayer;
         disableForgottenRealmButtons();
-        if(activePlayer.isAI()){
+        if (activePlayer.isAI()) {
             disableMainBoardDiceButtons();
-        }
-        else{
+        } else {
             enableMainBoardDiceButtons();
         }
         if (getPossibleMovesForDice(activePlayer, getAvailableDice()).length == 0) {
-            System.out.println(activePlayer+", NO Possible Moves: availableDice: "+ Arrays.toString(getAvailableDice())+"\n"+ Arrays.toString(getPossibleMovesForDice(activePlayer, getAvailableDice())));
+            System.out.println(activePlayer + ", NO Possible Moves: availableDice: " + Arrays.toString(getAvailableDice()) + "\n" + Arrays.toString(getPossibleMovesForDice(activePlayer, getAvailableDice())));
             if (activePlayer.isTimeWarpAvailable()) {
                 gameText.setText("No available moves for current dice. Use time warp?");
-                if(activePlayer.isAI()){
-                    boolean useTimeWarp=((AIPlayer) activePlayer).useTimeWarp(getAvailableDice());
-                    if(useTimeWarp){
+                if (activePlayer.isAI()) {
+                    boolean useTimeWarp = ((AIPlayer) activePlayer).useTimeWarp(getAvailableDice());
+                    if (useTimeWarp) {
                         timeWarpButtonClick();
-                    }
-                    else{
+                    } else {
                         skipButtonClick();
                     }
                     return;
-                }
-                else{
+                } else {
                     enableTimeWarpButton();
                     enableSkipButton();
                 }
@@ -628,24 +851,28 @@ public class GUIGameController extends CLIGameController implements Initializabl
             return;
         }
         if (activePlayer.isTimeWarpAvailable()) {
-            if(activePlayer.isAI()){
-                boolean useTimeWarp=((AIPlayer) activePlayer).useTimeWarp(getAvailableDice());
-                if(useTimeWarp){
+            if (activePlayer.isAI()) {
+                boolean useTimeWarp = ((AIPlayer) activePlayer).useTimeWarp(getAvailableDice());
+                if (useTimeWarp) {
                     timeWarpButtonClick();
+                } else {
+                    ((AIPlayer) activePlayer).selectDice(filterDiceWithPossibleMoves(activePlayer, getAvailableDice()).toArray(Dice[]::new));
                 }
-                else{
-                    ((AIPlayer) activePlayer).selectDice(filterDiceWithPossibleMoves(activePlayer,getAvailableDice()).toArray(Dice[]::new));
-                }
-            }
-            else{
+            } else {
                 enableTimeWarpButton();
             }
             return;
         }
-        if(activePlayer.isAI()){
-            ((AIPlayer) activePlayer).selectDice(filterDiceWithPossibleMoves(activePlayer,getAvailableDice()).toArray(Dice[]::new));
+        if (activePlayer.isAI()) {
+            ((AIPlayer) activePlayer).selectDice(filterDiceWithPossibleMoves(activePlayer, getAvailableDice()).toArray(Dice[]::new));
         }
     }
+
+    /**
+     * Disables the skip button and other related buttons when skip button is clicked.
+     * If the game status is in "Arcane Boost", sets the current player's arcane boost skipped to true.
+     * Manages the turn cycle
+     */
     @FXML
     public void skipButtonClick() {
         disableSkipButton();
@@ -657,6 +884,10 @@ public class GUIGameController extends CLIGameController implements Initializabl
         manageTurnCycle();
     }
 
+    /**
+     * This method is called after each active turn and at the end of the passive turn or arcane boost.
+     * It only gets called when a phase is partially or completely finished.
+     */
     //Gets called after each active turn and at the end of the passive turn or arcane boost
     //It only gets called when a phase is partially or completely finished
     public void manageTurnCycle() {
@@ -682,6 +913,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
+    /**
+     * Handles the active turn in the game.
+     */
     private void handleActiveTurn() {
         if (gameStatus.getTurn() < CLIGameController.MAX_NUMBER_OF_TURNS && containsAvailableDie()) {
             advanceActiveTurn();
@@ -690,13 +924,21 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
+    /**
+     * Advances the active turn in the game.
+     * This method increments the turn count, updates the active player,
+     * and performs necessary actions based on the player type.
+     * If the active player is an AI player, it triggers the roll button click event.
+     * If the active player is a human player, it enables the roll button.
+     * Additionally, it disables the main board dice buttons and time warp button.
+     * Finally, it updates the scene status.
+     */
     private void advanceActiveTurn() {
         gameStatus.incrementTurn();
         currentPlayer = activePlayer;
-        if(activePlayer.isAI()){
+        if (activePlayer.isAI()) {
             rollButtonClick();
-        }
-        else{
+        } else {
             enableRollButton();
         }
         disableMainBoardDiceButtons();
@@ -705,6 +947,15 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     }
 
+    /**
+     * Ends the active turn of the current player.
+     * Resets the turn status, disables the time warp button,
+     * moves the dice to the Forgotten Realm, updates the current player,
+     * updates the game status to passive turn, and checks if there are any possible moves.
+     * If there are no possible moves, ends the passive turn.
+     * If the current player is an AI player, selects dice with possible moves and updates the scene status.
+     * Otherwise, enables the Forgotten Realm buttons and updates the scene status.
+     */
     private void endActiveTurn() {
         gameStatus.resetTurn();
         disableTimeWarpButton();
@@ -713,24 +964,37 @@ public class GUIGameController extends CLIGameController implements Initializabl
         turnLabel.setText("");
         //Move to next phase
         gameStatus.setGameStatus(CurrentStatus.PASSIVE_TURN);
+        if (passivePlayer.isAI()) {
+            startDelayedAction(() -> {
+            }, smallDelay);
+        }
         if (getPossibleMovesForDice(passivePlayer, getForgottenRealmDice()).length == 0) {
             passivePlayer.getScoreSheetController().setRewardsLabel("No possible moves, passive turn lost");
             updateSceneStatus();
             endPassiveTurn();
-        }
-        else{
-            if(passivePlayer.isAI()){
+        } else {
+            if (passivePlayer.isAI()) {
                 disableForgottenRealmButtons();
-                System.out.println("Forgotten Realm Dice: "+ Arrays.toString(getForgottenRealmDice()));
-                ((AIPlayer) passivePlayer).selectDice(filterDiceWithPossibleMoves(passivePlayer,getForgottenRealmDice()).toArray(Dice[]::new));
-            }
-            else{
+                System.out.println("Forgotten Realm Dice: " + Arrays.toString(getForgottenRealmDice()));
+                ((AIPlayer) passivePlayer).selectDice(filterDiceWithPossibleMoves(passivePlayer, getForgottenRealmDice()).toArray(Dice[]::new));
+            } else {
                 enableForgottenRealmButtons();
             }
         }
         updateSceneStatus();
     }
 
+    /**
+     * Ends the passive player's turn and begins the next active player's turn.
+     * This method performs the following actions:
+     * 1. Sets the arcane boost skipped flag for both players to false.
+     * 2. Resets the arcane boost usage count for both players.
+     * 3. Sets the game status to ARCANE_BOOST.
+     * 4. Updates the scene status.
+     * 5. Resets the dice.
+     * 6. Disables the arcane boost button.
+     * 7. Manages the turn cycle by switching active and passive players.
+     */
     private void endPassiveTurn() {
         activePlayer.setArcaneBoostSkipped(false);
         passivePlayer.setArcaneBoostSkipped(false);
@@ -743,19 +1007,32 @@ public class GUIGameController extends CLIGameController implements Initializabl
         manageTurnCycle();
     }
 
+    /**
+     * Handles the Arcane Boost for the active and passive player.
+     * <p>
+     * If the active player has the Arcane Boost available and has not skipped it, the current player is set to the active player and a game text is displayed asking if they want
+     * to use Arcane Boost. If the active player is an AI player, the useArcaneBoost method is called on the AIPlayer object and if it returns true, the arcaneBoostButtonClick method
+     * is called; otherwise, the skipButtonClick method is called. If the active player is not an AI player, the enableArcaneBoostButton and enableSkipButton methods are called.
+     * <p>
+     * If the passive player has the Arcane Boost available and has not skipped it, checks are made on the active player. If the active player has used the Arcane Boost previously
+     * , the dice are reset and the Arcane Boost usage is reset. Then, the current player is set to the passive player and a game text is displayed asking if they want to use Arcane
+     * Boost. If the passive player is an AI player, the useArcaneBoost method is called on the AIPlayer object with a filtered array of dice with possible moves from the active player
+     * and if it returns true, the arcaneBoostButtonClick method is called and the main board dice buttons are disabled; otherwise, the skipButtonClick method is called. If the passive
+     * player is not an AI player, the enableArcaneBoostButton and enableSkipButton methods are called.
+     * <p>
+     * If neither the active nor the passive player have the Arcane Boost available or have skipped it, the endPhase method is called.
+     */
     private void handleArcaneBoost() {
         if (activePlayer.isArcaneBoostAvailable() && !activePlayer.isArcaneBoostSkipped()) {
             currentPlayer = activePlayer;
             gameText.setText(activePlayer.getName() + ", do you want to use Arcane Boost?");
-            if(activePlayer.isAI()){
-                if(((AIPlayer) activePlayer).useArcaneBoost(getAvailableDice())){
+            if (activePlayer.isAI()) {
+                if (((AIPlayer) activePlayer).useArcaneBoost(getAvailableDice())) {
                     arcaneBoostButtonClick();
-                }
-                else{
+                } else {
                     skipButtonClick();
                 }
-            }
-            else{
+            } else {
                 enableArcaneBoostButton();
                 enableSkipButton();
             }
@@ -768,16 +1045,14 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 activePlayer.resetArcaneBoostUsage();
             }
             currentPlayer = passivePlayer;
-            if(passivePlayer.isAI()){
-                if(((AIPlayer) passivePlayer).useArcaneBoost(filterDiceWithPossibleMoves(activePlayer,getAvailableDice()).toArray(Dice[]::new))){
+            if (passivePlayer.isAI()) {
+                if (((AIPlayer) passivePlayer).useArcaneBoost(filterDiceWithPossibleMoves(activePlayer, getAvailableDice()).toArray(Dice[]::new))) {
                     arcaneBoostButtonClick();
                     disableMainBoardDiceButtons();
-                }
-                else{
+                } else {
                     skipButtonClick();
                 }
-            }
-            else{
+            } else {
                 enableArcaneBoostButton();
                 enableSkipButton();
             }
@@ -788,6 +1063,15 @@ public class GUIGameController extends CLIGameController implements Initializabl
         endPhase();
     }
 
+    /**
+     * Ends the current phase of the game.
+     * Performs various actions necessary to transition to the next phase.
+     * Switches to the next player, updates game status, increments round if necessary,
+     * ends the game if maximum number of rounds is reached, highlights the current round,
+     * resets the dice, sets the current player, disables buttons for AI players,
+     * performs reward for the active player, updates scene status and score sheets,
+     * disables main board dice buttons for all players, and either initiates rolling for AI player or enables roll button for human player.
+     */
     private void endPhase() {
         switchPlayer();
         gameText.setText("");
@@ -795,7 +1079,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         if (realRounds % 2 == 0) {
             gameStatus.incrementRound();
         }
-        if (gameStatus.getRound() == MAX_NUMBER_OF_ROUNDS+1) {
+        if (gameStatus.getRound() == MAX_NUMBER_OF_ROUNDS + 1) {
             endGame();
             return;
         }
@@ -803,34 +1087,56 @@ public class GUIGameController extends CLIGameController implements Initializabl
         highlightCurrentRound();
         resetDice();
         currentPlayer = activePlayer;
-        if(currentPlayer.isAI()){
-            System.out.println(currentPlayer.getName()+" is AI");
+        if (currentPlayer.isAI()) {
+            System.out.println(currentPlayer.getName() + " is AI");
+            disableAllButtons();
+            startDelayedAction(() -> {
+            }, smallDelay);
+        } else {
+            System.out.println(currentPlayer.getName() + " is not AI");
         }
-        else{
-            System.out.println(currentPlayer.getName()+" is not AI");
+        if (gameStatus.getRound() < 7) {
+            performReward(activePlayer, roundRewards[gameStatus.getRound() - 1]);
         }
-        performReward(activePlayer, roundRewards[gameStatus.getRound() - 1]);
         updateSceneStatus();
         updateScoreSheets();
         disableMainBoardDiceButtons();
-        if(activePlayer.isAI()){
+        if (activePlayer.isAI()) {
             rollButtonClick();
-        }
-        else{
+        } else {
             enableRollButton();
         }
     }
 
+    /**
+     * Executes the necessary actions when the timeWarpButton is clicked.
+     * It activates the time warp power for the active player, disables the skip button,
+     * updates the score sheets, and checks if the time warp power is still available.
+     * If the time warp power is no longer available, it disables the time warp button.
+     * Finally, it calls the rollButtonClick method to simulate the roll of the dice.
+     */
     @FXML
     public void timeWarpButtonClick() {
         activePlayer.useTimeWarpPower();
         disableSkipButton();
+        updateScoreSheets();
         if (!activePlayer.isTimeWarpAvailable()) {
             disableTimeWarpButton();
         }
         rollButtonClick();
     }
 
+    /**
+     * This method is called when the "Arcane Boost" button is clicked.
+     * It performs the following operations:
+     * 1. Enables the main board dice buttons.
+     * 2. Disables the "Skip" button.
+     * 3. Disables the "Time Warp" button.
+     * 4. Uses the Arcane Boost power of the current player.
+     * 5. Checks if the Arcane Boost is no longer available for the current player, and disables the "Arcane Boost" button if necessary.
+     * 6. If the current player is an AI player, selects dice with possible moves and updates the selected dice.
+     * 7. Updates the score sheets.
+     */
     @FXML
     public void arcaneBoostButtonClick() {
         enableMainBoardDiceButtons();
@@ -840,12 +1146,41 @@ public class GUIGameController extends CLIGameController implements Initializabl
         if (!currentPlayer.isArcaneBoostAvailable()) {
             disableArcaneBoostButton();
         }
-        if(currentPlayer.isAI()){
-            ((AIPlayer)currentPlayer).selectDice(filterDiceWithPossibleMoves(currentPlayer,getAvailableDice()).toArray(Dice[]::new));
+        if (currentPlayer.isAI()) {
+            ((AIPlayer) currentPlayer).selectDice(filterDiceWithPossibleMoves(currentPlayer, getAvailableDice()).toArray(Dice[]::new));
         }
         updateScoreSheets();
     }
 
+    /**
+     * Executes a specified action after a delay.
+     *
+     * @param action         the action to be executed
+     * @param delayInSeconds the delay before executing the action, in seconds
+     */
+    private void startDelayedAction(Runnable action, long delayInSeconds) {
+        action.run();
+//        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+//        disableAllButtons();
+//        disableForgottenRealmButtons();
+//        disableMainBoardDiceButtons();
+//        executorService.schedule(() -> Platform.runLater(action), delayInSeconds, TimeUnit.SECONDS);
+//        executorService.shutdown();
+    }
+
+    /**
+     * Method called when the red dice button is clicked.
+     * Executes the necessary actions to make a move using the red dice.
+     * If there are no possible moves for the red dice, throws an InvalidMoveException.
+     * Disables the main board dice buttons and the forgotten realm buttons.
+     * Selects the red dice if it is the same as the reference dice array.
+     * If the current player is an AI, makes the move using the selected AI move and starts a delayed action to manage the turn cycle.
+     * Sets the current player and possible moves in the RedRealmController.
+     * Shows the RedRealmStage.
+     * Finally, manages the turn cycle.
+     *
+     * @throws InvalidMoveException if there are no possible moves for the red dice
+     */
     @FXML
     public void redDiceButtonClick() {
         try {
@@ -854,12 +1189,12 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
-            if(diceArray==refDiceArray){
+            if (diceArray == refDiceArray) {
                 selectDice(diceArray[0], currentPlayer);
             }
-            if(currentPlayer.isAI()){
-                makeMove(currentPlayer,((AIPlayer) currentPlayer).getSelectedMove());
-                manageTurnCycle();
+            if (currentPlayer.isAI()) {
+                makeMove(currentPlayer, ((AIPlayer) currentPlayer).getSelectedMove());
+                startDelayedAction(this::manageTurnCycle, largeDelay);
                 return;
             }
             RedRealmController.setCurrentPlayer(currentPlayer);
@@ -875,24 +1210,37 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     }
 
+    /**
+     * This method is called when the green dice button is clicked.
+     * It handles the logic for making moves with the green dice.
+     * If there are no possible moves for the green dice, it throws an InvalidMoveException.
+     * It then selects the green dice if it is the same as the reference dice array.
+     * It makes a move with the green dice to the first possible move.
+     * It disables the main board dice buttons and the forgotten realm buttons.
+     * If the current player is an AI player, it prints a message stating that and starts a delayed action to manage the turn cycle.
+     * If the current player is not an AI player, it prints a message stating that.
+     * Finally, it manages the turn cycle.
+     * If an InvalidMoveException is caught, it updates the game text to display an error message.
+     */
     @FXML
     public void greenDiceButtonClick() {
         try {
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[1]).length == 0) {
                 throw new InvalidMoveException();
             }
-            if(diceArray==refDiceArray){
+            if (diceArray == refDiceArray) {
                 selectDice(diceArray[1], currentPlayer);
             }
 
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[1])[0]);
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
-            if(currentPlayer.isAI()){
-                System.out.println(currentPlayer.getName()+" is AI");
-            }
-            else{
-                System.out.println(currentPlayer.getName()+" is not AI");
+            if (currentPlayer.isAI()) {
+                System.out.println(currentPlayer.getName() + " is AI");
+                startDelayedAction(this::manageTurnCycle, largeDelay);
+                return;
+            } else {
+                System.out.println(currentPlayer.getName() + " is not AI");
             }
             manageTurnCycle();
         } catch (InvalidMoveException e) {
@@ -900,81 +1248,137 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
+    /**
+     * Handles the event when the blue dice button is clicked.
+     * Checks if there are possible moves for the blue dice. If not, throws an InvalidMoveException.
+     * Selects the blue dice if it is currently the reference dice.
+     * Makes the move based on the possible moves for the blue dice.
+     * Disables the main board dice buttons and the forgotten realm buttons.
+     * If the current player is AI, starts a delayed action to manage the turn cycle.
+     * Otherwise, continues with managing the turn cycle.
+     * Displays an error message if there are no possible moves for the blue dice.
+     */
     @FXML
     public void blueDiceButtonClick() {
         try {
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[2]).length == 0) {
                 throw new InvalidMoveException();
             }
-            if(diceArray==refDiceArray){
+            if (diceArray == refDiceArray) {
                 selectDice(diceArray[2], currentPlayer);
             }
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[2])[0]);
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
+
+            if (currentPlayer.isAI()) {
+                System.out.println(currentPlayer.getName() + " is AI");
+                startDelayedAction(this::manageTurnCycle, largeDelay);
+                return;
+            } else {
+                System.out.println(currentPlayer.getName() + " is not AI");
+            }
             manageTurnCycle();
-            if(currentPlayer.isAI()){
-                System.out.println(currentPlayer.getName()+" is AI");
-            }
-            else{
-                System.out.println(currentPlayer.getName()+" is not AI");
-            }
         } catch (InvalidMoveException e) {
             gameText.setText("There are no possible moves for " + refDiceArray[2].getName());
         }
     }
 
+    /**
+     * Handles the click event when the magenta dice button is clicked.
+     * <p>
+     * This method checks if there are possible moves for the magenta dice of the current player.
+     * If there are no possible moves, an InvalidMoveException is thrown and an error message is displayed.
+     * If there are possible moves, the dice is selected and a move is made using the first possible move.
+     * The main board dice buttons and forgotten realm buttons are disabled.
+     * <p>
+     * If the current player is an AI player, a delayed action is started to manage the turn cycle after a large delay.
+     * If the current player is not an AI player, the turn cycle is managed immediately.
+     *
+     * @throws InvalidMoveException if there are no possible moves for the magenta dice
+     */
     @FXML
     public void magentaDiceButtonClick() {
         try {
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[3]).length == 0) {
                 throw new InvalidMoveException();
             }
-            if(diceArray==refDiceArray){
+            if (diceArray == refDiceArray) {
                 selectDice(diceArray[3], currentPlayer);
             }
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[3])[0]);
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
+
+            if (currentPlayer.isAI()) {
+                System.out.println(currentPlayer.getName() + " is AI");
+                startDelayedAction(this::manageTurnCycle, largeDelay);
+                return;
+            } else {
+                System.out.println(currentPlayer.getName() + " is not AI");
+            }
             manageTurnCycle();
-            if(currentPlayer.isAI()){
-                System.out.println(currentPlayer.getName()+" is AI");
-            }
-            else{
-                System.out.println(currentPlayer.getName()+" is not AI");
-            }
 
         } catch (InvalidMoveException e) {
             gameText.setText("There are no possible moves for " + refDiceArray[3].getName());
         }
     }
 
+    /**
+     * Method that is called when the yellow dice button is clicked.
+     * It handles the logic for the yellow dice button click event.
+     * If there are no possible moves for the fourth dice in the reference dice array,
+     * it throws an InvalidMoveException.
+     * If the dice array is the reference dice array, it selects the fourth dice for the current player.
+     * It then makes a move for the current player using the possible moves for the fourth dice.
+     * After that, it disables the main board dice buttons and the forgotten realm buttons.
+     * If the current player is an AI player, it starts a delayed action to manage the turn cycle after a large delay.
+     * If the current player is not an AI player, it simply logs that the player is not an AI.
+     * Finally, it manages the turn cycle.
+     * If an InvalidMoveException is caught, it sets the game text to display an appropriate message.
+     */
     @FXML
     public void yellowDiceButtonClick() {
         try {
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[4]).length == 0) {
                 throw new InvalidMoveException();
             }
-            if(diceArray==refDiceArray){
+            if (diceArray == refDiceArray) {
                 selectDice(diceArray[4], currentPlayer);
             }
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[4])[0]);
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
+            if (currentPlayer.isAI()) {
+                System.out.println(currentPlayer.getName() + " is AI");
+                startDelayedAction(this::manageTurnCycle, largeDelay);
+                return;
+            } else {
+                System.out.println(currentPlayer.getName() + " is not AI");
+            }
             manageTurnCycle();
-            if(currentPlayer.isAI()){
-                System.out.println(currentPlayer.getName()+" is AI");
-            }
-            else{
-                System.out.println(currentPlayer.getName()+" is not AI");
-            }
         } catch (InvalidMoveException e) {
             gameText.setText("There are no possible moves for " + refDiceArray[4].getName());
         }
 
     }
 
-
+    /**
+     * This method is invoked when the white dice button is clicked. It handles the logic for selecting and moving the white dice.
+     * It checks if there are any available moves for the white dice, throws a NoAvailableMovesException if there are none.
+     * It selects the white dice and disables the grid it is in.
+     * If the current player is an AI player, it prints a message indicating that the player is an AI.
+     * Sets the arcanePrismEnabled flag to true.
+     * Creates a reference dice array with dice objects of different colors and the same value as the selected white dice.
+     * Determines the destination grid for the white dice based on the current grid it is in.
+     * Enables the destination grid and updates the dice numbers displayed in the destination grid.
+     * If the current player is an AI player, it selects the dice objects from the reference dice array that have possible moves,
+     * disables and sets the opacity of the destination grid, and starts a delayed action.
+     * If the current player is not an AI player, it enables the destination grid and sets its opacity.
+     * Displays an error message if there are no available moves for the white dice.
+     *
+     * @throws NoAvailableMovesException if there are no available moves for the white dice
+     */
     @FXML
     public void whiteDiceButtonClick() {
         try {
@@ -986,11 +1390,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
             disableGrid(whiteDieParent);
             disableTimeWarpButton();
             Dice selectedDie = diceArray[5];
-            if(currentPlayer.isAI()){
-                System.out.println(currentPlayer.getName()+" is AI");
-            }
-            else{
-                System.out.println(currentPlayer.getName()+" is not AI");
+            if (currentPlayer.isAI()) {
+                System.out.println(currentPlayer.getName() + " is AI");
+
+            } else {
+                System.out.println(currentPlayer.getName() + " is not AI");
             }
             arcanePrismEnabled = true;
             refDiceArray = new Dice[]{
@@ -1016,15 +1420,27 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 magentaDiceNumber2.setText(String.valueOf(selectedDie.getValue()));
                 yellowDiceNumber2.setText(String.valueOf(selectedDie.getValue()));
             }
-            if(currentPlayer.isAI()){
+            if (currentPlayer.isAI()) {
                 System.out.println("AI pressed White Dice");
-                ((AIPlayer) currentPlayer).selectDice(filterDiceWithPossibleMoves(currentPlayer,refDiceArray).toArray(Dice[]::new));
+                ((AIPlayer) currentPlayer).selectDice(filterDiceWithPossibleMoves(currentPlayer, refDiceArray).toArray(Dice[]::new));
+                whiteDieDestination.setDisable(true);
+                whiteDieDestination.setOpacity(lowOpacity);
+                startDelayedAction(() -> {
+                }, smallDelay);
+            } else {
+                whiteDieDestination.setDisable(false);
+                whiteDieDestination.setOpacity(highOpacity);
             }
         } catch (NoAvailableMovesException e) {
             gameText.setText("There are no possible moves for " + diceArray[5].getName());
         }
     }
 
+    /**
+     * Disables the given grid by disabling its parent StackPane and making it invisible and mouse transparent.
+     *
+     * @param grid The grid to be disabled.
+     */
     private void disableGrid(GridPane grid) {
         StackPane stackPane = (StackPane) grid.getParent();
         stackPane.setDisable(true);
@@ -1033,6 +1449,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     }
 
+    /**
+     * Enables the given GridPane and its parent StackPane to make them visible and interactive.
+     *
+     * @param grid The GridPane to enable.
+     */
     private void enableGrid(GridPane grid) {
         StackPane stackPane = (StackPane) grid.getParent();
         stackPane.setDisable(false);
@@ -1041,10 +1462,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     }
 
-    //------------------------------------------------------GAME LOGIC METHODS-------------------------------------------------------//
-   @FXML
-   private AnchorPane guiderAnchorPane;
-
+    /**
+     * Starts the game by performing necessary actions such as disabling main board dice buttons,
+     * updating score sheets, updating scene status, setting the current player, setting the game status,
+     * loading the Guider.fxml file, and performing additional actions for an AI player.
+     */
     @Override
     public void startGame() {
         disableMainBoardDiceButtons();
@@ -1053,16 +1475,17 @@ public class GUIGameController extends CLIGameController implements Initializabl
         currentPlayer = activePlayer;
         gameStatus.setGameStatus(CurrentStatus.ACTIVE_TURN);
         refDiceArray = diceArray;
-        try{
+        try {
             FXMLLoader guiderLoader = new FXMLLoader(getClass().getResource("Guider.fxml"));
-            AnchorPane guiderAnchorPane=guiderLoader.load();
-            Guider guiderController=guiderLoader.getController();
+            AnchorPane guiderAnchorPane = guiderLoader.load();
+            Guider guiderController = guiderLoader.getController();
             guiderController.setGuiGameController(this);
             this.guiderAnchorPane.getChildren().add(guiderAnchorPane);
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
+
         //TEST
 //        GameColor[] colors = GameColor.values();
 //        for(int i=0;i<3;i++){
@@ -1078,6 +1501,13 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     }
 
+    /**
+     * Makes a move for a given player.
+     *
+     * @param player the player making the move
+     * @param move   the move to be made
+     * @return true if the move was successfully made, false otherwise
+     */
     @Override
     public boolean makeMove(Player player, Move move) {
         player.getScoreSheetController().setRewardsLabel("");
@@ -1092,11 +1522,12 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (realm.checkReward()) {
                 processRewardQueue(player, realm.getReward());
             }
-            if(player.isAI()){
-                ((AIPlayer)player).getMoveEvaluation().addMove(move);
+            if (player.isAI()) {
+                ((AIPlayer) player).getMoveEvaluation().addMove(move);
             }
             updateScoreSheets();
             updateSceneStatus();
+            sceneManager.updateEndGameStage();
             return true;
 
 
@@ -1108,6 +1539,12 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     //------------------------------------------------------REWARD METHODS-------------------------------------------------------//
 
+    /**
+     * Process the reward queue for a given player.
+     *
+     * @param player  the player who will receive the rewards
+     * @param rewards an array of Collectibles representing the rewards to be processed
+     */
     private void processRewardQueue(Player player, Collectibles[] rewards) {
         LinkedList<Collectibles> list = new LinkedList<>();
         for (Collectibles r : rewards) {
@@ -1122,6 +1559,13 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
+    /**
+     * Performs the reward action for the given player and collectible reward.
+     * If the reward is null, the method returns without performing any action.
+     *
+     * @param player The player who will receive the reward.
+     * @param reward The collectible reward to be given to the player.
+     */
     protected void performReward(Player player, Collectibles reward) {
         if (reward == null) {
             return;
@@ -1132,8 +1576,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
         if (reward instanceof EssenceBonus) {
             playEssenceBonus(player);
-        }
-        else {
+        } else {
             if (reward instanceof ColorBonus) {
                 playColorBonus(player, ((ColorBonus) reward).getColor());
             } else {
@@ -1143,6 +1586,14 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     }
 
+    /**
+     * Plays the color bonus for a player based on the given game color.
+     * If the player is an AI, the appropriate AI algorithm is executed, otherwise the UI is updated.
+     *
+     * @param player    the player who is playing the color bonus
+     * @param gameColor the game color for which the bonus is being played
+     * @throws IllegalArgumentException if an invalid game color is provided
+     */
     protected void playColorBonus(Player player, GameColor gameColor) {
         try {
             Move[] possibleMoves = player.getRealm(gameColor).getRealmMoves();
@@ -1152,22 +1603,20 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
             switch (gameColor) {
                 case RED:
-                    if(player.isAI()){
-                        System.out.println(player+" is AI");
-                        ((AIPlayer)(player)).playColorBonus(GameColor.RED,player.getRealm(GameColor.RED).getRealmMoves());
-                    }
-                    else{
+                    if (player.isAI()) {
+                        System.out.println(player + " is AI");
+                        ((AIPlayer) (player)).playColorBonus(GameColor.RED, player.getRealm(GameColor.RED).getRealmMoves());
+                    } else {
                         RedRealmController.setPossibleMoves(possibleMoves);
                         RedRealmController.setCurrentPlayer(player);
                         sceneManager.showRedRealmStage();
                     }
                     break;
                 case GREEN:
-                    if(player.isAI()){
-                        System.out.println(player+" is AI");
-                        ((AIPlayer)(player)).playColorBonus(GameColor.GREEN,player.getRealm(GameColor.GREEN).getRealmMoves());
-                    }
-                    else{
+                    if (player.isAI()) {
+                        System.out.println(player + " is AI");
+                        ((AIPlayer) (player)).playColorBonus(GameColor.GREEN, player.getRealm(GameColor.GREEN).getRealmMoves());
+                    } else {
                         GreenBonusController.setPossibleMoves(possibleMoves);
                         GreenBonusController.setCurrentPlayer(player);
                         sceneManager.showGreenRealmStage();
@@ -1175,34 +1624,34 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
                     break;
                 case BLUE:
-                    if(player.isAI()){
-                        System.out.println(player+" is AI");
-                        BlueDice blueDice=new BlueDice(6);
-                        makeMove(player,new Move(blueDice,player.getRealm(blueDice).getCreature(blueDice)));
-                    }
-                    else{
+                    if (player.isAI()) {
+                        System.out.println(player + " is AI");
+                        System.out.println(player + " received Blue Bonus");
+                        BlueDice blueDice = new BlueDice(6);
+                        makeMove(player, new Move(blueDice, player.getRealm(blueDice).getCreature(blueDice)));
+                    } else {
                         BlueBonusController.setPossibleMove(possibleMoves[possibleMoves.length - 1]);
                         BlueBonusController.setCurrentPlayer(player);
                         sceneManager.showBlueRealmStage();
                     }
                     break;
                 case MAGENTA:
-                    if(player.isAI()){
-                        System.out.println(player+" is AI");
-                        makeMove(player,new Move(new MagentaDice(6), player.getRealm(gameColor).getCreature(new MagentaDice(6))));
-                    }
-                    else{
+                    if (player.isAI()) {
+                        System.out.println(player + " is AI");
+                        System.out.println(player + " received Magenta Bonus");
+                        makeMove(player, new Move(new MagentaDice(6), player.getRealm(gameColor).getCreature(new MagentaDice(6))));
+                    } else {
                         MagentaBonusController.setCurrentPlayer(player);
                         MagentaBonusController.setPossibleMove(new Move(new MagentaDice(6), player.getRealm(gameColor).getCreature(new MagentaDice(6))));
                         sceneManager.showMagentaRealmStage();
                     }
                     break;
                 case YELLOW:
-                    if(player.isAI()){
-                        System.out.println(player+" is AI");
-                        makeMove(player,new Move(new YellowDice(6), player.getRealm(gameColor).getCreature(new YellowDice(6))));
-                    }
-                    else{
+                    if (player.isAI()) {
+                        System.out.println(player + " is AI");
+                        System.out.println(player + " received Yellow Bonus");
+                        makeMove(player, new Move(new YellowDice(6), player.getRealm(gameColor).getCreature(new YellowDice(6))));
+                    } else {
                         YellowBonusController.setCurrentPlayer(player);
                         YellowBonusController.setPossibleMove(new Move(new YellowDice(6), player.getRealm(gameColor).getCreature(new YellowDice(6))));
                         sceneManager.showYellowRealmStage();
@@ -1216,17 +1665,21 @@ public class GUIGameController extends CLIGameController implements Initializabl
         }
     }
 
+    /**
+     * Plays the essence bonus for a given player. The essence bonus allows the player to choose a realm to gain a color bonus.
+     *
+     * @param player the player for whom the essence bonus is being played
+     */
     protected void playEssenceBonus(Player player) {
         Realm[] realms = player.getRealms();
         LinkedList<GameColor> availableRealms = Stream.of(realms)
                 .filter(Realm::isRealmAvailable).map(Realm::getColor)
                 .collect(Collectors.toCollection(LinkedList::new));
 
-        if(!availableRealms.isEmpty()){
-            if(player.isAI()){
-                playColorBonus(player,((AIPlayer)player).selectRealm(availableRealms));
-            }
-            else{
+        if (!availableRealms.isEmpty()) {
+            if (player.isAI()) {
+                playColorBonus(player, ((AIPlayer) player).selectRealm(availableRealms));
+            } else {
                 RealmPickerController.setPossibleRealms(availableRealms);
                 RealmPickerController.setCurrentPlayer(player);
                 sceneManager.showRealmPickerStage();
@@ -1239,6 +1692,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
     //------------------------------------------------------SECONDARY METHODS-------------------------------------------------------//
 
 
+    /**
+     * Checks if any dice in the diceArray has the status DiceStatus.AVAILABLE.
+     *
+     * @return true if there is at least one dice with status DiceStatus.AVAILABLE, false otherwise.
+     */
     private boolean containsAvailableDie() {
         for (Dice i : diceArray) {
             if (i.getDiceStatus() == DiceStatus.AVAILABLE) {
@@ -1249,13 +1707,10 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     /**
-     * Gets all six dice, providing their current state and value within the
-     * game regardless of their location or status. The dice could be in various
-     * states, such as currently rolled and awaiting selection by the active player,
-     * in the Forgotten Realm awaiting selection by the passive player, or already
-     * assigned to a specific turn by the active player.
+     * Retrieves all possible moves for a given player.
      *
-     * @return An array of all six {@code Dice}, with each die's state and value.
+     * @param player the player for whom to retrieve possible moves
+     * @return an array of possible moves for the player
      */
 
 
@@ -1280,16 +1735,23 @@ public class GUIGameController extends CLIGameController implements Initializabl
     }
 
     /**
-     * Gets possible moves for all currently rolled dice for a given player.
+     * Returns an array of possible moves based on the available dice for a given player.
      *
-     * @param player The player for whom to determine possible moves.
-     * @return An array of all possible moves for all rolled dice.
+     * @param player The player for which to find the possible moves.
+     * @return An array of possible moves for the given player and available dice.
      */
     @Override
     public Move[] getPossibleMovesForAvailableDice(Player player) {
         return getPossibleMovesForDice(player, getAvailableDice());
     }
 
+    /**
+     * Returns an array of possible moves for the given player and dice.
+     *
+     * @param player the player who wants to make the moves
+     * @param dice   the dice values available for the player to use
+     * @return an array of possible moves for the player and dice combination
+     */
     private Move[] getPossibleMovesForDice(Player player, Dice[] dice) {
         try {
             LinkedList<Move> availableMoves = new LinkedList<>();
@@ -1310,6 +1772,13 @@ public class GUIGameController extends CLIGameController implements Initializabl
         return new Move[0];
     }
 
+    /**
+     * Returns an array of all possible moves that a player can make for a given die.
+     *
+     * @param player The player making the move
+     * @param dice   The dice for which we want to find the possible moves
+     * @return An array of possible moves for the given die
+     */
     @Override
     public Move[] getPossibleMovesForADie(Player player, Dice dice) {
         try {
@@ -1330,6 +1799,9 @@ public class GUIGameController extends CLIGameController implements Initializabl
             } else {
                 // If the dice is not white, find moves in the respective realm
                 Realm realm = player.getRealm(dice);
+                if (!realm.isRealmAvailable()) {
+                    return new Move[0];
+                }
                 Move[] realmMoves = realm.getRealmMoves();
                 for (Move move : realmMoves) {
                     int targetValue = (realm instanceof GreenRealm) ? diceValue + diceArray[5].getValue() : diceValue;
@@ -1350,11 +1822,16 @@ public class GUIGameController extends CLIGameController implements Initializabl
 
     }
 
+    /**
+     * Closes the game scanner, displays the score sheets of active and passive players,
+     * prints the maximum number of initialized worlds constant, and shows the end game scene.
+     */
     protected void endGame() {
         gameGuide.closeScanner();
         sc.close();
         activePlayer.getScoreSheet().displayScoreSheet();
         passivePlayer.getScoreSheet().displayScoreSheet();
+        System.out.println(MoveEvaluation.MAX_NO_WORLDS_INITIALIZED);
         sceneManager.showEndGame();
     }
 }

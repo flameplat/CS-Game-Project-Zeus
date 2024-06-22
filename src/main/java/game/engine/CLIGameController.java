@@ -54,16 +54,85 @@ public class CLIGameController extends GameController {
     }
 
 
+    /**
+     * An array of Dice objects representing the dice in a game.
+     */
     protected final Dice[] diceArray;
+    /**
+     * Represents the game board.
+     *
+     * The game board consists of dice and two players. It is responsible for managing the state
+     * of the game board, including the players and the available dice.
+     */
     protected final GameBoard gameBoard;
+    /**
+     *
+     */
     protected final SystemManager systemManager;
+    /**
+     *
+     */
     protected final Scanner sc; //Will be closed at the end of the game
+    /**
+     * Represents the game status, including round and turn information for the current active player.
+     */
     protected final GameStatus gameStatus;
+    /**
+     *
+     */
     protected final GameGuide gameGuide;
+    /**
+     * The standardAntiCheatService variable is an instance of the StandardAntiCheatService class.
+     * This variable is used to perform anti-cheat service checks for a player.
+     * It is a protected field and cannot be modified from outside of its containing class.
+     * It is final, meaning its value cannot be changed once it is initialized.
+     *
+     * The StandardAntiCheatService class provides methods for detecting and preventing cheating in the game.
+     * It ensures fair gameplay by checking for any unauthorized actions or violations of the game rules by the players.
+     * The standardAntiCheatService instance is used by the CLIGameController class to perform these checks.
+     * It helps to maintain the integrity of the game and prevent players from gaining unfair advantages.
+     */
     protected final StandardAntiCheatService standardAntiCheatService = new StandardAntiCheatService();
+    /**
+     * The active player in the game.
+     */
     protected Player activePlayer;
+    /**
+     *
+     */
     protected Player passivePlayer;
 
+    /**
+     * CLIGameController is a class that represents the controller for a command line interface (CLI) game.
+     * It is responsible for managing the flow of the game and interacting with the user through the command line.
+     *
+     * Constructor:
+     * public CLIGameController()
+     * Initializes a new instance of the CLIGameController class.
+     * It creates a SystemManager instance and performs system checks.
+     * It also initializes the game guide, game board, game status, dice array, scanner, active player, and passive player.
+     *
+     * Fields:
+     * - systemManager: SystemManager
+     *   An instance of the SystemManager class that is responsible for system-related checks.
+     * - gameGuide: GameGuide
+     *   An instance of the GameGuide class that provides instructions and rules for the game.
+     * - gameBoard: GameBoard
+     *   An instance of the GameBoard class that represents the game board.
+     * - gameStatus: GameStatus
+     *   An instance of the GameStatus class that represents the current status of the game.
+     * - diceArray: Dice[]
+     *   An array of Dice objects representing the dice used in the game.
+     * - sc: Scanner
+     *   An instance of the Scanner class for reading user input from the command line.
+     * - activePlayer: Player
+     *   The current active player in the game.
+     * - passivePlayer: Player
+     *   The passive player in the game.
+     *
+     * Example usage:
+     * CLIGameController gameController = new CLIGameController();
+     */
     // -----------------------Constructor-----------------------//
     public CLIGameController() {
         systemManager = new SystemManager();
@@ -77,6 +146,9 @@ public class CLIGameController extends GameController {
         activePlayer = gameBoard.getPlayer1();
         passivePlayer = gameBoard.getPlayer2();
     }
+    /**
+     *
+     */
     // -----------------------Methods-----------------------//
     @Override
     public void startGame() {
@@ -112,6 +184,9 @@ public class CLIGameController extends GameController {
         }
         endGame();
     }
+    /**
+     * Displays the main menu and handles user input.
+     */
     private void mainMenu() {
         gameGuide.displayGameMode();
         while(true){
@@ -127,6 +202,9 @@ public class CLIGameController extends GameController {
         gameGuide.displayInstructions(Instruction.GAME);
     }
 
+    /**
+     *
+     */
     protected void checkArcaneBoost(Player player) {
         while (player.isArcaneBoostAvailable()) {
             displayArcaneBoostStatus(player);
@@ -149,6 +227,11 @@ public class CLIGameController extends GameController {
         }
     }
 
+    /**
+     * Displays the Arcane Boost status for a given player.
+     *
+     * @param player The player for whom to display the Arcane Boost status.
+     */
     protected void displayArcaneBoostStatus(Player player) {
         System.out.println(player.getName());
         gameGuide.displayInstructions(Instruction.AB_PROMPT);
@@ -156,6 +239,11 @@ public class CLIGameController extends GameController {
         System.out.printf("You have %d Arcane Boost%s%n", count, count > 1 ? "s" : "");
     }
 
+    /**
+     * Plays an extra turn for the specified player.
+     *
+     * @param player the player for whom to play the extra turn
+     */
     protected void playExtraTurn(Player player) {
         player.getScoreSheet().displayScoreSheet();
         LinkedList<Dice> notSelectedByPlayer = new LinkedList<>();
@@ -175,6 +263,9 @@ public class CLIGameController extends GameController {
         }
     }
 
+    /**
+     *
+     */
     protected boolean checkTimeWarp(Player player) {
         if (player.isTimeWarpAvailable()) {
             displayTimeWarpStatus(player);
@@ -188,12 +279,22 @@ public class CLIGameController extends GameController {
         return false;
     }
 
+    /**
+     * Displays the time warp status of a player.
+     *
+     * @param player the player whose time warp status will be displayed
+     */
     protected void displayTimeWarpStatus(Player player) {
         int count = player.getTotalTimeWarpPowersCollected();
         gameGuide.displayInstructions(Instruction.TW_PROMPT);
         System.out.printf("You have %d Time Warp%s%n", count, count > 1 ? "s" : "");
     }
 
+    /**
+     * Displays the instructions for playing the essence bonus and allows the player to choose a realm to play the color bonus on.
+     *
+     * @param player the player who will play the essence bonus
+     */
     protected void playEssenceBonus(Player player) {
         gameGuide.displayInstructions(Instruction.ESSENCE_BONUS);
         player.getScoreSheet().displayScoreSheet();
@@ -232,6 +333,12 @@ public class CLIGameController extends GameController {
 
     }
 
+    /**
+     * Plays the color bonus for the given player and game color.
+     *
+     * @param player The player who will play the color bonus.
+     * @param gameColor The game color for the color bonus.
+     */
     protected void playColorBonus(Player player, GameColor gameColor) {
         gameGuide.displayInstructions(Instruction.COLOR_BONUS);
         switch (gameColor) {
@@ -334,6 +441,16 @@ public class CLIGameController extends GameController {
         }
     }
 
+    /**
+     * Processes the reward queue for a given player.
+     * This method takes a player object and an array of Collectibles as parameters.
+     * It adds the non-null Collectibles to a linked list and creates a priority queue
+     * using a custom CollectiblesComparator. Then, it iterates over the priority queue
+     * and performs the reward for each Collectible by calling the performReward method.
+     *
+     * @param player  the player object to process rewards for
+     * @param rewards an array of Collectibles representing the rewards
+     */
     private void processRewardQueue(Player player, Collectibles[] rewards) {
         LinkedList<Collectibles> list = new LinkedList<>();
         for (Collectibles r : rewards) {
@@ -348,6 +465,12 @@ public class CLIGameController extends GameController {
         }
     }
 
+    /**
+     * Perform the reward action for a player.
+     *
+     * @param player  The player receiving the reward.
+     * @param reward  The collectible reward to be given to the player.
+     */
     protected void performReward(Player player, Collectibles reward) {
         if (reward == null) {
             return;
@@ -364,6 +487,11 @@ public class CLIGameController extends GameController {
         }
     }
 
+    /**
+     * Delays the execution of the program for a specified amount of time in milliseconds.
+     *
+     * @param ms the amount of time to delay the program in milliseconds
+     */
     private void delay(int ms) {
         try {
             Thread.sleep(ms);
@@ -372,6 +500,27 @@ public class CLIGameController extends GameController {
         }
     }
 
+    /**
+     * Plays a round of the game.
+     * The method performs the following steps:
+     * 1. Prints the name of the active player.
+     * 2. Displays the instructions for the current round.
+     * 3. Resets the dice to AVAILABLE status.
+     * 4. Loops through a maximum number of turns or until no available dice remain:
+     *      a. Prints the turn number.
+     *      b. Calls the playTurn() method.
+     * 5. Moves all available dice to the forgotten realm.
+     * 6. Calls the playPassiveTurn() method.
+     * 7. Checks for Arcane Boost powers for both players.
+     *
+     * @see Player#getName()
+     * @see GameGuide#displayInstructions(Instruction)
+     * @see #resetDice()
+     * @see #playTurn()
+     * @see #playPassiveTurn()
+     * @see #moveDiceToForgottenRealm()
+     * @see #checkArcaneBoost(Player)
+     */
     protected void playRound() {
         System.out.println(activePlayer.getName());
         gameGuide.displayInstructions(Instruction.ROUND);
@@ -388,6 +537,9 @@ public class CLIGameController extends GameController {
 
     }
 
+    /**
+     *
+     */
     private boolean containsAvailableDie() {
         for (Dice i : diceArray) {
             if (i.getDiceStatus() == DiceStatus.AVAILABLE) {
@@ -397,6 +549,17 @@ public class CLIGameController extends GameController {
         return false;
     }
 
+    /**
+     * Selects a valid die (has an available move in player).
+     * Prints given dice if no moves or prints filtered dice then the selected die.
+     *
+     * @param player        the player for whom to select a valid die
+     * @param dice          the array of dice to choose from
+     * @param checkTimeWarp true if time warp power should be checked, false otherwise
+     * @param diceStatus    the status of the dice to select
+     * @return the selected valid die
+     * @throws NoAvailableMovesException if there are no available moves for any of the dice
+     */
     //Selects a valid die (has an available move in player)
     //Prints given dice if no moves or prints filtered dice then the selected die
     protected Dice selectValidDie(Player player, Dice[] dice, boolean checkTimeWarp, DiceStatus diceStatus) throws NoAvailableMovesException {
@@ -456,6 +619,13 @@ public class CLIGameController extends GameController {
         return selectedDie;
     }
 
+    /**
+     * Filter the dice array and return a list of dice that have possible moves for the given player.
+     *
+     * @param player The player object.
+     * @param dice   The array of dice.
+     * @return LinkedList<Dice> A list of dice with possible moves.
+     */
     protected LinkedList<Dice> filterDiceWithPossibleMoves(Player player, Dice[] dice) {
         LinkedList<Dice> diceWithMoves = new LinkedList<>();
         for (Dice i : dice) {
@@ -466,6 +636,13 @@ public class CLIGameController extends GameController {
         return diceWithMoves;
     }
 
+    /**
+     * Selects a valid move for the player based on the selected die.
+     *
+     * @param player The player who is making the move.
+     * @param selectedDie The selected die for the move.
+     * @return The selected valid move for the player.
+     */
     protected Move selectValidMove(Player player, Dice selectedDie) {
 
         if (selectedDie instanceof RedDice) {
@@ -474,6 +651,13 @@ public class CLIGameController extends GameController {
         return getPossibleMovesForADie(player, selectedDie)[0];
     }
 
+    /**
+     * Selects a move for the red dice.
+     *
+     * @param player   the player making the move
+     * @param redDice  the red dice to select a move for
+     * @return the selected move
+     */
     private Move selectMoveForRedDice(Player player, RedDice redDice) {
         player.getScoreSheet().displayRedRealm();
         Move[] moves = getPossibleMovesForADie(player, redDice);
@@ -499,6 +683,9 @@ public class CLIGameController extends GameController {
         }
     }
 
+    /**
+     *
+     */
     private void playTurn() {
         gameGuide.displayInstructions(Instruction.TURN);
         System.out.println("Here is your score sheet");
@@ -530,6 +717,17 @@ public class CLIGameController extends GameController {
         gameStatus.incrementTurn();
     }
 
+    /**
+     * Plays a passive turn for the player.
+     * Prints the name of the passive player.
+     * Displays the instructions for a passive turn.
+     * Displays the score sheet of the passive player.
+     * Gets the forgotten realm dice.
+     * Selects a valid die for the passive player from the forgotten realm dice.
+     * Selects a valid move for the passive player.
+     * Makes the selected move for the passive player.
+     * If no available moves for the passive player, prints a message and ends the passive turn.
+     */
     private void playPassiveTurn() {
         System.out.println(passivePlayer.getName());
         gameGuide.displayInstructions(Instruction.PASSIVE_TURN);
@@ -547,6 +745,9 @@ public class CLIGameController extends GameController {
         makeMove(passivePlayer, selectedMove);
     }
 
+    /**
+     *
+     */
     protected void displayRealms(Player player) {
         Realm[] realms = player.getRealms();
         StringBuilder result = new StringBuilder();
@@ -563,6 +764,12 @@ public class CLIGameController extends GameController {
         System.out.println(result);
     }
 
+    /**
+     * Retrieves the player name from the user.
+     *
+     * @param prompt the prompt to display to the user for entering the name
+     * @return a new Player object with the entered name
+     */
     private Player getPlayerName(String prompt) {
         while (true) {
             try {
@@ -579,6 +786,9 @@ public class CLIGameController extends GameController {
         }
     }
 
+    /**
+     *
+     */
     @Override
     public boolean switchPlayer() {
         boolean flag;
@@ -603,10 +813,7 @@ public class CLIGameController extends GameController {
     }
 
     /**
-     * Rolls all available dice for the current turn, assigning each a random
-     * number from 1 to 6.
      *
-     * @return An array of the currently rolled {@code Dice}.
      */
     @Override
     public Dice[] rollDice() {
@@ -626,8 +833,7 @@ public class CLIGameController extends GameController {
     }
 
     /**
-     * Resets dice status to be all available
-     * Used at the beginning of each round
+     *
      */
     private void resetDice() {
         for (Dice i : diceArray) {
@@ -636,9 +842,7 @@ public class CLIGameController extends GameController {
     }
 
     /**
-     * Gets the dice available for rolling or rerolling.
      *
-     * @return An array of {@code Dice} available for the current turn.
      */
     @Override
     public Dice[] getAvailableDice() {
@@ -652,13 +856,7 @@ public class CLIGameController extends GameController {
     }
 
     /**
-     * Gets all six dice, providing their current state and value within the
-     * game regardless of their location or status. The dice could be in various
-     * states, such as currently rolled and awaiting selection by the active player,
-     * in the Forgotten Realm awaiting selection by the passive player, or already
-     * assigned to a specific turn by the active player.
      *
-     * @return An array of all six {@code Dice}, with each die's state and value.
      */
     @Override
     public Dice[] getAllDice() {
@@ -685,6 +883,9 @@ public class CLIGameController extends GameController {
         return result;
     }
 
+    /**
+     *
+     */
     @Override
     public Move[] getAllPossibleMoves(Player player) {
         if (player == null) {
@@ -706,16 +907,16 @@ public class CLIGameController extends GameController {
     }
 
     /**
-     * Gets possible moves for all currently rolled dice for a given player.
      *
-     * @param player The player for whom to determine possible moves.
-     * @return An array of all possible moves for all rolled dice.
      */
     @Override
     public Move[] getPossibleMovesForAvailableDice(Player player) {
         return getPossibleMovesForDice(player, getAvailableDice());
     }
 
+    /**
+     *
+     */
     private Move[] getPossibleMovesForDice(Player player, Dice[] dice) {
         try {
             LinkedList<Move> availableMoves = new LinkedList<>();
@@ -736,6 +937,9 @@ public class CLIGameController extends GameController {
         return new Move[0];
     }
 
+    /**
+     *
+     */
     @Override
     public Move[] getPossibleMovesForADie(Player player, Dice dice) {
         try {
@@ -776,31 +980,57 @@ public class CLIGameController extends GameController {
 
     }
 
+    /**
+     * Retrieves the current game board.
+     *
+     * @return the game board
+     */
     @Override
     public GameBoard getGameBoard() {
         return gameBoard;
     }
 
+    /**
+     *
+     */
     @Override
     public Player getActivePlayer() {
         return activePlayer;
     }
 
+    /**
+     *
+     */
     @Override
     public Player getPassivePlayer() {
         return passivePlayer;
     }
 
+    /**
+     *
+     */
     @Override
     public ScoreSheet getScoreSheet(Player player) {
         return player.getScoreSheet();
     }
 
+    /**
+     * Retrieves the current status of the game.
+     *
+     * @return The current status of the game
+     */
     @Override
     public GameStatus getGameStatus() {
         return gameStatus;
     }
 
+    /**
+     * Returns the game score of a player.
+     *
+     * @param player the Player object whose game score is to be retrieved
+     * @return the GameScore object representing the game score of the player
+     *         or a new GameScore object if the player is null
+     */
     @Override
     public GameScore getGameScore(Player player) {
         if (player != null) {
@@ -810,6 +1040,12 @@ public class CLIGameController extends GameController {
         return new GameScore();
     }
 
+    /**
+     * Retrieves the array of TimeWarp powers owned by the specified player.
+     *
+     * @param player the player to retrieve the TimeWarp powers for
+     * @return an array of TimeWarp powers owned by the player, or an empty array if the player is null
+     */
     @Override
     public TimeWarp[] getTimeWarpPowers(Player player) {
         if (player != null) {
@@ -818,6 +1054,9 @@ public class CLIGameController extends GameController {
         return new TimeWarp[0];
     }
 
+    /**
+     *
+     */
     @Override
     public ArcaneBoost[] getArcaneBoostPowers(Player player) {
         if (player != null) {
@@ -826,6 +1065,9 @@ public class CLIGameController extends GameController {
         return new ArcaneBoost[0];
     }
 
+    /**
+     *
+     */
     @Override
     public boolean selectDice(Dice dice, Player player) {
         if (dice == null || player == null) {
@@ -846,6 +1088,9 @@ public class CLIGameController extends GameController {
         }
     }
 
+    /**
+     *
+     */
     private void moveDiceToForgottenRealm() {
         //Moves the rest of the dice unselected by active player to forgotten realm
         for (Dice i : diceArray) {
@@ -855,6 +1100,9 @@ public class CLIGameController extends GameController {
         }
     }
 
+    /**
+     *
+     */
     @Override
     public boolean makeMove(Player player, Move move) {
         try {
@@ -875,6 +1123,9 @@ public class CLIGameController extends GameController {
         }
     }
 
+    /**
+     *
+     */
     protected void performAntiCheatServiceChecks(Player player) {
         try {
             standardAntiCheatService.checkPlayerScore(player);
@@ -904,10 +1155,21 @@ public class CLIGameController extends GameController {
         }
     }
 
+    /**
+     * Retrieves an array of Collectibles representing the rewards for the current round.
+     *
+     * @return An array of Collectibles representing the rewards for the current round.
+     */
     public Collectibles[] getRoundRewards() {
         return roundRewards;
     }
 
+    /**
+     * Closes the game guide scanner and the system scanner, displays the active player's name,
+     * score sheet, passive player's name, score sheet, active player's game score, passive player's
+     * game score, determines the difference in scores and announces the winner. Also displays the
+     * team name and exits the system.
+     */
     protected void endGame() {
         gameGuide.closeScanner();
         sc.close();

@@ -57,6 +57,12 @@ public class CompositeScoreSheetController implements Initializable {
     @FXML private ImageView blueRealmIcon;
     @FXML private ImageView magentaRealmIcon;
     @FXML private ImageView yellowRealmIcon;
+    /**
+     * Initializes the CompositeScoreSheetController.
+     *
+     * @param url the location of the FXML file that is being initialized
+     * @param resourceBundle the resource bundle associated with the FXML file
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
@@ -107,6 +113,12 @@ public class CompositeScoreSheetController implements Initializable {
         }
 
     }
+    /**
+     * Updates the score sheet with the latest values.
+     * This method updates the score sheets for different realms and displays the player's total score,
+     * total time warp powers collected, total elemental crests collected, and total arcane boost powers collected.
+     * It also updates the labels indicating the number of time warps and arcane boosts used.
+     */
     public void updateScoreSheet(){
         yellowRealmScoreSheet.updateScoreSheet();
         magentaRealmScoreSheet.updateScoreSheet();
@@ -120,6 +132,11 @@ public class CompositeScoreSheetController implements Initializable {
         greenRealmScoreSheet.updateScoreSheet();
         redRealmScoreSheet.updateScoreSheet();
     }
+    /**
+     * Sets the player for the CompositeScoreSheetController.
+     *
+     * @param player the Player object to set
+     */
     public void setPlayer(Player player){
         this.player=player;
         this.playerName.setText(player.toString());
@@ -132,6 +149,12 @@ public class CompositeScoreSheetController implements Initializable {
         playerImageView.setImage(player.getWizardImage());
         updateScoreSheet();
     }
+    /**
+     * Highlights the cells on the yellow, magenta, blue, green, and red realm score sheets
+     * based on the given array of moves.
+     *
+     * @param moves the array of moves
+     */
     public void highlightPossibleMoves(Move[] moves){
         yellowRealmScoreSheet.highlightMoves(moves);
         magentaRealmScoreSheet.highlightMoves(moves);
@@ -140,6 +163,10 @@ public class CompositeScoreSheetController implements Initializable {
         redRealmScoreSheet.highlightMoves(moves);
 
     }
+    /**
+     * Removes the highlighting from all cells in the score sheets of the realms.
+     * This method should be called to remove the highlight after highlighting possible moves.
+     */
     public void removeHighlight(){
         yellowRealmScoreSheet.removeHighlight();
         magentaRealmScoreSheet.removeHighlight();
@@ -147,6 +174,11 @@ public class CompositeScoreSheetController implements Initializable {
         greenRealmScoreSheet.removeHighlight();
         redRealmScoreSheet.removeHighlight();
     }
+    /**
+     * Sets the text of the rewards label.
+     *
+     * @param text the text to be set on the rewards label
+     */
     public void setRewardsLabel(String text){
         rewardsLabel.setText(text);
     }

@@ -75,8 +75,21 @@ public class Guider implements Initializable,RealmController {
         addHoverEffect(button);
         buttonLabel.setMouseTransparent(true);
     }
+    /**
+     * This variable represents the index of the current title.
+     * It is a private integer and is used within the Guider class.
+     * The value of currentTitleIndex determines the position of the current title in the title list.
+     */
     private int currentTitleIndex;
 
+    /**
+     * Handles the action when the "Next" button is clicked.
+     * If there are messages remaining to be displayed, it updates the message label with the next message
+     * and the title with the next title.
+     * If there are no more messages, it performs certain actions such as removing the anchor pane from its parent,
+     * performing a reward action for the active player, highlighting the current game round, and enabling the roll button.
+     * If the active player is an AI player, it automatically triggers the roll button.
+     */
     @FXML
     private void handleNext() {
         if (currentMessageIndex < messages.length) {
@@ -89,10 +102,22 @@ public class Guider implements Initializable,RealmController {
             parentAnchorPane.getChildren().remove(anchorPane);
             parentAnchorPane.setMouseTransparent(true);
             guiGameController.performReward(guiGameController.getActivePlayer(), guiGameController.getRoundRewards()[0]);
-            guiGameController.enableRollButton();
             guiGameController.highlightCurrentRound();
+            if(guiGameController.getActivePlayer().isAI()){
+                guiGameController.rollButtonClick();
+            }
+            else{
+                guiGameController.enableRollButton();
+            }
+
+
         }
     }
+    /**
+     * Adds hover effect to an ImageView.
+     *
+     * @param imageView The ImageView to apply the hover effect to.
+     */
     private void addHoverEffect(ImageView imageView) {
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.WHITE);
@@ -102,15 +127,35 @@ public class Guider implements Initializable,RealmController {
         imageView.addEventHandler(MouseEvent.MOUSE_EXITED, e -> imageView.setEffect(null));
     }
 
+    /**
+     * Represents the SceneManager class responsible for managing scene switching and stage manipulation.
+     * This class is used to switch between different scenes and stages in the application.
+     */
     private SceneManager sceneManager;
+    /**
+     * An instance of the GUIGameController class that controls the GUI of the game.
+     */
     private GUIGameController guiGameController;
+    /**
+     * Sets the GUI game controller for the Guider class.
+     *
+     * @param guiGameController the GUI game controller to set
+     */
     public void setGuiGameController(GUIGameController guiGameController){
         this.guiGameController=guiGameController;
     }
+    /**
+     * Sets the SceneManager for the Guider class.
+     *
+     * @param sceneManager The SceneManager to set.
+     */
     public void setSceneManager(SceneManager sceneManager){
         this.sceneManager=sceneManager;
     }
 
+    /**
+     * Resets the labels in the Guider class to their default values.
+     */
     @Override
     public void resetLabels() {
 

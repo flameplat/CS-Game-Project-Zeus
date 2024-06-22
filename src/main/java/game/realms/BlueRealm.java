@@ -334,7 +334,7 @@ public class BlueRealm extends Realm{
                 }
             }
         }else{
-            for(int i=0;serpent2[i].getHeadNumber()-S1HeadNumber<=6;i++){
+            for(int i=0;serpent2[i].getHeadNumber()-S1HeadNumber<6;i++){
                 if ((serpent2[i].isAlive())){
                     for(int j=i+1;j<=6;j++){
                         Move mover=new Move(new BlueDice(j),new Serpent());

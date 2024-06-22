@@ -193,7 +193,10 @@ public class MagentaRealm extends Realm {
 
     @Override
     public Move[] getRealmMoves() {
-        return realmPossibleMoves;
+        if(isRealmAvailable()){
+            return realmPossibleMoves;
+        }
+        return new Move[0];
     }
 
     @Override

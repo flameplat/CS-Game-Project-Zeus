@@ -29,11 +29,19 @@ public class GameGuide {
         this.sc = new Scanner(System.in);
     }
 
+    /**
+     * Displays the menu options for the game.
+     */
     public void displayMenu() {
         System.out.println("Dice Realms: Quest for the Elemental Crests!");
         System.out.println("(1) Start Game\n(2) Exit Game");
     }
 
+    /**
+     * Displays a numbered choice for each element in the given array.
+     *
+     * @param array The array containing the choices to be displayed.
+     */
     public void displayNumberedChoice(Object[] array) {
         StringBuilder result = new StringBuilder();
         result.append("[");
@@ -48,6 +56,11 @@ public class GameGuide {
         System.out.println(result);
     }
 
+    /**
+     * Displays the corresponding instructions based on the given instruction type.
+     *
+     * @param instruction The instruction type to display.
+     */
     public void displayInstructions(Instruction instruction) {
         String output;
         switch (instruction) {
@@ -92,6 +105,12 @@ public class GameGuide {
         }
         System.out.println(output);
     }
+    /**
+     * Returns the instruction associated with the given Instruction enum.
+     *
+     * @param instruction The Instruction enum value to get the instruction for.
+     * @return The instruction associated with the given Instruction enum.
+     */
     public String getInstruction(Instruction instruction){
         String output;
         switch (instruction) {
@@ -137,6 +156,13 @@ public class GameGuide {
         return output;
     }
 
+    /**
+     * Gets the user's choice within a specified range.
+     *
+     * @param minBound The minimum value of the range (inclusive).
+     * @param maxBound The maximum value of the range (inclusive).
+     * @return The user's valid choice within the specified range.
+     */
     public int getUserChoice(int minBound, int maxBound) {
         if (minBound > maxBound) {
             int temp = minBound;
@@ -161,6 +187,11 @@ public class GameGuide {
 
     }
 
+    /**
+     * Displays the names of creatures in an array.
+     *
+     * @param creatures An array of Creature objects.
+     */
     public void displayCreatures(Creature[] creatures) {
         System.out.print("[");
         for (int i = 0; i < creatures.length; i++) {
@@ -172,15 +203,26 @@ public class GameGuide {
         System.out.println("]");
     }
 
+    /**
+     * Displays a menu to the user with two options (Yes and No) and prompts the user to select a choice.
+     *
+     * @return true if the user selects Yes, false if the user selects No
+     */
     public boolean getUserBooleanChoice() {
         System.out.printf("(1) Yes%n(2) No%n");
         int choice = getUserChoice(1, 2);
         return choice == 1;
     }
 
+    /**
+     * Closes the scanner used by the game.
+     */
     public void closeScanner() {
         sc.close();
     }
+    /**
+     * Displays the available game modes: Multiplayer and Singleplayer.
+     */
     public void displayGameMode(){
         System.out.printf("(1) Multiplayer%n(2) Singleplayer%n");
     }

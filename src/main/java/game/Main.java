@@ -1,35 +1,15 @@
 package game;
 
-import game.dice.YellowDice;
-import game.engine.AIPlayer;
-import game.engine.CLIGameController;
-import game.engine.Move;
-import game.utilities.GameColor;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
+import game.engine.CLIGameController;
 
 
 public class Main {
 
     public static void main(String[] args) {
-//        CLIGameController controller = new CLIGameController();
-//        controller.startGame();
-        AIPlayer x=new AIPlayer("MOSTAFA");
-        Move m=x.getRealm(GameColor.RED).getRealmMoves()[10];
-        System.out.println(m);
-        x.getRealm(GameColor.RED).attack(m);
-        System.out.println(x.getMoveEvaluation().evaluateRedMove(m));
-
-
+        CLIGameController controller = new CLIGameController();
+        controller.startGame();
     }
-    public static void print2DArray(Move[][] array) {
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                System.out.print(array[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
+    
 
 }

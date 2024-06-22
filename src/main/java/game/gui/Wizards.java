@@ -35,6 +35,12 @@ public class Wizards implements Initializable, GameController{
     private Player currentPlayer;
     private SceneManager sceneManager;
 
+    /**
+     * Initializes the Wizards class.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         wizardImages=new Image[5];
@@ -62,30 +68,69 @@ public class Wizards implements Initializable, GameController{
         mainLabel.setText(player1.getName()+", choose your wizard");
 
     }
+    /**
+     * Sets the SceneManager for the Wizards class.
+     *
+     * @param sceneManager the SceneManager object to set
+     */
     public void setSceneManager(SceneManager sceneManager){
         this.sceneManager=sceneManager;
     }
+    /**
+     * Chooses the red wizard for the current player.
+     * The method calls the chooseWizard method with the current player and the red wizard image.
+     *
+     * @see Wizards#chooseWizard(Player, Image)
+     */
     public void chooseRedWizard(){
         chooseWizard(currentPlayer,wizardImages[0]);
     }
+    /**
+     * Allows the player to choose the green wizard for the current player
+     */
     public void chooseGreenWizard(){
         chooseWizard(currentPlayer,wizardImages[1]);
     }
+    /**
+     * Choose the blue wizard for the current player.
+     */
     public void chooseBlueWizard(){
         chooseWizard(currentPlayer,wizardImages[2]);
     }
+    /**
+     * Method to choose the Magenta Wizard for the current player.
+     * Sets the wizard image for the player and performs necessary actions based on the game logic.
+     *
+     * @see Wizards#chooseWizard(Player, Image)
+     */
     public void chooseMagentaWizard(){
         chooseWizard(currentPlayer,wizardImages[3]);
     }
+    /**
+     * Choose the yellow wizard for the current player.
+     */
     public void chooseYellowWizard(){
         chooseWizard(currentPlayer,wizardImages[4]);
     }
+    /**
+     * Adds hover effect to a given rectangle.
+     * When the mouse pointer enters the rectangle, its opacity is set to 0.3.
+     * When the mouse pointer exits the rectangle, its opacity is set to 0.
+     *
+     * @param rectangle The rectangle to which the hover effect will be added.
+     */
     private void addHoverEffect(Rectangle rectangle) {
         rectangle.setOnMouseEntered(event -> rectangle.setOpacity(0.3));
         rectangle.setOnMouseExited(event -> rectangle.setOpacity(0));
     }
 
 
+    /**
+     * Sets the wizard image for the given player and handles the logic for choosing wizards.
+     *
+     * @param player The player for whom the wizard image needs to be set.
+     * @param wizard The wizard image to be set for the player.
+     */
     public void chooseWizard(Player player,Image wizard){
         player.setWizardImage(wizard);
         if(player==player2){

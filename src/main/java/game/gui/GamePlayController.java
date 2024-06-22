@@ -1,5 +1,6 @@
 package game.gui;
 
+import game.engine.AIPlayer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,10 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * The GamePlayController class implements the Initializable and GameController interfaces.
+ * It is responsible for controlling the gameplay scene of the game.
+ */
 public class GamePlayController implements Initializable,GameController {
 
     private SceneManager sceneManager;
@@ -25,10 +30,24 @@ public class GamePlayController implements Initializable,GameController {
     @FXML
     private ImageView backGround;
 
+    /**
+     * Sets the SceneManager for the GamePlayController.
+     * The SceneManager is responsible for managing scene switching and providing access
+     * to other controllers within the application.
+     *
+     * @param sceneManager The SceneManager to be set.
+     */
     public void setSceneManager(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
     }
 
+    /**
+     * Initializes the game controller.
+     *
+     * @param url            The URL of the location used to resolve relative paths for the root object, or null if
+     *                       the location is not known.
+     * @param resourceBundle The resource bundle containing locale-specific objects, or null if not used.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
