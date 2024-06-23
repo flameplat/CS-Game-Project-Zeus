@@ -84,7 +84,7 @@ public class AIPlayer extends Player {
      */
     public void playColorBonus(GameColor color, Move[] possibleMoves) {
         double tempWeight;
-        double selectedWeight = 0;
+        double selectedWeight = -1;
         for (Move move : possibleMoves) {
             tempWeight = moveEvaluation.getWeightOfMove(move);
             if (selectedWeight < tempWeight) {
@@ -145,7 +145,7 @@ public class AIPlayer extends Player {
      */
     public GameColor selectRealm(LinkedList<GameColor> availableRealms) {
         GameColor[] remRealms = availableRealms.toArray(GameColor[]::new);
-        double chosenWeight = 0;
+        double chosenWeight = -1;
         double tempWeight;
         GameColor chosenRealm = null;
         for (GameColor remRealm : remRealms) {

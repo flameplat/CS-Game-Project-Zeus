@@ -375,7 +375,6 @@ public class MoveEvaluation {
         AIPlayer helperPlayer=new AIPlayer("HelperPlayer");
         MoveEvaluation moveEvaluation2=new MoveEvaluation(helperPlayer,currentMoves,guiGameController);
         redWorlds++;
-
         if(redWorlds>limit || !moveEvaluation2.redRealm.isRealmAvailable()){
             return 0;
         }
@@ -383,7 +382,7 @@ public class MoveEvaluation {
             MAX_NO_WORLDS_INITIALIZED=redWorlds;
         }
         Move[] possibleMoves=helperPlayer.getRealm(GameColor.RED).getRealmMoves();
-        double maxWeight=0;
+        double maxWeight=-1;
         double tempWeight;
         for (Move move : possibleMoves) {
             tempWeight = moveEvaluation2.evaluateRedMove(new Move(move));
@@ -475,7 +474,7 @@ public class MoveEvaluation {
             MAX_NO_WORLDS_INITIALIZED=greenWorlds;
         }
         Move[] possibleMoves=moveEvaluation2.greenRealm.getRealmMoves();
-        double maxWeight=0;
+        double maxWeight=-1;
         double tempWeight;
         for (Move move : possibleMoves) {
             tempWeight = moveEvaluation2.evaluateGreenMove(move);
@@ -483,6 +482,7 @@ public class MoveEvaluation {
                 maxWeight = tempWeight;
             }
         }
+
         return maxWeight;
     }
 
@@ -521,7 +521,7 @@ public class MoveEvaluation {
      *         available, returns null.
      */
     public Move getMoveOfHighestWeight(Dice die){
-        double selectedWeight=0;
+        double selectedWeight=-1;
         double tempWeight;
         Move selectedMove=null;
         Move[] possibleMoves = guiGameController.getPossibleMovesForADie(player, die);
@@ -541,7 +541,7 @@ public class MoveEvaluation {
      * @return The weight of the dice
      */
     public double getWeightOfDice(Dice die){
-        double selectedWeight=0;
+        double selectedWeight=-1;
         double tempWeight;
         Move[] possibleMoves = guiGameController.getPossibleMovesForADie(player, die);
         for (Move move : possibleMoves) {
@@ -628,7 +628,7 @@ public class MoveEvaluation {
      */
     public double getWeightOfBestMove(Dice[] diceArray){
         double[] weights = getWeightOfAllDice(diceArray);
-        int bestWeight =0;
+        int bestWeight =-1;
         int tempWeight;
         for (double weight : weights) {
             tempWeight = (int) weight;
@@ -647,7 +647,7 @@ public class MoveEvaluation {
      */
     public Move bestMove(Dice [] diceArray){
         double[] weights = getWeightOfAllDice(diceArray);
-        int bestWeight =0;
+        int bestWeight =-1;
         int tempWeight;
         Dice bestDice = null;
         Move bestMove;
@@ -669,7 +669,7 @@ public class MoveEvaluation {
      */
     public Dice bestDice(Dice [] diceArray) {
         double[] weights = getWeightOfAllDice(diceArray);
-        int bestWeight = 0;
+        int bestWeight = -1;
         int tempWeight;
         Dice bestDice = null;
 
