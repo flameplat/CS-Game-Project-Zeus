@@ -35,7 +35,10 @@ public class PlayerDataController implements Initializable,GameController {
     private static Player player2;
     @FXML
     private Label submitLabel;
-
+    @FXML
+    private Label AIvsAI;
+    @FXML
+    private ImageView AIvsAIImageView;
 
 
     @FXML
@@ -57,6 +60,20 @@ public class PlayerDataController implements Initializable,GameController {
         imageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/3.png")).toExternalForm()));
         addHoverEffect(button1);
         submitLabel.setMouseTransparent(true);
+        if(MainMenuController.getGameMode()==GameMode.SINGLEPLAYER){
+            AIvsAI.setText("AI VS AI");
+            AIvsAIImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/3.png")).toExternalForm()));
+            AIvsAI.setMouseTransparent(true);
+            addHoverEffect(AIvsAIImageView);
+        }
+        else{
+            AIvsAI.setText("AI VS AI");
+            AIvsAI.setOpacity(0);
+            AIvsAIImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource("/images/buttons/3.png")).toExternalForm()));
+            AIvsAI.setMouseTransparent(true);
+            AIvsAIImageView.setOpacity(0);
+            AIvsAIImageView.setMouseTransparent(true);
+        }
 
     }
     /**
@@ -124,6 +141,13 @@ public class PlayerDataController implements Initializable,GameController {
             errorLabel.setText(e.getMessage());
         }
 
+    }
+    public void AIvsAI(){
+        player1= new AIPlayer("Athena");
+        player2=new AIPlayer("Zeus");
+        player1.setWizardImage(new Image(Objects.requireNonNull(getClass().getResource("/images/wizards/redWizard.png")).toExternalForm()));
+        player2.setWizardImage(new Image(Objects.requireNonNull(getClass().getResource("/images/wizards/magentaWizard.png")).toExternalForm()));
+        sceneManager.switchGamePlayScene();
     }
     /**
      * Retrieves the instance of the player 1.

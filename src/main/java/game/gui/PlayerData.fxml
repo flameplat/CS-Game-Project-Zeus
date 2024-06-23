@@ -5,6 +5,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.PlayerDataController">
@@ -39,6 +42,32 @@
          <font>
             <Font size="25.0" />
          </font>
+      </Label>
+      <ImageView fx:id="AIvsAIImageView" fitHeight="136.0" fitWidth="450.0" layoutX="272.0" layoutY="679.0" onMouseClicked="#AIvsAI" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../resources/images/buttons/3.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="AIvsAI" alignment="CENTER" layoutX="287.0" layoutY="721.0" prefHeight="39.0" prefWidth="418.0" text="AI VS AI">
+         <font>
+            <Font size="29.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
       </Label>
    </children>
 </AnchorPane>

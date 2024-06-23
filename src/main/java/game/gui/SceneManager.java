@@ -170,7 +170,7 @@ public class SceneManager {
                 Screen screen = Screen.getPrimary();
                 Rectangle2D bounds = screen.getVisualBounds();
                 double centerY = (bounds.getHeight() - stage.getHeight()) / 2;
-                stage.setY(centerY);
+                stage.setY(100);
             }
 
         }
@@ -216,7 +216,7 @@ public class SceneManager {
                 Screen screen = Screen.getPrimary();
                 Rectangle2D bounds = screen.getVisualBounds();
                 double centerY = (bounds.getHeight() - stage.getHeight()) / 2;
-                stage.setY(centerY);
+                stage.setY(100);
             }
             stageMap.put(resourceFileName, stage);
             sceneMap.put(resourceFileName, scene);

@@ -44,10 +44,10 @@ public class AIPlayer extends Player {
         selectedMove = moveEvaluation.bestMove(diceArray);
         Dice selectedDie = moveEvaluation.bestDice(diceArray);
         MoveEvaluation.resetNoWorlds();
-        MoveEvaluation.resetMAX_NO_WORLDS();
-        System.out.println("AI has chosen:  " + selectedDie);
+        System.out.println(getName()+" has chosen:  " + selectedDie);
         System.out.println("-".repeat(50));
         System.out.println("Number of worlds initialized: " + MoveEvaluation.MAX_NO_WORLDS_INITIALIZED);
+        MoveEvaluation.resetMAX_NO_WORLDS();
         if (selectedDie instanceof RedDice) {
             guiGameController.redDiceButtonClick();
         } else if (selectedDie instanceof WhiteDice) {

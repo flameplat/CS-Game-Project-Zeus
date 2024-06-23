@@ -13,6 +13,10 @@ import game.realms.Realm;
 import game.realms.RedRealm;
 import game.utilities.CollectiblesComparator;
 import game.utilities.GameColor;
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,10 +34,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -49,8 +58,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
     private final Image transparentImage;
     private final double lowOpacity = 0.5;
     private final double highOpacity = 1;
-    private final long largeDelay = 2;
-    private final long smallDelay = 1;
+
     @FXML
     private ImageView border;
     @FXML
@@ -1158,8 +1166,40 @@ public class GUIGameController extends CLIGameController implements Initializabl
      * @param action         the action to be executed
      * @param delayInSeconds the delay before executing the action, in seconds
      */
+    private final long largeDelay = 2;
+    private final long smallDelay = 1;
     private void startDelayedAction(Runnable action, long delayInSeconds) {
+        //TODO: We need to add a delay here inorder to make the AI decisions visible for the other player
+        //Encountered Errors: -showAndWait is not allowed during animation or layout processing
+        // -Not on FX application thread; currentThread = ForkJoinPool.commonPool-worker-3
         action.run();
+//        CompletableFuture.delayedExecutor(delayInSeconds, TimeUnit.SECONDS)
+//                .execute(() -> Platform.runLater(action));
+
+        // All the commented code didn't fit within our game structure
+
+
+
+//        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(delayInSeconds), event -> action.run()));
+//        timeline.play();
+
+//        Timer timer = new Timer();
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Platform.runLater(action);
+//            }
+//        }, delayInSeconds * 1000);
+
+//        PauseTransition delay = new PauseTransition(Duration.seconds(delayInSeconds));
+//        delay.setOnFinished(event -> Platform.runLater(action));
+//        delay.play();
+
+
+//        PauseTransition delay = new PauseTransition(Duration.seconds(delayInSeconds));
+//        delay.setOnFinished(event -> action.run());
+//        delay.play();
+
 //        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 //        disableAllButtons();
 //        disableForgottenRealmButtons();
@@ -1484,6 +1524,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     /**
