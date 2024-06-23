@@ -25,8 +25,8 @@ public class AIPlayer extends Player {
     public AIPlayer(String name) {
         super();
         setName(name);
-        // We could have used instance of to check if it is an AI or not but we don't like it cause it
-        // violates the open-closed principle, if a new AI Model is added, we'll have to find all the instanceof checks and update them
+        // We could have used 'instanceof' to check if it is an AI or not but we don't like it cause it
+        // violates the open-closed principle, if a new AI Model is added, we'll have to find all the 'instanceof' checks and update them
         isAI = true;
         LinkedList<Move> pastMoves = new LinkedList<>();
         moveEvaluation = new MoveEvaluation(this, pastMoves, guiGameController);
@@ -44,7 +44,7 @@ public class AIPlayer extends Player {
         selectedMove = moveEvaluation.bestMove(diceArray);
         Dice selectedDie = moveEvaluation.bestDice(diceArray);
         MoveEvaluation.resetNoWorlds();
-
+        MoveEvaluation.resetMAX_NO_WORLDS();
         System.out.println("AI has chosen:  " + selectedDie);
         System.out.println("-".repeat(50));
         System.out.println("Number of worlds initialized: " + MoveEvaluation.MAX_NO_WORLDS_INITIALIZED);
@@ -92,6 +92,7 @@ public class AIPlayer extends Player {
                 selectedMove = move;
             }
             MoveEvaluation.resetNoWorlds();
+            MoveEvaluation.resetMAX_NO_WORLDS();
         }
         System.out.println("Color bonus: " + color + ", selected move: " + selectedMove);
         guiGameController.makeMove(this, selectedMove);
@@ -154,6 +155,7 @@ public class AIPlayer extends Player {
                 chosenRealm = remRealm;
             }
             MoveEvaluation.resetNoWorlds();
+            MoveEvaluation.resetMAX_NO_WORLDS();
         }
         System.out.println("Chosen Realm: " + chosenRealm);
         return chosenRealm;

@@ -8,7 +8,7 @@ import game.exceptions.RewardCheatException;
 
 /**
  * Cheat can happen within the game if the user used one of the common ways to alter the current state of the
- * game using cheat engine or any other software that can track changes and sequences in the memory and modify the memory of a running program
+ * game using "Cheat Engine" or any other software that can track changes and sequences in the memory and modify the memory of a running program
  */
 public interface AntiCheatService {
     /**
