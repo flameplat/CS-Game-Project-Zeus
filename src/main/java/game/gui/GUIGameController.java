@@ -1484,21 +1484,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        //TEST
-//        GameColor[] colors = GameColor.values();
-//        for(int i=0;i<3;i++){
-//            for (GameColor color : colors) {
-//                if(color!=GameColor.WHITE){
-//                    playColorBonus(activePlayer, color);
-//                }
-//
-//            }
-//            playEssenceBonus(activePlayer);
-//        }
-
-
     }
 
     /**
@@ -1712,8 +1697,6 @@ public class GUIGameController extends CLIGameController implements Initializabl
      * @param player the player for whom to retrieve possible moves
      * @return an array of possible moves for the player
      */
-
-
     @Override
     public Move[] getAllPossibleMoves(Player player) {
         if (player == null) {

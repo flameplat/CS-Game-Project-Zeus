@@ -44,6 +44,9 @@ public class BlueRealm extends Realm{
     private static final String BLUE = "\u001B[34m";
 
 
+    /**
+     * Represents a BlueRealm.
+     */
     //-----------------------Constructor-----------------------//
     public BlueRealm() {
         serpent1 =new Serpent [S1HeadNumber];
@@ -70,30 +73,58 @@ public class BlueRealm extends Realm{
     }
 
 
+    /**
+     * Returns the name of the realm as a String.
+     *
+     * @return The name of the realm.
+     */
     // -----------------------Methods-----------------------//
     @Override
     public String getName() {
         return  (BLUE + "Blue Realm" + RESET);
     }
 
+    /**
+     * This method returns the color of the realm.
+     *
+     * @return The color of the realm.
+     */
     @Override
     public GameColor getColor() {
         return REALM_GAME_COLOR;
     }
 
+    /**
+     * Returns the status of the realm.
+     *
+     * @return the status of the realm as an integer
+     */
     @Override
     public int getStatus() {
         return 0;
     }
 
+    /**
+     *
+     */
     @Override
     public boolean isRealmAvailable() {
         return serpent2[serpent2.length - 1].isAlive();
 
     }
+    /**
+     * Retrieves the collectible rewards available in the Blue Realm.
+     *
+     * @return An array of Collectibles objects representing the available rewards.
+     */
     public Collectibles[] getCollectibles(){
         return rewardProperties;
     }
+    /**
+     * Calculates the total score for the realm.
+     *
+     * @return The total score for the realm.
+     */
     @Override
     public int getTotalScore(){
         int score=0;
@@ -102,6 +133,10 @@ public class BlueRealm extends Realm{
         }
         return score;
     }
+    /**
+     * Calculates the score for the score sheet.
+     * The score is calculated by adding the scoreProperties for each round and storing it in the scoreSheetValues array.
+     */
     private void getScoreScoreSheet(){
         int score=0;
         for(int i=0; i<S1HeadNumber+S2HeadNumber;i++){
@@ -110,22 +145,48 @@ public class BlueRealm extends Realm{
         }
 
     }
+    /**
+     * Retrieves a creature from the BlueRealm based on the rolled Dice value.
+     *
+     * @param dice the rolled Dice value
+     * @return the retrieved Creature
+     */
     @Override
     public Creature getCreature(Dice dice) {
         return serpent1[4];
     }
 
+    /**
+     * Retrieves the difference in score between the current move and the previous move in the score sheet.
+     *
+     * @param move the Move object representing the current move
+     * @return the difference in score between the current move and the previous move in the score sheet
+     */
     @Override
     public int getFakeScore(Move move) {
         int prev=(hitcount==0)?0:scoreSheetValues[hitcount-1];
         return scoreSheetValues[hitcount]-prev;
     }
 
+    /**
+     * Returns the number of elemental crests for the realm.
+     *
+     * @return The number of elemental crests for the realm.
+     */
     @Override
     public int getNoElementalCrests() {
         return noElementalCrests;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Returns a string representation of the BlueRealm object.
+     * The string contains information about the Hydra Serpents in the Blue Realm.
+     * </p>
+     *
+     * @return a string representation of the object.
+     */
     @Override
     public String toString() {
         return String.format("Tide Abyss: Hydra Serpents (BLUE REALM):\n" +
@@ -146,27 +207,58 @@ public class BlueRealm extends Realm{
                 scoreSheetValues[6],scoreSheetValues[7],scoreSheetValues[8],scoreSheetValues[9],scoreSheetValues[10]);
     }
 
+    /**
+     * Retrieves the values of the score sheet.
+     *
+     * @return an array containing the values of the score sheet.
+     */
     public int[] getScoreSheetValues() {
         return scoreSheetValues;
     }
 
+    /**
+     * Retrieves the attack values for the realm.
+     *
+     * @return an array of String representing the attack values for the realm.
+     */
     public String[] getAttackValues() {
         return attackValues;
     }
 
+    /**
+     * Retrieves the reward values of the realm.
+     *
+     * @return An array of Strings representing the reward values of the realm.
+     */
     public String[] getRewardValues() {
         return rewardValues;
     }
+    /**
+     * Returns the value of the hit count for the BlueRealm instance.
+     *
+     * @return The value of the hit count
+     */
     public int getHitcount(){
         return hitcount;
     }
 
+    /**
+     * Retrieves the reward of the realm.
+     *
+     * @return an array of Collectibles representing the reward of the realm
+     * @Override
+     */
     @Override //just returns an array of 1 element as the game controller gets an array from each realm
     public Collectibles[] getReward() {
         Collectibles[] temp=new Collectibles[1];
         temp[0]=rewardProperties[hitcount-1];
         return temp;
     }
+    /**
+     * Checks whether there is a reward or not after attacking.
+     *
+     * @return true if there is a reward, false otherwise
+     */
     @Override
     public boolean checkReward() {
         if(rewardProperties[hitcount-1]!=null){
@@ -181,6 +273,12 @@ public class BlueRealm extends Realm{
     }
 
 
+    /**
+     * Attacks the serpents using the given move. Can change to use the next possible move method if needed.
+     *
+     * @param move the move to use for the attack
+     * @return true if the attack was successful and a serpents was defeated, false otherwise
+     */
     @Override
     public boolean attack(Move move) {
         //Can change this to use next possibilemove method//
@@ -205,6 +303,13 @@ public class BlueRealm extends Realm{
         }
         return false;
     }
+    /**
+     * Retrieves the score properties from the TideAbyssScores.properties file.
+     * If the file is not found or there is an error reading the file,
+     * the method sets default values for the score properties.
+     *
+     * @return an array of 11 integers containing the score properties
+     */
     private int[] getScoreProperties() {
         Properties properties = new Properties();
         scoreProperties=new int[11] ;
@@ -240,6 +345,12 @@ public class BlueRealm extends Realm{
         return scoreProperties;
     }
 
+    /**
+     * Retrieves the properties of rewards from the "TideAbyssRewards.properties" file.
+     * If the file is not found, returns a default set of reward properties.
+     *
+     * @return an array of Collectibles representing the rewards properties
+     */
     public Collectibles[] getRewardsProperties() {
         Properties properties = new Properties();
         Collectibles []rewardProperties=new Collectibles[11] ;
@@ -320,6 +431,11 @@ public class BlueRealm extends Realm{
         }
         return rewardProperties;
     }
+    /**
+     * Returns an array of possible moves in the current realm.
+     *
+     * @return an array of possible moves in the current realm
+     */
     @Override
     public Move[] getRealmMoves() {
         LinkedList<Move> list =new LinkedList<>();
@@ -348,6 +464,11 @@ public class BlueRealm extends Realm{
         return list.toArray(Move[]::new);
     }
 
+    /**
+     * Checks whether the serpent 1 is alive.
+     *
+     * @return {@code true} if serpent 1 is alive, {@code false} otherwise.
+     */
     public boolean isSerpent1Alive(){
         return serpent1[S1HeadNumber-1].isAlive();
     }

@@ -28,6 +28,9 @@ public class YellowBonusController implements Initializable ,RealmController {
         LionImageView.setImage(creature);
         resetLabels();
     }
+    /**
+     * This method is used to attack the lion by closing the current stage, and making a move using the GUI game controller
+     */
     public void AttackLion() {
         Stage stage = (Stage) LionImageView.getScene().getWindow();
         stage.close();
@@ -37,27 +40,70 @@ public class YellowBonusController implements Initializable ,RealmController {
 
     }
 
+    /**
+     * Represents the SceneManager to manage scenes in the application.
+     */
     private SceneManager sceneManager;
+    /**
+     * This method resets the label text to an empty string.
+     */
     @Override
     public void resetLabels(){
         label.setText("");
     }
 
+    /**
+     * Sets the SceneManager for the YellowBonusController.
+     *
+     * @param sceneManager the SceneManager to be set
+     */
     public void setSceneManager(SceneManager sceneManager){
         this.sceneManager=sceneManager;
     }
+    /**
+     * GUI game controller for the YellowBonusController class.
+     */
     private GUIGameController guiGameController;
+    /**
+     * Sets the GUI game controller for the YellowBonusController.
+     *
+     * @param guiGameController The GUI game controller to be set.
+     */
     public void setGuiGameController(GUIGameController guiGameController){
         this.guiGameController=guiGameController;
     }
+    /**
+     * Stores the current player in the YellowBonusController class.
+     */
     private static Player currentPlayer;
+    /**
+     * Sets the current player.
+     *
+     * @param currentPlayer the new current player
+     */
     public static void setCurrentPlayer(Player currentPlayer){
         YellowBonusController.currentPlayer=currentPlayer;
     }
+    /**
+     * Represents a possible move in the game.
+     */
     private static Move possibleMove;
+    /**
+     * Sets the possible move for the YellowBonusController class.
+     *
+     * @param move the Move object representing the possible move
+     */
     public static void setPossibleMove(Move move){
         YellowBonusController.possibleMove=move;
     }
+    /**
+     * Sets the text of the label with a message indicating the current player's name and instructions to click on the lion to attack it.
+     *
+     * This method is typically called when the lion button is clicked in the Yellow Bonus Scene in the game. It retrieves the current player's name and constructs a message instruct
+     * ing the player to click on the lion to attack it. The constructed message is then set as the text of the label.
+     *
+     * @throws NullPointerException if the currentPlayer or label is null
+     */
     @FXML
     public void setLabel(){
         label.setText(currentPlayer.getName() + ", click on lion to attack it!");

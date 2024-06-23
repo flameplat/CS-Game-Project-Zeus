@@ -98,7 +98,7 @@ public class CLIGameController extends GameController {
      */
     protected Player activePlayer;
     /**
-     *
+     * The passive player in the game.
      */
     protected Player passivePlayer;
 
@@ -229,7 +229,6 @@ public class CLIGameController extends GameController {
 
     /**
      * Displays the Arcane Boost status for a given player.
-     *
      * @param player The player for whom to display the Arcane Boost status.
      */
     protected void displayArcaneBoostStatus(Player player) {
@@ -241,7 +240,6 @@ public class CLIGameController extends GameController {
 
     /**
      * Plays an extra turn for the specified player.
-     *
      * @param player the player for whom to play the extra turn
      */
     protected void playExtraTurn(Player player) {
@@ -447,7 +445,8 @@ public class CLIGameController extends GameController {
      * It adds the non-null Collectibles to a linked list and creates a priority queue
      * using a custom CollectiblesComparator. Then, it iterates over the priority queue
      * and performs the reward for each Collectible by calling the performReward method.
-     *
+     * It arranges the collected rewards according to there priority specified by @CollectiblesComparator
+     * For example if player received magenta bonus and red bonus with the same move he must play the red then the magenta
      * @param player  the player object to process rewards for
      * @param rewards an array of Collectibles representing the rewards
      */
@@ -1124,7 +1123,11 @@ public class CLIGameController extends GameController {
     }
 
     /**
+     * Performs anti-cheat service checks on the player.
+     * It checks the player's score, dice, final score, reward, and game status for cheats.
+     * If any cheat is detected, it handles the cheat accordingly.
      *
+     * @param player The player to perform anti-cheat service checks on.
      */
     protected void performAntiCheatServiceChecks(Player player) {
         try {

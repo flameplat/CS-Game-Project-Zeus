@@ -8,19 +8,27 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class AIPlayer extends Player {
-    private final LinkedList<Move> pastMoves;
     private final MoveEvaluation moveEvaluation;
     private Move selectedMove;
     private GUIGameController guiGameController;
 
     /**
-     * The AIPlayer class represents an AI player in the game. It is a subclass of the Player class.
+     * The AIPlayer class represents an AI LAMBDA λ model player in the game. It is a subclass of the Player class.
+     *
+     *   AAAAA   IIIII       L      AAAAA   M     M  BBBBB    DDDDD     AAAAA
+     *  A     A    I         L     A     A  MM   MM  B     B  D    D   A     A
+     *  AAAAAAA    I         L     AAAAAAA  M M M M  BBBBBB   D     D  AAAAAAA
+     *  A     A    I         L     A     A  M  M  M  B     B  D    D   A     A
+     *  A     A  IIIII       LLLLL A     A  M     M  BBBBB    DDDDD    A     A
+     *
      */
     public AIPlayer(String name) {
         super();
         setName(name);
+        // We could have used instance of to check if it is an AI or not but we don't like it cause it
+        // violates the open-closed principle, if a new AI Model is added, we'll have to find all the instanceof checks and update them
         isAI = true;
-        pastMoves = new LinkedList<>();
+        LinkedList<Move> pastMoves = new LinkedList<>();
         moveEvaluation = new MoveEvaluation(this, pastMoves, guiGameController);
     }
 
@@ -40,7 +48,6 @@ public class AIPlayer extends Player {
         System.out.println("AI has chosen:  " + selectedDie);
         System.out.println("-".repeat(50));
         System.out.println("Number of worlds initialized: " + MoveEvaluation.MAX_NO_WORLDS_INITIALIZED);
-        MoveEvaluation.resetMAX_NO_WORLDS();
         if (selectedDie instanceof RedDice) {
             guiGameController.redDiceButtonClick();
         } else if (selectedDie instanceof WhiteDice) {
@@ -54,7 +61,7 @@ public class AIPlayer extends Player {
         } else if (selectedDie instanceof MagentaDice) {
             guiGameController.magentaDiceButtonClick();
         } else {
-            System.out.println("Unknown dice type selected.");
+            System.err.println("Unknown dice type selected.");
         }
 
     }
@@ -155,7 +162,6 @@ public class AIPlayer extends Player {
 
     /**
      * Retrieves the MoveEvaluation object associated with the current move.
-     *
      * @return The MoveEvaluation object containing the evaluation of the move.
      */
     public MoveEvaluation getMoveEvaluation() {

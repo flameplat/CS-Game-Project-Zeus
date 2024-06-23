@@ -41,6 +41,12 @@ public class YellowRealmScoreSheet implements Initializable {
     private Label[] scoreLabels;
     private Label[] rewardLabels;
 
+    /**
+     * Initializes the YellowRealmScoreSheet controller.
+     *
+     * @param url            the location used to resolve relative paths for the root object, or null if the location is not known
+     * @param resourceBundle the resource bundle that the root object was loaded from, or null if the root object was not loaded from a ResourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         scoreLabels = new Label[] {
@@ -54,6 +60,11 @@ public class YellowRealmScoreSheet implements Initializable {
         };
 
     }
+    /**
+     * Updates the score sheet with the latest values.
+     * This method retrieves the score values from the Yellow Realm and updates the score labels accordingly.
+     * It also retrieves the reward values from the Yellow Realm and updates the reward labels.
+     */
     public void updateScoreSheet(){
         Object[] hitScore=yellowRealm.getScoreValues();
         for(int i=0;i<yellowRealm.getCountHits();i++){
@@ -64,9 +75,19 @@ public class YellowRealmScoreSheet implements Initializable {
             rewardLabels[i].setText(rewardValues[i]);
         }
     }
+    /**
+     * Sets the YellowRealm for the YellowRealmScoreSheet.
+     *
+     * @param yellowRealm The YellowRealm to set for the YellowRealmScoreSheet.
+     */
     public void setRealm(YellowRealm yellowRealm){
         this.yellowRealm=yellowRealm;
     }
+    /**
+     * Highlights the cells on the yellow realm score sheet based on the given array of moves.
+     *
+     * @param moves the array of moves
+     */
     public void highlightMoves(Move[] moves){
         for (Move move : moves) {
             if(move.getDice().getRealm()== GameColor.YELLOW){
@@ -81,6 +102,10 @@ public class YellowRealmScoreSheet implements Initializable {
         }
 
     }
+    /**
+     * Removes the highlighting from all cells in the score sheets of the realms.
+     * This method should be called to remove the highlight after highlighting possible moves.
+     */
     public void removeHighlight(){
         for(int i=0;i<4;i++){
             for(int j=0;j<12;j++){
@@ -88,6 +113,13 @@ public class YellowRealmScoreSheet implements Initializable {
             }
         }
     }
+    /**
+     * Highlights a cell in the gridPane by applying a background color to the corresponding label.
+     *
+     * @param row   the row index of the cell to highlight
+     * @param column   the column index of the cell to highlight
+     * @param color   the background color to apply to the cell
+     */
     private void highlightCell(int row, int column,String color) {
         for (Node node : gridPane.getChildren()) {
             if (node instanceof Label) {

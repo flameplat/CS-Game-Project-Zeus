@@ -75,11 +75,22 @@ public class RedRealmScoreSheet implements Initializable {
     @FXML
     private GridPane grid;
 
+    /**
+     * Initializes the RedRealmScoreSheet controller.
+     *
+     * @param url the location used to resolve relative paths
+     * @param resourceBundle the resources used to localize the root object
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
+    /**
+     * Update the labels in the RedRealmScoreSheet based on the current state of the Red Realm.
+     * This method retrieves the list of dragons from the Red Realm and updates the corresponding labels for each dragon.
+     * It also updates the labels for the collectibles and the dragon scores.
+     */
     public void updateLabels() {
         Dragon[] dragons = redRealm.getDragons();
         updateDragonLabels(dragons[0], dragon1Face, dragon1Wing, dragon1Tail, dragon1Heart);
@@ -99,6 +110,15 @@ public class RedRealmScoreSheet implements Initializable {
         dragon4Score.setText(String.valueOf(score[3]));
     }
 
+    /**
+     * Updates the labels displaying the health of a dragon.
+     *
+     * @param dragon     the Dragon object for which the labels need to be updated
+     * @param faceLabel  the Label that displays the face health of the dragon
+     * @param wingLabel  the Label that displays the wing health of the dragon
+     * @param tailLabel  the Label that displays the tail health of the dragon
+     * @param heartLabel the Label that displays the heart health of the dragon
+     */
     private void updateDragonLabels(Dragon dragon, Label faceLabel, Label wingLabel, Label tailLabel, Label heartLabel) {
         Object[] health = dragon.getHealth();
         faceLabel.setText(health[0].toString());
@@ -107,14 +127,30 @@ public class RedRealmScoreSheet implements Initializable {
         heartLabel.setText(health[3].toString());
     }
 
+    /**
+     * Updates the score sheet with the latest values.
+     * This method updates the score sheets for different realms and displays the player's total score,
+     * total time warp powers collected, total elemental crests collected, and total arcane boost powers collected.
+     * It also updates the labels indicating the number of time warps and arcane boosts used.
+     */
     public void updateScoreSheet() {
         updateLabels();
     }
 
+    /**
+     * Sets the RedRealm for the RedRealmScoreSheet.
+     *
+     * @param redRealm the RedRealm to set
+     */
     public void setRealm(RedRealm redRealm) {
         this.redRealm = redRealm;
     }
 
+    /**
+     * Highlights the moves in the specified array that have a dice realm of RED.
+     *
+     * @param moves an array of Move objects representing the moves to be highlighted
+     */
     public void highlightMoves(Move[] moves) {
         for (Move move : moves) {
             if (move.getDice().getRealm() == GameColor.RED) {
@@ -123,6 +159,11 @@ public class RedRealmScoreSheet implements Initializable {
         }
     }
 
+    /**
+     * Highlights the move on the score sheet based on the given dice.
+     *
+     * @param die The dice representing the move to highlight.
+     */
     private void highlightMove(Dice die) {
         Dragon[] dragons = redRealm.getDragons();
         String style = "-fx-background-color: red;";
@@ -177,6 +218,16 @@ public class RedRealmScoreSheet implements Initializable {
         }
     }
 
+    /**
+     * Highlights a specific label based on the health index and style.
+     *
+     * @param healthIndex The index of the label to highlight (0: face, 1: wing, 2: tail, 3: heart)
+     * @param style The CSS style to apply to the label
+     * @param face The label representing the dragon's face
+     * @param wing The label representing the dragon's wing
+     * @param tail The label representing the dragon's tail
+     * @param heart The label representing the dragon's heart
+     */
     private void highlightLabel(int healthIndex, String style, Label face, Label wing, Label tail, Label heart) {
         switch (healthIndex) {
             case 0:
@@ -196,6 +247,10 @@ public class RedRealmScoreSheet implements Initializable {
         }
     }
 
+    /**
+     * Removes the highlighting from all cells in the score sheets of the realms.
+     * This method should be called to remove the highlight after highlighting possible moves.
+     */
     public void removeHighlight() {
         for (int i = 0; i < grid.getRowCount(); i++) {
             for (int j = 0; j < grid.getColumnCount(); j++) {
@@ -204,6 +259,13 @@ public class RedRealmScoreSheet implements Initializable {
         }
     }
 
+    /**
+     * Highlights a specific cell in a grid with the given row and column indices using the specified color.
+     *
+     * @param row    the row index of the cell to highlight
+     * @param column the column index of the cell to highlight
+     * @param color  the color to use for highlighting the cell
+     */
     private void highlightCell(int row, int column, String color) {
         for (Node node : grid.getChildren()) {
             if (node instanceof Label) {

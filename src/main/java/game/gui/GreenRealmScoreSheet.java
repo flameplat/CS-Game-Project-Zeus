@@ -47,6 +47,12 @@ public class GreenRealmScoreSheet implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+    /**
+     * Updates the score sheet with the latest values.
+     * This method updates the score sheets for different realms and displays the player's total score,
+     * total time warp powers collected, total elemental crests collected, and total arcane boost powers collected.
+     * It also updates the labels indicating the number of time warps and arcane boosts used.
+     */
     public void updateScoreSheet(){
         int[] score= greenRealm.getScore();
         Object[][] mainArray= greenRealm.getMainArray();
@@ -78,9 +84,19 @@ public class GreenRealmScoreSheet implements Initializable {
         allScores+=score[score.length-1];
         scoreLabel.setText(allScores);
     }
+    /**
+     * Sets the GreenRealm for the GreenRealmScoreSheet object.
+     *
+     * @param greenRealm The GreenRealm to be set for the GreenRealmScoreSheet.
+     */
     public void setRealm(GreenRealm greenRealm){
         this.greenRealm=greenRealm;
     }
+    /**
+     * Highlights the cells on the green realm score sheet based on the given array of moves.
+     *
+     * @param moves the array of moves
+     */
     public void highlightMoves(Move[] moves){
         for (Move move : moves) {
             if(move.getDice().getRealm() == GameColor.GREEN){
@@ -127,6 +143,10 @@ public class GreenRealmScoreSheet implements Initializable {
             }
         }
     }
+    /**
+     * Removes the highlighting from all cells in the grid.
+     * This method should be called to remove the highlight after highlighting possible moves.
+     */
     public void removeHighlight(){
         for(int i=0;i< grid.getRowCount();i++){
             for(int j=0;j< grid.getColumnCount();j++){
@@ -134,6 +154,13 @@ public class GreenRealmScoreSheet implements Initializable {
             }
         }
     }
+    /**
+     * Highlights a cell in the grid with the specified row and column, using the given color.
+     *
+     * @param row   the row of the cell to highlight
+     * @param column   the column of the cell to highlight
+     * @param color   the color to use for highlighting the cell
+     */
     private void highlightCell(int row, int column,String color) {
         for (Node node : grid.getChildren()) {
             if (node instanceof Label) {

@@ -40,17 +40,34 @@ public class MainMenuController implements Initializable ,GameController{
 
     }
 
+    /**
+     * Sets the SceneManager instance for the MainMenuController.
+     *
+     * @param sceneManager the SceneManager instance to set
+     */
     public void setSceneManager(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
     }
+    /**
+     * Sets the game mode to single player and switches the scene to the player data scene.
+     */
     public void setGameModeSinglePlayer(){
         gameMode=GameMode.SINGLEPLAYER;
         sceneManager.switchPlayerDataScene();
     }
+    /**
+     * Sets the game mode to multiplayer.
+     * Switches to the player data scene.
+     */
     public void setGameModeMultiplayer(){
         gameMode=GameMode.MULTIPLAYER;
         sceneManager.switchPlayerDataScene();
     }
+    /**
+     * Adds a hover effect to the given ImageView by adding event handlers for MOUSE_ENTERED and MOUSE_EXITED events.
+     *
+     * @param imageView the ImageView to add the hover effect to
+     */
     private void addHoverEffect(ImageView imageView) {
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.CYAN);
@@ -61,6 +78,12 @@ public class MainMenuController implements Initializable ,GameController{
     }
 
 
+    /**
+     * Initializes the MainMenuController.
+     *
+     * @param url the location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Image mainBG=new Image(Objects.requireNonNull(getClass().getResource("/images/mainMenu.jpeg")).toExternalForm());
@@ -76,6 +99,11 @@ public class MainMenuController implements Initializable ,GameController{
         multiplayerLabel.setMouseTransparent(true);
         singlePlayerLabel.setMouseTransparent(true);
     }
+    /**
+     * Retrieves the GameMode.
+     *
+     * @return The GameMode object representing the current game mode.
+     */
     public static GameMode getGameMode(){
         return gameMode;
     }

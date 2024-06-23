@@ -52,8 +52,8 @@ public class StandardAntiCheatService implements AntiCheatService {
      * The master player for the game.
      *
      * <p>
-     * The master player is a private final instance of the Player class. It represents the player
-     * who achieved the maximum score in the game and is responsible for making decisions, receiving rewards, and
+     * The master player is a private final instance of the Player class. It represents a player
+     * who achieves the maximum score in the game and is responsible for making decisions, receiving rewards, and
      * keeping track of the score limit. This variable is used within the StandardAntiCheatService
      * class, which implements the AntiCheatService interface.
      * </p>
@@ -187,7 +187,6 @@ public class StandardAntiCheatService implements AntiCheatService {
      * This method is used to check the status of a game.
      *
      * @param gameStatus The status of the game.
-     * @return None
      */
     @Override
     public void checkGameStatus(GameStatus gameStatus) {

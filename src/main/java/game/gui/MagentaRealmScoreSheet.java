@@ -2,7 +2,6 @@ package game.gui;
 
 import game.engine.Move;
 import game.realms.MagentaRealm;
-import game.realms.YellowRealm;
 import game.utilities.GameColor;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class MagentaRealmScoreSheet implements Initializable {
@@ -44,6 +42,12 @@ public class MagentaRealmScoreSheet implements Initializable {
     private Label[] rewardLabels;
 
 
+    /**
+     * Initializes the score labels and reward labels.
+     *
+     * @param url The location used to resolve relative paths. Unused in this method.
+     * @param resourceBundle The resources used by this controller. Unused in this method.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         scoreLabels = new Label[] {
@@ -57,6 +61,12 @@ public class MagentaRealmScoreSheet implements Initializable {
         };
 
     }
+    /**
+     * Updates the score sheet with the latest values.
+     * This method updates the score labels and reward labels of the Magenta Realm score sheet.
+     * The score labels display the hit scores obtained from the Magenta Realm,
+     * and the reward labels display the reward values associated with each hit score.
+     */
     public void updateScoreSheet(){
         int[] hitScore=magentaRealm.getScoreValues();
         for(int i=0;i< magentaRealm.getCounterHits();i++){
@@ -67,9 +77,19 @@ public class MagentaRealmScoreSheet implements Initializable {
             rewardLabels[i].setText(rewardValues[i]);
         }
     }
+    /**
+     * Sets the realm of the MagentaRealmScoreSheet.
+     *
+     * @param yellowRealm The new realm to be set.
+     */
     public void setRealm(MagentaRealm yellowRealm){
         this.magentaRealm=yellowRealm;
     }
+    /**
+     * Highlights the cells on the magentaRealm score sheet based on the given array of moves.
+     *
+     * @param moves the array of moves
+     */
     public void highlightMoves(Move[] moves){
         for (Move move : moves) {
             if(move.getDice().getRealm()== GameColor.MAGENTA){
@@ -86,6 +106,10 @@ public class MagentaRealmScoreSheet implements Initializable {
         }
 
     }
+    /**
+     * Removes the highlighting from all cells in the score sheets of the realms.
+     * This method should be called to remove the highlight after highlighting possible moves.
+     */
     public void removeHighlight(){
         for(int i=0;i<4;i++){
             for(int j=0;j<12;j++){
@@ -93,6 +117,14 @@ public class MagentaRealmScoreSheet implements Initializable {
             }
         }
     }
+    /**
+     * Highlights a cell in the GridPane with the specified row and column index,
+     * using the specified color. If the color is "null", removes the highlighting.
+     *
+     * @param row    the row index of the cell to highlight
+     * @param column the column index of the cell to highlight
+     * @param color  the color of the highlighting, or "null" to remove the highlighting
+     */
     private void highlightCell(int row, int column,String color) {
         for (Node node : gridPane.getChildren()) {
             if (node instanceof Label) {

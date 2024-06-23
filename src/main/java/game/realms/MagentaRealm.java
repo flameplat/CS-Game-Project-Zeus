@@ -30,6 +30,9 @@ public class MagentaRealm extends Realm {
     private int counterHits;
     private Move[] realmPossibleMoves;
 
+    /**
+     * Represents the Magenta Realm.
+     */
     // -----------------------Constructor-----------------------//
     public MagentaRealm() {
         this.rewardValues = new String[11];
@@ -53,6 +56,11 @@ public class MagentaRealm extends Realm {
         this.counterHits = 0;
     }
 
+    /**
+     * Updates the possible moves based on the given move.
+     *
+     * @param move the Move object to update the possible moves with
+     */
     // -----------------------Methods-----------------------//
     private void updatePossibleMoves(Move move) {
         LinkedList<Move> list = new LinkedList<>();
@@ -63,10 +71,20 @@ public class MagentaRealm extends Realm {
         }
         this.realmPossibleMoves = list.toArray(Move[]::new);
     }
+    /**
+     * Returns the value of the counterHits field.
+     *
+     * @return The current value of the counterHits field.
+     */
     public int getCounterHits() {
         return counterHits;
     }
 
+    /**
+     * Retrieves the properties of the rewards.
+     *
+     * @return An array of Collectibles representing the reward properties.
+     */
     public Collectibles[] getRewardsProperties() {
         Properties properties = new Properties();
         Collectibles[] rewardProperties = new Collectibles[11];
@@ -92,26 +110,51 @@ public class MagentaRealm extends Realm {
         return rewardProperties;
     }
 
+    /**
+     * Returns the name of the realm as a String.
+     *
+     * @return The name of the realm.
+     */
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * Returns the color of the realm.
+     *
+     * @return The color of the realm.
+     */
     @Override
     public GameColor getColor() {
         return REALM_GAME_COLOR;
     }
 
+    /**
+     * Retrieves the status of the realm.
+     *
+     * @return the status of the realm as an integer
+     */
     @Override
     public int getStatus() {
         return 0;
     }
 
+    /**
+     * Checks if the realm is available based on the current number of hits.
+     *
+     * @return true if the realm is available, false otherwise.
+     */
     @Override
     public boolean isRealmAvailable() {
         return counterHits < 11;
     }
 
+    /**
+     * This method retrieves the reward for the realm.
+     *
+     * @return An array of Collectibles representing the reward for the realm.
+     */
     @Override
     public Collectibles[] getReward() {
         Collectibles[] temp = new Collectibles[1];
@@ -119,6 +162,13 @@ public class MagentaRealm extends Realm {
         return temp;
     }
 
+    /**
+     * Checks whether there is a reward or not after attacking. If a reward is found,
+     * it updates the rewardValues array and increments the noElementalCrests counter
+     * if the reward is an instance of ElementalCrest.
+     *
+     * @return true if there is a reward, false otherwise.
+     */
     @Override
     public boolean checkReward() {
         if (collectibles[counterHits - 1] != null) {
@@ -133,6 +183,12 @@ public class MagentaRealm extends Realm {
 
     }
 
+    /**
+     * Executes an attack move on the specified realm.
+     *
+     * @param move The move to be executed.
+     * @return true if the attack was successful, false otherwise.
+     */
     @Override
     public boolean attack(Move move) {
         if (isRealmAvailable()) {
@@ -165,16 +221,31 @@ public class MagentaRealm extends Realm {
 
     }
 
+    /**
+     * Returns the total score for the realm.
+     *
+     * @return the total score for the realm as an integer
+     */
     @Override
     public int getTotalScore() {
         return totalRealmScore;
     }
 
+    /**
+     * Returns the number of elemental crests for a realm.
+     *
+     * @return The number of elemental crests for the realm.
+     */
     @Override
     public int getNoElementalCrests() {
         return noElementalCrests;
     }
 
+    /**
+     * Returns a string representation of the Mystical Sky: Majestic Phoenix realm.
+     *
+     * @return a string representation of the realm.
+     */
     @Override
     public String toString() {
         return String.format("Mystical Sky: Majestic Phoenix (MAGENTA REALM):\n" +
@@ -191,6 +262,11 @@ public class MagentaRealm extends Realm {
     }
 
 
+    /**
+     * This method returns an array of Moves representing the possible moves in the Magenta Realm.
+     *
+     * @return an array of Moves representing the possible moves in the Magenta Realm.
+     */
     @Override
     public Move[] getRealmMoves() {
         if(isRealmAvailable()){
@@ -199,6 +275,12 @@ public class MagentaRealm extends Realm {
         return new Move[0];
     }
 
+    /**
+     * Retrieves a Creature based on a Dice.
+     *
+     * @param dice The Dice object to determine the realm.
+     * @return A Creature object corresponding to the realm of the Dice.
+     */
     @Override
     public Creature getCreature(Dice dice) {
         if (dice.getRealm() == GameColor.MAGENTA && (dice.getValue() <= 6 && dice.getValue() >= 1)) {
@@ -207,18 +289,39 @@ public class MagentaRealm extends Realm {
         return null;
     }
 
+    /**
+     * Retrieves the fake score from the given move.
+     *
+     * @param move the move containing the dice value
+     * @return the fake score from the move
+     */
     @Override
     public int getFakeScore(Move move) {
         int attackScore = move.getDice().getValue();
         return attackScore;
     }
 
+    /**
+     * Returns an array of score values for the Magenta Realm.
+     *
+     * @return An array of integers representing the score values for the Magenta Realm.
+     */
     public int[] getScoreValues(){
         return score;
     }
+    /**
+     * Retrieves the reward values associated with each hit score in the Magenta Realm.
+     *
+     * @return an array of Strings representing the reward values
+     */
     public String[] getRewardValues(){
         return rewardValues;
     }
+    /**
+     * Retrieves an array of Collectibles.
+     *
+     * @return An array of Collectibles.
+     */
     public Collectibles[] getCollectibles(){
         return collectibles;
     }

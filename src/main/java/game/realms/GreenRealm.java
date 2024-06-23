@@ -28,6 +28,23 @@ public class GreenRealm extends Realm {
     private int count;
     private int noElementalCrests;
 
+    /**
+     * Initializes a GreenRealm object.
+     *
+     * The GreenRealm class represents a realm in the game. It contains a grid of Guardians,
+     * each with their own score and status. The grid is initialized with deadGuardian and
+     * gardians objects. The realm also has rowRewards and colRewards arrays for storing rewards.
+     * The score array stores the attack scores of the Guardians. The possibleMoves list stores
+     * the valid moves in the realm.
+     *
+     * This constructor initializes all the necessary objects and arrays in the class.
+     * It sets the score array, initializes the Guardians, loads properties from files,
+     * and initializes the mainArray grid with the deadGuardian and gardians objects.
+     *
+     * @see Guardian
+     * @see DeadGuardian
+     * @see Move
+     */
     // -----------------------Constructor-----------------------//
     public GreenRealm() {
 
@@ -53,32 +70,62 @@ public class GreenRealm extends Realm {
         }
     }
 
+    /**
+     * Returns the name of the realm as a String.
+     *
+     * @return The name of the realm.
+     */
     // -----------------------Methods-----------------------//
     @Override
     public String getName() {
         return "\u001B[32m" + "Green Realm" + "\u001B[0m";
     }
 
+    /**
+     * Returns the color of the realm.
+     *
+     * @return The color of the realm.
+     */
     @Override
     public GameColor getColor() {
         return REALM_GAME_COLOR;
     }
 
+    /**
+     * Returns the status of the realm.
+     *
+     * @return the status of the realm as an integer
+     */
     @Override
     public int getStatus() {
         return 0;
     }
 
+    /**
+     * Checks if the realm is available.
+     *
+     * @return true if the realm is available, false otherwise.
+     */
     @Override
     public boolean isRealmAvailable() {
         return count < 12;
     }
 
+    /**
+     * Retrieves the rewards obtained from the realm.
+     *
+     * @return An array of Collectibles representing the rewards obtained from the realm.
+     */
     @Override
     public Collectibles[] getReward() {
         return currentRewards;
     }
 
+    /**
+     * Checks for rewards in the GreenRealm.
+     *
+     * @return {@code true} if there are rewards, otherwise {@code false}.
+     */
     @Override
     public boolean checkReward() {
         LinkedList<Collectibles> rewards = new LinkedList<>();
@@ -128,6 +175,12 @@ public class GreenRealm extends Realm {
         return currentRewards.length != 0;
     }
 
+    /**
+     * Checks if an attack is possible and executes it.
+     *
+     * @param move the Move object representing the attack
+     * @return true if the attack is successfully executed, false otherwise
+     */
     @Override
     public boolean attack(Move move) {
         if (isRealmAvailable()) {
@@ -148,6 +201,11 @@ public class GreenRealm extends Realm {
         return false;
     }
 
+    /**
+     * Returns the total score of the GreenRealm.
+     *
+     * @return The total score, which is obtained by summing up the scores of all previous attacks. If no attacks have been made, returns 0.
+     */
     @Override
     public int getTotalScore() {
         if (count == 0) {
@@ -156,11 +214,24 @@ public class GreenRealm extends Realm {
         return score[count - 1];
     }
 
+    /**
+     * Returns the number of elemental crests for the GreenRealm.
+     *
+     * @return The number of elemental crests for the GreenRealm.
+     */
     @Override
     public int getNoElementalCrests() {
         return noElementalCrests;
     }
 
+    /**
+     * Returns a string representation of the GreenRealm object.
+     *
+     * The string representation includes the layout of the GreenRealm grid, the rewards
+     * for each row and column, and the current score.
+     *
+     * @return a string representation of the GreenRealm object
+     */
     @Override
     public String toString() {
         return String.format("Terra's Heartland: Gaia Guardians (GREEN REALM):\n" +
@@ -182,25 +253,56 @@ public class GreenRealm extends Realm {
                 score[0] < 10 ? score[0] + " " : score[0], score[1] < 10 ? score[1] + " " : score[1], score[2] < 10 ? score[2] + " " : score[2], score[3] < 10 ? score[3] + " " : score[3], score[4] < 10 ? score[4] + " " : score[4], score[5] < 10 ? score[5] + " " : score[5], score[6] < 10 ? score[6] + " " : score[6], score[7] < 10 ? score[7] + " " : score[7], score[8] < 10 ? score[8] + " " : score[8], score[9] < 10 ? score[9] + " " : score[9], score[10] < 10 ? score[10] + " " : score[10]
         );
     }
+    /**
+     * Retrieves the main array of Guardian objects.
+     *
+     * @return the 2D array of Guardian objects representing the main array
+     */
     public Guardian[][] getMainArray(){
         return mainArray;
     }
+    /**
+     * Retrieves the column rewards of the GreenRealm object.
+     *
+     * @return An array of Objects representing the column rewards of the GreenRealm.
+     */
     public Object[] getColRewards(){
         return colRewards;
     }
+    /**
+     * Returns the score for the realm as an array of integers.
+     *
+     * @return an array of integers representing the score for the realm.
+     */
     public int[] getScore(){
         return score;
     }
+    /**
+     * Returns the row rewards for the GreenRealm.
+     *
+     * @return The row rewards as an array of objects.
+     */
     public Object[] getRowRewards(){
         return rowRewards;
     }
 
 
+    /**
+     * Retrieves an array of possible Move objects for the realm.
+     *
+     * @return the array of possible Move objects
+     */
     @Override
     public Move[] getRealmMoves() {
         return possibleMoves.toArray(Move[]::new);
     }
 
+    /**
+     * Retrieves a Creature based on a Dice.
+     *
+     * @param dice The Dice object to determine the realm.
+     * @return A Creature object corresponding to the realm of the Dice, or null if no creature is found.
+     */
     @Override
     public Creature getCreature(Dice dice) {
         for (Guardian[] guardians : mainArray) {
@@ -213,12 +315,23 @@ public class GreenRealm extends Realm {
         return null;
     }
 
+    /**
+     * Calculates the fake score for a given Move object.
+     *
+     * @param move the Move object to calculate the fake score for
+     * @return the fake score for the Move object
+     */
     @Override
     public int getFakeScore(Move move) {
         int prev=(count==0)?0:score[count-1];
         return score[count]-prev;
     }
 
+    /**
+     * Returns a list of all living Guardian creatures in the GreenRealm.
+     *
+     * @return A LinkedList of living Guardian creatures.
+     */
     public LinkedList<Guardian> getAliveCreatures() {
         LinkedList<Guardian> aliveGardians = new LinkedList<>();
         for (Guardian g : gardians) {
@@ -229,10 +342,21 @@ public class GreenRealm extends Realm {
         return aliveGardians;
     }
 
+    /**
+     * Retrieves an array of all creatures in the GreenRealm.
+     *
+     * @return An array of Guardian objects representing all the creatures in the GreenRealm.
+     */
     public Guardian[] getAllCreatures() {
         return gardians;
     }
 
+    /**
+     * Loads the properties from the config files and initializes the rewards and scores.
+     * If the files are not found, an error message is printed.
+     * The method uses the Collectibles.getCollectibleFromString method to convert string representations
+     * of rewards into instances of the Collectibles class.
+     */
     private void loadProperties() {
         Properties properties = new Properties();
         Properties gaiaScoreProperties = new Properties();

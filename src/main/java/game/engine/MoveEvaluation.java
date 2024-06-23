@@ -168,7 +168,7 @@ public class MoveEvaluation {
                 }
             }
             LinkedList<Move> newPastMoves = new LinkedList<>(pastMoves);
-            newPastMoves.add(move);
+            newPastMoves.add(new Move(move));
             Collectibles rowReward = null;
             if (redRealmRewards[row] != null && redRealmRewards[row] instanceof Collectibles) {
                 rowReward = (Collectibles) redRealmRewards[row];
@@ -225,7 +225,7 @@ public class MoveEvaluation {
                 colReward = (Collectibles) colRewards[col];
             }
             LinkedList<Move> newPastMoves=new LinkedList<>(pastMoves);
-            newPastMoves.add(move);
+            newPastMoves.add(new Move(move));
             double rowRewardWeight = 0;
             if (rowReward != null) {
                 rowRewardWeight = getRewardEvaluation(rowReward,newPastMoves);
@@ -253,7 +253,7 @@ public class MoveEvaluation {
             double rewardWeight = 0;
             LinkedList<Move> newPastMoves=new LinkedList<>(pastMoves);
             for (int i = hitCount; i < rewards.length; i++) {
-                newPastMoves.add(blueRealm.getRealmMoves()[blueRealm.getRealmMoves().length-1]);
+                newPastMoves.add(new Move(blueRealm.getRealmMoves()[blueRealm.getRealmMoves().length-1]));
                 if (rewards[i] != null) {
                     Collectibles reward = rewards[i];
                     rewardWeight += ((double) 1 / (i - hitCount + 1)) * getRewardEvaluation(reward,newPastMoves);
@@ -278,7 +278,7 @@ public class MoveEvaluation {
             double rewardWeight = 0;
             LinkedList<Move> newPastMoves=new LinkedList<>(pastMoves);
             for (int i = hitCount; i < rewards.length; i++) {
-                newPastMoves.add(move);
+                newPastMoves.add(new Move(move));
                 if (rewards[i] != null) {
                     Collectibles reward = rewards[i];
                     rewardWeight += ((double) 1 / (i - hitCount + 1)) * getRewardEvaluation(reward,newPastMoves);
@@ -306,7 +306,7 @@ public class MoveEvaluation {
             LinkedList<Move> newPastMoves=new LinkedList<>(pastMoves);
             double rewardWeight = 0;
             for (int i = hitCount; i < rewards.length; i++) {
-                newPastMoves.add(move);
+                newPastMoves.add(new Move(move));
                 if (rewards[i] != null) {
                     Collectibles reward = rewards[i];
                     rewardWeight += ((double) 1 / (i - hitCount + 1)) * getRewardEvaluation(reward,newPastMoves);
@@ -316,7 +316,6 @@ public class MoveEvaluation {
             return scoreWeight + rewardWeight;
         }
         return 0;
-
     }
 
     /**
@@ -340,7 +339,7 @@ public class MoveEvaluation {
                     minScore = realms[i].getTotalScore();
                 }
             }
-            return (player.gameScore.getTotalElementalCrests() + 1) *minScore
+            return (player.gameScore.getTotalElementalCrests() + 1) *(minScore)
                     * (7- guiGameController.gameStatus.getRound());
 
         }
@@ -381,7 +380,7 @@ public class MoveEvaluation {
         if(MAX_NO_WORLDS_INITIALIZED<redWorlds){
             MAX_NO_WORLDS_INITIALIZED=redWorlds;
         }
-        Move[] possibleMoves=moveEvaluation2.redRealm.getRealmMoves();
+        Move[] possibleMoves=helperPlayer.getRealm(GameColor.RED).getRealmMoves();
         double maxWeight=0;
         double tempWeight;
         for (Move move : possibleMoves) {
@@ -405,11 +404,12 @@ public class MoveEvaluation {
         if(yellowWorlds>limit || !moveEvaluation2.yellowRealm.isRealmAvailable()){
             return 0;
         }
-
         if(MAX_NO_WORLDS_INITIALIZED<yellowWorlds){
             MAX_NO_WORLDS_INITIALIZED=yellowWorlds;
         }
-        return moveEvaluation2.evaluateYellowMove(new Move(new YellowDice(6),new Lion()));
+        Dice yellowDice = new YellowDice(6);
+        Move move = new Move(yellowDice, new Lion());
+        return moveEvaluation2.evaluateYellowMove(move);
     }
     /**
      *
