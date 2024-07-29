@@ -127,10 +127,10 @@ public class BlueRealmScoreSheet implements Initializable {
                     && blueRealm.isRealmAvailable()
                     && move.getDice().getValue()>=score[blueRealm.getHitcount()]) {
                 int col=blueRealm.getHitcount();
-                highlightCell(0,col+1,"green");
-                highlightCell(1,col+1,"green");
-                highlightCell(2,col+1,"green");
-                highlightCell(3,col+1,"green");
+                highlightCell(0,col+1,"blue");
+                highlightCell(1,col+1,"blue");
+                highlightCell(2,col+1,"blue");
+                highlightCell(3,col+1,"blue");
                 break;
             }
         }

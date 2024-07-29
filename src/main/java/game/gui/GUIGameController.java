@@ -36,6 +36,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -823,8 +827,20 @@ public class GUIGameController extends CLIGameController implements Initializabl
      * Checks if time warp is available and handles the action accordingly if the active player is an AI player.
      * If time warp is not available, selects the dice for the active player if they are an AI player.
      */
+    private void playSound(String soundFilePath) {
+        try {
+            File soundFile = new File(soundFilePath);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     public void rollButtonClick() {
+        playSound("src/main/resources/sound/Playing Dice 1.wav");
         updateSceneStatus();
         rollDice();
         gameText.setText("");
@@ -883,6 +899,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
      */
     @FXML
     public void skipButtonClick() {
+        playSound("src/main/resources/sound/Negative click.wav");
         disableSkipButton();
         disableTimeWarpButton();
         disableArcaneBoostButton();
@@ -980,6 +997,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             passivePlayer.getScoreSheetController().setRewardsLabel("No possible moves, passive turn lost");
             updateSceneStatus();
             endPassiveTurn();
+            return;
         } else {
             if (passivePlayer.isAI()) {
                 disableForgottenRealmButtons();
@@ -1011,6 +1029,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
         gameStatus.setGameStatus(CurrentStatus.ARCANE_BOOST);
         updateSceneStatus();
         resetDice();
+        disableForgottenRealmButtons();
         disableArcaneBoostButton();
         manageTurnCycle();
     }
@@ -1031,7 +1050,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
      * If neither the active nor the passive player have the Arcane Boost available or have skipped it, the endPhase method is called.
      */
     private void handleArcaneBoost() {
-        if (activePlayer.isArcaneBoostAvailable() && !activePlayer.isArcaneBoostSkipped()) {
+        if (activePlayer.isArcaneBoostAvailable() && !activePlayer.isArcaneBoostSkipped() && filterDiceWithPossibleMoves(activePlayer, getAvailableDice()).toArray(Dice[]::new).length!=0) {
             currentPlayer = activePlayer;
             gameText.setText(activePlayer.getName() + ", do you want to use Arcane Boost?");
             if (activePlayer.isAI()) {
@@ -1047,7 +1066,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             updateSceneStatus();
             return;
         }
-        if (passivePlayer.isArcaneBoostAvailable() && !passivePlayer.isArcaneBoostSkipped()) {
+        if (passivePlayer.isArcaneBoostAvailable() && !passivePlayer.isArcaneBoostSkipped() && filterDiceWithPossibleMoves(passivePlayer, getAvailableDice()).toArray(Dice[]::new).length!=0) {
             if (activePlayer.isArcaneBoostUsed()) {
                 resetDice();
                 activePlayer.resetArcaneBoostUsage();
@@ -1125,6 +1144,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
      */
     @FXML
     public void timeWarpButtonClick() {
+        playSound("src/main/resources/sound/Playing Dice 1.wav");
         activePlayer.useTimeWarpPower();
         disableSkipButton();
         updateScoreSheets();
@@ -1147,6 +1167,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
      */
     @FXML
     public void arcaneBoostButtonClick() {
+        playSound("src/main/resources/sound/Epic_Button_Click_1.wav");
         enableMainBoardDiceButtons();
         disableSkipButton();
         disableTimeWarpButton();
@@ -1227,6 +1248,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[0]).length == 0) {
                 throw new InvalidMoveException();
             }
+            playSound("src/main/resources/sound/DiceDrop_BW.48117.wav");
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
             if (diceArray == refDiceArray) {
@@ -1245,6 +1267,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             manageTurnCycle();
 
         } catch (InvalidMoveException e) {
+            playSound("src/main/resources/sound/Ancient Game UI Click.wav");
             gameText.setText("There are no possible moves for " + refDiceArray[0].getName());
         }
 
@@ -1268,9 +1291,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[1]).length == 0) {
                 throw new InvalidMoveException();
             }
+            playSound("src/main/resources/sound/DiceDrop_BW.48117.wav");
             if (diceArray == refDiceArray) {
                 selectDice(diceArray[1], currentPlayer);
             }
+
 
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[1])[0]);
             disableMainBoardDiceButtons();
@@ -1284,6 +1309,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             manageTurnCycle();
         } catch (InvalidMoveException e) {
+            playSound("src/main/resources/sound/Ancient Game UI Click.wav");
             gameText.setText("There are no possible moves for " + refDiceArray[1].getName());
         }
     }
@@ -1304,6 +1330,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[2]).length == 0) {
                 throw new InvalidMoveException();
             }
+            playSound("src/main/resources/sound/DiceDrop_BW.48117.wav");
             if (diceArray == refDiceArray) {
                 selectDice(diceArray[2], currentPlayer);
             }
@@ -1320,6 +1347,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             manageTurnCycle();
         } catch (InvalidMoveException e) {
+            playSound("src/main/resources/sound/Ancient Game UI Click.wav");
             gameText.setText("There are no possible moves for " + refDiceArray[2].getName());
         }
     }
@@ -1343,6 +1371,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[3]).length == 0) {
                 throw new InvalidMoveException();
             }
+            playSound("src/main/resources/sound/DiceDrop_BW.48117.wav");
             if (diceArray == refDiceArray) {
                 selectDice(diceArray[3], currentPlayer);
             }
@@ -1360,6 +1389,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             manageTurnCycle();
 
         } catch (InvalidMoveException e) {
+            playSound("src/main/resources/sound/Ancient Game UI Click.wav");
             gameText.setText("There are no possible moves for " + refDiceArray[3].getName());
         }
     }
@@ -1383,9 +1413,11 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (getPossibleMovesForADie(currentPlayer, refDiceArray[4]).length == 0) {
                 throw new InvalidMoveException();
             }
+            playSound("src/main/resources/sound/DiceDrop_BW.48117.wav");
             if (diceArray == refDiceArray) {
                 selectDice(diceArray[4], currentPlayer);
             }
+
             makeMove(currentPlayer, getPossibleMovesForADie(currentPlayer, refDiceArray[4])[0]);
             disableMainBoardDiceButtons();
             disableForgottenRealmButtons();
@@ -1398,6 +1430,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             }
             manageTurnCycle();
         } catch (InvalidMoveException e) {
+            playSound("src/main/resources/sound/Ancient Game UI Click.wav");
             gameText.setText("There are no possible moves for " + refDiceArray[4].getName());
         }
 
@@ -1425,6 +1458,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
             if (getPossibleMovesForADie(currentPlayer, diceArray[5]).length == 0) {
                 throw new NoAvailableMovesException();
             }
+            playSound("src/main/resources/sound/DiceDrop_BW.48117.wav");
             whiteDieParent = (GridPane) whiteDice.getParent();
             selectDice(diceArray[5], currentPlayer);
             disableGrid(whiteDieParent);
@@ -1472,6 +1506,7 @@ public class GUIGameController extends CLIGameController implements Initializabl
                 whiteDieDestination.setOpacity(highOpacity);
             }
         } catch (NoAvailableMovesException e) {
+            playSound("src/main/resources/sound/Ancient Game UI Click.wav");
             gameText.setText("There are no possible moves for " + diceArray[5].getName());
         }
     }

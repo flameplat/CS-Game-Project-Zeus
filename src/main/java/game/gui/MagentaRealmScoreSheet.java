@@ -96,9 +96,9 @@ public class MagentaRealmScoreSheet implements Initializable {
                 if(magentaRealm.isRealmAvailable()){
                     if(magentaRealm.getRealmMoves()[0].getDice().getValue()<=move.getDice().getValue()){
                         int col=magentaRealm.getCounterHits();
-                        highlightCell(0,col+1,"white");
-                        highlightCell(1,col+1,"white");
-                        highlightCell(2,col+1,"white");
+                        highlightCell(0,col+1,"magenta");
+                        highlightCell(1,col+1,"magenta");
+                        highlightCell(2,col+1,"magenta");
                     }
                 }
                 break;

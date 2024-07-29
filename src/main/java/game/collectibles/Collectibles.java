@@ -49,7 +49,6 @@ public abstract class Collectibles {
                 return null;
         }
     }
-
     /**
      * Retrieves the counter value for a specific reward.
      *

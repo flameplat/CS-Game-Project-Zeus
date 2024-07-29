@@ -6,6 +6,7 @@ module DiceRealms {
     requires transitive javafx.graphics;
     requires java.xml;
     requires java.sql;
+    requires java.desktop;
 
     opens game.gui to javafx.fxml;
 

@@ -93,9 +93,9 @@ public class YellowRealmScoreSheet implements Initializable {
             if(move.getDice().getRealm()== GameColor.YELLOW){
                 if(yellowRealm.isRealmAvailable()){
                     int col=yellowRealm.getCountHits();
-                    highlightCell(0,col+1,"white");
-                    highlightCell(1,col+1,"white");
-                    highlightCell(2,col+1,"white");
+                    highlightCell(0,col+1,"yellow");
+                    highlightCell(1,col+1,"yellow");
+                    highlightCell(2,col+1,"yellow");
                 }
                 break;
             }

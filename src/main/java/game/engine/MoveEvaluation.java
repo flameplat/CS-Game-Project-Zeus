@@ -21,7 +21,7 @@ public class MoveEvaluation {
     private final MagentaRealm magentaRealm;
 
     //This limit represents the hardness level of the AI, ranging from 0 to Integer.MAX_VALUE. The higher the number, the harder the AI.
-    public static final int limit=1000;
+    public static final int limit=500;
     public static int MAX_NO_WORLDS_INITIALIZED=0;
     public static int redWorlds=0;
     public static int greenWorlds = 0;
