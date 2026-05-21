@@ -1,4 +1,4 @@
-⏺ ## Dice Realms: Quest for the Elemental Crests
+## Dice Realms: Quest for the Elemental Crests
 
   **Type:** Turn-based Strategy Game | **Stack:** Java 17, JavaFX, OOP
   **Course:** CS401
